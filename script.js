@@ -99,26 +99,26 @@ document.addEventListener("keydown", (e) => {
 });
 
 
-const kundaliToggle = document.getElementById("kundaliToggle");
-const kundaliSubmenu = document.getElementById("kundaliSubmenu");
-const kundaliAccordion = document.getElementById("kundaliAccordion");
+const bookKundaliToggle = document.getElementById("bookKundaliToggle");
+const bookKundaliSubmenu = document.getElementById("bookKundaliSubmenu");
+const bookKundaliAccordion = document.getElementById("bookKundaliAccordion");
 
-gsap.set(kundaliSubmenu, {
+gsap.set(bookKundaliSubmenu, {
     height: 0,
     opacity: 0,
     display: "none"
 });
 
-let kundaliOpen = false;
+let bookKundaliOpen = false;
 
-kundaliToggle.addEventListener("click", () => {
-    kundaliOpen = !kundaliOpen;
+bookKundaliToggle.addEventListener("click", () => {
+    bookKundaliOpen = !bookKundaliOpen;
 
-    if (kundaliOpen) {
-        kundaliAccordion.classList.add("open");
-        gsap.set(kundaliSubmenu, { display: "flex" });
+    if (bookKundaliOpen) {
+        bookKundaliAccordion.classList.add("open");
+        gsap.set(bookKundaliSubmenu, { display: "flex" });
         gsap.fromTo(
-            kundaliSubmenu,
+            bookKundaliSubmenu,
             { height: 0, opacity: 0 },
             {
                 height: "auto",
@@ -128,14 +128,14 @@ kundaliToggle.addEventListener("click", () => {
             }
         );
     } else {
-        kundaliAccordion.classList.remove("open");
-        gsap.to(kundaliSubmenu, {
+        bookKundaliAccordion.classList.remove("open");
+        gsap.to(bookKundaliSubmenu, {
             height: 0,
             opacity: 0,
             duration: 0.25,
             ease: "power2.in",
             onComplete: () => {
-                gsap.set(kundaliSubmenu, { display: "none" });
+                gsap.set(bookKundaliSubmenu, { display: "none" });
             }
         });
     }
