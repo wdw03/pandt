@@ -783,7 +783,7 @@ body {
 .slidercontemain .sliderleft {
     height: 100%;
     width: 50%;
-    background-color: purple;
+    /* background-color: purple; */
 }
 
 .slidetopleft {
@@ -1035,7 +1035,7 @@ body {
     height: 120px;
     width: 600px;
     margin-left: 8%;
-    margin-top: 22px;
+    /* margin-top: 22px; */
     /* background-color: #d48181; */
 }
 
