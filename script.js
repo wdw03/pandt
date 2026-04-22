@@ -144,6 +144,40 @@ bookKundaliToggle.addEventListener("click", () => {
 
 
 
+const topImage = document.querySelector(".slidetopleft");
+
+if (topImage) {
+    gsap.set(topImage, {
+        y: -220,
+        opacity: 0,
+        rotation: -6
+    });
+
+    gsap.to(topImage, {
+        y: 0,
+        opacity: 1,
+        rotation: 0,
+        duration: 1.4,
+        ease: "power3.out",
+        delay: 0.25
+    });
+
+    topImage.addEventListener("mouseenter", () => {
+        gsap.to(topImage, {
+            y: -22,
+            duration: 0.45,
+            ease: "power2.out"
+        });
+    });
+
+    topImage.addEventListener("mouseleave", () => {
+        gsap.to(topImage, {
+            y: 0,
+            duration: 0.45,
+            ease: "power2.out"
+        });
+    });
+}
 
 
 

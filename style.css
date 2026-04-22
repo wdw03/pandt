@@ -25,7 +25,13 @@ body {
     height: clamp(64px, 5vw, 88px);
     width: 100%;
     background-color: #fff;
-    border-bottom: 1px solid #000;
+    /* border-bottom: 1px solid #000; */
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+
 }
 
 #navbar .navbarmain {
@@ -733,6 +739,7 @@ body {
     width: 100%;
     height: calc(100vh - clamp(64px, 5vw, 88px));
     overflow: hidden;
+    margin-top: clamp(64px, 5vw, 88px);
 }
 
 .slidermain {
@@ -791,13 +798,16 @@ body {
     width: clamp(200px, 30vw, 500px);
 
     background-image: url(./assets/images/mala-removebg-preview.png);
-
     background-size: clamp(90%, 10vw, 100%);
     background-position: 65% 45%;
-    /* tweak yaha karega tu */
-    /* background-color: chartreuse; */
     background-repeat: no-repeat;
+
+    position: relative;
+    will-change: transform, opacity;
+    transform-origin: center top;
+    cursor: pointer;
 }
+
 
 
 
@@ -1222,4 +1232,427 @@ body {
     width: 50%;
     min-width: 0;
     background-color: transparent;
+}
+
+
+
+
+
+
+
+
+
+/* =========================================
+   POOJA PAGE - LEFT SIDE COMPLETE PC CSS
+   ========================================= */
+
+#pooja {
+    width: 100%;
+    min-height: 100vh;
+    background-color: #F8F1DE;
+}
+
+#poojamain {
+    width: 100%;
+    min-height: 100vh;
+    background-image: url(./assets/images/patra.png);
+    background-size: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    overflow: hidden;
+}
+
+/* LEFT + RIGHT */
+.leftpooja {
+    width: 50%;
+    min-height: 100vh;
+
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.rightpooja {
+    width: 50%;
+    min-height: 100vh;
+}
+
+/* main inner wrapper */
+.leftpojamain {
+    width: clamp(340px, 34vw, 460px);
+    margin-left: clamp(40px, 10vw, 180px);
+    margin-top: clamp(24px, 3vw, 42px);
+
+    display: flex;
+    flex-direction: column;
+    gap: clamp(18px, 2vw, 28px);
+}
+
+/* =======================
+   TOP "Pooja" BUTTON
+   ======================= */
+.topleft {
+    width: 100%;
+}
+
+.topleftmaintxt {
+    width: 100%;
+}
+
+.topleftmaintxt .custom-button {
+    display: inline-block;
+    padding: clamp(12px, 1vw, 15px) clamp(28px, 2.2vw, 40px);
+    background-color: #FFC107;
+    border-radius: 999px;
+
+    color: #111;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: clamp(18px, 1.45vw, 24px);
+    text-transform: capitalize;
+    letter-spacing: 0.3px;
+
+    border: 2px solid #111;
+    box-shadow: 6px 6px 0 rgba(0, 0, 0, 1);
+
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.topleftmaintxt .custom-button:hover {
+    transform: translate(2px, 2px);
+    box-shadow: 3px 3px 0 rgba(0, 0, 0, 1);
+}
+
+.topleftmaintxt .custom-button:active {
+    transform: translate(6px, 6px);
+    box-shadow: 0 0 0 rgba(0, 0, 0, 1);
+}
+
+/* =======================
+   MAIN POOJA CARD
+   ======================= */
+.midleft {
+    width: 100%;
+}
+
+.midleftmain {
+    width: 100%;
+    background: linear-gradient(180deg, #fffdf8 0%, #fff7ea 100%);
+    border: 2px solid #111;
+    border-radius: 28px;
+    box-shadow: 8px 8px 0 rgba(0, 0, 0, 1);
+    overflow: hidden;
+    transition: all 0.25s ease;
+}
+
+.midleftmain:hover {
+    transform: translate(2px, 2px);
+    box-shadow: 5px 5px 0 rgba(0, 0, 0, 1);
+}
+
+/* =======================
+   CARD IMAGE
+   ======================= */
+.midleftimg {
+    width: 100%;
+    height: clamp(210px, 17vw, 260px);
+
+    background-image: url(./assets/images/panditpujakete.jpg);
+    background-size: 88%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #fff3d5;
+
+    border-bottom: 2px solid #111;
+    position: relative;
+}
+
+.midleftimg::after {
+    content: "✨ Sacred Ritual";
+    position: absolute;
+    top: 14px;
+    left: 14px;
+
+    padding: 7px 12px;
+    border: 2px solid #111;
+    border-radius: 999px;
+    background: #fff;
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 1);
+
+    font-family: 'Poppins', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    color: #222;
+    letter-spacing: 0.2px;
+}
+
+/* =======================
+   CARD CONTENT AREA
+   ======================= */
+.midlefttexs {
+    width: 100%;
+    padding: clamp(14px, 1.2vw, 18px);
+}
+
+.midtextpooja {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(10px, 0.9vw, 14px);
+}
+
+/* =======================
+   TITLE
+   ======================= */
+.nameofpuja {
+    width: 100%;
+}
+
+.nameofpuja h2 {
+    margin: 0;
+
+    font-family: 'Cinzel', serif;
+    font-size: clamp(20px, 1.6vw, 30px);
+    font-weight: 700;
+    line-height: 1.2;
+    text-transform: capitalize;
+    letter-spacing: 0.4px;
+    color: #1f1408;
+}
+
+.nameofpuja h2::after {
+    content: "";
+    display: block;
+    width: clamp(64px, 5vw, 92px);
+    height: 4px;
+    margin-top: 8px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #ffb100, #ff7a00);
+}
+
+/* =======================
+   DESCRIPTION
+   ======================= */
+.detailspooja {
+    position: relative;
+    width: 100%;
+
+    border: 2px solid #111;
+    border-radius: 18px;
+    background: #fffaf1;
+    padding: 12px 44px 12px 14px;
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 1);
+
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.28s ease;
+}
+
+.detailspooja::after {
+    content: "";
+    position: absolute;
+    top: 12px;
+    right: 12px;
+
+    width: 22px;
+    height: 22px;
+    border: 2px solid #111;
+    border-radius: 50%;
+
+    background-color: #ffd25f;
+    background-image: url("./assets/images/down-arrow.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 70%;
+
+    box-shadow: 2px 2px 0 rgba(0, 0, 0, 1);
+    transition: transform 0.28s ease;
+}
+
+.detailspooja p {
+    margin: 0;
+
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(12.5px, 0.92vw, 14px);
+    font-weight: 500;
+    line-height: 1.65;
+    color: #4b3a28;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+
+    max-height: calc(1.65em * 2);
+    transition: max-height 0.3s ease;
+}
+
+.detailspooja:hover {
+    background: #fff6e8;
+}
+
+.detailspooja:hover p {
+    -webkit-line-clamp: unset;
+    max-height: 240px;
+    overflow: visible;
+}
+
+.detailspooja:hover::after {
+    transform: rotate(180deg);
+}
+
+/* =======================
+   PRICE BADGE
+   ======================= */
+.pricepooja {
+    position: relative;
+    width: fit-content;
+    min-height: 40px;
+
+    padding: 8px 14px 8px 42px;
+    border: 2px solid #111;
+    border-radius: 999px;
+    background: linear-gradient(180deg, #ffd768 0%, #ffbf2f 100%);
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 1);
+
+    display: inline-flex;
+    align-items: center;
+
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(13px, 0.95vw, 15px);
+    font-weight: 700;
+    color: #1f1408;
+    letter-spacing: 0.2px;
+}
+
+.pricepooja::before {
+    content: "₹";
+    position: absolute;
+    left: 11px;
+    top: 50%;
+    transform: translateY(-50%);
+
+    width: 22px;
+    height: 22px;
+    border: 2px solid #111;
+    border-radius: 50%;
+    background: #fff7df;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 12px;
+    font-weight: 800;
+    box-shadow: 2px 2px 0 rgba(0, 0, 0, 1);
+}
+
+.pricepooja::after {
+    content: "MRP 300";
+    text-transform: uppercase;
+}
+
+/* =======================
+   BUTTONS ROW
+   ======================= */
+.poojabutonsd {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.shareivutton,
+.booknowb {
+    flex: 1;
+    display: flex;
+}
+
+/* common button */
+.shareivutton button,
+.booknowb button {
+    width: 100%;
+    height: clamp(40px, 3vw, 46px);
+
+    border-radius: 999px;
+    border: 2px solid #111;
+    outline: none;
+    cursor: pointer;
+
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(12px, 0.88vw, 14px);
+    font-weight: 700;
+    text-transform: capitalize;
+    white-space: nowrap;
+
+    box-shadow: 5px 5px 0 rgba(0, 0, 0, 1);
+    transition: all 0.2s ease;
+
+    position: relative;
+    padding: 0 16px 0 38px;
+}
+
+/* share */
+.shareivutton button {
+    background: #fff;
+    color: #111;
+}
+
+.shareivutton button::before {
+    content: "↗";
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-52%);
+    font-size: 14px;
+    font-weight: 800;
+}
+
+/* book now */
+.booknowb button {
+    background: #FFC107;
+    color: #111;
+}
+
+.booknowb button::before {
+    content: "🕉";
+    position: absolute;
+    left: 13px;
+    top: 50%;
+    transform: translateY(-54%);
+    font-size: 14px;
+}
+
+/* hover */
+.shareivutton button:hover,
+.booknowb button:hover {
+    transform: translate(2px, 2px);
+    box-shadow: 3px 3px 0 rgba(0, 0, 0, 1);
+}
+
+/* active */
+.shareivutton button:active,
+.booknowb button:active {
+    transform: translate(5px, 5px);
+    box-shadow: 0 0 0 rgba(0, 0, 0, 1);
+}
+
+/* optional footer space */
+.foterleft {
+    width: 100%;
+    min-height: 10px;
+}
+
+
+
+.rightpooja {
+    width: 50%;
+    height: 100%;
+    /* background-color: darkred; */
+    /* light pooja theme */
 }
