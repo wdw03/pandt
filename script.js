@@ -350,6 +350,7 @@ poojaSliders.forEach((slider) => {
     const track = slider.querySelector("[data-pooja-track]");
     const prevButton = slider.querySelector(".pooja-slider-btn-prev");
     const nextButton = slider.querySelector(".pooja-slider-btn-next");
+    const rightPanel = slider.querySelector(".rightpoojamain");
     const title = slider.querySelector("[data-pooja-title]");
     const subtitle = slider.querySelector("[data-pooja-subtitle]");
     const aboutPreview = slider.querySelector("[data-pooja-about-preview]");
@@ -361,6 +362,7 @@ poojaSliders.forEach((slider) => {
         !track ||
         !prevButton ||
         !nextButton ||
+        !rightPanel ||
         !title ||
         !subtitle ||
         !aboutPreview ||
@@ -374,8 +376,51 @@ poojaSliders.forEach((slider) => {
 
     track.innerHTML = renderPoojaSlides(poojaSlidesData);
 
+    const realSlides = Array.from(track.querySelectorAll("[data-pooja-slide]"));
+    const firstClone = realSlides[0].cloneNode(true);
+    const lastClone = realSlides[realSlides.length - 1].cloneNode(true);
+
+    firstClone.setAttribute("data-pooja-clone", "true");
+    lastClone.setAttribute("data-pooja-clone", "true");
+
+    track.append(firstClone);
+    track.prepend(lastClone);
+
     const slides = Array.from(track.querySelectorAll("[data-pooja-slide]"));
+    const realSlideCount = realSlides.length;
     let activeIndex = 0;
+    let currentPosition = 1;
+    let autoplayTimer = null;
+    let clickPauseTimer = null;
+    let isAnimating = false;
+    const autoplayDelay = 3000;
+    const pauseReasons = new Set();
+
+    const getRealIndexFromPosition = (position) => {
+        if (position === 0) {
+            return realSlideCount - 1;
+        }
+
+        if (position === realSlideCount + 1) {
+            return 0;
+        }
+
+        return position - 1;
+    };
+
+    const setTrackPosition = (position, withTransition = true) => {
+        track.style.transition = withTransition ? "" : "none";
+        track.style.transform = `translateX(-${position * 100}%)`;
+    };
+
+    const syncSlides = () => {
+        slides.forEach((slide, slideIndex) => {
+            const isActive = slideIndex === currentPosition;
+            slide.classList.toggle("is-active", isActive);
+            slide.setAttribute("aria-hidden", String(!isActive));
+            slide.toggleAttribute("inert", !isActive);
+        });
+    };
 
     const animatePanel = () => {
         if (typeof gsap === "undefined") {
@@ -417,39 +462,152 @@ poojaSliders.forEach((slider) => {
     };
 
     const updateButtons = () => {
-        const shouldDisable = slides.length <= 1;
+        const shouldDisable = realSlideCount <= 1;
         prevButton.disabled = shouldDisable;
         nextButton.disabled = shouldDisable;
     };
 
-    const updateSlider = (index) => {
-        activeIndex = (index + slides.length) % slides.length;
-        track.style.transform = `translateX(-${activeIndex * 100}%)`;
+    const clearAutoplay = () => {
+        if (autoplayTimer) {
+            clearTimeout(autoplayTimer);
+            autoplayTimer = null;
+        }
+    };
 
-        slides.forEach((slide, slideIndex) => {
-            const isActive = slideIndex === activeIndex;
-            slide.classList.toggle("is-active", isActive);
-            slide.setAttribute("aria-hidden", String(!isActive));
-            slide.toggleAttribute("inert", !isActive);
-        });
+    const scheduleAutoplay = () => {
+        clearAutoplay();
 
+        if (pauseReasons.size || realSlideCount <= 1 || isAnimating) {
+            return;
+        }
+
+        autoplayTimer = setTimeout(() => {
+            moveSlider(1);
+        }, autoplayDelay);
+    };
+
+    const pauseAutoplay = (reason) => {
+        pauseReasons.add(reason);
+        clearAutoplay();
+    };
+
+    const resumeAutoplay = (reason) => {
+        pauseReasons.delete(reason);
+
+        if (!pauseReasons.size) {
+            scheduleAutoplay();
+        }
+    };
+
+    const triggerTemporaryPause = () => {
+        pauseAutoplay("click-interaction");
+
+        if (clickPauseTimer) {
+            clearTimeout(clickPauseTimer);
+        }
+
+        clickPauseTimer = setTimeout(() => {
+            resumeAutoplay("click-interaction");
+        }, 5000);
+    };
+
+    const updateSlider = (position) => {
+        currentPosition = position;
+        activeIndex = getRealIndexFromPosition(position);
+        setTrackPosition(currentPosition);
+        syncSlides();
         updateRightPanel(poojaSlidesData[activeIndex]);
     };
 
+    const jumpToPosition = (position) => {
+        currentPosition = position;
+        activeIndex = getRealIndexFromPosition(position);
+        setTrackPosition(currentPosition, false);
+        syncSlides();
+        track.offsetHeight;
+        track.style.transition = "";
+    };
+
+    const moveSlider = (step) => {
+        if (isAnimating || realSlideCount <= 1) {
+            return;
+        }
+
+        isAnimating = true;
+        updateSlider(currentPosition + step);
+        clearAutoplay();
+    };
+
+    const attachPauseHandlers = (element, token) => {
+        if (!element) {
+            return;
+        }
+
+        element.addEventListener("pointerenter", () => {
+            pauseAutoplay(token);
+        });
+
+        element.addEventListener("pointerleave", () => {
+            resumeAutoplay(token);
+        });
+
+        element.addEventListener("focusin", () => {
+            pauseAutoplay(token);
+        });
+
+        element.addEventListener("focusout", (event) => {
+            if (!element.contains(event.relatedTarget)) {
+                resumeAutoplay(token);
+            }
+        });
+
+        element.addEventListener("pointerdown", () => {
+            triggerTemporaryPause();
+        });
+    };
+
+    track.addEventListener("transitionend", (event) => {
+        if (event.target !== track || event.propertyName !== "transform") {
+            return;
+        }
+
+        if (currentPosition === 0) {
+            jumpToPosition(realSlideCount);
+        } else if (currentPosition === realSlideCount + 1) {
+            jumpToPosition(1);
+        }
+
+        isAnimating = false;
+        scheduleAutoplay();
+    });
+
     prevButton.addEventListener("click", () => {
-        updateSlider(activeIndex - 1);
+        triggerTemporaryPause();
+        moveSlider(-1);
     });
 
     nextButton.addEventListener("click", () => {
-        updateSlider(activeIndex + 1);
+        triggerTemporaryPause();
+        moveSlider(1);
+    });
+
+    attachPauseHandlers(rightPanel, "right-panel");
+    attachPauseHandlers(prevButton, "prev-button");
+    attachPauseHandlers(nextButton, "next-button");
+
+    track.querySelectorAll(".detailspooja").forEach((element, index) => {
+        attachPauseHandlers(element, `detail-${index}`);
+    });
+
+    track.querySelectorAll(".booknowb button").forEach((element, index) => {
+        attachPauseHandlers(element, `book-${index}`);
     });
 
     updateButtons();
-    updateSlider(0);
+    jumpToPosition(1);
+    updateRightPanel(poojaSlidesData[0]);
+    scheduleAutoplay();
 });
-
-
-
 
 
 
