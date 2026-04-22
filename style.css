@@ -1253,6 +1253,7 @@ body {
 }
 
 #poojamain {
+    position: relative;
     width: 100%;
     min-height: 100vh;
     background-image: url(./assets/images/patra.png);
@@ -1338,6 +1339,102 @@ body {
    ======================= */
 .midleft {
     width: 100%;
+}
+
+.pooja-slider-shell {
+    position: relative;
+    width: 100%;
+}
+
+.pooja-slider-viewport {
+    width: 100%;
+    overflow: hidden;
+}
+
+.pooja-slider-track {
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+    transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform;
+}
+
+.pooja-slide {
+    flex: 0 0 100%;
+    min-width: 0;
+}
+
+.pooja-slide[aria-hidden="true"] {
+    pointer-events: none;
+}
+
+.pooja-slider-btn {
+    position: absolute;
+    top: 50%;
+    z-index: 2;
+
+    width: clamp(44px, 3vw, 56px);
+    height: clamp(44px, 3vw, 56px);
+    border: 2px solid #111;
+    border-radius: 50%;
+    background: linear-gradient(180deg, #ffe58f 0%, #ffc83d 100%);
+    box-shadow: 5px 5px 0 rgba(0, 0, 0, 1);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+    transition: transform 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
+}
+
+.pooja-slider-btn:hover {
+    transform: translateY(calc(-50% - 2px));
+    box-shadow: 7px 7px 0 rgba(0, 0, 0, 1);
+    background: linear-gradient(180deg, #ffeeb4 0%, #ffcd49 100%);
+}
+
+.pooja-slider-btn:active {
+    transform: translateY(calc(-50% + 2px));
+    box-shadow: 3px 3px 0 rgba(0, 0, 0, 1);
+}
+
+.pooja-slider-btn:focus-visible {
+    outline: 3px solid #ff9700;
+    outline-offset: 4px;
+}
+
+.pooja-slider-btn:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    box-shadow: 3px 3px 0 rgba(0, 0, 0, 1);
+}
+
+.pooja-slider-btn-prev {
+    left: clamp(8px, 1vw, 18px);
+    transform: translateY(-50%);
+}
+
+.pooja-slider-btn-next {
+    right: clamp(8px, 1vw, 18px);
+    transform: translateY(-50%);
+}
+
+.pooja-slider-btn-icon {
+    width: clamp(18px, 1.25vw, 24px);
+    height: clamp(18px, 1.25vw, 24px);
+    background-image: url("./assets/images/down-arrow.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+.pooja-slider-btn-prev .pooja-slider-btn-icon {
+    transform: rotate(90deg);
+}
+
+.pooja-slider-btn-next .pooja-slider-btn-icon {
+    transform: rotate(-90deg);
 }
 
 .midleftmain {
@@ -1555,6 +1652,20 @@ body {
 .pricepooja::after {
     content: "MRP 300";
     text-transform: uppercase;
+}
+
+.pooja-slide .midleftimg::after {
+    content: attr(data-pooja-tag);
+}
+
+.pooja-slide .pricepooja::before {
+    content: "Rs";
+    width: 26px;
+    font-size: 10px;
+}
+
+.pooja-slide .pricepooja::after {
+    content: attr(data-price-label);
 }
 
 /* =======================
