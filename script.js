@@ -395,6 +395,27 @@ poojaSliders.forEach((slider) => {
     let isAnimating = false;
     const autoplayDelay = 3000;
     const pauseReasons = new Set();
+    const hoverPreview = document.createElement("div");
+
+    hoverPreview.className = "pooja-hover-preview";
+    hoverPreview.setAttribute("aria-hidden", "true");
+    hoverPreview.innerHTML = `
+        <div class="pooja-hover-preview-card">
+            <span class="pooja-hover-preview-label">Full Details</span>
+            <h4 class="pooja-hover-preview-title"></h4>
+            <div class="pooja-hover-preview-scroll">
+                <p class="pooja-hover-preview-body"></p>
+            </div>
+        </div>
+    `;
+
+    document.body.append(hoverPreview);
+
+    const hoverPreviewLabel = hoverPreview.querySelector(".pooja-hover-preview-label");
+    const hoverPreviewTitle = hoverPreview.querySelector(".pooja-hover-preview-title");
+    const hoverPreviewBody = hoverPreview.querySelector(".pooja-hover-preview-body");
+    let activePreviewSource = null;
+    let previewHideTimer = null;
 
     const getRealIndexFromPosition = (position) => {
         if (position === 0) {
@@ -458,6 +479,7 @@ poojaSliders.forEach((slider) => {
         aboutHeading.textContent = pooja.aboutHeading;
         aboutBody.textContent = pooja.aboutBody;
         benefitsContainer.innerHTML = renderPoojaBenefits(pooja.benefits);
+        bindHoverPreviewSources();
         animatePanel();
     };
 
@@ -509,6 +531,146 @@ poojaSliders.forEach((slider) => {
         clickPauseTimer = setTimeout(() => {
             resumeAutoplay("click-interaction");
         }, 5000);
+    };
+
+    const clearPreviewHideTimer = () => {
+        if (previewHideTimer) {
+            clearTimeout(previewHideTimer);
+            previewHideTimer = null;
+        }
+    };
+
+    const positionHoverPreview = (sourceElement) => {
+        const rect = sourceElement.getBoundingClientRect();
+        const previewRect = hoverPreview.getBoundingClientRect();
+        const previewWidth = previewRect.width || Math.min(720, window.innerWidth - 32);
+        const previewHeight = previewRect.height || 0;
+        const sideGap = 16;
+        const left = Math.min(
+            Math.max(rect.left + rect.width / 2 - previewWidth / 2, sideGap),
+            Math.max(sideGap, window.innerWidth - previewWidth - sideGap)
+        );
+        const preferredTop = rect.top - previewHeight - 18;
+        const top = Math.max(24, Math.min(72, preferredTop));
+
+        hoverPreview.style.left = `${left}px`;
+        hoverPreview.style.top = `${top}px`;
+    };
+
+    const openHoverPreview = (sourceElement, payload) => {
+        if (
+            !payload ||
+            !hoverPreviewLabel ||
+            !hoverPreviewTitle ||
+            !hoverPreviewBody ||
+            !payload.title ||
+            !payload.body
+        ) {
+            return;
+        }
+
+        clearPreviewHideTimer();
+        activePreviewSource = sourceElement;
+        hoverPreviewLabel.textContent = payload.label || "Full Details";
+        hoverPreviewTitle.textContent = payload.title;
+        hoverPreviewBody.textContent = payload.body;
+        hoverPreview.setAttribute("aria-hidden", "false");
+        positionHoverPreview(sourceElement);
+        hoverPreview.classList.add("is-visible");
+        pauseAutoplay("hover-preview");
+    };
+
+    const closeHoverPreview = () => {
+        clearPreviewHideTimer();
+        activePreviewSource = null;
+        hoverPreview.classList.remove("is-visible");
+        hoverPreview.setAttribute("aria-hidden", "true");
+        resumeAutoplay("hover-preview");
+    };
+
+    const scheduleHoverPreviewClose = (relatedTarget = null) => {
+        if (
+            relatedTarget &&
+            (hoverPreview.contains(relatedTarget) || activePreviewSource?.contains(relatedTarget))
+        ) {
+            return;
+        }
+
+        clearPreviewHideTimer();
+        previewHideTimer = setTimeout(() => {
+            const previewHovered = hoverPreview.matches(":hover");
+            const sourceHovered = activePreviewSource?.matches(":hover");
+            const sourceFocused =
+                !!activePreviewSource && activePreviewSource.contains(document.activeElement);
+
+            if (previewHovered || sourceHovered || sourceFocused) {
+                return;
+            }
+
+            closeHoverPreview();
+        }, 120);
+    };
+
+    const bindHoverPreviewSource = (element, getPayload) => {
+        if (!element || element.dataset.hoverPreviewBound === "true") {
+            return;
+        }
+
+        element.dataset.hoverPreviewBound = "true";
+
+        const showPreview = () => {
+            openHoverPreview(element, getPayload());
+        };
+
+        element.addEventListener("mouseenter", showPreview);
+        element.addEventListener("focusin", showPreview);
+        element.addEventListener("mouseleave", (event) => {
+            scheduleHoverPreviewClose(event.relatedTarget);
+        });
+        element.addEventListener("focusout", (event) => {
+            scheduleHoverPreviewClose(event.relatedTarget);
+        });
+    };
+
+    const bindHoverPreviewSources = () => {
+        track.querySelectorAll(".detailspooja").forEach((element) => {
+            bindHoverPreviewSource(element, () => {
+                const slide = element.closest(".pooja-slide");
+                const detailTitle =
+                    slide?.querySelector(".nameofpuja h2")?.textContent?.trim() ||
+                    title.textContent.trim();
+                const detailBody = element.querySelector("p")?.textContent?.trim() || "";
+
+                return {
+                    label: "Pooja Details",
+                    title: detailTitle,
+                    body: detailBody
+                };
+            });
+        });
+
+        bindHoverPreviewSource(slider.querySelector(".rightaboutpooja.expandcard"), () => {
+            return {
+                label: "About",
+                title: aboutHeading.textContent.trim() || title.textContent.trim(),
+                body: aboutBody.textContent.trim()
+            };
+        });
+
+        slider.querySelectorAll(".benefititem.expandcard").forEach((element) => {
+            bindHoverPreviewSource(element, () => {
+                const benefitTitle =
+                    element.querySelector(".innerexpandbox h4")?.textContent?.trim() || "Benefit";
+                const benefitBody =
+                    element.querySelector(".innerexpandbox p")?.textContent?.trim() || "";
+
+                return {
+                    label: "Benefit",
+                    title: benefitTitle,
+                    body: benefitBody
+                };
+            });
+        });
     };
 
     const updateSlider = (position) => {
@@ -582,13 +744,40 @@ poojaSliders.forEach((slider) => {
     });
 
     prevButton.addEventListener("click", () => {
+        closeHoverPreview();
         triggerTemporaryPause();
         moveSlider(-1);
     });
 
     nextButton.addEventListener("click", () => {
+        closeHoverPreview();
         triggerTemporaryPause();
         moveSlider(1);
+    });
+
+    hoverPreview.addEventListener("mouseenter", () => {
+        clearPreviewHideTimer();
+        pauseAutoplay("hover-preview");
+    });
+
+    hoverPreview.addEventListener("mouseleave", (event) => {
+        scheduleHoverPreviewClose(event.relatedTarget);
+    });
+
+    window.addEventListener(
+        "scroll",
+        () => {
+            if (activePreviewSource && hoverPreview.classList.contains("is-visible")) {
+                positionHoverPreview(activePreviewSource);
+            }
+        },
+        true
+    );
+
+    window.addEventListener("resize", () => {
+        if (activePreviewSource && hoverPreview.classList.contains("is-visible")) {
+            positionHoverPreview(activePreviewSource);
+        }
     });
 
     attachPauseHandlers(rightPanel, "right-panel");
@@ -608,8 +797,3 @@ poojaSliders.forEach((slider) => {
     updateRightPanel(poojaSlidesData[0]);
     scheduleAutoplay();
 });
-
-
-
-
-

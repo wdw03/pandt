@@ -1427,6 +1427,8 @@ body {
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
+    transform-origin: center top;
+    transition: transform 0.22s ease;
 }
 
 .pooja-slider-btn-prev .pooja-slider-btn-icon {
@@ -1568,6 +1570,7 @@ body {
     background-size: 70%;
 
     box-shadow: 2px 2px 0 rgba(0, 0, 0, 1);
+    transform-origin: center center;
     transition: transform 0.28s ease;
 }
 
@@ -1902,6 +1905,7 @@ body {
     background-size: 68%;
     box-shadow: 2px 2px 0 rgba(0, 0, 0, 1);
 
+    transform-origin: center center;
     transition: transform 0.25s ease;
 }
 
@@ -2103,4 +2107,313 @@ body {
 .rightcta .benefitbtn:hover {
     transform: translate(2px, 2px);
     box-shadow: 2px 2px 0 rgba(0, 0, 0, 1);
+}
+
+/* =========================
+   POOJA HOVER STABILITY
+   ========================= */
+.topleftmaintxt .custom-button:hover,
+.topleftmaintxt .custom-button:active,
+.midleftmain:hover,
+.shareivutton button:hover,
+.shareivutton button:active,
+.booknowb button:hover,
+.booknowb button:active,
+.rightaboutpooja:hover,
+.rightbenefitswrap:hover,
+.benefititem:hover,
+.rightcta .aboutbtn:hover,
+.rightcta .benefitbtn:hover {
+    transform: none;
+}
+
+.pooja-slider-btn:hover,
+.pooja-slider-btn:active {
+    transform: translateY(-50%);
+}
+
+.topleftmaintxt .custom-button:hover,
+.midleftmain:hover,
+.shareivutton button:hover,
+.booknowb button:hover,
+.rightaboutpooja:hover,
+.rightbenefitswrap:hover,
+.benefititem:hover,
+.rightcta .aboutbtn:hover,
+.rightcta .benefitbtn:hover {
+    box-shadow: none;
+}
+
+.topleftmaintxt .custom-button:hover {
+    box-shadow: 6px 6px 0 rgba(0, 0, 0, 1);
+}
+
+.midleftmain:hover {
+    box-shadow: 8px 8px 0 rgba(0, 0, 0, 1);
+}
+
+.shareivutton button:hover,
+.booknowb button:hover {
+    box-shadow: 5px 5px 0 rgba(0, 0, 0, 1);
+}
+
+.rightaboutpooja:hover,
+.rightbenefitswrap:hover {
+    box-shadow: 6px 6px 0 rgba(0, 0, 0, 1);
+}
+
+.benefititem:hover {
+    box-shadow: 3px 3px 0 rgba(0, 0, 0, 1);
+}
+
+.rightcta .aboutbtn:hover,
+.rightcta .benefitbtn:hover {
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 1);
+}
+
+.topleftmaintxt .custom-button:active,
+.shareivutton button:active,
+.booknowb button:active {
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 1);
+}
+
+.pooja-slider-btn:hover {
+    box-shadow: 5px 5px 0 rgba(0, 0, 0, 1);
+}
+
+.pooja-slider-btn:active {
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 1);
+}
+
+.midtextpooja {
+    min-height: 0;
+}
+
+.detailspooja {
+    height: calc(1.65em * 2 + 24px);
+    max-height: calc(1.65em * 2 + 24px);
+    scrollbar-gutter: stable;
+}
+
+.detailspooja:hover,
+.detailspooja:focus-within {
+    overflow-y: auto;
+}
+
+.detailspooja:hover p,
+.detailspooja:focus-within p {
+    max-height: none;
+    padding-right: 4px;
+}
+
+.poojabutonsd {
+    margin-top: 0;
+}
+
+.rightaboutpooja {
+    position: relative;
+    overflow: hidden;
+}
+
+.rightaboutpooja .expandcontent {
+    position: absolute;
+    left: clamp(12px, 1vw, 16px);
+    right: clamp(12px, 1vw, 16px);
+    top: clamp(52px, 3.8vw, 64px);
+    bottom: clamp(12px, 1vw, 16px);
+    max-height: none;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+.rightaboutpooja .expandcontent .innerexpandbox {
+    height: 100%;
+    overflow-y: auto;
+    scrollbar-gutter: stable;
+}
+
+.benefititem {
+    position: relative;
+    overflow: hidden;
+}
+
+.benefititem .expandcontent {
+    position: absolute;
+    inset: 10px;
+    max-height: none;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+.benefititem .expandcontent .innerexpandbox {
+    height: 100%;
+    overflow-y: auto;
+    scrollbar-gutter: stable;
+}
+
+.rightaboutpooja.expandcard:hover .previewtext,
+.rightaboutpooja.expandcard:focus-within .previewtext {
+    max-height: 60px;
+    opacity: 0;
+    margin: 0;
+}
+
+.benefititem.expandcard:hover .benefithead p,
+.benefititem.expandcard:focus-within .benefithead p {
+    max-height: 50px;
+    opacity: 0;
+    margin: 0;
+}
+
+.rightaboutpooja.expandcard:hover .expandcontent,
+.rightaboutpooja.expandcard:focus-within .expandcontent,
+.benefititem.expandcard:hover .expandcontent,
+.benefititem.expandcard:focus-within .expandcontent {
+    max-height: none;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+/* =========================
+   POOJA JS HOVER PREVIEW
+   ========================= */
+.detailspooja,
+.rightaboutpooja.expandcard,
+.benefititem.expandcard {
+    cursor: pointer;
+}
+
+.detailspooja,
+.detailspooja:hover,
+.detailspooja:focus-within {
+    overflow: hidden;
+}
+
+.detailspooja p,
+.detailspooja:hover p,
+.detailspooja:focus-within p {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    max-height: calc(1.65em * 2);
+    overflow: hidden;
+    padding-right: 0;
+}
+
+.rightaboutpooja .expandcontent,
+.benefititem .expandcontent {
+    display: none;
+}
+
+.rightaboutpooja.expandcard:hover .previewtext,
+.rightaboutpooja.expandcard:focus-within .previewtext {
+    max-height: 60px;
+    opacity: 1;
+    margin: 0;
+}
+
+.benefititem.expandcard:hover .benefithead p,
+.benefititem.expandcard:focus-within .benefithead p {
+    max-height: 50px;
+    opacity: 1;
+    margin: 0;
+}
+
+.expandcard:hover .titlearrow,
+.expandcard:hover .benefitarrow,
+.expandcard:focus-within .titlearrow,
+.expandcard:focus-within .benefitarrow {
+    transform: rotate(180deg);
+}
+
+.detailspooja:hover::after,
+.detailspooja:focus-within::after {
+    transform: rotate(180deg);
+}
+
+.pooja-slider-btn-prev:hover .pooja-slider-btn-icon,
+.pooja-slider-btn-prev:focus-visible .pooja-slider-btn-icon {
+    transform: translateY(-2px) rotate(90deg) scale(0.82);
+}
+
+.pooja-slider-btn-next:hover .pooja-slider-btn-icon,
+.pooja-slider-btn-next:focus-visible .pooja-slider-btn-icon {
+    transform: translateY(-2px) rotate(-90deg) scale(0.82);
+}
+
+.pooja-hover-preview {
+    position: fixed;
+    top: 24px;
+    left: 16px;
+    z-index: 90;
+    width: min(720px, calc(100vw - 32px));
+    max-height: min(72vh, 560px);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(-12px);
+    transition: opacity 0.22s ease, transform 0.22s ease, visibility 0.22s ease;
+}
+
+.pooja-hover-preview.is-visible {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+
+.pooja-hover-preview-card {
+    border: 2px solid #111;
+    border-radius: 28px;
+    background: rgba(255, 250, 241, 0.98);
+    box-shadow: 12px 12px 0 rgba(0, 0, 0, 1);
+    padding: clamp(16px, 1.6vw, 24px);
+    overflow: hidden;
+}
+
+.pooja-hover-preview-label {
+    display: inline-flex;
+    align-items: center;
+    min-height: 34px;
+    padding: 0 14px;
+    border: 2px solid #111;
+    border-radius: 999px;
+    background: linear-gradient(180deg, #ffe58f 0%, #ffc83d 100%);
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 1);
+    font-family: 'Poppins', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    color: #1f1408;
+}
+
+.pooja-hover-preview-title {
+    margin: 14px 0 8px 0;
+    font-family: 'Cinzel', serif;
+    font-size: clamp(22px, 2vw, 32px);
+    font-weight: 700;
+    line-height: 1.2;
+    color: #1d1208;
+}
+
+.pooja-hover-preview-scroll {
+    max-height: min(52vh, 360px);
+    overflow-y: auto;
+    padding-right: 6px;
+    scrollbar-gutter: stable;
+}
+
+.pooja-hover-preview-body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(14px, 1vw, 16px);
+    font-weight: 500;
+    line-height: 1.72;
+    color: #4b3a28;
 }
