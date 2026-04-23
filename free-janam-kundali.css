@@ -1,0 +1,827 @@
+body.janam-route-body {
+    min-height: 100vh;
+    overflow-x: hidden;
+    background:
+        radial-gradient(circle at top left, rgba(255, 214, 102, 0.32), transparent 28%),
+        radial-gradient(circle at 88% 8%, rgba(255, 139, 77, 0.18), transparent 24%),
+        linear-gradient(180deg, #fffaf0 0%, #fff4e2 48%, #ffedd5 100%);
+    color: #1d1208;
+}
+
+.janam-route-main {
+    min-height: 100vh;
+    background: transparent !important;
+}
+
+.janam-route-body #navbar .navbarmain {
+    flex-wrap: wrap;
+    row-gap: 10px;
+}
+
+.janam-route-body .navbarhelogmain {
+    flex: 1 1 260px;
+}
+
+.janam-route-body #navbarlinks {
+    flex: 2 1 620px;
+}
+
+.janam-route-body #navbarlinks nav ul {
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 10px;
+}
+
+.janam-route-body .loglongu {
+    flex: 0 1 auto;
+}
+
+.janam-route-body .dropdown > .nav-link-arrow {
+    color: #ff6a00;
+}
+
+.janam-route-body .dropdown > .nav-link-arrow::after {
+    width: 100%;
+}
+
+.janam-route-body .dropdown-menu a[href="free-janam-kundali.html"] {
+    background: #fff3e8;
+    color: #ff6a00;
+}
+
+.janam-route-page {
+    width: min(1380px, calc(100% - clamp(24px, 3.6vw, 72px)));
+    margin: 0 auto;
+    padding: calc(clamp(86px, 6vw, 116px) + clamp(20px, 2vw, 32px)) 0 clamp(56px, 5vw, 84px);
+    display: flex;
+    flex-direction: column;
+    gap: clamp(20px, 2vw, 28px);
+}
+
+.janam-route-page > * {
+    min-width: 0;
+}
+
+.janam-pill,
+.janam-section-tag,
+.janam-mini-tag {
+    width: fit-content;
+    min-height: 36px;
+    padding: 0 16px;
+    border: 2px solid #111;
+    border-radius: 999px;
+    background: #fff8e0;
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Poppins', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #5a3e19;
+}
+
+.janam-hero {
+    position: relative;
+    overflow: hidden;
+    border: 2px solid #111;
+    border-radius: clamp(26px, 2.6vw, 38px);
+    background: linear-gradient(135deg, rgba(255, 253, 247, 0.98) 0%, rgba(255, 238, 204, 0.98) 100%);
+    box-shadow: clamp(8px, 1vw, 12px) clamp(8px, 1vw, 12px) 0 rgba(0, 0, 0, 1);
+    padding: clamp(24px, 2.8vw, 40px);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+    gap: clamp(20px, 2vw, 28px);
+    isolation: isolate;
+}
+
+.janam-hero > * {
+    min-width: 0;
+}
+
+.janam-hero::before,
+.janam-hero::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    border-radius: 999px;
+}
+
+.janam-hero::before {
+    width: clamp(220px, 20vw, 320px);
+    height: clamp(220px, 20vw, 320px);
+    right: -60px;
+    top: -90px;
+    background: radial-gradient(circle, rgba(255, 196, 72, 0.76) 0%, rgba(255, 196, 72, 0) 72%);
+}
+
+.janam-hero::after {
+    width: clamp(180px, 16vw, 240px);
+    height: clamp(180px, 16vw, 240px);
+    left: -44px;
+    bottom: -100px;
+    background: radial-gradient(circle, rgba(255, 129, 58, 0.28) 0%, rgba(255, 129, 58, 0) 72%);
+}
+
+.janam-hero-copy {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 14px;
+}
+
+.janam-hero-copy h1 {
+    margin: 0;
+    max-width: min(100%, 15ch);
+    font-family: 'Cinzel', serif;
+    font-size: clamp(34px, 3.4vw, 52px);
+    line-height: 1.06;
+    color: #1d1208;
+    text-wrap: balance;
+}
+
+.janam-hero-copy p {
+    margin: 0;
+    max-width: min(100%, 66ch);
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(14px, 1vw, 16px);
+    line-height: 1.76;
+    color: #4b3a28;
+}
+
+.janam-hero-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.janam-hero-tags span {
+    min-height: 38px;
+    padding: 0 14px;
+    border: 2px solid #111;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.74);
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    color: #362718;
+}
+
+.janam-hero-visual {
+    position: relative;
+    min-height: clamp(340px, 30vw, 470px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-inline: clamp(6px, 1vw, 14px);
+}
+
+.janam-chart-card {
+    position: relative;
+    width: min(100%, clamp(320px, 30vw, 440px));
+    aspect-ratio: 1 / 1;
+    border: 2px solid #111;
+    border-radius: 36px;
+    background: linear-gradient(180deg, #fffdf8 0%, #fff2d4 100%);
+    box-shadow: 10px 10px 0 rgba(0, 0, 0, 1);
+    overflow: hidden;
+}
+
+.janam-chart-ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 2px dashed rgba(17, 17, 17, 0.26);
+}
+
+.janam-chart-ring-outer {
+    inset: 12% 12%;
+}
+
+.janam-chart-ring-inner {
+    inset: 23% 23%;
+}
+
+.janam-chart-board {
+    position: absolute;
+    inset: 16% 16%;
+    border: 2px solid rgba(17, 17, 17, 0.34);
+    border-radius: 28px;
+    background: radial-gradient(circle at center, rgba(255, 233, 176, 0.42) 0%, rgba(255, 233, 176, 0) 70%);
+    transform: rotate(45deg);
+}
+
+.janam-chart-patra,
+.janam-chart-ganesh,
+.janam-chart-deep {
+    position: absolute;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+.janam-chart-patra {
+    left: 50%;
+    top: 50%;
+    width: clamp(220px, 19vw, 300px);
+    height: clamp(220px, 19vw, 300px);
+    background-image: url("./assets/images/patra.png");
+    transform: translate(-50%, -50%);
+    opacity: 0.94;
+}
+
+.janam-chart-ganesh {
+    right: 16px;
+    bottom: 12px;
+    width: clamp(86px, 8vw, 120px);
+    height: clamp(86px, 8vw, 120px);
+    background-image: url("./assets/images/ganeshjii.png");
+    filter: drop-shadow(0 10px 12px rgba(0, 0, 0, 0.12));
+}
+
+.janam-chart-deep {
+    left: 18px;
+    top: 18px;
+    width: clamp(72px, 7vw, 94px);
+    height: clamp(72px, 7vw, 94px);
+    background-image: url("./assets/images/deeppics.png");
+}
+
+.janam-stat-chip {
+    position: absolute;
+    width: min(46%, clamp(148px, 15vw, 190px));
+    min-width: clamp(126px, 12vw, 168px);
+    max-width: 100%;
+    border: 2px solid #111;
+    border-radius: 20px;
+    background: rgba(255, 253, 247, 0.96);
+    box-shadow: 8px 8px 0 rgba(0, 0, 0, 1);
+    padding: clamp(12px, 1vw, 14px) clamp(12px, 1vw, 16px);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.janam-stat-chip strong {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(18px, 1.5vw, 24px);
+    color: #1d1208;
+}
+
+.janam-stat-chip span {
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    line-height: 1.55;
+    color: #4b3a28;
+}
+
+.janam-stat-chip-top {
+    left: clamp(0px, 0.8vw, 8px);
+    top: clamp(18px, 6%, 44px);
+}
+
+.janam-stat-chip-bottom {
+    right: clamp(0px, 0.8vw, 8px);
+    bottom: clamp(16px, 5%, 36px);
+}
+
+.janam-feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+    gap: clamp(18px, 2vw, 24px);
+}
+
+.janam-feature-grid > * {
+    min-width: 0;
+}
+
+.janam-copy-card,
+.janam-insight-card,
+.janam-form-section,
+.janam-benefits-section,
+.janam-create-card,
+.janam-dosha-banner,
+.janam-faq-section,
+.janam-benefit-card,
+.janam-topic-card,
+.janam-faq-item {
+    border: 2px solid #111;
+    border-radius: clamp(22px, 2vw, 30px);
+    background: linear-gradient(180deg, #fffdf8 0%, #fff7e8 100%);
+    box-shadow: clamp(6px, 0.8vw, 10px) clamp(6px, 0.8vw, 10px) 0 rgba(0, 0, 0, 1);
+}
+
+.janam-copy-card,
+.janam-form-section,
+.janam-benefits-section,
+.janam-create-card,
+.janam-faq-section {
+    padding: clamp(22px, 2vw, 30px);
+}
+
+.janam-copy-card {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.janam-section-head {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.janam-section-head h2,
+.janam-form-card-head h3,
+.janam-summary-card h3,
+.janam-copy-card h3,
+.janam-create-card h2,
+.janam-dosha-copy h2 {
+    margin: 0;
+    font-family: 'Cinzel', serif;
+    color: #1d1208;
+}
+
+.janam-section-head h2,
+.janam-create-card h2,
+.janam-dosha-copy h2 {
+    font-size: clamp(26px, 2.3vw, 38px);
+    line-height: 1.14;
+}
+
+.janam-section-head p,
+.janam-copy-card p,
+.janam-create-card p,
+.janam-dosha-copy p,
+.janam-summary-card p,
+.janam-topic-card p,
+.janam-benefit-card p,
+.janam-insight-card p,
+.janam-faq-content p {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(13px, 0.95vw, 15px);
+    line-height: 1.76;
+    color: #4b3a28;
+}
+
+.janam-topic-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+    gap: clamp(14px, 1.5vw, 18px);
+}
+
+.janam-topic-card {
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.janam-topic-card h3 {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(16px, 1.1vw, 18px);
+    font-weight: 700;
+    line-height: 1.45;
+    color: #1d1208;
+}
+
+.janam-insight-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.janam-insight-card {
+    padding: clamp(18px, 1.6vw, 24px);
+    display: grid;
+    grid-template-columns: minmax(44px, auto) minmax(0, 1fr);
+    gap: 14px;
+    align-items: start;
+}
+
+.janam-insight-card-highlight {
+    grid-template-columns: 1fr;
+    background: linear-gradient(135deg, #fff8dd 0%, #ffe8ba 100%);
+}
+
+.janam-insight-card h3 {
+    font-size: clamp(22px, 1.8vw, 28px);
+    line-height: 1.18;
+}
+
+.janam-insight-card h4 {
+    margin: 0 0 4px 0;
+    font-family: 'Cinzel', serif;
+    font-size: clamp(16px, 1.2vw, 20px);
+    line-height: 1.25;
+    color: #1d1208;
+}
+
+.janam-insight-icon {
+    width: 44px;
+    height: 44px;
+    border: 2px solid #111;
+    border-radius: 16px;
+    background:
+        radial-gradient(circle at 50% 35%, #fffdf8 0%, #fffdf8 18%, transparent 19%),
+        linear-gradient(180deg, #ffd96d 0%, #ffbf2f 100%);
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 1);
+    position: relative;
+}
+
+.janam-insight-icon::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 8px;
+    width: 18px;
+    height: 8px;
+    border: 2px solid #111;
+    border-top: none;
+    border-radius: 0 0 10px 10px;
+    transform: translateX(-50%);
+}
+
+.janam-insight-icon-alt {
+    background: linear-gradient(180deg, #ffb591 0%, #ff7b4f 100%);
+}
+
+.janam-form-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.janam-form {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(18px, 2vw, 24px);
+}
+
+.janam-form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+    gap: clamp(16px, 1.8vw, 22px);
+}
+
+.janam-form-grid > * {
+    min-width: 0;
+}
+
+.janam-form-card,
+.janam-summary-card {
+    border: 2px solid #111;
+    border-radius: 26px;
+    background: linear-gradient(180deg, #fffdf8 0%, #fff8ec 100%);
+    box-shadow: 6px 6px 0 rgba(0, 0, 0, 1);
+    padding: clamp(18px, 1.8vw, 24px);
+}
+
+.janam-form-card {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.janam-form-card-head {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.janam-form-card-head h3,
+.janam-summary-card h3 {
+    font-size: clamp(22px, 1.8vw, 30px);
+    line-height: 1.15;
+}
+
+.janam-field-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.janam-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.janam-field span,
+.janam-check-row span {
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: #5a3e19;
+}
+
+.janam-field small {
+    font-family: 'Poppins', sans-serif;
+    font-size: 11px;
+    color: #8b6640;
+}
+
+.janam-field input,
+.janam-field select {
+    width: 100%;
+    min-height: 54px;
+    padding: 0 16px;
+    border: 2px solid #111;
+    border-radius: 18px;
+    background: #fffdf8;
+    box-shadow: inset 0 0 0 1px rgba(255, 201, 115, 0.22);
+    color: #1d1208;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.janam-field input:focus,
+.janam-field select:focus {
+    border-color: #e48618;
+    box-shadow: inset 0 0 0 1px rgba(255, 191, 47, 0.48), 0 0 0 4px rgba(255, 191, 47, 0.18);
+    background: #fffaf0;
+}
+
+.janam-field select:disabled {
+    background: #f0eadf;
+    color: #8b7a63;
+    cursor: not-allowed;
+}
+
+.janam-inline-grid {
+    display: grid;
+    gap: 10px;
+}
+
+.janam-inline-grid-date {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.janam-inline-grid-time {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.janam-check-row {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 24px;
+}
+
+.janam-check-row input {
+    width: 18px;
+    height: 18px;
+    accent-color: #f59f00;
+    flex-shrink: 0;
+}
+
+.janam-summary-card {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    justify-content: flex-start;
+}
+
+.janam-summary-block,
+.janam-price-card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.janam-price-card {
+    border: 2px solid #111;
+    border-radius: 22px;
+    background: #fffdf8;
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 1);
+    padding: 16px;
+}
+
+.janam-price-card {
+    background: linear-gradient(180deg, #fff0c9 0%, #ffd96b 100%);
+}
+
+.janam-price-card h4 {
+    margin: 0;
+    font-family: 'Cinzel', serif;
+    font-size: clamp(28px, 2.4vw, 38px);
+    line-height: 1;
+    color: #1d1208;
+}
+
+.janam-field-whatsapp input {
+    min-height: 58px;
+}
+
+.janam-submit-btn,
+.janam-primary-btn,
+.janam-secondary-btn {
+    width: 100%;
+    min-height: 52px;
+    padding: 0 20px;
+    border: 2px solid #111;
+    border-radius: 999px;
+    cursor: pointer;
+    outline: none;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: capitalize;
+    text-decoration: none;
+    box-shadow: 5px 5px 0 rgba(0, 0, 0, 1);
+    transition: background-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.janam-submit-btn,
+.janam-primary-btn {
+    background: #111;
+    color: #fffdf8;
+}
+
+.janam-secondary-btn {
+    background: #fffdf8;
+    color: #111;
+}
+
+.janam-submit-btn:hover,
+.janam-submit-btn:focus-visible,
+.janam-primary-btn:hover,
+.janam-primary-btn:focus-visible,
+.janam-secondary-btn:hover,
+.janam-secondary-btn:focus-visible {
+    box-shadow: 5px 5px 0 rgba(0, 0, 0, 1);
+}
+
+.janam-submit-feedback {
+    margin: 0;
+    border: 2px solid #111;
+    border-radius: 18px;
+    background: #fffaf1;
+    box-shadow: 5px 5px 0 rgba(0, 0, 0, 1);
+    padding: 14px 16px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.7;
+    color: #4b3a28;
+}
+
+.janam-submit-feedback[data-feedback-state="success"] {
+    background: #efffe8;
+}
+
+.janam-submit-feedback[data-feedback-state="error"] {
+    background: #fff0ea;
+}
+
+.janam-benefits-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.janam-benefit-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+    gap: clamp(14px, 1.6vw, 18px);
+}
+
+.janam-benefit-card {
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.janam-benefit-card h3 {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(16px, 1.1vw, 18px);
+    font-weight: 700;
+    line-height: 1.45;
+    color: #1d1208;
+}
+
+.janam-create-section {
+    display: flex;
+    flex-direction: column;
+}
+
+.janam-create-card {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.janam-dosha-banner {
+    padding: clamp(22px, 2vw, 30px);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+    gap: clamp(18px, 2vw, 24px);
+    align-items: center;
+    background: linear-gradient(135deg, rgba(255, 248, 221, 0.98) 0%, rgba(255, 228, 166, 0.98) 100%);
+}
+
+.janam-dosha-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.janam-dosha-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.janam-dosha-actions a {
+    min-width: min(100%, 180px);
+    flex: 1 1 min(100%, 220px);
+}
+
+.janam-faq-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.janam-faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.janam-faq-item {
+    overflow: hidden;
+}
+
+.janam-faq-toggle {
+    width: 100%;
+    min-height: 76px;
+    border: none;
+    background: transparent;
+    padding: 18px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    cursor: pointer;
+    text-align: left;
+}
+
+.janam-faq-toggle span:first-child {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(15px, 1vw, 17px);
+    font-weight: 700;
+    line-height: 1.5;
+    color: #1d1208;
+}
+
+.janam-faq-arrow {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    border: 2px solid #111;
+    border-radius: 50%;
+    background-color: #ffd25f;
+    background-image: url("./assets/images/down-arrow.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 70%;
+    box-shadow: 2px 2px 0 rgba(0, 0, 0, 1);
+    transition: transform 0.25s ease;
+}
+
+.janam-faq-item.is-open .janam-faq-arrow {
+    transform: rotate(180deg);
+}
+
+.janam-faq-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.janam-faq-content p {
+    padding: 0 20px 20px;
+}
+
+.janam-faq-item.is-open .janam-faq-content {
+    max-height: 420px;
+}

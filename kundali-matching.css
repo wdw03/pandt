@@ -1,0 +1,899 @@
+body.kundali-route-body {
+    min-height: 100vh;
+    overflow-x: hidden;
+    background:
+        radial-gradient(circle at top left, rgba(255, 214, 102, 0.34), transparent 30%),
+        radial-gradient(circle at 90% 10%, rgba(255, 128, 0, 0.16), transparent 24%),
+        linear-gradient(180deg, #fff9ee 0%, #fff3df 50%, #ffeed6 100%);
+    color: #1d1208;
+}
+
+.kundali-route-main {
+    min-height: 100vh;
+    background: transparent !important;
+}
+
+.kundali-route-body #navbar .navbarmain {
+    flex-wrap: wrap;
+    row-gap: 10px;
+}
+
+.kundali-route-body .navbarhelogmain {
+    flex: 1 1 260px;
+}
+
+.kundali-route-body #navbarlinks {
+    flex: 2 1 620px;
+}
+
+.kundali-route-body #navbarlinks nav ul {
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 10px;
+}
+
+.kundali-route-body .loglongu {
+    flex: 0 1 auto;
+}
+
+.kundali-route-body .dropdown>.nav-link-arrow {
+    color: #ff6a00;
+}
+
+.kundali-route-body .dropdown>.nav-link-arrow::after {
+    width: 100%;
+}
+
+.kundali-route-body .dropdown-menu a[href="kundali-matching.html"] {
+    background: #fff3e8;
+    color: #ff6a00;
+}
+
+.kundali-route-page {
+    width: min(1380px, calc(100% - clamp(24px, 3.6vw, 72px)));
+    margin: 0 auto;
+    padding: calc(clamp(86px, 6vw, 116px) + clamp(20px, 2vw, 32px)) 0 clamp(56px, 5vw, 84px);
+    display: flex;
+    flex-direction: column;
+    gap: clamp(20px, 2vw, 28px);
+}
+
+.kundali-route-page > * {
+    min-width: 0;
+}
+
+.kundali-pill,
+.kundali-section-tag,
+.kundali-mini-tag,
+.kundali-partner-badge {
+    width: fit-content;
+    min-height: 36px;
+    padding: 0 16px;
+    border: 2px solid #111;
+    border-radius: 999px;
+    background: #fff8e0;
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Poppins', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #5a3e19;
+}
+
+.kundali-hero {
+    position: relative;
+    overflow: hidden;
+    border: 2px solid #111;
+    border-radius: clamp(26px, 2.6vw, 38px);
+    background: linear-gradient(135deg, rgba(255, 253, 247, 0.98) 0%, rgba(255, 240, 208, 0.98) 100%);
+    box-shadow: clamp(8px, 1vw, 12px) clamp(8px, 1vw, 12px) 0 rgba(0, 0, 0, 1);
+    padding: clamp(24px, 2.8vw, 40px);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+    gap: clamp(20px, 2vw, 28px);
+    isolation: isolate;
+}
+
+.kundali-hero > * {
+    min-width: 0;
+}
+
+.kundali-hero::before,
+.kundali-hero::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    border-radius: 999px;
+}
+
+.kundali-hero::before {
+    width: clamp(220px, 20vw, 320px);
+    height: clamp(220px, 20vw, 320px);
+    right: -60px;
+    top: -90px;
+    background: radial-gradient(circle, rgba(255, 196, 72, 0.8) 0%, rgba(255, 196, 72, 0) 72%);
+}
+
+.kundali-hero::after {
+    width: clamp(180px, 16vw, 240px);
+    height: clamp(180px, 16vw, 240px);
+    left: -44px;
+    bottom: -100px;
+    background: radial-gradient(circle, rgba(255, 129, 58, 0.3) 0%, rgba(255, 129, 58, 0) 72%);
+}
+
+.kundali-hero-copy {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 14px;
+    min-width: 0;
+}
+
+.kundali-hero-copy h1 {
+    margin: 0;
+    max-width: min(100%, 14ch);
+    font-family: 'Cinzel', serif;
+    font-size: clamp(34px, 3.4vw, 52px);
+    line-height: 1.06;
+    color: #1d1208;
+    text-wrap: balance;
+}
+
+.kundali-hero-copy p {
+    margin: 0;
+    max-width: min(100%, 66ch);
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(14px, 1vw, 16px);
+    line-height: 1.76;
+    color: #4b3a28;
+}
+
+.kundali-hero-lead {
+    font-weight: 700;
+    color: #8c4c00 !important;
+}
+
+.kundali-hero-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.kundali-hero-tags span {
+    min-height: 38px;
+    padding: 0 14px;
+    border: 2px solid #111;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.74);
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    color: #362718;
+}
+
+.kundali-hero-visual {
+    position: relative;
+    min-height: clamp(340px, 32vw, 480px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+    padding-inline: clamp(6px, 1vw, 14px);
+}
+
+.kundali-visual-main {
+    position: relative;
+    width: min(100%, clamp(320px, 30vw, 440px));
+    aspect-ratio: 1 / 1;
+    border: 2px solid #111;
+    border-radius: 34px;
+    background:
+        radial-gradient(circle at 50% 32%, rgba(255, 228, 162, 0.9) 0%, rgba(255, 228, 162, 0) 34%),
+        linear-gradient(180deg, #fffdf8 0%, #fff1d1 100%);
+    box-shadow: 10px 10px 0 rgba(0, 0, 0, 1);
+    overflow: hidden;
+}
+
+.kundali-visual-mala,
+.kundali-visual-deity,
+.kundali-bride-garland,
+.kundali-bride-blessing {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+.kundali-visual-mala {
+    position: absolute;
+    inset: 18px 18px auto;
+    height: 112px;
+    background-image: url("./assets/images/mala-removebg-preview.png");
+    opacity: 0.95;
+}
+
+.kundali-visual-orbit {
+    position: absolute;
+    inset: 18% 14% 16%;
+    border: 2px dashed rgba(17, 17, 17, 0.34);
+    border-radius: 30px;
+}
+
+.kundali-visual-avatars {
+    position: absolute;
+    inset: 26% 12% 12%;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+    align-items: end;
+}
+
+.kundali-avatar-card {
+    position: relative;
+    min-height: 230px;
+    border: 2px solid #111;
+    border-radius: 30px;
+    background:
+        radial-gradient(circle at 50% 25%, #ffe4aa 0%, #ffe4aa 22%, transparent 23%),
+        linear-gradient(180deg, #ffca63 0%, #ffa228 100%);
+    box-shadow: 8px 8px 0 rgba(0, 0, 0, 1);
+}
+
+.kundali-avatar-card::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 24%;
+    width: 52px;
+    height: 52px;
+    border: 2px solid #111;
+    border-radius: 50%;
+    background: #fff6df;
+    transform: translateX(-50%);
+}
+
+.kundali-avatar-card::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 24px;
+    width: min(76%, 122px);
+    height: 108px;
+    border: 2px solid #111;
+    border-radius: 34px 34px 22px 22px;
+    background: rgba(255, 255, 255, 0.42);
+    transform: translateX(-50%);
+}
+
+.kundali-avatar-card span {
+    position: absolute;
+    left: 50%;
+    bottom: 14px;
+    transform: translateX(-50%);
+    z-index: 1;
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #24160c;
+}
+
+.kundali-avatar-card-secondary {
+    background:
+        radial-gradient(circle at 50% 25%, #ffe4aa 0%, #ffe4aa 22%, transparent 23%),
+        linear-gradient(180deg, #ff8c6a 0%, #ff5a5f 100%);
+}
+
+.kundali-visual-deity {
+    position: absolute;
+    right: 16px;
+    bottom: 12px;
+    width: clamp(88px, 9vw, 126px);
+    height: clamp(88px, 9vw, 126px);
+    background-image: url("./assets/images/ganeshjii.png");
+    filter: drop-shadow(0 10px 12px rgba(0, 0, 0, 0.12));
+}
+
+.kundali-stat-chip {
+    position: absolute;
+    width: min(46%, clamp(148px, 15vw, 190px));
+    min-width: clamp(126px, 12vw, 168px);
+    max-width: 100%;
+    border: 2px solid #111;
+    border-radius: 20px;
+    background: rgba(255, 253, 247, 0.96);
+    box-shadow: 8px 8px 0 rgba(0, 0, 0, 1);
+    padding: clamp(12px, 1vw, 14px) clamp(12px, 1vw, 16px);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.kundali-stat-chip strong {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(18px, 1.5vw, 24px);
+    color: #1d1208;
+}
+
+.kundali-stat-chip span {
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    line-height: 1.55;
+    color: #4b3a28;
+}
+
+.kundali-stat-chip-top {
+    left: clamp(0px, 0.8vw, 8px);
+    top: clamp(18px, 6%, 44px);
+}
+
+.kundali-stat-chip-bottom {
+    right: clamp(0px, 0.8vw, 8px);
+    bottom: clamp(16px, 5%, 36px);
+}
+
+.kundali-intro-grid,
+.kundali-guidance-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+    gap: clamp(18px, 2vw, 24px);
+}
+
+.kundali-intro-grid > *,
+.kundali-guidance-grid > * {
+    min-width: 0;
+}
+
+.kundali-copy-card,
+.kundali-insight-card,
+.kundali-form-section,
+.kundali-analysis-banner,
+.kundali-process-section,
+.kundali-bride-card,
+.kundali-reason-card {
+    border: 2px solid #111;
+    border-radius: clamp(22px, 2vw, 30px);
+    background: linear-gradient(180deg, #fffdf8 0%, #fff7e8 100%);
+    box-shadow: clamp(6px, 0.8vw, 10px) clamp(6px, 0.8vw, 10px) 0 rgba(0, 0, 0, 1);
+}
+
+.kundali-copy-card,
+.kundali-form-section,
+.kundali-process-section {
+    padding: clamp(22px, 2vw, 30px);
+}
+
+.kundali-copy-card {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.kundali-copy-card p,
+.kundali-analysis-copy p,
+.kundali-reason-card p,
+.kundali-insight-card p,
+.kundali-order-card p,
+.kundali-contact-copy p {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(13px, 0.95vw, 15px);
+    line-height: 1.76;
+    color: #4b3a28;
+}
+
+.kundali-section-head {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.kundali-section-head h2,
+.kundali-analysis-copy h2,
+.kundali-order-card h3,
+.kundali-contact-copy h3,
+.kundali-partner-head h3,
+.kundali-bride-card h3,
+.kundali-insight-card h3,
+.kundali-insight-card h4 {
+    margin: 0;
+    font-family: 'Cinzel', serif;
+    color: #1d1208;
+}
+
+.kundali-section-head h2,
+.kundali-analysis-copy h2 {
+    font-size: clamp(26px, 2.3vw, 38px);
+    line-height: 1.14;
+}
+
+.kundali-section-head p {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(13px, 0.95vw, 15px);
+    line-height: 1.74;
+    color: #4b3a28;
+    max-width: 70ch;
+}
+
+.kundali-insight-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.kundali-insight-card {
+    padding: clamp(18px, 1.6vw, 24px);
+    display: grid;
+    grid-template-columns: minmax(44px, auto) minmax(0, 1fr);
+    gap: 14px;
+    align-items: start;
+}
+
+.kundali-insight-card-highlight {
+    grid-template-columns: 1fr;
+    background: linear-gradient(135deg, #fff8dd 0%, #ffe8ba 100%);
+}
+
+.kundali-insight-card h3 {
+    font-size: clamp(22px, 1.8vw, 28px);
+    line-height: 1.18;
+}
+
+.kundali-insight-card h4 {
+    font-size: clamp(16px, 1.2vw, 20px);
+    line-height: 1.25;
+}
+
+.kundali-insight-icon {
+    width: 44px;
+    height: 44px;
+    border: 2px solid #111;
+    border-radius: 16px;
+    background:
+        radial-gradient(circle at 50% 35%, #fffdf8 0%, #fffdf8 18%, transparent 19%),
+        linear-gradient(180deg, #ffd96d 0%, #ffbf2f 100%);
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 1);
+    position: relative;
+}
+
+.kundali-insight-icon::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 8px;
+    width: 18px;
+    height: 8px;
+    border: 2px solid #111;
+    border-top: none;
+    border-radius: 0 0 10px 10px;
+    transform: translateX(-50%);
+}
+
+.kundali-insight-icon-alt {
+    background:
+        linear-gradient(180deg, #ffb591 0%, #ff7b4f 100%);
+}
+
+.kundali-form-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.kundali-section-head-wide {
+    margin-bottom: 2px;
+}
+
+.kundali-form {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(18px, 2vw, 24px);
+}
+
+.kundali-partner-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+    gap: clamp(16px, 1.8vw, 22px);
+}
+
+.kundali-partner-grid > * {
+    min-width: 0;
+}
+
+.kundali-partner-card,
+.kundali-order-card,
+.kundali-contact-card {
+    border: 2px solid #111;
+    border-radius: 26px;
+    background: linear-gradient(180deg, #fffdf8 0%, #fff8ec 100%);
+    box-shadow: 6px 6px 0 rgba(0, 0, 0, 1);
+    padding: clamp(18px, 1.8vw, 24px);
+}
+
+.kundali-partner-card {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.kundali-partner-card-secondary {
+    background: linear-gradient(180deg, #fffaf7 0%, #fff0ea 100%);
+}
+
+.kundali-partner-head {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.kundali-partner-head h3 {
+    font-size: clamp(22px, 1.8vw, 30px);
+    line-height: 1.15;
+}
+
+.kundali-field-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.kundali-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.kundali-field span,
+.kundali-field label,
+.kundali-check-row span {
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: #5a3e19;
+}
+
+.kundali-field small {
+    font-family: 'Poppins', sans-serif;
+    font-size: 11px;
+    color: #8b6640;
+}
+
+.kundali-field input,
+.kundali-field select {
+    width: 100%;
+    min-height: 54px;
+    padding: 0 16px;
+    border: 2px solid #111;
+    border-radius: 18px;
+    background: #fffdf8;
+    box-shadow: inset 0 0 0 1px rgba(255, 201, 115, 0.22);
+    color: #1d1208;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.kundali-field input:focus,
+.kundali-field select:focus {
+    border-color: #e48618;
+    box-shadow: inset 0 0 0 1px rgba(255, 191, 47, 0.48), 0 0 0 4px rgba(255, 191, 47, 0.18);
+    background: #fffaf0;
+}
+
+.kundali-field select:disabled {
+    background: #f0eadf;
+    color: #8b7a63;
+    cursor: not-allowed;
+}
+
+.kundali-inline-grid {
+    display: grid;
+    gap: 10px;
+}
+
+.kundali-inline-grid-date {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.kundali-inline-grid-time {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.kundali-check-row {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 24px;
+}
+
+.kundali-check-row input {
+    width: 18px;
+    height: 18px;
+    accent-color: #f59f00;
+    flex-shrink: 0;
+}
+
+.kundali-form-footer {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+    gap: clamp(16px, 1.8vw, 22px);
+}
+
+.kundali-form-footer > * {
+    min-width: 0;
+}
+
+.kundali-contact-card {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.kundali-contact-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.kundali-order-card {
+    background: linear-gradient(180deg, #fff0c9 0%, #ffd96b 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 14px;
+}
+
+.kundali-order-card h3 {
+    font-size: clamp(30px, 2.5vw, 40px);
+    line-height: 1;
+}
+
+.kundali-field-whatsapp input {
+    min-height: 58px;
+}
+
+.kundali-submit-btn,
+.kundali-primary-btn,
+.kundali-secondary-btn {
+    width: 100%;
+    min-height: 52px;
+    padding: 0 20px;
+    border: 2px solid #111;
+    border-radius: 999px;
+    cursor: pointer;
+    outline: none;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: capitalize;
+    text-decoration: none;
+    box-shadow: 5px 5px 0 rgba(0, 0, 0, 1);
+    transition: background-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.kundali-submit-btn,
+.kundali-primary-btn {
+    background: #111;
+    color: #fffdf8;
+}
+
+.kundali-secondary-btn {
+    background: #fffdf8;
+    color: #111;
+}
+
+.kundali-submit-btn:hover,
+.kundali-submit-btn:focus-visible,
+.kundali-primary-btn:hover,
+.kundali-primary-btn:focus-visible,
+.kundali-secondary-btn:hover,
+.kundali-secondary-btn:focus-visible {
+    box-shadow: 5px 5px 0 rgba(0, 0, 0, 1);
+}
+
+.kundali-submit-feedback {
+    margin: 0;
+    border: 2px solid #111;
+    border-radius: 18px;
+    background: #fffaf1;
+    box-shadow: 5px 5px 0 rgba(0, 0, 0, 1);
+    padding: 14px 16px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.7;
+    color: #4b3a28;
+}
+
+.kundali-submit-feedback[data-feedback-state="success"] {
+    background: #efffe8;
+}
+
+.kundali-submit-feedback[data-feedback-state="error"] {
+    background: #fff0ea;
+}
+
+.kundali-analysis-banner {
+    padding: clamp(22px, 2vw, 30px);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+    gap: clamp(18px, 2vw, 24px);
+    align-items: center;
+    background:
+        linear-gradient(135deg, rgba(255, 248, 221, 0.98) 0%, rgba(255, 228, 166, 0.98) 100%);
+}
+
+.kundali-analysis-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.kundali-analysis-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.kundali-analysis-actions a {
+    width: auto;
+    min-width: min(100%, 180px);
+    flex: 1 1 min(100%, 220px);
+}
+
+.kundali-process-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.kundali-process-grid,
+.kundali-reasons-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+    gap: clamp(14px, 1.6vw, 18px);
+}
+
+.kundali-process-card {
+    border: 2px solid #111;
+    border-radius: 24px;
+    background: #fffdf8;
+    box-shadow: 5px 5px 0 rgba(0, 0, 0, 1);
+    padding: 20px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.kundali-step-no {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(28px, 2.2vw, 38px);
+    line-height: 1;
+    color: #e18f00;
+}
+
+.kundali-process-card p {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    line-height: 1.75;
+    color: #4b3a28;
+}
+
+.kundali-bride-card {
+    padding: clamp(20px, 1.8vw, 28px);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.kundali-bride-visual {
+    position: relative;
+    min-height: clamp(280px, 28vw, 360px);
+    border: 2px solid #111;
+    border-radius: 26px;
+    background:
+        radial-gradient(circle at 50% 26%, rgba(255, 223, 154, 0.9) 0%, rgba(255, 223, 154, 0) 24%),
+        linear-gradient(180deg, #fffdf8 0%, #fff0d5 100%);
+    box-shadow: 6px 6px 0 rgba(0, 0, 0, 1);
+    overflow: hidden;
+    padding-inline: clamp(10px, 1.6vw, 18px);
+}
+
+.kundali-bride-garland {
+    position: absolute;
+    inset: 10px 12px auto;
+    height: 100px;
+    background-image: url("./assets/images/mala-removebg-preview.png");
+    opacity: 0.95;
+}
+
+.kundali-bride-avatar {
+    position: absolute;
+    bottom: 26px;
+    width: clamp(96px, 10vw, 150px);
+    aspect-ratio: 1 / 1.5;
+    border: 2px solid #111;
+    border-radius: 999px 999px 34px 34px;
+    box-shadow: 6px 6px 0 rgba(0, 0, 0, 1);
+}
+
+.kundali-bride-avatar::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 18%;
+    width: 42px;
+    height: 42px;
+    border: 2px solid #111;
+    border-radius: 50%;
+    background: #fff5dc;
+    transform: translateX(-50%);
+}
+
+.kundali-bride-avatar-primary {
+    left: clamp(16px, 12%, 22%);
+    background: linear-gradient(180deg, #ff7b5b 0%, #ff545e 100%);
+}
+
+.kundali-bride-avatar-secondary {
+    right: clamp(16px, 12%, 22%);
+    background: linear-gradient(180deg, #ffca63 0%, #ffa228 100%);
+}
+
+.kundali-bride-blessing {
+    position: absolute;
+    right: 14px;
+    top: 18px;
+    width: 76px;
+    height: 76px;
+    background-image: url("./assets/images/deeppics.png");
+}
+
+.kundali-bride-card h3 {
+    font-size: clamp(22px, 1.8vw, 30px);
+    line-height: 1.18;
+}
+
+.kundali-bride-card p,
+.kundali-reason-card p {
+    margin: 0;
+}
+
+.kundali-reasons-list {
+    align-content: start;
+}
+
+.kundali-reason-card {
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.kundali-reason-card h4 {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(16px, 1.1vw, 18px);
+    font-weight: 700;
+    line-height: 1.45;
+    color: #1d1208;
+}

@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="resposnive.css">
+    <link rel="stylesheet" href="free-janam-kundali.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&display=swap" rel="stylesheet">
+    <title>Free Janam Kundali</title>
+</head>
+
+<body class="janam-route-body">
+    <div id="main" class="janam-route-main">
+        <div id="navbar">
+            <div class="navbarmain">
+                <div class="navbarhelogmain">
+                    <div class="navbarlogo"></div>
+                    <div class="navbartext">
+                        <h4>thanathu madom devasthanam</h4>
+                    </div>
+                </div>
+                <div id="navbarlinks">
+                    <nav>
+                        <ul>
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="pooja.html">Puja</a></li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link-arrow">Kundali<span class="arrow"></span></a>
+                                <div class="dropdown-menu">
+                                    <a href="kundali-matching.html">Kundali Matching</a>
+                                    <a href="free-janam-kundali.html">Free Janam Kundali</a>
+                                </div>
+                            </li>
+                            <li><a href="#">Panchnaag</a></li>
+                            <li><a href="#">about</a></li>
+                            <li><a href="#">Horoscope</a></li>
+                            <li><a href="#">Astrology gallery</a></li>
+                            <li><a href="#">Contact us</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="loglongu">
+                    <div class="language">
+                        <div class="langselected nav-link-arrow">
+                            <p>HINDI</p>
+                            <span class="arrow"></span>
+                        </div>
+                        <div class="languageoption">
+                            <a href="#">English</a>
+                            <a href="#">Hindi</a>
+                            <a href="#">Tamil</a>
+                            <a href="#">Telugu</a>
+                        </div>
+                    </div>
+
+                    <div class="profileicons" id="profileToggle"
+                        style="background-image: url('./assets/images/ic_user_profile.svg');">
+                    </div>
+                </div>
+
+                <div class="profile-drawer" id="profileDrawer">
+                    <div class="profile-drawer-header">
+                        <h3>Welcome to Thanathu Madom Devasthanam</h3>
+                        <p>Thanathu Madom Devasthanam</p>
+                    </div>
+
+                    <div class="profile-drawer-body">
+                        <h4>Account Details</h4>
+
+                        <a href="#" class="drawer-item">
+                            <span class="drawer-left">
+                                <span class="drawer-icon profile-item-icon"></span>
+                                <span>My Profile</span>
+                            </span>
+                            <span class="drawer-arrow"></span>
+                        </a>
+
+                        <a href="#" class="drawer-item">
+                            <span class="drawer-left">
+                                <span class="drawer-icon pooja-item-icon"></span>
+                                <span>My Puja Booking</span>
+                            </span>
+                            <span class="drawer-arrow"></span>
+                        </a>
+
+                        <a href="free-janam-kundali.html" class="drawer-item">
+                            <span class="drawer-left">
+                                <span class="drawer-icon kundali-item-icon"></span>
+                                <span>Kundali Booking</span>
+                            </span>
+                            <span class="drawer-arrow"></span>
+                        </a>
+
+                        <h4>Services</h4>
+
+                        <a href="#" class="drawer-item">
+                            <span class="drawer-left">
+                                <span class="drawer-icon book-pooja-icon"></span>
+                                <span>Book a Pooja</span>
+                            </span>
+                            <span class="drawer-arrow"></span>
+                        </a>
+
+                        <div class="drawer-item drawer-accordion" id="bookKundaliAccordion">
+                            <div class="drawer-item-main" id="bookKundaliToggle">
+                                <span class="drawer-left">
+                                    <span class="drawer-icon book-kundali-icon"></span>
+                                    <span>Book for Kundali</span>
+                                </span>
+                                <span class="drawer-arrow accordion-arrow"></span>
+                            </div>
+
+                            <div class="drawer-submenu" id="bookKundaliSubmenu">
+                                <a href="kundali-matching.html" class="drawer-subitem">
+                                    <span class="drawer-left">
+                                        <span class="drawer-icon kundali-match-icon"></span>
+                                        <span>Kundali Matching</span>
+                                    </span>
+                                    <span class="drawer-arrow"></span>
+                                </a>
+
+                                <a href="free-janam-kundali.html" class="drawer-subitem">
+                                    <span class="drawer-left">
+                                        <span class="drawer-icon janam-kundali-icon"></span>
+                                        <span>Free Janam Kundali</span>
+                                    </span>
+                                    <span class="drawer-arrow"></span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <a href="#" class="drawer-item">
+                            <span class="drawer-left">
+                                <span class="drawer-icon store-item-icon"></span>
+                                <span>Store</span>
+                            </span>
+                            <span class="drawer-arrow"></span>
+                        </a>
+                    </div>
+
+                    <div class="profile-drawer-footer">
+                        <p class="support-title">Help &amp; Support for Puja Booking</p>
+
+                        <a href="mailto:yourmail@example.com" class="footer-btn support-btn">
+                            <span class="support-left">
+                                <span class="support-icon gmail-icon"></span>
+                                <span>Email Us</span>
+                            </span>
+                            <span class="drawer-arrow"></span>
+                        </a>
+
+                        <a href="https://wa.me/911234567890" class="footer-btn support-btn">
+                            <span class="support-left">
+                                <span class="support-icon whatsapp-icon"></span>
+                                <span>Whatsapp</span>
+                            </span>
+                            <span class="drawer-arrow"></span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="drawer-overlay" id="drawerOverlay"></div>
+            </div>
+        </div>
+
+        <main class="janam-route-page">
+            <section class="janam-hero">
+                <div class="janam-hero-copy">
+                    <span class="janam-pill">Future Predictions</span>
+                    <h1>Get Future Predictions With Free Online Janam Kundali</h1>
+                    <p>
+                        Welcome to our Free Kundli page! Kundli, also known as a birth chart or horoscope, is a
+                        detailed astrological chart that represents the position of celestial bodies at the time of
+                        your birth. It provides valuable insights into your personality, life events, and future
+                        prospects.
+                    </p>
+                    <p>
+                        Our Free Kundli service allows you to generate your personalized Kundli online. Simply input
+                        your birth details, including date, time, and place of birth, and the report flow can be
+                        prepared instantly for delivery to your WhatsApp number.
+                    </p>
+
+                    <div class="janam-hero-tags">
+                        <span>Personality Clarity</span>
+                        <span>Career &amp; Finance Insights</span>
+                        <span>WhatsApp Delivery</span>
+                    </div>
+                </div>
+
+                <div class="janam-hero-visual">
+                    <div class="janam-chart-card">
+                        <div class="janam-chart-ring janam-chart-ring-outer"></div>
+                        <div class="janam-chart-ring janam-chart-ring-inner"></div>
+                        <div class="janam-chart-board"></div>
+                        <div class="janam-chart-patra" aria-hidden="true"></div>
+                        <div class="janam-chart-ganesh" aria-hidden="true"></div>
+                        <div class="janam-chart-deep" aria-hidden="true"></div>
+                    </div>
+
+                    <div class="janam-stat-chip janam-stat-chip-top">
+                        <strong>Rs 300</strong>
+                        <span>Janam Kundali report setup</span>
+                    </div>
+
+                    <div class="janam-stat-chip janam-stat-chip-bottom">
+                        <strong>1 Person</strong>
+                        <span>Single birth chart analysis</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="janam-feature-grid">
+                <article class="janam-copy-card">
+                    <div class="janam-section-head">
+                        <span class="janam-section-tag">What You Can Explore</span>
+                        <h2>Life areas covered in your Janam Kundali</h2>
+                    </div>
+
+                    <div class="janam-topic-list">
+                        <article class="janam-topic-card">
+                            <h3>1. Personality Traits</h3>
+                            <p>
+                                Discover your unique personality traits based on the positions of the planets at the
+                                time of your birth. Understand your strengths, weaknesses, and potential areas of growth.
+                            </p>
+                        </article>
+
+                        <article class="janam-topic-card">
+                            <h3>2. Career and Education</h3>
+                            <p>
+                                Get insights into suitable career paths and educational pursuits based on your Kundli.
+                                Identify your natural talents and areas where you can excel.
+                            </p>
+                        </article>
+
+                        <article class="janam-topic-card">
+                            <h3>3. Relationships and Marriage</h3>
+                            <p>
+                                Understand your compatibility with potential partners or gain insights into your
+                                existing relationships. Kundli can provide valuable information about your love life and
+                                marital prospects.
+                            </p>
+                        </article>
+
+                        <article class="janam-topic-card">
+                            <h3>4. Health and Well-being</h3>
+                            <p>
+                                Learn about potential health issues or vulnerabilities based on your Kundli. Take
+                                preventive measures and make informed lifestyle choices to maintain your well-being.
+                            </p>
+                        </article>
+
+                        <article class="janam-topic-card">
+                            <h3>5. Finance and Wealth</h3>
+                            <p>
+                                Gain insights into your financial prospects and wealth accumulation potential. Kundli
+                                can provide guidance on investment opportunities and favorable periods for financial growth.
+                            </p>
+                        </article>
+                    </div>
+                </article>
+
+                <aside class="janam-insight-stack">
+                    <div class="janam-insight-card janam-insight-card-highlight">
+                        <span class="janam-mini-tag">Guidance Note</span>
+                        <h3>Unlock the secrets of your destiny</h3>
+                        <p>
+                            Our Free Kundli service is designed to help you unlock the mysteries of your life and make
+                            informed decisions. Astrology is a tool for self-reflection and guidance, while your actions
+                            and choices shape your destiny.
+                        </p>
+                    </div>
+
+                    <div class="janam-insight-card">
+                        <div class="janam-insight-icon" aria-hidden="true"></div>
+                        <div>
+                            <h4>Personalized birth details</h4>
+                            <p>Just one person’s accurate data is needed to prepare this Janam Kundali flow.</p>
+                        </div>
+                    </div>
+
+                    <div class="janam-insight-card">
+                        <div class="janam-insight-icon janam-insight-icon-alt" aria-hidden="true"></div>
+                        <div>
+                            <h4>Expert upgrade path</h4>
+                            <p>For more detailed and personalized insights, you can later connect users with expert astrologers.</p>
+                        </div>
+                    </div>
+                </aside>
+            </section>
+
+            <section class="janam-form-section" id="janam-form-section">
+                <div class="janam-section-head janam-section-head-wide">
+                    <span class="janam-section-tag">Enter Details</span>
+                    <h2>Create your online Janam Kundali</h2>
+                    <p>
+                        Enter your birth details carefully. Exact date and time give better Kundali accuracy and more
+                        useful future guidance.
+                    </p>
+                </div>
+
+                <form class="janam-form" id="janamKundaliForm" data-payment-url="">
+                    <div class="janam-form-grid">
+                        <article class="janam-form-card">
+                            <div class="janam-form-card-head">
+                                <span class="janam-mini-tag">Single Person Details</span>
+                                <h3>Enter your birth details</h3>
+                            </div>
+
+                            <div class="janam-field-stack">
+                                <label class="janam-field">
+                                    <span>Name *</span>
+                                    <input type="text" name="fullName" placeholder="Enter Name" required>
+                                </label>
+
+                                <label class="janam-field">
+                                    <span>Place of Birth *</span>
+                                    <input type="text" name="birthPlace" placeholder="Place of Birth" required>
+                                </label>
+
+                                <div class="janam-field">
+                                    <span>Birth Date *</span>
+                                    <div class="janam-inline-grid janam-inline-grid-date">
+                                        <select name="birthDay" data-janam-day required></select>
+                                        <select name="birthMonth" data-janam-month required></select>
+                                        <select name="birthYear" data-janam-year required></select>
+                                    </div>
+                                    <small>Choose dd-mm-yyyy</small>
+                                </div>
+
+                                <div class="janam-field">
+                                    <span>Birth Time *</span>
+                                    <div class="janam-inline-grid janam-inline-grid-time">
+                                        <select name="birthHour" data-janam-hour required></select>
+                                        <select name="birthMinute" data-janam-minute required></select>
+                                    </div>
+                                    <label class="janam-check-row">
+                                        <input type="checkbox" name="timeUnknown" data-janam-time-unknown>
+                                        <span>Don't know birth time.</span>
+                                    </label>
+                                </div>
+
+                                <label class="janam-field">
+                                    <span>Gender *</span>
+                                    <select name="gender" required>
+                                        <option value="" selected disabled>Gender</option>
+                                        <option value="male">Male</option>
+                                        <option value="female">Female</option>
+                                    </select>
+                                </label>
+                            </div>
+                        </article>
+
+                        <aside class="janam-summary-card">
+                            <div class="janam-summary-block">
+                                <span class="janam-mini-tag">Report Delivery</span>
+                                <h3>Submit WhatsApp number</h3>
+                                <p>
+                                    The Kundali report can be sent to the WhatsApp number you submit here after the flow is processed.
+                                </p>
+                            </div>
+
+                            <label class="janam-field janam-field-whatsapp">
+                                <span>WhatsApp Number *</span>
+                                <input type="tel" name="whatsappNumber" placeholder="Enter WhatsApp number"
+                                    inputmode="numeric" pattern="[0-9]{10}" maxlength="10" required>
+                            </label>
+
+                            <div class="janam-price-card">
+                                <span class="janam-mini-tag">Price</span>
+                                <h4>Rs 300</h4>
+                                <p>Single Janam Kundali generation and report setup.</p>
+                            </div>
+
+                            <button class="janam-submit-btn" type="submit">Submit Details</button>
+                        </aside>
+                    </div>
+
+                    <p class="janam-submit-feedback" data-janam-feedback hidden></p>
+                </form>
+            </section>
+
+            <section class="janam-benefits-section">
+                <div class="janam-section-head janam-section-head-wide">
+                    <span class="janam-section-tag">Why Janam Kundali</span>
+                    <h2>Why should you get your Janam Kundali?</h2>
+                    <p>
+                        A Janam Kundali or Birth Chart is simply a way to get clarity about your future to make better
+                        decisions and choices in life.
+                    </p>
+                </div>
+
+                <div class="janam-benefit-grid">
+                    <article class="janam-benefit-card">
+                        <h3>Professional direction</h3>
+                        <p>Make better professional decisions and career choices.</p>
+                    </article>
+
+                    <article class="janam-benefit-card">
+                        <h3>Self understanding</h3>
+                        <p>Gain better clarity about your personality, strengths and weaknesses.</p>
+                    </article>
+
+                    <article class="janam-benefit-card">
+                        <h3>Favorable periods</h3>
+                        <p>Know the favorable and unfavorable time periods of your life.</p>
+                    </article>
+
+                    <article class="janam-benefit-card">
+                        <h3>Financial guidance</h3>
+                        <p>Know how to make better financial choices and attract prosperity in life.</p>
+                    </article>
+
+                    <article class="janam-benefit-card">
+                        <h3>Marriage readiness</h3>
+                        <p>Choose the right partner for marriage later with Kundali Matching.</p>
+                    </article>
+                </div>
+            </section>
+
+            <section class="janam-create-section">
+                <article class="janam-create-card">
+                    <div class="janam-section-head">
+                        <span class="janam-section-tag">Create Online Janam Kundali</span>
+                        <h2>Accuracy starts with correct birth information</h2>
+                    </div>
+
+                    <p>
+                        An online Janam Kundli is only accurate when you have exact information about your date of
+                        birth and time of birth. A lot of people make the mistake of entering the incorrect birth time,
+                        which results in an incorrect Kundali and predictions that are totally irrelevant.
+                    </p>
+
+                    <p>
+                        It is easy to get a Janam Kundli online. Just enter the appropriate information and hit the
+                        submit button. It dates back to the Vedic era when Kundli was used for prediction. The Kundali
+                        chart we have provided you is an authentic representation of the Vedic tradition.
+                    </p>
+                </article>
+            </section>
+
+            <section class="janam-dosha-banner">
+                <div class="janam-dosha-copy">
+                    <span class="janam-section-tag">Dosha Guidance</span>
+                    <h2>Doshas in your Kundali affecting your life?</h2>
+                    <p>Ask a Thanathu Madom Devasthanam now for solutions.</p>
+                </div>
+
+                <div class="janam-dosha-actions">
+                    <a href="tel:+911234567890" class="janam-secondary-btn">Call Now</a>
+                    <a href="https://wa.me/911234567890" class="janam-primary-btn">Ask on WhatsApp</a>
+                </div>
+            </section>
+
+            <section class="janam-faq-section">
+                <div class="janam-section-head janam-section-head-wide">
+                    <span class="janam-section-tag">FAQ</span>
+                    <h2>Frequently Asked Questions</h2>
+                </div>
+
+                <div class="janam-faq-list">
+                    <article class="janam-faq-item is-open">
+                        <button class="janam-faq-toggle" type="button">
+                            <span>Why is creating a Kundli important for me?</span>
+                            <span class="janam-faq-arrow" aria-hidden="true"></span>
+                        </button>
+                        <div class="janam-faq-content">
+                            <p>
+                                Creating a Kundli is essential for understanding various aspects of your life,
+                                including your personality, strengths, weaknesses, and potential future events. It
+                                serves as a roadmap to navigate your life’s journey with better clarity. By analyzing
+                                the planetary positions at the time of your birth, a Kundli can help uncover your
+                                natural talents, suitable career paths, relationships, and even life challenges. It’s a
+                                tool that empowers self-awareness and decision-making.
+                            </p>
+                        </div>
+                    </article>
+
+                    <article class="janam-faq-item">
+                        <button class="janam-faq-toggle" type="button">
+                            <span>How can I create a Kundli online that resonates with my personal details?</span>
+                            <span class="janam-faq-arrow" aria-hidden="true"></span>
+                        </button>
+                        <div class="janam-faq-content">
+                            <p>
+                                Start with your correct name, place of birth, date of birth, time of birth, and gender.
+                                The more accurate your birth details are, the closer the generated Kundli will align
+                                with your real-life patterns and predictions.
+                            </p>
+                        </div>
+                    </article>
+
+                    <article class="janam-faq-item">
+                        <button class="janam-faq-toggle" type="button">
+                            <span>Can an online Kundli truly reflect who I am?</span>
+                            <span class="janam-faq-arrow" aria-hidden="true"></span>
+                        </button>
+                        <div class="janam-faq-content">
+                            <p>
+                                A well-prepared online Kundli can reflect major life tendencies, personality traits and
+                                timing patterns. It is best used as a guidance framework, especially when supported by
+                                accurate data and expert interpretation.
+                            </p>
+                        </div>
+                    </article>
+
+                    <article class="janam-faq-item">
+                        <button class="janam-faq-toggle" type="button">
+                            <span>Do I need to know astrology to understand my Kundli?</span>
+                            <span class="janam-faq-arrow" aria-hidden="true"></span>
+                        </button>
+                        <div class="janam-faq-content">
+                            <p>
+                                No. A good Kundli report should help you understand the key life areas in plain terms.
+                                If you want deeper interpretation, you can also consult an expert astrologer afterward.
+                            </p>
+                        </div>
+                    </article>
+
+                    <article class="janam-faq-item">
+                        <button class="janam-faq-toggle" type="button">
+                            <span>What specific benefits will I gain from creating my Kundli?</span>
+                            <span class="janam-faq-arrow" aria-hidden="true"></span>
+                        </button>
+                        <div class="janam-faq-content">
+                            <p>
+                                You can gain clarity in career, relationships, timing, finances, and self-awareness.
+                                It also helps identify strengths, weak phases, and areas where better planning can make
+                                a real difference.
+                            </p>
+                        </div>
+                    </article>
+
+                    <article class="janam-faq-item">
+                        <button class="janam-faq-toggle" type="button">
+                            <span>Is creating a Kundli online really free, and are there any hidden costs?</span>
+                            <span class="janam-faq-arrow" aria-hidden="true"></span>
+                        </button>
+                        <div class="janam-faq-content">
+                            <p>
+                                On this page, the service flow is set with a visible `Rs 300` price so there are no
+                                hidden charges. The amount is clearly shown before submission, and you can later attach
+                                the form to your own payment step.
+                            </p>
+                        </div>
+                    </article>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+    <script src="free-janam-kundali.js"></script>
+</body>
+
+</html>

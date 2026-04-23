@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="resposnive.css">
+    <link rel="stylesheet" href="kundali-matching.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&display=swap" rel="stylesheet">
+    <title>Kundali Matching</title>
+</head>
+
+<body class="kundali-route-body">
+    <div id="main" class="kundali-route-main">
+        <div id="navbar">
+            <div class="navbarmain">
+                <div class="navbarhelogmain">
+                    <div class="navbarlogo"></div>
+                    <div class="navbartext">
+                        <h4>thanathu madom devasthanam</h4>
+                    </div>
+                </div>
+                <div id="navbarlinks">
+                    <nav>
+                        <ul>
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="pooja.html">Puja</a></li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link-arrow">Kundali<span class="arrow"></span></a>
+                                <div class="dropdown-menu">
+                                    <a href="kundali-matching.html">Kundali Matching</a>
+                                    <a href="free-janam-kundali.html">Free Janam Kundali</a>
+                                </div>
+                            </li>
+                            <li><a href="#">Panchnaag</a></li>
+                            <li><a href="#">about</a></li>
+                            <li><a href="#">Horoscope</a></li>
+                            <li><a href="#">Astrology gallery</a></li>
+                            <li><a href="#">Contact us</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="loglongu">
+                    <div class="language">
+                        <div class="langselected nav-link-arrow">
+                            <p>HINDI</p>
+                            <span class="arrow"></span>
+                        </div>
+                        <div class="languageoption">
+                            <a href="#">English</a>
+                            <a href="#">Hindi</a>
+                            <a href="#">Tamil</a>
+                            <a href="#">Telugu</a>
+                        </div>
+                    </div>
+
+                    <div class="profileicons" id="profileToggle"
+                        style="background-image: url('./assets/images/ic_user_profile.svg');">
+                    </div>
+                </div>
+
+                <div class="profile-drawer" id="profileDrawer">
+                    <div class="profile-drawer-header">
+                        <h3>Welcome to Thanathu Madom Devasthanam</h3>
+                        <p>Thanathu Madom Devasthanam</p>
+                    </div>
+
+                    <div class="profile-drawer-body">
+                        <h4>Account Details</h4>
+
+                        <a href="#" class="drawer-item">
+                            <span class="drawer-left">
+                                <span class="drawer-icon profile-item-icon"></span>
+                                <span>My Profile</span>
+                            </span>
+                            <span class="drawer-arrow"></span>
+                        </a>
+
+                        <a href="#" class="drawer-item">
+                            <span class="drawer-left">
+                                <span class="drawer-icon pooja-item-icon"></span>
+                                <span>My Puja Booking</span>
+                            </span>
+                            <span class="drawer-arrow"></span>
+                        </a>
+
+                        <a href="kundali-matching.html" class="drawer-item">
+                            <span class="drawer-left">
+                                <span class="drawer-icon kundali-item-icon"></span>
+                                <span>Kundali Booking</span>
+                            </span>
+                            <span class="drawer-arrow"></span>
+                        </a>
+
+                        <h4>Services</h4>
+
+                        <a href="#" class="drawer-item">
+                            <span class="drawer-left">
+                                <span class="drawer-icon book-pooja-icon"></span>
+                                <span>Book a Pooja</span>
+                            </span>
+                            <span class="drawer-arrow"></span>
+                        </a>
+
+                        <div class="drawer-item drawer-accordion" id="bookKundaliAccordion">
+                            <div class="drawer-item-main" id="bookKundaliToggle">
+                                <span class="drawer-left">
+                                    <span class="drawer-icon book-kundali-icon"></span>
+                                    <span>Book for Kundali</span>
+                                </span>
+                                <span class="drawer-arrow accordion-arrow"></span>
+                            </div>
+
+                            <div class="drawer-submenu" id="bookKundaliSubmenu">
+                                <a href="kundali-matching.html" class="drawer-subitem">
+                                    <span class="drawer-left">
+                                        <span class="drawer-icon kundali-match-icon"></span>
+                                        <span>Kundali Matching</span>
+                                    </span>
+                                    <span class="drawer-arrow"></span>
+                                </a>
+
+                                <a href="free-janam-kundali.html" class="drawer-subitem">
+                                    <span class="drawer-left">
+                                        <span class="drawer-icon janam-kundali-icon"></span>
+                                        <span>Free Janam Kundali</span>
+                                    </span>
+                                    <span class="drawer-arrow"></span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <a href="#" class="drawer-item">
+                            <span class="drawer-left">
+                                <span class="drawer-icon store-item-icon"></span>
+                                <span>Store</span>
+                            </span>
+                            <span class="drawer-arrow"></span>
+                        </a>
+                    </div>
+
+                    <div class="profile-drawer-footer">
+                        <p class="support-title">Help &amp; Support for Puja Booking</p>
+
+                        <a href="mailto:yourmail@example.com" class="footer-btn support-btn">
+                            <span class="support-left">
+                                <span class="support-icon gmail-icon"></span>
+                                <span>Email Us</span>
+                            </span>
+                            <span class="drawer-arrow"></span>
+                        </a>
+
+                        <a href="https://wa.me/911234567890" class="footer-btn support-btn">
+                            <span class="support-left">
+                                <span class="support-icon whatsapp-icon"></span>
+                                <span>Whatsapp</span>
+                            </span>
+                            <span class="drawer-arrow"></span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="drawer-overlay" id="drawerOverlay"></div>
+            </div>
+        </div>
+
+        <main class="kundali-route-page">
+            <section class="kundali-hero">
+                <div class="kundali-hero-copy">
+                    <span class="kundali-pill">For Marriages</span>
+                    <h1>Kundli Matching | Kundali Match for Marriage | Horoscope Matching</h1>
+                    <p class="kundali-hero-lead">
+                        Match Making - Kundli Milan &amp; Gun Milan to Check Possibilities of Marriage.
+                    </p>
+                    <p>
+                        Check compatibility for both partners with a detailed marriage-focused kundali matching
+                        experience, designed to collect the correct details and prepare the report with clarity.
+                    </p>
+
+                    <div class="kundali-hero-tags">
+                        <span>Boy &amp; Girl Matching</span>
+                        <span>Gun Milan Insights</span>
+                        <span>WhatsApp Report Delivery</span>
+                    </div>
+                </div>
+
+                <div class="kundali-hero-visual">
+                    <div class="kundali-visual-main">
+                        <div class="kundali-visual-mala" aria-hidden="true"></div>
+                        <div class="kundali-visual-orbit" aria-hidden="true"></div>
+                        <div class="kundali-visual-avatars" aria-hidden="true">
+                            <div class="kundali-avatar-card">
+                                <span>Boy</span>
+                            </div>
+                            <div class="kundali-avatar-card kundali-avatar-card-secondary">
+                                <span>Girl</span>
+                            </div>
+                        </div>
+                        <div class="kundali-visual-deity" aria-hidden="true"></div>
+                    </div>
+
+                    <div class="kundali-stat-chip kundali-stat-chip-top">
+                        <strong>8 Gunas</strong>
+                        <span>Compatibility factors</span>
+                    </div>
+
+                    <div class="kundali-stat-chip kundali-stat-chip-bottom">
+                        <strong>Rs 800</strong>
+                        <span>Marriage matching report</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="kundali-intro-grid">
+                <article class="kundali-copy-card">
+                    <div class="kundali-section-head">
+                        <span class="kundali-section-tag">About &amp; Details</span>
+                        <h2>Kundali matching before marriage</h2>
+                    </div>
+
+                    <p>
+                        Kundli milan or kundali matching is an important consideration to make when you decide to get
+                        married. Kundli matching, also called Gun matching or Horoscope matching is the first step
+                        towards marriage when the parents decide to match the kundlis of the girl and the boy to ensure
+                        the couple is compatible. The gun milan exercise has been a part of India's culture for 1000s
+                        of years now and continues to be so.
+                    </p>
+
+                    <p>
+                        So, if you too are the lucky one who is planning to get married, and hence looking for a
+                        horoscope matching with someone you have started liking, then Myastro can help you. The
+                        Kundali milan online software on Myastro has been prepared by the top astrologers of Myastro.
+                        The software caters to the free Kundli milan needs of the individuals and gives you insights;
+                        such as the number of guns matching for the girl and the boy, what they are compatible in,
+                        what their future would be like if they get married, and so much more. The online gun milan
+                        software can save you time and the hassle of going out to look for an astrologer to get the gun
+                        milan exercise done. Also, in case you have any doubts about the free kundali milan offered by
+                        Myastro, you can always connect with the astrologers on board and get those doubts sorted for
+                        yourself.
+                    </p>
+                </article>
+
+                <aside class="kundali-insight-stack">
+                    <div class="kundali-insight-card kundali-insight-card-highlight">
+                        <span class="kundali-mini-tag">What You Get</span>
+                        <h3>Marriage compatibility report</h3>
+                        <p>Gun Milan guidance, matching overview and a WhatsApp-ready delivery path for the final report.</p>
+                    </div>
+
+                    <div class="kundali-insight-card">
+                        <div class="kundali-insight-icon" aria-hidden="true"></div>
+                        <div>
+                            <h4>Prepared for both partners</h4>
+                            <p>Separate detail collection for boy and girl keeps the matching process clean and accurate.</p>
+                        </div>
+                    </div>
+
+                    <div class="kundali-insight-card">
+                        <div class="kundali-insight-icon kundali-insight-icon-alt" aria-hidden="true"></div>
+                        <div>
+                            <h4>Ready for payment step</h4>
+                            <p>Submit flow is structured so you can later connect it to your payment page without rebuilding the form.</p>
+                        </div>
+                    </div>
+                </aside>
+            </section>
+
+            <section class="kundali-form-section" id="kundali-form-section">
+                <div class="kundali-section-head kundali-section-head-wide">
+                    <span class="kundali-section-tag">Enter Details</span>
+                    <h2>Fill in both kundali details for matching</h2>
+                    <p>
+                        Enter the details of both partners, then submit the WhatsApp number where the report should be
+                        delivered after processing.
+                    </p>
+                </div>
+
+                <form class="kundali-form" id="kundaliMatchingForm" data-payment-url="">
+                    <div class="kundali-partner-grid">
+                        <article class="kundali-partner-card">
+                            <div class="kundali-partner-head">
+                                <span class="kundali-partner-badge">Boy Details</span>
+                                <h3>Enter boy details</h3>
+                            </div>
+
+                            <div class="kundali-field-stack">
+                                <label class="kundali-field">
+                                    <span>Enter Name</span>
+                                    <input type="text" name="boyName" placeholder="Enter boy name" required>
+                                </label>
+
+                                <div class="kundali-field">
+                                    <span>Birth Date</span>
+                                    <div class="kundali-inline-grid kundali-inline-grid-date">
+                                        <select name="boyBirthDay" data-kundali-day required></select>
+                                        <select name="boyBirthMonth" data-kundali-month required></select>
+                                        <select name="boyBirthYear" data-kundali-year required></select>
+                                    </div>
+                                    <small>Choose DD - MM - YYYY</small>
+                                </div>
+
+                                <div class="kundali-field">
+                                    <span>Birth Time</span>
+                                    <div class="kundali-inline-grid kundali-inline-grid-time">
+                                        <select name="boyBirthHour" data-kundali-hour required></select>
+                                        <select name="boyBirthMinute" data-kundali-minute required></select>
+                                    </div>
+                                    <label class="kundali-check-row">
+                                        <input type="checkbox" name="boyTimeUnknown" data-kundali-time-unknown>
+                                        <span>Don't know birth time</span>
+                                    </label>
+                                </div>
+
+                                <label class="kundali-field">
+                                    <span>City Name</span>
+                                    <input type="text" name="boyBirthCity" placeholder="Enter city name" required>
+                                </label>
+
+                                <label class="kundali-field">
+                                    <span>Type</span>
+                                    <select name="boyChartType" required>
+                                        <option value="" selected disabled>Choose type</option>
+                                        <option value="north">North</option>
+                                        <option value="south">South</option>
+                                    </select>
+                                </label>
+                            </div>
+                        </article>
+
+                        <article class="kundali-partner-card kundali-partner-card-secondary">
+                            <div class="kundali-partner-head">
+                                <span class="kundali-partner-badge">Girl Details</span>
+                                <h3>Enter girl details</h3>
+                            </div>
+
+                            <div class="kundali-field-stack">
+                                <label class="kundali-field">
+                                    <span>Enter Name</span>
+                                    <input type="text" name="girlName" placeholder="Enter girl name" required>
+                                </label>
+
+                                <div class="kundali-field">
+                                    <span>Birth Date</span>
+                                    <div class="kundali-inline-grid kundali-inline-grid-date">
+                                        <select name="girlBirthDay" data-kundali-day required></select>
+                                        <select name="girlBirthMonth" data-kundali-month required></select>
+                                        <select name="girlBirthYear" data-kundali-year required></select>
+                                    </div>
+                                    <small>Choose DD - MM - YYYY</small>
+                                </div>
+
+                                <div class="kundali-field">
+                                    <span>Birth Time</span>
+                                    <div class="kundali-inline-grid kundali-inline-grid-time">
+                                        <select name="girlBirthHour" data-kundali-hour required></select>
+                                        <select name="girlBirthMinute" data-kundali-minute required></select>
+                                    </div>
+                                    <label class="kundali-check-row">
+                                        <input type="checkbox" name="girlTimeUnknown" data-kundali-time-unknown>
+                                        <span>Don't know birth time</span>
+                                    </label>
+                                </div>
+
+                                <label class="kundali-field">
+                                    <span>City Name</span>
+                                    <input type="text" name="girlBirthCity" placeholder="Enter city name" required>
+                                </label>
+
+                                <label class="kundali-field">
+                                    <span>Type</span>
+                                    <select name="girlChartType" required>
+                                        <option value="" selected disabled>Choose type</option>
+                                        <option value="north">North</option>
+                                        <option value="south">South</option>
+                                    </select>
+                                </label>
+                            </div>
+                        </article>
+                    </div>
+
+                    <div class="kundali-form-footer">
+                        <div class="kundali-contact-card">
+                            <div class="kundali-contact-copy">
+                                <span class="kundali-mini-tag">Report Delivery</span>
+                                <h3>Submit WhatsApp number</h3>
+                                <p>
+                                    The report will be sent to the WhatsApp number submitted here after the matching
+                                    details are processed.
+                                </p>
+                            </div>
+
+                            <label class="kundali-field kundali-field-whatsapp">
+                                <span>WhatsApp Number</span>
+                                <input type="tel" name="whatsappNumber" placeholder="Enter WhatsApp number"
+                                    inputmode="numeric" pattern="[0-9]{10}" maxlength="10" required>
+                            </label>
+                        </div>
+
+                        <div class="kundali-order-card">
+                            <span class="kundali-mini-tag">Price</span>
+                            <h3>Rs 800</h3>
+                            <p>Kundali Matching analysis and prepared report setup.</p>
+                            <button class="kundali-submit-btn" type="submit">Submit Details</button>
+                        </div>
+                    </div>
+
+                    <p class="kundali-submit-feedback" data-kundali-feedback hidden></p>
+                </form>
+            </section>
+
+            <section class="kundali-analysis-banner">
+                <div class="kundali-analysis-copy">
+                    <span class="kundali-section-tag">Kundali Matching Analysis</span>
+                    <h2>Connect with Thanathu Madom Devasthanams now!</h2>
+                    <p>
+                        Got the Patrika Matching analysis, but not sure about what it means. Rest assured, connect with
+                        expert Thanathu Madom Devasthanams instantly over call or chat to ensure minute details about
+                        your compatibility and also receive recommendations to fix any issues that might hinder in
+                        marital life.
+                    </p>
+                </div>
+
+                <div class="kundali-analysis-actions">
+                    <a href="tel:+911234567890" class="kundali-secondary-btn">Call Now</a>
+                    <a href="https://wa.me/911234567890" class="kundali-primary-btn">Chat on WhatsApp</a>
+                </div>
+            </section>
+
+            <section class="kundali-process-section">
+                <div class="kundali-section-head kundali-section-head-wide">
+                    <span class="kundali-section-tag">How It Works</span>
+                    <h2>Online Kundali Matching Process</h2>
+                    <p>The process for Kundli Milan for marriage works as follows.</p>
+                </div>
+
+                <div class="kundali-process-grid">
+                    <article class="kundali-process-card">
+                        <span class="kundali-step-no">01</span>
+                        <p>
+                            Enter the details of both partners, such as their name, birthdate, birthplace, and birth
+                            time. Make sure you enter the correct details for an accurate Janam Kundli matching.
+                        </p>
+                    </article>
+
+                    <article class="kundali-process-card">
+                        <span class="kundali-step-no">02</span>
+                        <p>
+                            The system will generate a horoscope matching for marriage based on the details provided.
+                        </p>
+                    </article>
+
+                    <article class="kundali-process-card">
+                        <span class="kundali-step-no">03</span>
+                        <p>
+                            Gun Milan by name and other birth-related details are analyzed for both potential partners
+                            by the software. The compatibility score is generated based on eight factors, namely Varna,
+                            Vashya, Tara, Yoni, Graha Maitri, Gana, Bhakoot, and Nadi.
+                        </p>
+                    </article>
+
+                    <article class="kundali-process-card">
+                        <span class="kundali-step-no">04</span>
+                        <p>
+                            Based on the scores of each guna, the compatibility gets calculated. The higher the score,
+                            the higher the compatibility, and vice versa. However, other factors are also considered
+                            while analyzing, which can be done by expert Thanathu Madom Devasthanams.
+                        </p>
+                    </article>
+
+                    <article class="kundali-process-card">
+                        <span class="kundali-step-no">05</span>
+                        <p>
+                            The system then produces a detailed analysis concerning each factor and offers precautions
+                            or recommendations if required.
+                        </p>
+                    </article>
+
+                    <article class="kundali-process-card">
+                        <span class="kundali-step-no">06</span>
+                        <p>
+                            It is recommended to consult expert Thanathu Madom Devasthanams for further clarifications
+                            and insights.
+                        </p>
+                    </article>
+                </div>
+            </section>
+
+            <section class="kundali-guidance-section">
+                <div class="kundali-section-head kundali-section-head-wide">
+                    <span class="kundali-section-tag">Marriage Guidance</span>
+                    <h2>Are you getting married to the right person?</h2>
+                    <p>Get answers to all your questions right here.</p>
+                </div>
+
+                <div class="kundali-guidance-grid">
+                    <article class="kundali-bride-card">
+                        <span class="kundali-mini-tag">Indian Bride Image</span>
+                        <div class="kundali-bride-visual" aria-hidden="true">
+                            <div class="kundali-bride-garland"></div>
+                            <div class="kundali-bride-avatar kundali-bride-avatar-primary"></div>
+                            <div class="kundali-bride-avatar kundali-bride-avatar-secondary"></div>
+                            <div class="kundali-bride-blessing"></div>
+                        </div>
+                        <h3>Finding the right partner through Kundli Matching</h3>
+                        <p>
+                            The Hindu culture has always favored Kundali matching by date of birth to check the
+                            compatibility among the prospective partners.
+                        </p>
+                    </article>
+
+                    <div class="kundali-reasons-list">
+                        <article class="kundali-reason-card">
+                            <h4>Personality and family understanding</h4>
+                            <p>
+                                The temperament, health, financials, intellect, and family of partners can be evaluated
+                                by horoscope matching by name and other birth details.
+                            </p>
+                        </article>
+
+                        <article class="kundali-reason-card">
+                            <h4>Eight vital compatibility aspects</h4>
+                            <p>
+                                In the Kundali Milan by date of birth, the eight vital aspects are evaluated by
+                                considering behavior, personality, and spirituality.
+                            </p>
+                        </article>
+
+                        <article class="kundali-reason-card">
+                            <h4>Higher gun milan, stronger bonding</h4>
+                            <p>
+                                A higher gun milan means stronger compatibility and vice between the partners.
+                            </p>
+                        </article>
+
+                        <article class="kundali-reason-card">
+                            <h4>More than just a score</h4>
+                            <p>
+                                The Kundali matching by name and other birth details provides an analysis of more than
+                                just the compatibility score, such as the potential strengths and weaknesses.
+                            </p>
+                        </article>
+
+                        <article class="kundali-reason-card">
+                            <h4>Guidance from Thanathu Madom Devasthanams</h4>
+                            <p>
+                                Based on the results, one can consult Thanathu Madom Devasthanams to seek personalized
+                                guidance, yet clarifying concerns.
+                            </p>
+                        </article>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+    <script src="kundali-matching.js"></script>
+</body>
+
+</html>
