@@ -6,14 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="resposnive.css">
-    <link rel="stylesheet" href="pooja-page.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="panchang.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&display=swap" rel="stylesheet">
-    <title>All Poojas</title>
+    <title>Today's Panchang</title>
 </head>
 
-<body class="pooja-route-body">
-    <div id="main" class="pooja-route-main">
+<body class="panchang-route-body">
+    <div id="main" class="panchang-route-main">
         <div id="navbar">
             <div class="navbarmain">
                 <div class="navbarhelogmain">
@@ -22,7 +22,6 @@
                         <h4>thanathu madom devasthanam</h4>
                     </div>
                 </div>
-
                 <div id="navbarlinks">
                     <nav>
                         <ul>
@@ -43,7 +42,6 @@
                         </ul>
                     </nav>
                 </div>
-
                 <div class="loglongu">
                     <div class="language">
                         <div class="langselected nav-link-arrow">
@@ -168,57 +166,99 @@
             </div>
         </div>
 
-        <main class="pooja-route-page">
-            <section class="pooja-route-hero">
-                <div class="pooja-route-hero-copy">
-                    <span class="pooja-route-pill">Pooja Collection</span>
-                    <h1>Sabhi pooja ek hi page par, search ke saath.</h1>
+        <main class="panchang-route-page">
+            <section class="panchang-hero">
+                <div class="panchang-hero-copy">
+                    <span class="panchang-pill">Vijay Vishwa Panchang</span>
+                    <h1>Today&rsquo;s Panchang (Aaj Ka Panchang)</h1>
                     <p>
-                        Yahan har available pooja one by one dikhegi. Search bar me naam ya uska koi letter type
-                        karoge to matching pooja sabse pehle saamne aa jayegi.
+                        Panchang is the Hindu calendar followed by Vedic astrology, which provides complete detail on
+                        each day&rsquo;s Tithis and auspicious and inauspicious timings. Today&rsquo;s Panchang on Thanathu
+                        Madom Devasthanam is based on Vijay Vishwa Panchang, which is the rarest of Panchang, used by
+                        Thanathu Madom Devasthanams for hundreds of years.
                     </p>
+                    <p>
+                        Through Daily Panchang, you can get all the information about the time, date, and day to
+                        determine the Muhurat for everything. Thanathu Madom Devasthanams suggest people should follow
+                        the Day Panchang while doing new work or performing any auspicious event.
+                    </p>
+
+                    <div class="panchang-hero-tags">
+                        <span>Daily Muhurat Guidance</span>
+                        <span>Dummy Data Ready for API</span>
+                        <span data-selected-summary>Shukla Sapthami | Punarvasu</span>
+                    </div>
                 </div>
 
-                <div class="pooja-route-search-panel">
-                    <label class="pooja-route-search-label" for="poojaSearch">Search Pooja</label>
-
-                    <div class="pooja-route-search-field">
-                        <span class="pooja-route-search-icon" aria-hidden="true"></span>
-                        <input type="search" id="poojaSearch" placeholder="Search by pooja name"
-                            autocomplete="off" data-pooja-search>
-                    </div>
-
-                    <div class="pooja-route-quick-searches">
-                        <button type="button" data-pooja-quick-search="Maha">Maha</button>
-                        <button type="button" data-pooja-quick-search="Lakshmi">Lakshmi</button>
-                        <button type="button" data-pooja-quick-search="Ghar">Ghar</button>
+                <div class="panchang-hero-visual">
+                    <div class="panchang-visual-card">
+                        <div class="panchang-visual-orb panchang-visual-orb-one"></div>
+                        <div class="panchang-visual-orb panchang-visual-orb-two"></div>
+                        <div class="panchang-visual-pattern"></div>
+                        <div class="panchang-visual-patra"></div>
+                        <div class="panchang-visual-garland"></div>
+                        <div class="panchang-visual-ganesh"></div>
+                        <div class="panchang-visual-deep"></div>
+                        <div class="panchang-visual-chip panchang-visual-chip-date" data-hero-date-short>24 Apr
+                            2026</div>
+                        <div class="panchang-visual-chip panchang-visual-chip-tithi" data-hero-tithi>Sapthami</div>
+                        <div class="panchang-visual-chip panchang-visual-chip-paksha" data-hero-paksha>Shukla
+                            Paksha</div>
                     </div>
                 </div>
             </section>
 
-            <section class="pooja-route-results-head">
-                <div>
-                    <p class="pooja-route-results-label">Available Poojas</p>
-                    <h2>Explore every pooja in detail</h2>
+            <section class="panchang-dashboard">
+                <div class="panchang-controls-card">
+                    <div class="panchang-controls">
+                        <button class="panchang-action-btn" type="button" data-jump="today">Today</button>
+                        <button class="panchang-action-btn" type="button" data-jump="tomorrow">Tomorrow</button>
+
+                        <label class="panchang-date-picker">
+                            <span>Select Panchang Date</span>
+                            <input type="date" id="panchangDateInput">
+                        </label>
+                    </div>
+
+                    <div class="panchang-selected-date">
+                        <span>Selected Date</span>
+                        <strong data-selected-date-label>Friday, April 24, 2026</strong>
+                    </div>
                 </div>
 
-                <p class="pooja-route-results-count" data-pooja-results-count></p>
-            </section>
+                <div class="panchang-view-grid">
+                    <article class="panchang-info-card">
+                        <div class="panchang-card-top">
+                            <div>
+                                <span class="panchang-section-tag">Panchang</span>
+                                <h3>Daily Core Details</h3>
+                            </div>
 
-            <section class="pooja-route-list" data-pooja-list></section>
+                            <span class="panchang-card-date" data-card-date-short>24 Apr 2026</span>
+                        </div>
 
-            <section class="pooja-route-empty" data-pooja-empty hidden>
-                <span class="pooja-route-empty-tag">No Match</span>
-                <h3>No pooja matched your search.</h3>
-                <p>Search ko clear karo ya kisi aur naam ka letter try karo.</p>
-                <button type="button" data-pooja-clear-search>Show all poojas</button>
+                        <div class="panchang-data-list" data-primary-list></div>
+                    </article>
+
+                    <article class="panchang-info-card">
+                        <div class="panchang-card-top">
+                            <div>
+                                <span class="panchang-section-tag">Additional Info</span>
+                                <h3>Timings &amp; Lunar Notes</h3>
+                            </div>
+
+                            <span class="panchang-card-date" data-mode-label>Today Snapshot</span>
+                        </div>
+
+                        <div class="panchang-data-list" data-additional-list></div>
+                    </article>
+                </div>
             </section>
         </main>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
-    <script src="pooja-data.js"></script>
-    <script src="pooja-page.js"></script>
+    <script src="panchang.js"></script>
 </body>
 
 </html>

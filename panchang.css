@@ -1,0 +1,495 @@
+body.panchang-route-body {
+    min-height: 100vh;
+    overflow-x: hidden;
+    background:
+        radial-gradient(circle at 8% 8%, rgba(255, 223, 134, 0.28), transparent 24%),
+        radial-gradient(circle at 92% 12%, rgba(255, 153, 77, 0.22), transparent 24%),
+        linear-gradient(180deg, #fffaf1 0%, #fff2df 42%, #ffe7c8 100%);
+    color: #1d1208;
+}
+
+.panchang-route-main {
+    min-height: 100vh;
+    background: transparent !important;
+}
+
+.panchang-route-body #navbar .navbarmain {
+    flex-wrap: wrap;
+    row-gap: 10px;
+}
+
+.panchang-route-body .navbarhelogmain {
+    flex: 1 1 260px;
+}
+
+.panchang-route-body #navbarlinks {
+    flex: 2 1 620px;
+}
+
+.panchang-route-body #navbarlinks nav ul {
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 10px;
+}
+
+.panchang-route-body .loglongu {
+    flex: 0 1 auto;
+}
+
+.panchang-route-body #navbarlinks nav ul > li > a[href="panchang.html"] {
+    color: #ff6a00;
+}
+
+.panchang-route-body #navbarlinks nav ul > li > a[href="panchang.html"]::after {
+    width: 100%;
+}
+
+.panchang-route-page {
+    width: min(1400px, calc(100% - clamp(24px, 3.6vw, 72px)));
+    margin: 0 auto;
+    padding: calc(clamp(86px, 6vw, 116px) + clamp(18px, 2vw, 30px)) 0 clamp(60px, 5vw, 90px);
+    display: flex;
+    flex-direction: column;
+    gap: clamp(22px, 2vw, 32px);
+}
+
+.panchang-route-page > * {
+    min-width: 0;
+}
+
+.panchang-pill,
+.panchang-section-tag {
+    width: fit-content;
+    min-height: 36px;
+    padding: 0 16px;
+    border: 2px solid #111;
+    border-radius: 999px;
+    background: #fff8e4;
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Poppins', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #5a3b18;
+}
+
+.panchang-hero,
+.panchang-dashboard {
+    border: 2px solid #111;
+    border-radius: clamp(26px, 2.6vw, 38px);
+    background: linear-gradient(135deg, rgba(255, 253, 247, 0.98) 0%, rgba(255, 244, 224, 0.98) 100%);
+    box-shadow: clamp(8px, 1vw, 12px) clamp(8px, 1vw, 12px) 0 rgba(0, 0, 0, 1);
+}
+
+.panchang-hero {
+    position: relative;
+    overflow: hidden;
+    padding: clamp(24px, 3vw, 40px);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+    gap: clamp(20px, 2vw, 32px);
+    isolation: isolate;
+}
+
+.panchang-hero::before,
+.panchang-hero::after {
+    content: "";
+    position: absolute;
+    border-radius: 999px;
+    z-index: -1;
+}
+
+.panchang-hero::before {
+    width: clamp(220px, 18vw, 320px);
+    height: clamp(220px, 18vw, 320px);
+    right: -80px;
+    top: -100px;
+    background: radial-gradient(circle, rgba(255, 205, 112, 0.84) 0%, rgba(255, 205, 112, 0) 72%);
+}
+
+.panchang-hero::after {
+    width: clamp(180px, 14vw, 240px);
+    height: clamp(180px, 14vw, 240px);
+    left: -34px;
+    bottom: -90px;
+    background: radial-gradient(circle, rgba(255, 127, 58, 0.24) 0%, rgba(255, 127, 58, 0) 72%);
+}
+
+.panchang-hero-copy {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 14px;
+}
+
+.panchang-hero-copy h1 {
+    margin: 0;
+    font-family: 'Cinzel', serif;
+    color: #1d1208;
+    text-wrap: balance;
+}
+
+.panchang-hero-copy h1 {
+    max-width: min(100%, 14ch);
+    font-size: clamp(34px, 3.4vw, 52px);
+    line-height: 1.08;
+}
+
+.panchang-hero-copy p {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(14px, 1vw, 16px);
+    line-height: 1.76;
+    color: #4b3a28;
+}
+
+.panchang-hero-tags,
+.panchang-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.panchang-hero-tags span {
+    min-height: 38px;
+    padding: 0 14px;
+    border: 2px solid #111;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    color: #362718;
+}
+
+.panchang-hero-visual {
+    position: relative;
+    min-height: clamp(340px, 30vw, 460px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.panchang-visual-card {
+    position: relative;
+    width: min(100%, clamp(320px, 31vw, 450px));
+    aspect-ratio: 1 / 1;
+    border: 2px solid #111;
+    border-radius: 38px;
+    background: linear-gradient(180deg, #fffdf8 0%, #fff0cf 100%);
+    box-shadow: 10px 10px 0 rgba(0, 0, 0, 1);
+    overflow: hidden;
+}
+
+.panchang-visual-orb,
+.panchang-visual-pattern {
+    position: absolute;
+    border-radius: 50%;
+}
+
+.panchang-visual-orb-one {
+    width: 54%;
+    height: 54%;
+    top: -8%;
+    right: -4%;
+    background: radial-gradient(circle, rgba(255, 205, 106, 0.66) 0%, rgba(255, 205, 106, 0) 72%);
+}
+
+.panchang-visual-orb-two {
+    width: 46%;
+    height: 46%;
+    left: -8%;
+    bottom: -10%;
+    background: radial-gradient(circle, rgba(255, 140, 76, 0.28) 0%, rgba(255, 140, 76, 0) 72%);
+}
+
+.panchang-visual-pattern {
+    inset: 12%;
+    border: 2px dashed rgba(17, 17, 17, 0.18);
+}
+
+.panchang-visual-patra,
+.panchang-visual-garland,
+.panchang-visual-ganesh,
+.panchang-visual-deep {
+    position: absolute;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+.panchang-visual-patra {
+    inset: 18%;
+    background-image: url("./assets/images/patra.png");
+    opacity: 0.95;
+}
+
+.panchang-visual-garland {
+    left: -4%;
+    top: 2%;
+    width: 44%;
+    height: 44%;
+    background-image: url("./assets/images/mala-removebg-preview.png");
+    opacity: 0.85;
+}
+
+.panchang-visual-ganesh {
+    right: 10px;
+    bottom: 18px;
+    width: 31%;
+    height: 31%;
+    background-image: url("./assets/images/ganeshjii.png");
+}
+
+.panchang-visual-deep {
+    left: 12px;
+    bottom: 14px;
+    width: 23%;
+    height: 23%;
+    background-image: url("./assets/images/deeppics.png");
+}
+
+.panchang-visual-chip {
+    position: absolute;
+    min-height: 42px;
+    padding: 0 16px;
+    border: 2px solid #111;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    color: #2f1e12;
+}
+
+.panchang-visual-chip-date {
+    left: 20px;
+    top: 18px;
+}
+
+.panchang-visual-chip-tithi {
+    right: 18px;
+    top: 76px;
+}
+
+.panchang-visual-chip-paksha {
+    left: 22px;
+    bottom: 26px;
+}
+
+.panchang-dashboard {
+    padding: clamp(22px, 2.4vw, 34px);
+    display: flex;
+    flex-direction: column;
+    gap: clamp(16px, 1.8vw, 24px);
+}
+
+.panchang-controls-card,
+.panchang-info-card {
+    border: 2px solid #111;
+    border-radius: 28px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(255, 248, 232, 0.98) 100%);
+    box-shadow: 7px 7px 0 rgba(0, 0, 0, 1);
+}
+
+.panchang-controls-card {
+    padding: clamp(18px, 2vw, 24px);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.panchang-controls {
+    align-items: center;
+}
+
+.panchang-action-btn {
+    min-height: 46px;
+    padding: 0 20px;
+    border: 2px solid #111;
+    border-radius: 999px;
+    background: #fff3d6;
+    box-shadow: 5px 5px 0 rgba(0, 0, 0, 1);
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: #3d2814;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.panchang-action-btn:hover,
+.panchang-action-btn:focus-visible {
+    transform: translate(-2px, -2px);
+    box-shadow: 7px 7px 0 rgba(0, 0, 0, 1);
+    outline: none;
+}
+
+.panchang-action-btn.is-active {
+    background: linear-gradient(135deg, #ff7a00 0%, #ffb347 100%);
+    color: #fffaf0;
+}
+
+.panchang-date-picker {
+    min-height: 58px;
+    padding: 10px 14px;
+    border: 2px solid #111;
+    border-radius: 20px;
+    background: #fffdf8;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-family: 'Poppins', sans-serif;
+    color: #4b3622;
+}
+
+.panchang-date-picker span,
+.panchang-selected-date span,
+.panchang-row-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.panchang-date-picker input {
+    min-width: clamp(180px, 16vw, 220px);
+    border: 0;
+    padding: 0;
+    background: transparent;
+    font: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    color: #1d1208;
+    outline: none;
+}
+
+.panchang-selected-date {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.panchang-selected-date strong {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(20px, 1.6vw, 28px);
+    color: #1d1208;
+}
+
+.panchang-view-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr));
+    gap: clamp(18px, 1.8vw, 24px);
+    align-items: start;
+}
+
+.panchang-info-card {
+    min-width: 0;
+    padding: clamp(18px, 2vw, 24px);
+    min-height: 100%;
+}
+
+.panchang-card-top {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.panchang-card-top h3 {
+    margin: 8px 0 0;
+    font-family: 'Cinzel', serif;
+    font-size: clamp(20px, 1.5vw, 28px);
+    line-height: 1.24;
+    color: #1d1208;
+}
+
+.panchang-card-date {
+    min-height: 40px;
+    padding: 0 14px;
+    border: 2px solid rgba(17, 17, 17, 0.16);
+    border-radius: 999px;
+    background: rgba(255, 248, 230, 0.96);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    color: #5a3b18;
+}
+
+.panchang-data-list {
+    margin-top: 18px;
+    display: grid;
+    gap: 12px;
+}
+
+.panchang-list-row {
+    padding: 14px 0;
+    border-top: 1px dashed rgba(17, 17, 17, 0.18);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.panchang-list-row:first-child {
+    border-top: 0;
+    padding-top: 0;
+}
+
+.panchang-row-main {
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.panchang-icon-badge {
+    flex: 0 0 48px;
+    width: 48px;
+    height: 48px;
+    border: 2px solid #111;
+    border-radius: 16px;
+    background: linear-gradient(180deg, #fff5d8 0%, #ffe0ab 100%);
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: #6f430b;
+}
+
+.panchang-row-copy {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.panchang-row-value {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(15px, 1vw, 17px);
+    font-weight: 700;
+    color: #1f140b;
+    word-break: break-word;
+}
