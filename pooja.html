@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="resposnive.css">
+    <link rel="stylesheet" href="pooja-page.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&display=swap" rel="stylesheet">
+    <title>All Poojas</title>
+</head>
+
+<body class="pooja-route-body">
+    <div id="main" class="pooja-route-main">
+        <div id="navbar">
+            <div class="navbarmain">
+                <div class="navbarhelogmain">
+                    <div class="navbarlogo"></div>
+                    <div class="navbartext">
+                        <h4>thanathu madom devasthanam</h4>
+                    </div>
+                </div>
+
+                <div id="navbarlinks">
+                    <nav>
+                        <ul>
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="pooja.html">Puja</a></li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link-arrow">Kundali<span class="arrow"></span></a>
+                                <div class="dropdown-menu">
+                                    <a href="#">Kundali Matching</a>
+                                    <a href="#">Free Janam Kundali</a>
+                                </div>
+                            </li>
+                            <li><a href="#">Panchnaag</a></li>
+                            <li><a href="#">about</a></li>
+                            <li><a href="#">Horoscope</a></li>
+                            <li><a href="#">Astrology gallery</a></li>
+                            <li><a href="#">Contact us</a></li>
+                        </ul>
+                    </nav>
+                </div>
+
+                <div class="loglongu">
+                    <div class="language">
+                        <div class="langselected nav-link-arrow">
+                            <p>HINDI</p>
+                            <span class="arrow"></span>
+                        </div>
+                        <div class="languageoption">
+                            <a href="#">English</a>
+                            <a href="#">Hindi</a>
+                            <a href="#">Tamil</a>
+                            <a href="#">Telugu</a>
+                        </div>
+                    </div>
+
+                    <div class="profileicons" id="profileToggle"
+                        style="background-image: url('./assets/images/ic_user_profile.svg');">
+                    </div>
+                </div>
+
+                <div class="profile-drawer" id="profileDrawer">
+                    <div class="profile-drawer-header">
+                        <h3>Welcome to Thanathu Madom Devasthanam</h3>
+                        <p>Thanathu Madom Devasthanam</p>
+                    </div>
+
+                    <div class="profile-drawer-body">
+                        <h4>Account Details</h4>
+
+                        <a href="#" class="drawer-item">
+                            <span class="drawer-left">
+                                <span class="drawer-icon profile-item-icon"></span>
+                                <span>My Profile</span>
+                            </span>
+                            <span class="drawer-arrow"></span>
+                        </a>
+
+                        <a href="#" class="drawer-item">
+                            <span class="drawer-left">
+                                <span class="drawer-icon pooja-item-icon"></span>
+                                <span>My Puja Booking</span>
+                            </span>
+                            <span class="drawer-arrow"></span>
+                        </a>
+
+                        <a href="#" class="drawer-item">
+                            <span class="drawer-left">
+                                <span class="drawer-icon kundali-item-icon"></span>
+                                <span>Kundali Booking</span>
+                            </span>
+                            <span class="drawer-arrow"></span>
+                        </a>
+
+                        <h4>Services</h4>
+
+                        <a href="#" class="drawer-item">
+                            <span class="drawer-left">
+                                <span class="drawer-icon book-pooja-icon"></span>
+                                <span>Book a Pooja</span>
+                            </span>
+                            <span class="drawer-arrow"></span>
+                        </a>
+
+                        <div class="drawer-item drawer-accordion" id="bookKundaliAccordion">
+                            <div class="drawer-item-main" id="bookKundaliToggle">
+                                <span class="drawer-left">
+                                    <span class="drawer-icon book-kundali-icon"></span>
+                                    <span>Book for Kundali</span>
+                                </span>
+                                <span class="drawer-arrow accordion-arrow"></span>
+                            </div>
+
+                            <div class="drawer-submenu" id="bookKundaliSubmenu">
+                                <a href="#" class="drawer-subitem">
+                                    <span class="drawer-left">
+                                        <span class="drawer-icon kundali-match-icon"></span>
+                                        <span>Kundali Matching</span>
+                                    </span>
+                                    <span class="drawer-arrow"></span>
+                                </a>
+
+                                <a href="#" class="drawer-subitem">
+                                    <span class="drawer-left">
+                                        <span class="drawer-icon janam-kundali-icon"></span>
+                                        <span>Free Janam Kundali</span>
+                                    </span>
+                                    <span class="drawer-arrow"></span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <a href="#" class="drawer-item">
+                            <span class="drawer-left">
+                                <span class="drawer-icon store-item-icon"></span>
+                                <span>Store</span>
+                            </span>
+                            <span class="drawer-arrow"></span>
+                        </a>
+                    </div>
+
+                    <div class="profile-drawer-footer">
+                        <p class="support-title">Help &amp; Support for Puja Booking</p>
+
+                        <a href="mailto:yourmail@example.com" class="footer-btn support-btn">
+                            <span class="support-left">
+                                <span class="support-icon gmail-icon"></span>
+                                <span>Email Us</span>
+                            </span>
+                            <span class="drawer-arrow"></span>
+                        </a>
+
+                        <a href="https://wa.me/911234567890" class="footer-btn support-btn">
+                            <span class="support-left">
+                                <span class="support-icon whatsapp-icon"></span>
+                                <span>Whatsapp</span>
+                            </span>
+                            <span class="drawer-arrow"></span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="drawer-overlay" id="drawerOverlay"></div>
+            </div>
+        </div>
+
+        <main class="pooja-route-page">
+            <section class="pooja-route-hero">
+                <div class="pooja-route-hero-copy">
+                    <span class="pooja-route-pill">Pooja Collection</span>
+                    <h1>Sabhi pooja ek hi page par, search ke saath.</h1>
+                    <p>
+                        Yahan har available pooja one by one dikhegi. Search bar me naam ya uska koi letter type
+                        karoge to matching pooja sabse pehle saamne aa jayegi.
+                    </p>
+                </div>
+
+                <div class="pooja-route-search-panel">
+                    <label class="pooja-route-search-label" for="poojaSearch">Search Pooja</label>
+
+                    <div class="pooja-route-search-field">
+                        <span class="pooja-route-search-icon" aria-hidden="true"></span>
+                        <input type="search" id="poojaSearch" placeholder="Search by pooja name"
+                            autocomplete="off" data-pooja-search>
+                    </div>
+
+                    <div class="pooja-route-quick-searches">
+                        <button type="button" data-pooja-quick-search="Maha">Maha</button>
+                        <button type="button" data-pooja-quick-search="Lakshmi">Lakshmi</button>
+                        <button type="button" data-pooja-quick-search="Ghar">Ghar</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="pooja-route-results-head">
+                <div>
+                    <p class="pooja-route-results-label">Available Poojas</p>
+                    <h2>Explore every pooja in detail</h2>
+                </div>
+
+                <p class="pooja-route-results-count" data-pooja-results-count></p>
+            </section>
+
+            <section class="pooja-route-list" data-pooja-list></section>
+
+            <section class="pooja-route-empty" data-pooja-empty hidden>
+                <span class="pooja-route-empty-tag">No Match</span>
+                <h3>No pooja matched your search.</h3>
+                <p>Search ko clear karo ya kisi aur naam ka letter try karo.</p>
+                <button type="button" data-pooja-clear-search>Show all poojas</button>
+            </section>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+    <script src="pooja-data.js"></script>
+    <script src="pooja-page.js"></script>
+</body>
+
+</html>
