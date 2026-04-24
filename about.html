@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="resposnive.css">
+    <link rel="stylesheet" href="about.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&display=swap" rel="stylesheet">
+    <title>About Us</title>
+</head>
+
+<body class="about-route-body">
+    <div id="main" class="about-route-main">
+        <div id="navbar">
+            <div class="navbarmain">
+                <div class="navbarhelogmain">
+                    <div class="navbarlogo"></div>
+                    <div class="navbartext">
+                        <h4>thanathu madom devasthanam</h4>
+                    </div>
+                </div>
+                <div id="navbarlinks">
+                    <nav>
+                        <ul>
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="pooja.html">Puja</a></li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link-arrow">Kundali<span class="arrow"></span></a>
+                                <div class="dropdown-menu">
+                                    <a href="kundali-matching.html">Kundali Matching</a>
+                                    <a href="free-janam-kundali.html">Free Janam Kundali</a>
+                                </div>
+                            </li>
+                            <li><a href="panchang.html">Panchnaag</a></li>
+                            <li><a href="about.html">about</a></li>
+                            <li><a href="horoscope.html">Horoscope</a></li>
+                            <li><a href="#">Astrology gallery</a></li>
+                            <li><a href="#">Contact us</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="loglongu">
+                    <div class="language">
+                        <div class="langselected nav-link-arrow">
+                            <p>HINDI</p>
+                            <span class="arrow"></span>
+                        </div>
+                        <div class="languageoption">
+                            <a href="#">English</a>
+                            <a href="#">Hindi</a>
+                            <a href="#">Tamil</a>
+                            <a href="#">Telugu</a>
+                        </div>
+                    </div>
+
+                    <div class="profileicons" id="profileToggle"
+                        style="background-image: url('./assets/images/ic_user_profile.svg');">
+                    </div>
+                </div>
+
+                <div class="profile-drawer" id="profileDrawer">
+                    <div class="profile-drawer-header">
+                        <h3>Welcome to Thanathu Madom Devasthanam</h3>
+                        <p>Thanathu Madom Devasthanam</p>
+                    </div>
+
+                    <div class="profile-drawer-body">
+                        <h4>Account Details</h4>
+
+                        <a href="#" class="drawer-item">
+                            <span class="drawer-left">
+                                <span class="drawer-icon profile-item-icon"></span>
+                                <span>My Profile</span>
+                            </span>
+                            <span class="drawer-arrow"></span>
+                        </a>
+
+                        <a href="#" class="drawer-item">
+                            <span class="drawer-left">
+                                <span class="drawer-icon pooja-item-icon"></span>
+                                <span>My Puja Booking</span>
+                            </span>
+                            <span class="drawer-arrow"></span>
+                        </a>
+
+                        <a href="kundali-matching.html" class="drawer-item">
+                            <span class="drawer-left">
+                                <span class="drawer-icon kundali-item-icon"></span>
+                                <span>Kundali Booking</span>
+                            </span>
+                            <span class="drawer-arrow"></span>
+                        </a>
+
+                        <h4>Services</h4>
+
+                        <a href="#" class="drawer-item">
+                            <span class="drawer-left">
+                                <span class="drawer-icon book-pooja-icon"></span>
+                                <span>Book a Pooja</span>
+                            </span>
+                            <span class="drawer-arrow"></span>
+                        </a>
+
+                        <div class="drawer-item drawer-accordion" id="bookKundaliAccordion">
+                            <div class="drawer-item-main" id="bookKundaliToggle">
+                                <span class="drawer-left">
+                                    <span class="drawer-icon book-kundali-icon"></span>
+                                    <span>Book for Kundali</span>
+                                </span>
+                                <span class="drawer-arrow accordion-arrow"></span>
+                            </div>
+
+                            <div class="drawer-submenu" id="bookKundaliSubmenu">
+                                <a href="kundali-matching.html" class="drawer-subitem">
+                                    <span class="drawer-left">
+                                        <span class="drawer-icon kundali-match-icon"></span>
+                                        <span>Kundali Matching</span>
+                                    </span>
+                                    <span class="drawer-arrow"></span>
+                                </a>
+
+                                <a href="free-janam-kundali.html" class="drawer-subitem">
+                                    <span class="drawer-left">
+                                        <span class="drawer-icon janam-kundali-icon"></span>
+                                        <span>Free Janam Kundali</span>
+                                    </span>
+                                    <span class="drawer-arrow"></span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <a href="#" class="drawer-item">
+                            <span class="drawer-left">
+                                <span class="drawer-icon store-item-icon"></span>
+                                <span>Store</span>
+                            </span>
+                            <span class="drawer-arrow"></span>
+                        </a>
+                    </div>
+
+                    <div class="profile-drawer-footer">
+                        <p class="support-title">Help &amp; Support for Puja Booking</p>
+
+                        <a href="mailto:yourmail@example.com" class="footer-btn support-btn">
+                            <span class="support-left">
+                                <span class="support-icon gmail-icon"></span>
+                                <span>Email Us</span>
+                            </span>
+                            <span class="drawer-arrow"></span>
+                        </a>
+
+                        <a href="https://wa.me/911234567890" class="footer-btn support-btn">
+                            <span class="support-left">
+                                <span class="support-icon whatsapp-icon"></span>
+                                <span>Whatsapp</span>
+                            </span>
+                            <span class="drawer-arrow"></span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="drawer-overlay" id="drawerOverlay"></div>
+            </div>
+        </div>
+
+        <main class="about-route-page">
+            <section class="about-hero">
+                <div class="about-hero-copy">
+                    <span class="about-pill">About Thanathu Madom</span>
+                    <h1>About Us</h1>
+                    <p>
+                        Thanathu Madom carries a spiritual legacy shaped by devotion, Vedic precision, Kerala Tantric
+                        discipline, and service to devotees across the world. This page brings together the tradition,
+                        the guiding priesthood, and the sacred puja process in one trusted space.
+                    </p>
+
+                    <div class="about-hero-chips">
+                        <span>250+ Years of Tradition</span>
+                        <span>Authentic Vedic Rituals</span>
+                        <span>Global Devotee Support</span>
+                    </div>
+                </div>
+
+                <div class="about-hero-visual">
+                    <div class="about-hero-visual-card">
+                        <div class="about-hero-orb about-hero-orb-one"></div>
+                        <div class="about-hero-orb about-hero-orb-two"></div>
+                        <div class="about-hero-pattern"></div>
+                        <div class="about-hero-image"></div>
+                        <div class="about-hero-ganesh"></div>
+                        <div class="about-hero-deep"></div>
+                        <div class="about-hero-garland"></div>
+                        <div class="about-hero-chip about-hero-chip-top">Sacred Lineage</div>
+                        <div class="about-hero-chip about-hero-chip-bottom">Trusted Vedic Service</div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="about-stats">
+                <article class="about-stat-card">
+                    <strong>250+</strong>
+                    <span>Years of divine heritage</span>
+                </article>
+                <article class="about-stat-card">
+                    <strong>20+</strong>
+                    <span>Years of ritual and astrology experience</span>
+                </article>
+                <article class="about-stat-card">
+                    <strong>100,000+</strong>
+                    <span>Devotees served worldwide</span>
+                </article>
+                <article class="about-stat-card">
+                    <strong>2 Days</strong>
+                    <span>Puja video link shared after rituals</span>
+                </article>
+            </section>
+
+            <section class="about-split-section">
+                <div class="about-image-card about-image-card-tradition">
+                    <div class="about-image about-image-tradition"></div>
+                </div>
+
+                <div class="about-copy-card">
+                    <span class="about-section-tag">Sacred Heritage</span>
+                    <h2>Our Rich Tradition</h2>
+                    <p>
+                        Thanathu Madom, belonging to the revered Gowthama Rishi Clan, upholds a divine puja tradition
+                        that has flourished for over 250 years. Deeply rooted in ancient heritage, it extends its reach
+                        to devotees worldwide through astrology services and puja offerings, making Thanathu Madom a
+                        blessed sanctuary of eternal grace.
+                    </p>
+                    <p>
+                        The Thanathu Madom family has had the privilege of serving in many esteemed temples across
+                        Kerala, dedicating themselves to preserving authentic Vedic rituals with unwavering devotion and
+                        purity. With the blessings of the Guru Parampara, Thanathu Madom extends its spiritual services
+                        to devotees across the globe through trusted online astrology consultations and personalized
+                        puja offerings.
+                    </p>
+                </div>
+            </section>
+
+            <section class="about-split-section about-split-section-reverse">
+                <div class="about-copy-card">
+                    <span class="about-section-tag">Guiding Priest</span>
+                    <h2>Brahmashree Dr Harikrishnan Potty O</h2>
+                    <p>
+                        The Vedic Pujari, Brahmashree Dr. Harikrishnan Potty O, grandson of the esteemed Brahmashree
+                        Vasudevan Potty and son of the revered Brahmashree V Omanakuttan Potty, continues this divine
+                        pooja tradition with unwavering dedication.
+                    </p>
+                    <p>
+                        With over 20 years of experience in Vedic rituals and astrology services, he has served more
+                        than 100,000 devotees across the globe. His expertise encompasses Vedic Puja/Homam, Yantra, and
+                        Astrology, making him a trusted figure in spiritual guidance.
+                    </p>
+                </div>
+
+                <div class="about-image-card about-image-card-guru">
+                    <div class="about-image about-image-guru"></div>
+                </div>
+            </section>
+
+            <section class="about-split-section">
+                <div class="about-copy-card">
+                    <span class="about-section-tag">Puja Process</span>
+                    <h2>Why Book Puja with Thanathu Madom</h2>
+                    <p>
+                        Experience the divine grace of a sacred Puja performed strictly according to authentic Vedic
+                        traditions by the experienced priests of Thanathu Madom. Each ritual is conducted individually
+                        with your personal Sankalp, ensuring it is perfectly aligned with your unique intentions and
+                        spiritual aspirations.
+                    </p>
+                    <p>
+                        We use only pure and high-quality sacred Puja Samagri to invoke powerful positive vibrations
+                        and divine blessings. The complete puja video link will be sent to you within 2 days of the
+                        Puja so you can experience the divine blessings and spiritual energy to flow. Thanathu Madom
+                        assures complete transparency, punctuality and genuine Vedic procedures for a truly sacred and
+                        trustworthy online puja experience.
+                    </p>
+                </div>
+
+                <div class="about-image-card about-image-card-process">
+                    <div class="about-image about-image-process"></div>
+                </div>
+            </section>
+
+            <section class="about-process-story">
+                <div class="about-process-copy">
+                    <span class="about-section-tag">Our Sacred Process at Thanathu Madom</span>
+                    <h2>How the Puja is prepared, performed, and shared with the devotee.</h2>
+                    <p>
+                        At Thanathu Madom, we prepare a dedicated Homa Kundam (sacred fire altar) following the
+                        authentic Kerala Tantric tradition, ensuring purity, discipline and scriptural accuracy in every
+                        ritual. For each devotee, we perform an individual Sankalpa by clearly reciting the Name, Birth
+                        Star (Nakshatra) and Gothra, aligning the homam precisely with their personal intentions and
+                        karmic energies.
+                    </p>
+                    <p>
+                        The ritual includes powerful mantra chanting along with pure Ghee havan, where clarified butter
+                        is offered into the sacred fire. Ghee havan is highly auspicious as it purifies the
+                        environment, amplifies mantra vibrations, removes negative energies, balances planetary
+                        influences and attracts divine blessings for prosperity, peace and overall well-being.
+                    </p>
+                </div>
+
+                <div class="about-process-image-card">
+                    <div class="about-process-full-image"></div>
+                </div>
+            </section>
+
+            <section class="about-values-section">
+                <div class="about-section-head">
+                    <span class="about-section-tag">What Devotees Receive</span>
+                    <h2>Why devotees trust Thanathu Madom for sacred online puja services.</h2>
+                    <p>
+                        Along with authentic ritual discipline, devotees receive clarity, personalized sankalp, proper
+                        procedure, and post-puja transparency. These value points are kept visible here so the About
+                        page feels complete and confidence-building.
+                    </p>
+                </div>
+
+                <div class="about-values-grid" data-about-values-grid></div>
+            </section>
+
+            <section class="about-cta">
+                <div class="about-cta-visual">
+                    <div class="about-cta-ganesh"></div>
+                </div>
+
+                <div class="about-cta-copy">
+                    <span class="about-section-tag">Spiritual Support</span>
+                    <h2>Begin your puja journey with a tradition rooted in trust, purity, and devotion.</h2>
+                    <p>
+                        Whether you seek a personalized puja, astrology guidance, or a ritual aligned with your
+                        sankalp, Thanathu Madom stands ready to serve with authentic Vedic care and global accessibility.
+                    </p>
+
+                    <div class="about-cta-actions">
+                        <a href="pooja.html" class="about-primary-btn">Explore Pujas</a>
+                        <a href="kundali-matching.html" class="about-secondary-btn">Book Kundali Service</a>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+    <script src="about.js"></script>
+</body>
+
+</html>
