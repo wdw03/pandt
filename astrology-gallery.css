@@ -1,0 +1,737 @@
+body.gallery-route-body {
+    min-height: 100vh;
+    overflow-x: hidden;
+    background:
+        radial-gradient(circle at 10% 10%, rgba(255, 214, 126, 0.28), transparent 24%),
+        radial-gradient(circle at 92% 8%, rgba(255, 124, 58, 0.18), transparent 24%),
+        linear-gradient(180deg, #fffaf1 0%, #fff2de 44%, #ffe5c5 100%);
+    color: #1d1208;
+}
+
+.gallery-route-main {
+    min-height: 100vh;
+    background: transparent !important;
+}
+
+.gallery-route-body #navbar .navbarmain {
+    flex-wrap: wrap;
+    row-gap: 10px;
+}
+
+.gallery-route-body .navbarhelogmain {
+    flex: 1 1 260px;
+}
+
+.gallery-route-body #navbarlinks {
+    flex: 2 1 620px;
+}
+
+.gallery-route-body #navbarlinks nav ul {
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 10px;
+}
+
+.gallery-route-body .loglongu {
+    flex: 0 1 auto;
+}
+
+.gallery-route-body #navbarlinks nav ul > li > a[href="astrology-gallery.html"] {
+    color: #ff6a00;
+}
+
+.gallery-route-body #navbarlinks nav ul > li > a[href="astrology-gallery.html"]::after {
+    width: 100%;
+}
+
+.gallery-route-page {
+    width: min(1440px, calc(100% - clamp(24px, 3.6vw, 72px)));
+    margin: 0 auto;
+    padding: calc(clamp(86px, 6vw, 116px) + clamp(18px, 2vw, 30px)) 0 clamp(60px, 5vw, 90px);
+    display: flex;
+    flex-direction: column;
+    gap: clamp(22px, 2vw, 34px);
+}
+
+.gallery-route-page > * {
+    min-width: 0;
+}
+
+.gallery-badge,
+.gallery-section-tag {
+    width: fit-content;
+    min-height: 36px;
+    padding: 0 16px;
+    border: 2px solid #111;
+    border-radius: 999px;
+    background: #fff8e4;
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Poppins', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #5a3b18;
+}
+
+.gallery-hero,
+.gallery-zodiac-section,
+.gallery-reviews-section,
+.gallery-videos-section,
+.gallery-products-section,
+.gallery-blogs-section,
+.gallery-accordion-section {
+    border: 2px solid #111;
+    border-radius: clamp(28px, 2.6vw, 40px);
+    background: linear-gradient(135deg, rgba(255, 254, 249, 0.98) 0%, rgba(255, 243, 221, 0.98) 100%);
+    box-shadow: clamp(8px, 1vw, 12px) clamp(8px, 1vw, 12px) 0 rgba(0, 0, 0, 1);
+}
+
+.gallery-hero {
+    padding: clamp(22px, 2.4vw, 34px);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr));
+    gap: 20px;
+    align-items: stretch;
+}
+
+.gallery-analyze-card,
+.gallery-intro-card,
+.gallery-panchang-card,
+.gallery-mini-copy-card,
+.gallery-zodiac-card,
+.gallery-video-card,
+.gallery-product-card,
+.gallery-blog-card,
+.gallery-review-card {
+    border: 2px solid #111;
+    border-radius: 28px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(255, 248, 232, 0.98) 100%);
+    box-shadow: 7px 7px 0 rgba(0, 0, 0, 1);
+}
+
+.gallery-analyze-card {
+    position: relative;
+    min-height: clamp(420px, 34vw, 560px);
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+}
+
+.gallery-analyze-card:hover,
+.gallery-analyze-card:focus-visible {
+    transform: translateY(-2px);
+    outline: none;
+}
+
+.gallery-analyze-image {
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(180deg, rgba(16, 8, 2, 0.08) 0%, rgba(16, 8, 2, 0.42) 100%),
+        url("./assets/images/home-analyze.png");
+    background-size: cover;
+    background-position: center;
+}
+
+.gallery-analyze-overlay {
+    position: absolute;
+    left: 20px;
+    right: 20px;
+    bottom: 20px;
+    padding: 18px;
+    border: 2px solid rgba(255, 255, 255, 0.24);
+    border-radius: 26px;
+    background: rgba(25, 14, 4, 0.42);
+    backdrop-filter: blur(8px);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.gallery-analyze-overlay h1,
+.gallery-heading-row h2,
+.gallery-intro-card h2,
+.gallery-panchang-card h3,
+.gallery-zodiac-card h3,
+.gallery-video-card h3,
+.gallery-product-card h3,
+.gallery-blog-card h3,
+.gallery-accordion-toggle strong {
+    margin: 0;
+    font-family: 'Cinzel', serif;
+    color: #1d1208;
+    text-wrap: balance;
+}
+
+.gallery-analyze-overlay h1 {
+    font-size: clamp(34px, 3vw, 50px);
+    line-height: 1.06;
+    color: #fff7ea;
+}
+
+.gallery-analyze-overlay p,
+.gallery-intro-card p,
+.gallery-mini-copy-card p,
+.gallery-info-row span:last-child,
+.gallery-video-card p,
+.gallery-product-card p,
+.gallery-blog-card p,
+.gallery-long-copy p,
+.gallery-long-copy li,
+.gallery-faq-block p {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(14px, 1vw, 16px);
+    line-height: 1.72;
+    color: #4b3a28;
+}
+
+.gallery-analyze-overlay p {
+    color: rgba(255, 247, 234, 0.9);
+}
+
+.gallery-hero-side {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    min-width: 0;
+}
+
+.gallery-intro-card,
+.gallery-panchang-card,
+.gallery-mini-copy-card {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.gallery-intro-card h2 {
+    font-size: clamp(24px, 2vw, 34px);
+    line-height: 1.25;
+}
+
+.gallery-card-head,
+.gallery-heading-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.gallery-inline-link,
+.gallery-product-share {
+    text-decoration: none;
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: #ff6a00;
+}
+
+.gallery-panchang-list {
+    display: grid;
+    gap: 10px;
+}
+
+.gallery-info-row {
+    padding-top: 10px;
+    border-top: 1px dashed rgba(17, 17, 17, 0.18);
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+}
+
+.gallery-info-row:first-child {
+    border-top: 0;
+    padding-top: 0;
+}
+
+.gallery-info-icon,
+.gallery-zodiac-icon,
+.gallery-review-avatar,
+.gallery-long-copy h3::before,
+.gallery-product-dot,
+.gallery-carousel-dot {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.gallery-info-icon,
+.gallery-zodiac-icon,
+.gallery-review-avatar {
+    flex: 0 0 auto;
+    width: 40px;
+    height: 40px;
+    border: 2px solid #111;
+    border-radius: 14px;
+    background: linear-gradient(180deg, #fff4d8 0%, #ffe0ab 100%);
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 1);
+    font-family: 'Poppins', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    color: #6f430b;
+}
+
+.gallery-zodiac-section,
+.gallery-reviews-section,
+.gallery-videos-section,
+.gallery-products-section,
+.gallery-blogs-section,
+.gallery-accordion-section {
+    padding: clamp(22px, 2.4vw, 34px);
+}
+
+.gallery-heading-row h2 {
+    font-size: clamp(28px, 2.5vw, 40px);
+    line-height: 1.2;
+}
+
+.gallery-zodiac-grid,
+.gallery-products-grid {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 190px), 1fr));
+    gap: 18px;
+}
+
+.gallery-zodiac-card {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.gallery-zodiac-card:hover,
+.gallery-zodiac-card:focus-visible {
+    transform: translateY(-4px);
+    box-shadow: 10px 10px 0 rgba(0, 0, 0, 1);
+    outline: none;
+}
+
+.gallery-zodiac-art {
+    min-height: 160px;
+    border: 2px solid rgba(17, 17, 17, 0.14);
+    border-radius: 24px;
+    background:
+        radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.34) 0%, transparent 28%),
+        linear-gradient(160deg, var(--zodiac-start) 0%, var(--zodiac-end) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.gallery-zodiac-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.18);
+    color: rgba(255, 255, 255, 0.96);
+    box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.18);
+    font-size: 18px;
+}
+
+.gallery-zodiac-subtitle {
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: #6f4b24;
+}
+
+.gallery-review-marquee {
+    margin-top: 18px;
+    overflow: hidden;
+    mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+}
+
+.gallery-review-track {
+    display: flex;
+    width: max-content;
+    animation: reviewMarquee 34s linear infinite;
+}
+
+.gallery-review-group {
+    display: flex;
+    gap: 18px;
+}
+
+.gallery-review-marquee:hover .gallery-review-track {
+    animation-play-state: paused;
+}
+
+.gallery-review-card {
+    width: clamp(260px, 22vw, 330px);
+    min-height: 150px;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.gallery-review-head {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.gallery-review-avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: 18px;
+    font-size: 14px;
+}
+
+.gallery-review-name {
+    font-family: 'Cinzel', serif;
+    font-size: 18px;
+    color: #1d1208;
+}
+
+.gallery-review-stars {
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: #ff8a1e;
+}
+
+.gallery-carousel {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: 14px;
+    align-items: center;
+}
+
+.gallery-carousel-btn,
+.gallery-product-nav,
+.gallery-product-action {
+    min-height: 44px;
+    padding: 0 16px;
+    border: 2px solid #111;
+    border-radius: 999px;
+    background: #fff4d7;
+    box-shadow: 5px 5px 0 rgba(0, 0, 0, 1);
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: #352212;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+}
+
+.gallery-carousel-btn:hover,
+.gallery-carousel-btn:focus-visible,
+.gallery-product-nav:hover,
+.gallery-product-nav:focus-visible,
+.gallery-product-action:hover,
+.gallery-product-action:focus-visible {
+    transform: translate(-2px, -2px);
+    box-shadow: 7px 7px 0 rgba(0, 0, 0, 1);
+    outline: none;
+}
+
+.gallery-carousel-viewport {
+    overflow: hidden;
+}
+
+.gallery-carousel-track {
+    display: flex;
+    transition: transform 0.45s ease;
+    will-change: transform;
+}
+
+.gallery-video-slide,
+.gallery-blog-slide {
+    min-width: 100%;
+    display: flex;
+}
+
+.gallery-video-card,
+.gallery-blog-card {
+    width: 100%;
+    padding: 18px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+    gap: 18px;
+    align-items: stretch;
+    text-decoration: none;
+    color: inherit;
+}
+
+.gallery-video-thumb,
+.gallery-blog-thumb {
+    position: relative;
+    min-height: clamp(220px, 24vw, 320px);
+    border-radius: 24px;
+    overflow: hidden;
+    background:
+        linear-gradient(rgba(16, 8, 2, 0.08), rgba(16, 8, 2, 0.2)),
+        linear-gradient(160deg, #f1d4a6 0%, #d68b50 100%);
+    background-size: cover;
+    background-position: center;
+}
+
+.gallery-video-thumb::after,
+.gallery-blog-thumb::after {
+    content: "";
+    position: absolute;
+    inset: auto auto 18px 18px;
+    width: 54px;
+    height: 54px;
+    border: 2px solid #111;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.88);
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 1);
+}
+
+.gallery-video-thumb::before,
+.gallery-blog-thumb::before {
+    content: "";
+    position: absolute;
+    left: 40px;
+    bottom: 36px;
+    z-index: 1;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 16px solid #ff7a00;
+}
+
+.gallery-video-copy,
+.gallery-blog-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+}
+
+.gallery-video-meta,
+.gallery-blog-meta,
+.gallery-product-meta {
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #8a5c2d;
+}
+
+.gallery-dots {
+    margin-top: 14px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
+.gallery-carousel-dot {
+    width: 14px;
+    height: 14px;
+    padding: 0;
+    border: 2px solid #111;
+    border-radius: 50%;
+    background: #fff4db;
+    box-shadow: 3px 3px 0 rgba(0, 0, 0, 1);
+    cursor: pointer;
+}
+
+.gallery-carousel-dot.is-active {
+    background: #ff8c1a;
+}
+
+.gallery-products-grid {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+}
+
+.gallery-product-card {
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.gallery-product-gallery {
+    position: relative;
+    min-height: 260px;
+    border: 2px solid rgba(17, 17, 17, 0.12);
+    border-radius: 24px;
+    overflow: hidden;
+    background: linear-gradient(160deg, #fff9ef 0%, #ffe6c0 100%);
+}
+
+.gallery-product-track {
+    display: flex;
+    height: 100%;
+    transition: transform 0.42s ease;
+}
+
+.gallery-product-image {
+    min-width: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.gallery-product-navs {
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    top: 12px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.gallery-product-nav {
+    min-height: 36px;
+    padding: 0 12px;
+    background: rgba(255, 255, 255, 0.86);
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 1);
+}
+
+.gallery-product-dots {
+    position: absolute;
+    left: 50%;
+    bottom: 14px;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+}
+
+.gallery-product-dot {
+    width: 12px;
+    height: 12px;
+    border: 2px solid #111;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.86);
+    box-shadow: 2px 2px 0 rgba(0, 0, 0, 1);
+    cursor: pointer;
+}
+
+.gallery-product-dot.is-active {
+    background: #ff8c1a;
+}
+
+.gallery-product-price {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(22px, 1.8vw, 30px);
+    color: #1d1208;
+}
+
+.gallery-product-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.gallery-product-action.is-primary {
+    background: linear-gradient(135deg, #ff7a00 0%, #ffb347 100%);
+    color: #fffaf0;
+}
+
+.gallery-accordion-toggle {
+    width: 100%;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    display: flex;
+    justify-content: space-between;
+    gap: 18px;
+    align-items: center;
+    cursor: pointer;
+    text-align: left;
+}
+
+.gallery-accordion-toggle strong {
+    display: block;
+    margin-top: 10px;
+    font-size: clamp(30px, 2.6vw, 42px);
+    line-height: 1.16;
+}
+
+.gallery-accordion-arrow {
+    flex: 0 0 58px;
+    width: 58px;
+    height: 58px;
+    border: 2px solid #111;
+    border-radius: 18px;
+    background:
+        linear-gradient(180deg, rgba(255, 244, 216, 0.98) 0%, rgba(255, 224, 171, 0.98) 100%),
+        url("./assets/images/down-arrow.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 22px 22px;
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 1);
+    transition: transform 0.24s ease;
+}
+
+.gallery-accordion-toggle.is-open .gallery-accordion-arrow {
+    transform: rotate(180deg);
+}
+
+.gallery-accordion-content {
+    height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: opacity 0.24s ease;
+}
+
+.gallery-accordion-content.is-open {
+    opacity: 1;
+}
+
+.gallery-long-copy {
+    margin-top: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.gallery-long-copy h3,
+.gallery-faq-block h4 {
+    margin: 0;
+    font-family: 'Cinzel', serif;
+    font-size: clamp(24px, 1.9vw, 32px);
+    line-height: 1.24;
+    color: #1d1208;
+}
+
+.gallery-long-copy ul,
+.gallery-long-copy ol {
+    margin: 0;
+    padding-left: 22px;
+    display: grid;
+    gap: 10px;
+}
+
+.gallery-faq-block {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+    gap: 16px;
+}
+
+.gallery-faq-block article {
+    padding: 16px;
+    border: 2px solid #111;
+    border-radius: 24px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(255, 248, 232, 0.98) 100%);
+    box-shadow: 6px 6px 0 rgba(0, 0, 0, 1);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+@keyframes reviewMarquee {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-50%);
+    }
+}

@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="resposnive.css">
+    <link rel="stylesheet" href="astrology-gallery.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&display=swap" rel="stylesheet">
+    <title>Astrology Gallery</title>
+</head>
+
+<body class="gallery-route-body">
+    <div id="main" class="gallery-route-main">
+        <div id="navbar">
+            <div class="navbarmain">
+                <div class="navbarhelogmain">
+                    <div class="navbarlogo"></div>
+                    <div class="navbartext">
+                        <h4>thanathu madom devasthanam</h4>
+                    </div>
+                </div>
+                <div id="navbarlinks">
+                    <nav>
+                        <ul>
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="pooja.html">Puja</a></li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link-arrow">Kundali<span class="arrow"></span></a>
+                                <div class="dropdown-menu">
+                                    <a href="kundali-matching.html">Kundali Matching</a>
+                                    <a href="free-janam-kundali.html">Free Janam Kundali</a>
+                                </div>
+                            </li>
+                            <li><a href="panchang.html">Panchnaag</a></li>
+                            <li><a href="about.html">about</a></li>
+                            <li><a href="horoscope.html">Horoscope</a></li>
+                            <li><a href="astrology-gallery.html">Astrology gallery</a></li>
+                            <li><a href="#">Contact us</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="loglongu">
+                    <div class="language">
+                        <div class="langselected nav-link-arrow">
+                            <p>HINDI</p>
+                            <span class="arrow"></span>
+                        </div>
+                        <div class="languageoption">
+                            <a href="#">English</a>
+                            <a href="#">Hindi</a>
+                            <a href="#">Tamil</a>
+                            <a href="#">Telugu</a>
+                        </div>
+                    </div>
+
+                    <div class="profileicons" id="profileToggle"
+                        style="background-image: url('./assets/images/ic_user_profile.svg');">
+                    </div>
+                </div>
+
+                <div class="profile-drawer" id="profileDrawer">
+                    <div class="profile-drawer-header">
+                        <h3>Welcome to Thanathu Madom Devasthanam</h3>
+                        <p>Thanathu Madom Devasthanam</p>
+                    </div>
+
+                    <div class="profile-drawer-body">
+                        <h4>Account Details</h4>
+
+                        <a href="#" class="drawer-item">
+                            <span class="drawer-left">
+                                <span class="drawer-icon profile-item-icon"></span>
+                                <span>My Profile</span>
+                            </span>
+                            <span class="drawer-arrow"></span>
+                        </a>
+
+                        <a href="#" class="drawer-item">
+                            <span class="drawer-left">
+                                <span class="drawer-icon pooja-item-icon"></span>
+                                <span>My Puja Booking</span>
+                            </span>
+                            <span class="drawer-arrow"></span>
+                        </a>
+
+                        <a href="kundali-matching.html" class="drawer-item">
+                            <span class="drawer-left">
+                                <span class="drawer-icon kundali-item-icon"></span>
+                                <span>Kundali Booking</span>
+                            </span>
+                            <span class="drawer-arrow"></span>
+                        </a>
+
+                        <h4>Services</h4>
+
+                        <a href="pooja.html" class="drawer-item">
+                            <span class="drawer-left">
+                                <span class="drawer-icon book-pooja-icon"></span>
+                                <span>Book a Pooja</span>
+                            </span>
+                            <span class="drawer-arrow"></span>
+                        </a>
+
+                        <div class="drawer-item drawer-accordion" id="bookKundaliAccordion">
+                            <div class="drawer-item-main" id="bookKundaliToggle">
+                                <span class="drawer-left">
+                                    <span class="drawer-icon book-kundali-icon"></span>
+                                    <span>Book for Kundali</span>
+                                </span>
+                                <span class="drawer-arrow accordion-arrow"></span>
+                            </div>
+
+                            <div class="drawer-submenu" id="bookKundaliSubmenu">
+                                <a href="kundali-matching.html" class="drawer-subitem">
+                                    <span class="drawer-left">
+                                        <span class="drawer-icon kundali-match-icon"></span>
+                                        <span>Kundali Matching</span>
+                                    </span>
+                                    <span class="drawer-arrow"></span>
+                                </a>
+
+                                <a href="free-janam-kundali.html" class="drawer-subitem">
+                                    <span class="drawer-left">
+                                        <span class="drawer-icon janam-kundali-icon"></span>
+                                        <span>Free Janam Kundali</span>
+                                    </span>
+                                    <span class="drawer-arrow"></span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <a href="#" class="drawer-item">
+                            <span class="drawer-left">
+                                <span class="drawer-icon store-item-icon"></span>
+                                <span>Store</span>
+                            </span>
+                            <span class="drawer-arrow"></span>
+                        </a>
+                    </div>
+
+                    <div class="profile-drawer-footer">
+                        <p class="support-title">Help &amp; Support for Puja Booking</p>
+
+                        <a href="mailto:yourmail@example.com" class="footer-btn support-btn">
+                            <span class="support-left">
+                                <span class="support-icon gmail-icon"></span>
+                                <span>Email Us</span>
+                            </span>
+                            <span class="drawer-arrow"></span>
+                        </a>
+
+                        <a href="https://wa.me/911234567890" class="footer-btn support-btn">
+                            <span class="support-left">
+                                <span class="support-icon whatsapp-icon"></span>
+                                <span>Whatsapp</span>
+                            </span>
+                            <span class="drawer-arrow"></span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="drawer-overlay" id="drawerOverlay"></div>
+            </div>
+        </div>
+
+        <main class="gallery-route-page">
+            <section class="gallery-hero">
+                <a class="gallery-analyze-card" href="free-janam-kundali.html">
+                    <div class="gallery-analyze-image"></div>
+                    <div class="gallery-analyze-overlay">
+                        <span class="gallery-badge">Kundali Analysis</span>
+                        <h1>Astrology Gallery</h1>
+                        <p>Tap the analysis visual to open the single-person kundali route and explore personalized guidance.</p>
+                    </div>
+                </a>
+
+                <div class="gallery-hero-side">
+                    <article class="gallery-intro-card">
+                        <span class="gallery-badge">Spiritual Discovery</span>
+                        <h2>See Panchang, Horoscope, reviews, videos, products, blogs, and deeper astrology guidance in one place.</h2>
+                        <p>
+                            This page is built like a rich gallery destination. It keeps key astrology content organized
+                            in fluid sections so the layout still feels balanced even when the PC window becomes smaller.
+                        </p>
+                    </article>
+
+                    <article class="gallery-panchang-card">
+                        <div class="gallery-card-head">
+                            <div>
+                                <span class="gallery-section-tag">Today's Panchang</span>
+                                <h3>Fri Apr 24 2026</h3>
+                            </div>
+                            <a href="panchang.html" class="gallery-inline-link">Detailed Panchang</a>
+                        </div>
+
+                        <div class="gallery-panchang-list">
+                            <div class="gallery-info-row">
+                                <span class="gallery-info-icon">SR</span>
+                                <span>Sunrise : 5:48:10 AM</span>
+                            </div>
+                            <div class="gallery-info-row">
+                                <span class="gallery-info-icon">SS</span>
+                                <span>Sunset : 6:52:45 PM</span>
+                            </div>
+                            <div class="gallery-info-row">
+                                <span class="gallery-info-icon">MR</span>
+                                <span>Moonrise : 11:54:43 AM</span>
+                            </div>
+                            <div class="gallery-info-row">
+                                <span class="gallery-info-icon">MS</span>
+                                <span>Moonset : 2:02:18 AM</span>
+                            </div>
+                            <div class="gallery-info-row">
+                                <span class="gallery-info-icon">MO</span>
+                                <span>Month : Amanta : Vaisakha</span>
+                            </div>
+                            <div class="gallery-info-row">
+                                <span class="gallery-info-icon">SV</span>
+                                <span>Samvat : Vikram 2083 - Siddharthi</span>
+                            </div>
+                            <div class="gallery-info-row">
+                                <span class="gallery-info-icon">TI</span>
+                                <span>Tithi : Ashtami till Fri Apr 24 2026 6:57:01 PM</span>
+                            </div>
+                            <div class="gallery-info-row">
+                                <span class="gallery-info-icon">NK</span>
+                                <span>Nakshatra : Pushya till Fri Apr 24 2026 7:49:18 PM</span>
+                            </div>
+                            <div class="gallery-info-row">
+                                <span class="gallery-info-icon">KR</span>
+                                <span>Karan : Vishti till Fri Apr 24 2026 7:36:30 AM</span>
+                            </div>
+                            <div class="gallery-info-row">
+                                <span class="gallery-info-icon">YG</span>
+                                <span>Yog : Dhrithi till Fri Apr 24 2026 3:06:13 AM</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="gallery-mini-copy-card">
+                        <span class="gallery-section-tag">Horoscope Prediction</span>
+                        <p>
+                            It is exciting to explore the possibilities of the future. With horoscope predictions, you
+                            can gain daily, weekly, or even yearly insights into how celestial movements impact your life.
+                        </p>
+                        <a href="horoscope.html" class="gallery-inline-link">Explore Horoscope</a>
+                    </article>
+                </div>
+            </section>
+
+            <section class="gallery-zodiac-section">
+                <div class="gallery-heading-row">
+                    <div>
+                        <span class="gallery-section-tag">Horoscope Prediction</span>
+                        <h2>12 Rashifal Signs</h2>
+                    </div>
+                    <a href="horoscope.html" class="gallery-inline-link">Open Horoscope Page</a>
+                </div>
+
+                <div class="gallery-zodiac-grid" data-zodiac-grid></div>
+            </section>
+
+            <section class="gallery-reviews-section">
+                <div class="gallery-heading-row">
+                    <div>
+                        <span class="gallery-section-tag">User Feedback</span>
+                        <h2>Devotees share their experience with Thanathu Madom.</h2>
+                    </div>
+                </div>
+
+                <div class="gallery-review-marquee" data-review-marquee>
+                    <div class="gallery-review-track" data-review-track></div>
+                </div>
+            </section>
+
+            <section class="gallery-videos-section">
+                <div class="gallery-heading-row">
+                    <div>
+                        <span class="gallery-section-tag">Astrology Videos</span>
+                        <h2>Watch spiritual and astrology guidance videos in a future-ready gallery.</h2>
+                    </div>
+                    <a href="#" class="gallery-inline-link">See All Videos</a>
+                </div>
+
+                <div class="gallery-carousel">
+                    <button class="gallery-carousel-btn" type="button" data-video-prev>Prev</button>
+                    <div class="gallery-carousel-viewport">
+                        <div class="gallery-carousel-track" data-video-track></div>
+                    </div>
+                    <button class="gallery-carousel-btn" type="button" data-video-next>Next</button>
+                </div>
+
+                <div class="gallery-dots" data-video-dots></div>
+            </section>
+
+            <section class="gallery-products-section">
+                <div class="gallery-heading-row">
+                    <div>
+                        <span class="gallery-section-tag">Astromall Products</span>
+                        <h2>Shop Genuine and Energised Products by Thanathu Madom Devasthanam</h2>
+                    </div>
+                    <a href="#" class="gallery-inline-link">See All Products</a>
+                </div>
+
+                <div class="gallery-products-grid" data-products-grid></div>
+            </section>
+
+            <section class="gallery-blogs-section">
+                <div class="gallery-heading-row">
+                    <div>
+                        <span class="gallery-section-tag">Latest Blogs</span>
+                        <h2>Read spiritual stories, astrology thoughts, and devotional insights.</h2>
+                    </div>
+                    <a href="#" class="gallery-inline-link">See All Articles</a>
+                </div>
+
+                <div class="gallery-carousel">
+                    <button class="gallery-carousel-btn" type="button" data-blog-prev>Prev</button>
+                    <div class="gallery-carousel-viewport">
+                        <div class="gallery-carousel-track" data-blog-track></div>
+                    </div>
+                    <button class="gallery-carousel-btn" type="button" data-blog-next>Next</button>
+                </div>
+
+                <div class="gallery-dots" data-blog-dots></div>
+            </section>
+
+            <section class="gallery-accordion-section">
+                <button class="gallery-accordion-toggle" type="button" data-gallery-accordion-toggle aria-expanded="false">
+                    <span>
+                        <span class="gallery-section-tag">Deep Reading</span>
+                        <strong>What Is Astrology?</strong>
+                    </span>
+                    <span class="gallery-accordion-arrow" aria-hidden="true"></span>
+                </button>
+
+                <div class="gallery-accordion-content" data-gallery-accordion-content>
+                    <div class="gallery-long-copy">
+                        <h3>Astrology Is The Language Of The Universe</h3>
+                        <p>
+                            Astrology predictions are based on the position and movements of planets and celestial
+                            bodies in the Universe that impact our life quality. This can be studied by creating an
+                            offline or online horoscope of individuals. This affects not only the people but also
+                            controls the occurrence of certain events happening in the sublunar world.
+                        </p>
+                        <p>
+                            Some may call it pseudo-science, and others call it predictive science. The science that is
+                            Astrology inspires people to know the various aspects of their life and take it in the
+                            right direction. From making life predictions on the basis of a detailed Kundali or telling
+                            you about the near future through daily, weekly and monthly horoscopes, Astrology is the
+                            medium through which you can get a glimpse of what the future will bring for you.
+                        </p>
+                        <p>
+                            There is one aspect of offline and online Astrology prediction where the impacts of
+                            planetary transition can be seen. And when it is related to the Zodiacs, it happens as
+                            various planets cross the sectors of each zodiac in the sky. It impacts the natives of
+                            different zodiacs differently. And one more way is by analyzing the planetary position in
+                            various houses of one's Kundli.
+                        </p>
+                        <p>
+                            Astrology reading is quite extensive. It is all about studying the 9 planets placed in the
+                            twelve houses of one's Kundli and their impact on their life. These planets are the Sun,
+                            Moon, Mercury, Venus, Mars, Jupiter, Saturn, Rahu, and Ketu. Some of these planets
+                            positively impact human life, and others affect it adversely. It depends on their house
+                            placement.
+                        </p>
+                        <p>
+                            For example, it is not always a compulsion that Saturn will bring negative impacts or
+                            Jupiter will be a positive one.
+                        </p>
+                        <p>
+                            Every house in the Kundli represents a different aspect of one's life. Similarly, Sun
+                            Signs, Moon Signs, Ascendants, and Descendants have their own significance. So it is not a
+                            confined subject, and the best way to know your future through the power of Astrology is to
+                            talk to an online Thanathu Madom Devasthanam and get a detailed analysis of your online
+                            horoscope covering every aspect of your life.
+                        </p>
+
+                        <h3>Astrology Predictions And Its Benefits</h3>
+                        <p>
+                            Offline and online Astrology predictions have the power to forecast the future by analyzing
+                            the positions of the planets as they move and studying their impact on your life.
+                        </p>
+                        <p>
+                            An online horoscope is essentially a blueprint of your life that can help you gain clarity
+                            about the different aspects of your life, your personality and your future. Although there
+                            are several benefits of Astrological predictions, the best one remains timely guidance, and
+                            remedial suggestions to help avoid any unfavorable events coming your way. Or even if not
+                            eliminate them altogether, the offline and online Astro remedies can at least minimize
+                            their impacts. It is best if the guidance comes from the best Thanathu Madom Devasthanam
+                            in India.
+                        </p>
+                        <p>
+                            You can take advantage of staying a step ahead of time in every aspect of your life, be it
+                            love, money, career, marriage, family, or anything else. Online Astrology has the power to
+                            show you the right path that will lead you towards a successful and happy life.
+                        </p>
+
+                        <h3>How Online Astrology Services Can Benefit You</h3>
+                        <p>
+                            You know how well you can take your life in the right direction with right Astro guidance,
+                            so why not get it from the comfort of your home.
+                        </p>
+                        <p>
+                            Keeping the convenience, comfort and flexibility in mind, Thanathu Madom Devasthanam has
+                            introduced the best online Astrology consultation services. You can choose from online
+                            Thanathu Madom Devasthanams, numerologists, palmists, and tarot reading experts to get
+                            answers for your concerns. This has been done while keeping various factors in mind that can
+                            benefit you.
+                        </p>
+                        <ul>
+                            <li>It is the most hassle-free way to connect with the best Thanathu Madom Devasthanams.</li>
+                            <li>Online Astrology services are the most time-saving and affordable way to connect with top Thanathu Madom Devasthanams and get consultations, anytime and anywhere.</li>
+                            <li>It makes it convenient for people to talk to an Thanathu Madom Devasthanam openly as your privacy and confidentiality is strictly maintained.</li>
+                            <li>You can choose the best Thanathu Madom Devasthanam online among nearly 100+ Thanathu Madom Devasthanams that you think matches your requirements perfectly.</li>
+                        </ul>
+
+                        <h3>Online Astrology Consultation Services By Thanathu Madom Devasthanam</h3>
+                        <p>
+                            Thanathu Madom Devasthanam has established its footprints in the online Astrology services,
+                            helping people get through their life problems. This is done by the best online Thanathu
+                            Madom Devasthanams who are experienced and renowned in this domain. Our Thanathu Madom
+                            Devasthanams are available 24/7 to help people with their Astro advice on the best website
+                            for Astrology.
+                        </p>
+                        <p>
+                            Thanathu Madom Devasthanam strives to provide the best Astrology consultation services by
+                            the best Thanathu Madom Devasthanams. Our professional Thanathu Madom Devasthanams are not
+                            only limited to providing guidance and insights into various aspects of your life. They are
+                            also your friend and partner to get you through difficult situations. Another thing is that
+                            they are not only traditional Thanathu Madom Devasthanams. There are also tarot reading
+                            experts and numerologists to give you a range of Astrology services.
+                        </p>
+                        <p>You know that you need an online Astrology reading session at Thanathu Madom Devasthanam, so you should understand how it works.</p>
+                        <ol>
+                            <li>Download the Thanathu Madom Devasthanam app</li>
+                            <li>Sign up with your basic details</li>
+                            <li>Enjoy your free session of online Astrology consultation</li>
+                            <li>Recharge your wallet</li>
+                            <li>Choose the best Thanathu Madom Devasthanam online with whom you want to consult</li>
+                            <li>Enjoy your live chat/call session with the best online Thanathu Madom Devasthanams</li>
+                        </ol>
+                        <p>
+                            So are you now confused about how you can choose the best Thanathu Madom Devasthanam for
+                            your session? The one who can make the most accurate online horoscope? Here are the things
+                            to consider.
+                        </p>
+                        <p>
+                            First of all, categorize your query based on various issues like love, finance, family,
+                            etc. Then look for the expert Thanathu Madom Devasthanams of that particular aspect and
+                            choose them based on the ratings they get from their clients. These ratings are based on
+                            the quality of the session. Or you can go a step further and read their descriptions where
+                            their experience and expertise are mentioned.
+                        </p>
+                        <p>
+                            That's how you will get in touch with the expert Thanathu Madom Devasthanam that will
+                            provide the guidance you need for all your life problems along with the most effective
+                            solutions.
+                        </p>
+
+                        <h3>Online Thanathu Madom Devasthanams Of Thanathu Madom Devasthanam</h3>
+                        <p>Thanathu Madom Devasthanam connects you with India's top Thanathu Madom Devasthanams!</p>
+                        <p>
+                            We at Thanathu Madom Devasthanam consider it our responsibility to connect you with India's
+                            best online Thanathu Madom Devasthanams. And to make sure that you get the most
+                            satisfactory experience after each session, whether through live chat or call, we are
+                            highly particular about choosing our Thanathu Madom Devasthanams.
+                        </p>
+                        <p>There are a lot of factors that we consider before an Thanathu Madom Devasthanam comes on board with us.</p>
+                        <ul>
+                            <li>Educational qualifications</li>
+                            <li>Area of expertise</li>
+                            <li>Years of experience</li>
+                            <li>Method of practice (Astrology, numerology, tarot card reading, etc.)</li>
+                        </ul>
+                        <p>
+                            We make sure that our clients get what they expect. So, we ensure that only the best and
+                            the most knowledgeable Thanathu Madom Devasthanams are associated with us. Thanathu Madom
+                            Devasthanams go through a multi-layer screening process to become a part of our community.
+                            And they come from all over the country. All the Thanathu Madom Devasthanams who are
+                            associated with us are certified and verified for their area of expertise. We leave no
+                            stone unturned to ensure you get the best guidance by the best Thanathu Madom Devasthanams.
+                        </p>
+                        <p>
+                            You can get their guidance regarding your online horoscope, Kundli matching, general online
+                            predictions, etc.
+                        </p>
+                        <p>
+                            Search for the phrase 'the best Thanathu Madom Devasthanam near me,' and you will get the
+                            relevant results wherever you are. But with Thanathu Madom Devasthanam, you will still find
+                            the best Thanathu Madom Devasthanams and get their guidance from the comfort of your home.
+                        </p>
+                        <p>
+                            So whenever you consult with an expert Thanathu Madom Devasthanam at Thanathu Madom
+                            Devasthanam, you get only the best!
+                        </p>
+
+                        <h3>Online Astrology Predictions Categories</h3>
+                        <p>
+                            You can discuss anything troubling you with a professional Thanathu Madom Devasthanam.
+                            Still, in case you need clarity, here are the buckets of specific categories in which you
+                            can put your queries.
+                        </p>
+                        <ul>
+                            <li>Love and relationships: questions related to your relationship, whether past, present, or future.</li>
+                            <li>Marriage and family: questions related to married life, infidelity, general future, or second marriage.</li>
+                            <li>Career and job: workplace conflicts, promotions, or confusion between career options.</li>
+                            <li>Money and finance: current financial position, future money flow, and reasons affecting it.</li>
+                        </ul>
+                        <p>
+                            These are the four primary and basic categories under which almost every question can be
+                            put. Then it will be convenient for you to choose the expert Thanathu Madom Devasthanams
+                            who will answer your question. It will be done through Vedic Astrology predictions, tarot
+                            reading, numerology, and palmistry to give you the best insights.
+                        </p>
+                        <p>
+                            Thanathu Madom Devasthanam is your ultimate destination for all your online Astrology
+                            consultation needs. Here you can get the best guidance from the top Thanathu Madom
+                            Devasthanams who will help you make the best and the most beneficial decisions in life.
+                        </p>
+
+                        <h3>FAQs Related To Astrology &amp; Thanathu Madom Devasthanam</h3>
+                        <div class="gallery-faq-block">
+                            <article>
+                                <h4>What are Astrology predictions based on?</h4>
+                                <p>Astrology predictions are basically the analysis of the position of planets and stars and how they move to impact the world and each individual existing there.</p>
+                            </article>
+                            <article>
+                                <h4>What are Astrology and zodiac?</h4>
+                                <p>Zodiac signs are the signs that develop the internal and external personality of someone, and Astrology defines the changes in that personality concerning the planetary movements.</p>
+                            </article>
+                            <article>
+                                <h4>How do Astrology predictions help me to deal with my problems?</h4>
+                                <p>Astrology predictions can keep you a step ahead of time where you can know what is waiting for you in the future.</p>
+                            </article>
+                            <article>
+                                <h4>How can online Astrology predictions be so accurate?</h4>
+                                <p>Astrology services are based on pseudo-scientific practice that provides Astrology predictions to individuals based on the movements of planets.</p>
+                            </article>
+                            <article>
+                                <h4>How reliable are the Thanathu Madom Devasthanam Thanathu Madom Devasthanams?</h4>
+                                <p>The credibility can be seen through the reviews and ratings they get from people after their session. All are verified for experience and expertise.</p>
+                            </article>
+                            <article>
+                                <h4>Can I ask personal questions?</h4>
+                                <p>Yes. Queries can be both personal and general, as long as they respect the sanctity of this spiritual practice.</p>
+                            </article>
+                            <article>
+                                <h4>Can I speak to the same Thanathu Madom Devasthanam when I call again?</h4>
+                                <p>Yes, you can always choose the Thanathu Madom Devasthanam of your choice again for the next session.</p>
+                            </article>
+                            <article>
+                                <h4>Can I talk to an Thanathu Madom Devasthanam for free?</h4>
+                                <p>You can connect for your first session without payment. After that, wallet recharge is needed for continued chat or call sessions.</p>
+                            </article>
+                            <article>
+                                <h4>How much does it cost to see an Thanathu Madom Devasthanam?</h4>
+                                <p>The rates vary by expertise, experience, and exposure. Sign up is free and the amount depends on the expert you choose.</p>
+                            </article>
+                            <article>
+                                <h4>Who is the best online Thanathu Madom Devasthanam?</h4>
+                                <p>The best one is the expert whose area of expertise matches your concern most closely.</p>
+                            </article>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+    <script src="astrology-gallery.js"></script>
+</body>
+
+</html>
