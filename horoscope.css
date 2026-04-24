@@ -1,0 +1,788 @@
+body.horoscope-route-body {
+    min-height: 100vh;
+    overflow-x: hidden;
+    background:
+        radial-gradient(circle at 8% 10%, rgba(255, 209, 102, 0.28), transparent 24%),
+        radial-gradient(circle at 92% 8%, rgba(255, 122, 0, 0.14), transparent 24%),
+        linear-gradient(180deg, #fffaf2 0%, #fff3df 44%, #ffe8cb 100%);
+    color: #1d1208;
+}
+
+.horoscope-route-main {
+    min-height: 100vh;
+    background: transparent !important;
+}
+
+.horoscope-route-body #navbar .navbarmain {
+    flex-wrap: wrap;
+    row-gap: 10px;
+}
+
+.horoscope-route-body .navbarhelogmain {
+    flex: 1 1 260px;
+}
+
+.horoscope-route-body #navbarlinks {
+    flex: 2 1 620px;
+}
+
+.horoscope-route-body #navbarlinks nav ul {
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 10px;
+}
+
+.horoscope-route-body .loglongu {
+    flex: 0 1 auto;
+}
+
+.horoscope-route-body #navbarlinks nav ul > li > a[href="horoscope.html"] {
+    color: #ff6a00;
+}
+
+.horoscope-route-body #navbarlinks nav ul > li > a[href="horoscope.html"]::after {
+    width: 100%;
+}
+
+.horoscope-route-page {
+    width: min(1400px, calc(100% - clamp(24px, 3.6vw, 72px)));
+    margin: 0 auto;
+    padding: calc(clamp(86px, 6vw, 116px) + clamp(18px, 2vw, 30px)) 0 clamp(60px, 5vw, 90px);
+    display: flex;
+    flex-direction: column;
+    gap: clamp(22px, 2vw, 34px);
+}
+
+.horoscope-route-page > * {
+    min-width: 0;
+}
+
+.horoscope-pill,
+.horoscope-section-tag,
+.horoscope-mini-tag {
+    width: fit-content;
+    min-height: 36px;
+    padding: 0 16px;
+    border: 2px solid #111;
+    border-radius: 999px;
+    background: #fff7e2;
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Poppins', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #5a3b18;
+}
+
+.horoscope-hero,
+.horoscope-today-section,
+.horoscope-why-section,
+.horoscope-success-section {
+    border: 2px solid #111;
+    border-radius: clamp(28px, 2.6vw, 40px);
+    background: linear-gradient(135deg, rgba(255, 254, 249, 0.98) 0%, rgba(255, 243, 221, 0.98) 100%);
+    box-shadow: clamp(8px, 1vw, 12px) clamp(8px, 1vw, 12px) 0 rgba(0, 0, 0, 1);
+}
+
+.horoscope-hero {
+    position: relative;
+    overflow: hidden;
+    padding: clamp(24px, 3vw, 40px);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr));
+    gap: clamp(22px, 2vw, 32px);
+    isolation: isolate;
+}
+
+.horoscope-hero::before,
+.horoscope-hero::after {
+    content: "";
+    position: absolute;
+    border-radius: 999px;
+    z-index: -1;
+}
+
+.horoscope-hero::before {
+    width: clamp(240px, 20vw, 340px);
+    height: clamp(240px, 20vw, 340px);
+    right: -80px;
+    top: -100px;
+    background: radial-gradient(circle, rgba(255, 201, 93, 0.74) 0%, rgba(255, 201, 93, 0) 72%);
+}
+
+.horoscope-hero::after {
+    width: clamp(180px, 15vw, 260px);
+    height: clamp(180px, 15vw, 260px);
+    left: -44px;
+    bottom: -96px;
+    background: radial-gradient(circle, rgba(255, 121, 54, 0.2) 0%, rgba(255, 121, 54, 0) 72%);
+}
+
+.horoscope-hero-copy,
+.horoscope-success-copy,
+.horoscope-why-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    min-width: 0;
+}
+
+.horoscope-hero-copy {
+    justify-content: center;
+}
+
+.horoscope-hero-copy h1,
+.horoscope-section-head h2,
+.horoscope-why-copy h2,
+.horoscope-success-copy h2,
+.horoscope-today-banner-copy h3 {
+    margin: 0;
+    font-family: 'Cinzel', serif;
+    color: #1d1208;
+    text-wrap: balance;
+}
+
+.horoscope-hero-copy h1 {
+    max-width: min(100%, 11ch);
+    font-size: clamp(38px, 3.8vw, 58px);
+    line-height: 1.06;
+}
+
+.horoscope-hero-copy p,
+.horoscope-section-head p,
+.horoscope-today-banner-copy p,
+.horoscope-why-copy p,
+.horoscope-success-copy p,
+.horoscope-trust-note p {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(14px, 1vw, 16px);
+    line-height: 1.78;
+    color: #4b3a28;
+}
+
+.horoscope-hero-chips,
+.horoscope-hero-actions,
+.horoscope-sign-grid,
+.horoscope-success-indicators {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.horoscope-hero-chips span {
+    min-height: 38px;
+    padding: 0 14px;
+    border: 2px solid #111;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.84);
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    color: #362718;
+}
+
+.horoscope-primary-btn,
+.horoscope-secondary-btn {
+    min-height: 50px;
+    padding: 0 22px;
+    border: 2px solid #111;
+    border-radius: 999px;
+    box-shadow: 5px 5px 0 rgba(0, 0, 0, 1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.horoscope-primary-btn {
+    background: linear-gradient(135deg, #ff7a00 0%, #ffb347 100%);
+    color: #fffaf0;
+}
+
+.horoscope-secondary-btn {
+    background: #fffaf2;
+    color: #352212;
+}
+
+.horoscope-primary-btn:hover,
+.horoscope-primary-btn:focus-visible,
+.horoscope-secondary-btn:hover,
+.horoscope-secondary-btn:focus-visible {
+    transform: translate(-2px, -2px);
+    box-shadow: 7px 7px 0 rgba(0, 0, 0, 1);
+    outline: none;
+}
+
+.horoscope-hero-visual {
+    position: relative;
+    min-height: clamp(360px, 32vw, 490px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.horoscope-hero-visual-card {
+    position: relative;
+    width: min(100%, clamp(330px, 32vw, 460px));
+    aspect-ratio: 1 / 1;
+    border: 2px solid #111;
+    border-radius: 40px;
+    background: linear-gradient(180deg, #fffdf8 0%, #fff0d1 100%);
+    box-shadow: 10px 10px 0 rgba(0, 0, 0, 1);
+    overflow: hidden;
+}
+
+.horoscope-hero-orb,
+.horoscope-hero-pattern {
+    position: absolute;
+    border-radius: 50%;
+}
+
+.horoscope-hero-orb-one {
+    width: 54%;
+    height: 54%;
+    top: -10%;
+    right: -4%;
+    background: radial-gradient(circle, rgba(255, 206, 108, 0.68) 0%, rgba(255, 206, 108, 0) 72%);
+}
+
+.horoscope-hero-orb-two {
+    width: 44%;
+    height: 44%;
+    left: -8%;
+    bottom: -10%;
+    background: radial-gradient(circle, rgba(255, 138, 78, 0.28) 0%, rgba(255, 138, 78, 0) 72%);
+}
+
+.horoscope-hero-pattern {
+    inset: 12%;
+    border: 2px dashed rgba(17, 17, 17, 0.16);
+}
+
+.horoscope-hero-main-image,
+.horoscope-hero-side-image,
+.horoscope-hero-deep,
+.horoscope-hero-garland,
+.horoscope-today-banner-image,
+.horoscope-trust-image {
+    position: absolute;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.horoscope-hero-main-image {
+    inset: 18% 14% 16% 18%;
+    border-radius: 32px;
+    background-image:
+        linear-gradient(rgba(255, 248, 230, 0.08), rgba(255, 238, 210, 0.12)),
+        url("./assets/images/Gemini_Generated_Image_alcwplalcwplalcw.png");
+    box-shadow: inset 0 0 0 2px rgba(17, 17, 17, 0.08);
+}
+
+.horoscope-hero-side-image {
+    width: 32%;
+    height: 32%;
+    right: 14px;
+    bottom: 18px;
+    border-radius: 24px;
+    background-image:
+        linear-gradient(rgba(255, 248, 230, 0.08), rgba(255, 238, 210, 0.12)),
+        url("./assets/images/panditpujakete.jpg");
+    box-shadow: inset 0 0 0 2px rgba(17, 17, 17, 0.08);
+}
+
+.horoscope-hero-deep {
+    left: 10px;
+    bottom: 10px;
+    width: 24%;
+    height: 24%;
+    background-image: url("./assets/images/deeppics.png");
+    background-size: contain;
+}
+
+.horoscope-hero-garland {
+    left: -4%;
+    top: 2%;
+    width: 40%;
+    height: 40%;
+    background-image: url("./assets/images/mala-removebg-preview.png");
+    background-size: contain;
+    opacity: 0.88;
+}
+
+.horoscope-hero-chip {
+    position: absolute;
+    min-height: 42px;
+    padding: 0 16px;
+    border: 2px solid #111;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.92);
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    color: #2f1e12;
+}
+
+.horoscope-hero-chip-top {
+    left: 18px;
+    top: 18px;
+}
+
+.horoscope-hero-chip-bottom {
+    right: 18px;
+    top: 70px;
+}
+
+.horoscope-today-section,
+.horoscope-why-section,
+.horoscope-success-section {
+    padding: clamp(22px, 2.4vw, 34px);
+}
+
+.horoscope-section-head {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.horoscope-section-head h2,
+.horoscope-why-copy h2,
+.horoscope-success-copy h2 {
+    font-size: clamp(30px, 2.7vw, 42px);
+    line-height: 1.18;
+}
+
+.horoscope-today-banner {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+    gap: 18px;
+    align-items: stretch;
+}
+
+.horoscope-today-banner-copy,
+.horoscope-today-banner-visual,
+.horoscope-sign-card,
+.horoscope-trust-card,
+.horoscope-trust-note,
+.horoscope-success-slider,
+.horoscope-success-copy {
+    border: 2px solid #111;
+    border-radius: 28px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(255, 248, 232, 0.98) 100%);
+    box-shadow: 7px 7px 0 rgba(0, 0, 0, 1);
+}
+
+.horoscope-today-banner-copy {
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    justify-content: center;
+}
+
+.horoscope-today-banner-copy h3 {
+    font-size: clamp(24px, 2vw, 34px);
+    line-height: 1.2;
+}
+
+.horoscope-today-banner-visual {
+    position: relative;
+    min-height: clamp(280px, 24vw, 360px);
+    overflow: hidden;
+}
+
+.horoscope-today-banner-image {
+    inset: 18px 18px 88px;
+    border-radius: 24px;
+    background-image:
+        linear-gradient(rgba(255, 248, 230, 0.08), rgba(255, 238, 210, 0.12)),
+        url("./assets/images/Gemini_Generated_Image_alcwplalcwplalcw.png");
+}
+
+.horoscope-today-banner-card {
+    position: absolute;
+    left: 18px;
+    right: 18px;
+    bottom: 18px;
+    min-height: 64px;
+    padding: 14px 16px;
+    border: 2px solid #111;
+    border-radius: 22px;
+    background: rgba(255, 255, 255, 0.94);
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 1);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.horoscope-today-banner-card span {
+    font-family: 'Poppins', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #6a4620;
+}
+
+.horoscope-today-banner-card strong,
+.horoscope-trust-copy strong {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(18px, 1.4vw, 24px);
+    line-height: 1.3;
+    color: #1d1208;
+}
+
+.horoscope-sign-grid {
+    margin-top: 22px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 190px), 1fr));
+    gap: 18px;
+}
+
+.horoscope-sign-card {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.horoscope-sign-card:hover,
+.horoscope-sign-card:focus-within {
+    transform: translateY(-4px);
+    box-shadow: 10px 10px 0 rgba(0, 0, 0, 1);
+}
+
+.horoscope-sign-art {
+    position: relative;
+    min-height: 170px;
+    border: 2px solid rgba(17, 17, 17, 0.14);
+    border-radius: 24px;
+    overflow: hidden;
+    background:
+        radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.34) 0%, transparent 28%),
+        linear-gradient(160deg, var(--sign-start) 0%, var(--sign-end) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.horoscope-sign-art::before,
+.horoscope-sign-art::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+}
+
+.horoscope-sign-art::before {
+    width: 76%;
+    height: 76%;
+    border: 2px dashed rgba(255, 255, 255, 0.44);
+}
+
+.horoscope-sign-art::after {
+    width: 48%;
+    height: 48%;
+    background: rgba(255, 255, 255, 0.18);
+    box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.2);
+}
+
+.horoscope-sign-badge {
+    position: absolute;
+    left: 12px;
+    top: 12px;
+    min-height: 28px;
+    padding: 0 10px;
+    border: 2px solid rgba(17, 17, 17, 0.24);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.76);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Poppins', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #5a3b18;
+    z-index: 1;
+}
+
+.horoscope-sign-initials {
+    position: relative;
+    z-index: 1;
+    font-family: 'Cinzel', serif;
+    font-size: clamp(30px, 2vw, 40px);
+    letter-spacing: 0.06em;
+    color: rgba(255, 255, 255, 0.96);
+    text-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+}
+
+.horoscope-sign-name {
+    margin: 0;
+    font-family: 'Cinzel', serif;
+    font-size: clamp(20px, 1.4vw, 26px);
+    color: #1d1208;
+}
+
+.horoscope-sign-subtitle {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: #6f4b24;
+}
+
+.horoscope-why-section,
+.horoscope-success-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr));
+    gap: 22px;
+    align-items: center;
+}
+
+.horoscope-why-lead,
+.horoscope-success-lead {
+    font-weight: 700;
+    color: #2e1e11;
+}
+
+.horoscope-why-visual {
+    min-width: 0;
+}
+
+.horoscope-why-collage {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+    gap: 16px;
+}
+
+.horoscope-trust-card,
+.horoscope-trust-note {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 0;
+}
+
+.horoscope-trust-card-main {
+    grid-column: 1 / -1;
+}
+
+.horoscope-trust-image {
+    position: relative;
+    min-height: 200px;
+    border-radius: 22px;
+    overflow: hidden;
+    background-color: #f3dfbe;
+}
+
+.horoscope-trust-image-main {
+    background-image:
+        linear-gradient(rgba(255, 248, 230, 0.08), rgba(255, 238, 210, 0.12)),
+        url("./assets/images/panditpujakete.jpg");
+}
+
+.horoscope-trust-image-alt {
+    background-image:
+        linear-gradient(rgba(255, 248, 230, 0.08), rgba(255, 238, 210, 0.12)),
+        url("./assets/images/Gemini_Generated_Image_alcwplalcwplalcw.png");
+}
+
+.horoscope-trust-copy,
+.horoscope-trust-note div {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.horoscope-trust-copy span {
+    font-family: 'Poppins', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #6a4620;
+}
+
+.horoscope-note-icon {
+    width: 52px;
+    height: 52px;
+    border: 2px solid #111;
+    border-radius: 18px;
+    background: linear-gradient(180deg, #fff4d8 0%, #ffe0ab 100%);
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: #6f430b;
+}
+
+.horoscope-trust-note h3 {
+    margin: 0;
+    font-family: 'Cinzel', serif;
+    font-size: clamp(18px, 1.4vw, 24px);
+    line-height: 1.3;
+    color: #1d1208;
+}
+
+.horoscope-success-slider-wrap {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.horoscope-success-slider {
+    position: relative;
+    overflow: hidden;
+    min-height: clamp(360px, 31vw, 460px);
+    padding: 12px;
+}
+
+.horoscope-success-track {
+    display: flex;
+    height: 100%;
+    transition: transform 0.45s ease;
+    will-change: transform;
+}
+
+.horoscope-success-slide {
+    min-width: 100%;
+    display: flex;
+}
+
+.horoscope-success-frame {
+    position: relative;
+    flex: 1;
+    min-height: clamp(334px, 28vw, 420px);
+    border-radius: 24px;
+    overflow: hidden;
+    background:
+        radial-gradient(circle at top left, rgba(255, 255, 255, 0.34) 0%, transparent 28%),
+        linear-gradient(160deg, var(--slide-start) 0%, var(--slide-end) 100%);
+    box-shadow: inset 0 0 0 2px rgba(17, 17, 17, 0.08);
+}
+
+.horoscope-success-frame.has-image {
+    background-size: cover;
+    background-position: center;
+}
+
+.horoscope-success-frame::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(180deg, rgba(0, 0, 0, 0.06) 0%, rgba(0, 0, 0, 0.34) 100%);
+}
+
+.horoscope-success-label {
+    position: absolute;
+    left: 16px;
+    top: 16px;
+    min-height: 30px;
+    padding: 0 12px;
+    border: 2px solid rgba(17, 17, 17, 0.18);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.84);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Poppins', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #5a3b18;
+    z-index: 1;
+}
+
+.horoscope-success-placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cinzel', serif;
+    font-size: clamp(24px, 2vw, 34px);
+    color: rgba(255, 255, 255, 0.9);
+    z-index: 1;
+}
+
+.horoscope-success-overlay {
+    position: absolute;
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+    padding: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.24);
+    border-radius: 22px;
+    background: rgba(22, 12, 4, 0.38);
+    backdrop-filter: blur(8px);
+    z-index: 1;
+}
+
+.horoscope-success-overlay strong {
+    display: block;
+    font-family: 'Cinzel', serif;
+    font-size: clamp(20px, 1.5vw, 28px);
+    line-height: 1.3;
+    color: #fff7ea;
+}
+
+.horoscope-success-overlay p {
+    margin: 6px 0 0;
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    line-height: 1.6;
+    color: rgba(255, 247, 234, 0.88);
+}
+
+.horoscope-success-indicators {
+    justify-content: center;
+}
+
+.horoscope-success-dot {
+    width: 14px;
+    height: 14px;
+    border: 2px solid #111;
+    border-radius: 50%;
+    background: #fff4db;
+    padding: 0;
+    box-shadow: 3px 3px 0 rgba(0, 0, 0, 1);
+    cursor: pointer;
+}
+
+.horoscope-success-dot.is-active {
+    background: #ff8c1a;
+}
+
+.horoscope-success-copy {
+    padding: clamp(20px, 2vw, 28px);
+    min-height: 100%;
+    justify-content: center;
+}

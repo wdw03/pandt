@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="resposnive.css">
+    <link rel="stylesheet" href="horoscope.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&display=swap" rel="stylesheet">
+    <title>Free Horoscope</title>
+</head>
+
+<body class="horoscope-route-body">
+    <div id="main" class="horoscope-route-main">
+        <div id="navbar">
+            <div class="navbarmain">
+                <div class="navbarhelogmain">
+                    <div class="navbarlogo"></div>
+                    <div class="navbartext">
+                        <h4>thanathu madom devasthanam</h4>
+                    </div>
+                </div>
+                <div id="navbarlinks">
+                    <nav>
+                        <ul>
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="pooja.html">Puja</a></li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link-arrow">Kundali<span class="arrow"></span></a>
+                                <div class="dropdown-menu">
+                                    <a href="kundali-matching.html">Kundali Matching</a>
+                                    <a href="free-janam-kundali.html">Free Janam Kundali</a>
+                                </div>
+                            </li>
+                            <li><a href="panchang.html">Panchnaag</a></li>
+                            <li><a href="#">about</a></li>
+                            <li><a href="horoscope.html">Horoscope</a></li>
+                            <li><a href="#">Astrology gallery</a></li>
+                            <li><a href="#">Contact us</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="loglongu">
+                    <div class="language">
+                        <div class="langselected nav-link-arrow">
+                            <p>HINDI</p>
+                            <span class="arrow"></span>
+                        </div>
+                        <div class="languageoption">
+                            <a href="#">English</a>
+                            <a href="#">Hindi</a>
+                            <a href="#">Tamil</a>
+                            <a href="#">Telugu</a>
+                        </div>
+                    </div>
+
+                    <div class="profileicons" id="profileToggle"
+                        style="background-image: url('./assets/images/ic_user_profile.svg');">
+                    </div>
+                </div>
+
+                <div class="profile-drawer" id="profileDrawer">
+                    <div class="profile-drawer-header">
+                        <h3>Welcome to Thanathu Madom Devasthanam</h3>
+                        <p>Thanathu Madom Devasthanam</p>
+                    </div>
+
+                    <div class="profile-drawer-body">
+                        <h4>Account Details</h4>
+
+                        <a href="#" class="drawer-item">
+                            <span class="drawer-left">
+                                <span class="drawer-icon profile-item-icon"></span>
+                                <span>My Profile</span>
+                            </span>
+                            <span class="drawer-arrow"></span>
+                        </a>
+
+                        <a href="#" class="drawer-item">
+                            <span class="drawer-left">
+                                <span class="drawer-icon pooja-item-icon"></span>
+                                <span>My Puja Booking</span>
+                            </span>
+                            <span class="drawer-arrow"></span>
+                        </a>
+
+                        <a href="kundali-matching.html" class="drawer-item">
+                            <span class="drawer-left">
+                                <span class="drawer-icon kundali-item-icon"></span>
+                                <span>Kundali Booking</span>
+                            </span>
+                            <span class="drawer-arrow"></span>
+                        </a>
+
+                        <h4>Services</h4>
+
+                        <a href="#" class="drawer-item">
+                            <span class="drawer-left">
+                                <span class="drawer-icon book-pooja-icon"></span>
+                                <span>Book a Pooja</span>
+                            </span>
+                            <span class="drawer-arrow"></span>
+                        </a>
+
+                        <div class="drawer-item drawer-accordion" id="bookKundaliAccordion">
+                            <div class="drawer-item-main" id="bookKundaliToggle">
+                                <span class="drawer-left">
+                                    <span class="drawer-icon book-kundali-icon"></span>
+                                    <span>Book for Kundali</span>
+                                </span>
+                                <span class="drawer-arrow accordion-arrow"></span>
+                            </div>
+
+                            <div class="drawer-submenu" id="bookKundaliSubmenu">
+                                <a href="kundali-matching.html" class="drawer-subitem">
+                                    <span class="drawer-left">
+                                        <span class="drawer-icon kundali-match-icon"></span>
+                                        <span>Kundali Matching</span>
+                                    </span>
+                                    <span class="drawer-arrow"></span>
+                                </a>
+
+                                <a href="free-janam-kundali.html" class="drawer-subitem">
+                                    <span class="drawer-left">
+                                        <span class="drawer-icon janam-kundali-icon"></span>
+                                        <span>Free Janam Kundali</span>
+                                    </span>
+                                    <span class="drawer-arrow"></span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <a href="#" class="drawer-item">
+                            <span class="drawer-left">
+                                <span class="drawer-icon store-item-icon"></span>
+                                <span>Store</span>
+                            </span>
+                            <span class="drawer-arrow"></span>
+                        </a>
+                    </div>
+
+                    <div class="profile-drawer-footer">
+                        <p class="support-title">Help &amp; Support for Puja Booking</p>
+
+                        <a href="mailto:yourmail@example.com" class="footer-btn support-btn">
+                            <span class="support-left">
+                                <span class="support-icon gmail-icon"></span>
+                                <span>Email Us</span>
+                            </span>
+                            <span class="drawer-arrow"></span>
+                        </a>
+
+                        <a href="https://wa.me/911234567890" class="footer-btn support-btn">
+                            <span class="support-left">
+                                <span class="support-icon whatsapp-icon"></span>
+                                <span>Whatsapp</span>
+                            </span>
+                            <span class="drawer-arrow"></span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="drawer-overlay" id="drawerOverlay"></div>
+            </div>
+        </div>
+
+        <main class="horoscope-route-page">
+            <section class="horoscope-hero">
+                <div class="horoscope-hero-copy">
+                    <span class="horoscope-pill">Free Daily Guidance</span>
+                    <h1>Free Horoscope</h1>
+                    <p>
+                        Read your daily horoscope with a clean, trust-building layout designed for fast insight.
+                        Explore zodiac guidance, understand your day better, and keep your decisions aligned with the
+                        energy around you.
+                    </p>
+
+                    <div class="horoscope-hero-chips">
+                        <span>Career</span>
+                        <span>Relationships</span>
+                        <span>Health</span>
+                        <span>Luck &amp; Timing</span>
+                    </div>
+
+                    <div class="horoscope-hero-actions">
+                        <a href="#today-horoscope" class="horoscope-primary-btn">Read Today&rsquo;s Horoscope</a>
+                        <a href="#success-section" class="horoscope-secondary-btn">See Future Guidance</a>
+                    </div>
+                </div>
+
+                <div class="horoscope-hero-visual">
+                    <div class="horoscope-hero-visual-card">
+                        <div class="horoscope-hero-orb horoscope-hero-orb-one"></div>
+                        <div class="horoscope-hero-orb horoscope-hero-orb-two"></div>
+                        <div class="horoscope-hero-pattern"></div>
+                        <div class="horoscope-hero-main-image"></div>
+                        <div class="horoscope-hero-side-image"></div>
+                        <div class="horoscope-hero-deep"></div>
+                        <div class="horoscope-hero-garland"></div>
+                        <div class="horoscope-hero-chip horoscope-hero-chip-top">Today&rsquo;s Cosmic Mood</div>
+                        <div class="horoscope-hero-chip horoscope-hero-chip-bottom">Stars Shift Every Day</div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="horoscope-today-section" id="today-horoscope">
+                <div class="horoscope-section-head">
+                    <span class="horoscope-section-tag">Daily Zodiac Reading</span>
+                    <h2>Today&rsquo;s Horoscope</h2>
+                    <p>
+                        Confused about how your day would turn out to be? Find out if today is the day to make big
+                        decisions. Read your Daily Horoscope forecast and get insights regarding different aspects of
+                        your life to plan your day better.
+                    </p>
+                </div>
+
+                <div class="horoscope-today-banner">
+                    <div class="horoscope-today-banner-copy">
+                        <span class="horoscope-mini-tag">12 Rashis</span>
+                        <h3>Choose your rashi and begin your day with clearer direction.</h3>
+                        <p>
+                            Every zodiac sign has its own rhythm for love, work, health, and opportunities. This page
+                            keeps all rashiyan in one place with a polished card layout that you can later connect to
+                            live daily horoscope content.
+                        </p>
+                    </div>
+
+                    <div class="horoscope-today-banner-visual">
+                        <div class="horoscope-today-banner-image"></div>
+                        <div class="horoscope-today-banner-card">
+                            <span>Today&rsquo;s Focus</span>
+                            <strong>Read before making important choices.</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="horoscope-sign-grid" data-zodiac-grid></div>
+            </section>
+
+            <section class="horoscope-why-section">
+                <div class="horoscope-why-copy">
+                    <span class="horoscope-section-tag">Horoscope Kyu Check Karwana Chahiye Aapko</span>
+                    <h2>Why Should You Check Your Horoscope Daily?</h2>
+                    <p class="horoscope-why-lead">
+                        If today is the right day for new beginnings? Or if this day will have opportunities or
+                        challenges in store?
+                    </p>
+                    <p>
+                        Every day is like a new page in the book of our life. While some days are for hustle, on some
+                        days all you need to do is take a back seat and let situations reveal their outcome. What if
+                        there is a way from which you can get clarity about your day ahead and know what needs to be
+                        done. The daily Horoscope of an individual is a prediction about what different situations in
+                        your life such as regarding career, health, relationship, etc. are going to be like.
+                    </p>
+                    <p>
+                        The position of celestial bodies like the Sun, the Moon, and planets change frequently and they
+                        often enter into new Houses and Zodiac signs leaving the former ones. With this movement, the
+                        life situations of an individual also get affected.
+                    </p>
+                    <p>
+                        Daily Horoscope is created by deeply analyzing the position and effect of the celestial bodies
+                        on a particular day and how it affects different aspects of the life of an individual.
+                    </p>
+                    <p>
+                        Your Daily Horoscope can help you decipher upcoming challenges and reveal opportunities coming
+                        towards you. You get better clarity about the roadblocks that are restricting you to get peace
+                        of mind and success. These predictions give you greater confidence about your day ahead and help
+                        you steer your life in the right direction by making the right decisions.
+                    </p>
+                </div>
+
+                <div class="horoscope-why-visual">
+                    <div class="horoscope-why-collage">
+                        <article class="horoscope-trust-card horoscope-trust-card-main">
+                            <div class="horoscope-trust-image horoscope-trust-image-main"></div>
+                            <div class="horoscope-trust-copy">
+                                <span>Daily Clarity</span>
+                                <strong>Know the tone of your day before you begin.</strong>
+                            </div>
+                        </article>
+
+                        <article class="horoscope-trust-card">
+                            <div class="horoscope-trust-image horoscope-trust-image-alt"></div>
+                            <div class="horoscope-trust-copy">
+                                <span>Planetary Movement</span>
+                                <strong>Understand changing energies with more confidence.</strong>
+                            </div>
+                        </article>
+
+                        <article class="horoscope-trust-note">
+                            <span class="horoscope-note-icon">TR</span>
+                            <div>
+                                <h3>Build trust with a strong daily ritual.</h3>
+                                <p>Horoscope reading helps users feel prepared for decisions, timing, and emotional
+                                    balance.</p>
+                            </div>
+                        </article>
+
+                        <article class="horoscope-trust-note">
+                            <span class="horoscope-note-icon">IN</span>
+                            <div>
+                                <h3>Get insights beyond guesswork.</h3>
+                                <p>Career, love, health, and opportunities can be read with clearer context for the
+                                    day ahead.</p>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </section>
+
+            <section class="horoscope-success-section" id="success-section">
+                <div class="horoscope-success-slider-wrap">
+                    <div class="horoscope-success-slider" data-success-slider>
+                        <div class="horoscope-success-track" data-success-track></div>
+                    </div>
+
+                    <div class="horoscope-success-indicators" data-success-indicators></div>
+                </div>
+
+                <div class="horoscope-success-copy">
+                    <span class="horoscope-section-tag">Future Direction</span>
+                    <h2>WILL YOU BE RICH AND SUCCESSFUL IN FUTURE?</h2>
+                    <p class="horoscope-success-lead">Know what&rsquo;s written in your stars!</p>
+                    <p>
+                        Explore future-focused guidance to understand how effort, timing, and opportunity can align in
+                        your life. This section is designed like a premium destination CTA so you can later plug it
+                        into deeper horoscope readings, consultation flows, or booking steps.
+                    </p>
+
+                    <a href="#" class="horoscope-primary-btn">Ask Thanathu Madom Devasthanam Now</a>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+    <script src="horoscope.js"></script>
+</body>
+
+</html>
