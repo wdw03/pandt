@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="hi">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Panchang — Thanathu Madam Devasthanam</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;700&display=swap"
+        rel="stylesheet" />
+    <style>
+        :root {
+            --bg: #f5f0e8;
+            --card: #faf7f2;
+            --border: #d9cdb8;
+            --gold: #c8922a;
+            --gold-lt: #e8c97a;
+            --gold-chip: #d4a843;
+            --text: #2c2416;
+            --text-sm: #6b5a3e;
+            --accent: #8b6914;
+            --tag-bg: #e8dcc8;
+            --tag-txt: #5c4a20;
+            --badge-bg: #d4a843;
+            --badge-txt: #fff8ee;
+            --shadow: 0 4px 24px rgba(100, 70, 10, 0.10);
+            --radius: 16px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        /* ── NAV ── */
+        nav {
+            background: var(--card);
+            border-bottom: 1.5px solid var(--border);
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            gap: 0;
+            flex-wrap: wrap;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 0;
+            margin-right: 24px;
+        }
+
+        .nav-logo-circle {
+            width: 36px;
+            height: 36px;
+            background: var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 16px;
+        }
+
+        .nav-logo span {
+            font-family: 'Playfair Display', serif;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-sm);
+            font-size: 13px;
+            padding: 20px 14px;
+            transition: color .2s;
+        }
+
+        nav a:hover {
+            color: var(--gold);
+        }
+
+        nav a.active {
+            color: var(--gold);
+            font-weight: 700;
+            border-bottom: 2px solid var(--gold);
+        }
+
+        /* ── HEADER CONTROLS ── */
+        .header {
+            max-width: 960px;
+            margin: 24px auto 0;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .btn-today,
+        .btn-tomorrow {
+            padding: 9px 22px;
+            border-radius: 30px;
+            border: none;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all .2s;
+        }
+
+        .btn-today {
+            background: var(--gold);
+            color: white;
+        }
+
+        .btn-today:hover {
+            background: var(--accent);
+        }
+
+        .btn-tomorrow {
+            background: var(--card);
+            color: var(--text);
+            border: 1.5px solid var(--border);
+        }
+
+        .btn-tomorrow:hover {
+            background: var(--tag-bg);
+        }
+
+        .date-picker-wrap {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .date-picker-wrap label {
+            font-size: 10px;
+            color: var(--text-sm);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .date-picker-wrap input[type=date] {
+            border: 1.5px solid var(--border);
+            background: var(--card);
+            border-radius: 8px;
+            padding: 6px 10px;
+            font-size: 14px;
+            color: var(--text);
+            outline: none;
+            cursor: pointer;
+        }
+
+        .date-picker-wrap input[type=date]:focus {
+            border-color: var(--gold);
+        }
+
+        .city-select-wrap {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .city-select-wrap label {
+            font-size: 10px;
+            color: var(--text-sm);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .city-select-wrap select {
+            border: 1.5px solid var(--border);
+            background: var(--card);
+            border-radius: 8px;
+            padding: 6px 10px;
+            font-size: 14px;
+            color: var(--text);
+            outline: none;
+            cursor: pointer;
+            min-width: 160px;
+        }
+
+        .city-select-wrap select:focus {
+            border-color: var(--gold);
+        }
+
+        .selected-date-label {
+            margin-left: auto;
+            text-align: right;
+        }
+
+        .selected-date-label .sdl-sub {
+            font-size: 10px;
+            color: var(--text-sm);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .selected-date-label .sdl-main {
+            font-family: 'Playfair Display', serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        /* ── MAIN GRID ── */
+        .main {
+            max-width: 960px;
+            margin: 20px auto 40px;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 660px) {
+            .main {
+                grid-template-columns: 1fr;
+            }
+
+            .selected-date-label {
+                display: none;
+            }
+        }
+
+        /* ── CARDS ── */
+        .card {
+            background: var(--card);
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius);
+            padding: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 18px;
+        }
+
+        .card-tag {
+            background: var(--tag-bg);
+            color: var(--tag-txt);
+            border-radius: 30px;
+            padding: 4px 14px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            border: 1px solid var(--border);
+        }
+
+        .card-date {
+            font-size: 12px;
+            color: var(--text-sm);
+        }
+
+        .card-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 16px;
+            letter-spacing: 0.5px;
+        }
+
+        /* ── PANCHANG ROW ── */
+        .panch-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            padding: 13px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .panch-row:last-child {
+            border-bottom: none;
+        }
+
+        .badge {
+            min-width: 38px;
+            height: 38px;
+            background: linear-gradient(135deg, var(--gold-chip), var(--gold-lt));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 800;
+            color: white;
+            letter-spacing: 0.5px;
+            flex-shrink: 0;
+            box-shadow: 0 2px 8px rgba(200, 146, 42, .25);
+        }
+
+        .panch-info {
+            flex: 1;
+        }
+
+        .panch-label {
+            font-size: 10px;
+            color: var(--text-sm);
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            margin-bottom: 3px;
+        }
+
+        .panch-value {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .panch-sub {
+            font-size: 12px;
+            color: var(--text-sm);
+            margin-top: 2px;
+        }
+
+        /* ── ADDITIONAL INFO ── */
+        .snapshot-btn {
+            background: var(--tag-bg);
+            color: var(--tag-txt);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 5px 14px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            display: inline-block;
+        }
+
+        .lunar-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 11px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .lunar-row:last-child {
+            border-bottom: none;
+        }
+
+        .lunar-badge {
+            min-width: 38px;
+            height: 38px;
+            background: linear-gradient(135deg, var(--gold-chip), var(--gold-lt));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 800;
+            color: white;
+            letter-spacing: 0.5px;
+            flex-shrink: 0;
+            box-shadow: 0 2px 8px rgba(200, 146, 42, .25);
+        }
+
+        .lunar-info {
+            flex: 1;
+        }
+
+        .lunar-label {
+            font-size: 10px;
+            color: var(--text-sm);
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            margin-bottom: 2px;
+        }
+
+        .lunar-value {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        /* ── LOADING / ERROR ── */
+        .loading-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(245, 240, 232, .85);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .spinner {
+            width: 48px;
+            height: 48px;
+            border: 4px solid var(--border);
+            border-top-color: var(--gold);
+            border-radius: 50%;
+            animation: spin .8s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .loading-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 16px;
+            color: var(--text-sm);
+        }
+
+        .error-box {
+            background: #fff3f3;
+            border: 1.5px solid #e88;
+            border-radius: 12px;
+            padding: 16px 20px;
+            color: #a33;
+            font-size: 14px;
+            margin: 12px 0;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* ── FETCH BTN ── */
+        .fetch-btn {
+            padding: 9px 22px;
+            border-radius: 30px;
+            border: none;
+            background: var(--gold);
+            color: white;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background .2s;
+        }
+
+        .fetch-btn:hover {
+            background: var(--accent);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAV -->
+    <nav>
+        <div class="nav-logo">
+            <div class="nav-logo-circle">🕉</div>
+            <span>Thanathu Madam Devasthanam</span>
+        </div>
+        <a href="#">Home</a>
+        <a href="#">Puja</a>
+        <a href="#">Kundali</a>
+        <a href="#" class="active">Panchnaag</a>
+        <a href="#">about</a>
+        <a href="#">Horoscope</a>
+        <a href="#">Astrology gallery</a>
+        <a href="#">Contact us</a>
+    </nav>
+
+    <!-- HEADER CONTROLS -->
+    <div class="header">
+        <button class="btn-today" onclick="loadToday()">Today</button>
+        <button class="btn-tomorrow" onclick="loadTomorrow()">Tomorrow</button>
+
+        <div class="city-select-wrap">
+            <label>Select City</label>
+            <select id="citySelect" onchange="fetchPanchang()">
+                <option value="patna">Patna</option>
+                <option value="delhi">Delhi</option>
+                <option value="mumbai">Mumbai</option>
+                <option value="kolkata">Kolkata</option>
+                <option value="chennai">Chennai</option>
+                <option value="bangalore">Bangalore</option>
+                <option value="hyderabad">Hyderabad</option>
+                <option value="ahmedabad">Ahmedabad</option>
+                <option value="pune">Pune</option>
+                <option value="jaipur">Jaipur</option>
+                <option value="lucknow">Lucknow</option>
+                <option value="varanasi">Varanasi</option>
+                <option value="prayagraj">Prayagraj</option>
+                <option value="indore">Indore</option>
+                <option value="bhopal">Bhopal</option>
+                <option value="nagpur">Nagpur</option>
+                <option value="surat">Surat</option>
+                <option value="chandigarh">Chandigarh</option>
+                <option value="amritsar">Amritsar</option>
+                <option value="dehradun">Dehradun</option>
+                <option value="ranchi">Ranchi</option>
+                <option value="bhubaneswar">Bhubaneswar</option>
+                <option value="guwahati">Guwahati</option>
+                <option value="thiruvananthapuram">Thiruvananthapuram</option>
+                <option value="kochi">Kochi</option>
+            </select>
+        </div>
+
+        <div class="date-picker-wrap">
+            <label>Select Panchang Date</label>
+            <input type="date" id="dateInput" onchange="fetchPanchang()" />
+        </div>
+
+        <div class="selected-date-label">
+            <div class="sdl-sub">Selected Date</div>
+            <div class="sdl-main" id="selectedDateLabel">—</div>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="main">
+
+        <!-- LEFT: Daily Core -->
+        <div class="card" id="coreCard">
+            <div class="card-header">
+                <span class="card-tag">Panchang</span>
+                <span class="card-date" id="coreCardDate">—</span>
+            </div>
+            <div class="card-title">Daily Core Details</div>
+            <div id="coreRows">
+                <!-- Filled by JS -->
+            </div>
+            <div class="error-box hidden" id="coreError"></div>
+        </div>
+
+        <!-- RIGHT: Additional Info -->
+        <div class="card" id="additionalCard">
+            <div class="card-header">
+                <span class="card-tag">Additional Info</span>
+            </div>
+            <div class="card-title">Timings &amp; Lunar Notes</div>
+            <div class="snapshot-btn">Today Snapshot</div>
+            <div id="lunarRows">
+                <!-- Filled by JS -->
+            </div>
+            <div class="error-box hidden" id="lunarError"></div>
+        </div>
+
+    </div>
+
+    <!-- LOADING -->
+    <div class="loading-overlay hidden" id="loadingOverlay">
+        <div class="spinner"></div>
+        <div class="loading-text">🕉️ Panchang fetch ho raha hai...</div>
+    </div>
+
+    <script>
+        // ── Helpers ──
+        function todayISO() {
+            const now = new Date();
+            // offset to IST
+            const ist = new Date(now.getTime() + (5.5 * 60 * 60 * 1000));
+            return ist.toISOString().split("T")[0];
+        }
+
+        function formatDisplayDate(dateStr) {
+            const d = new Date(dateStr + "T00:00:00+05:30");
+            return d.toLocaleDateString("en-US", {
+                weekday: "long", year: "numeric",
+                month: "long", day: "numeric"
+            }).toUpperCase();
+        }
+
+        function shortDate(dateStr) {
+            const d = new Date(dateStr + "T00:00:00+05:30");
+            return d.toLocaleDateString("en-US", {
+                month: "short", day: "2-digit", year: "numeric"
+            }).replace(/ /g, " ").toUpperCase();
+        }
+
+        // ── Core rows builder ──
+        function buildCoreRows(data) {
+            const core = data.daily_core_details;
+            let html = "";
+
+            // Vaara
+            html += row("VA", "Vaara (Day)", core.vaara);
+
+            // Tithi (show first, note if 2)
+            if (core.tithi && core.tithi.length > 0) {
+                const t = core.tithi[0];
+                let sub = `${t.paksha} · ${t.start} – ${t.end}`;
+                if (core.tithi.length > 1) {
+                    const t2 = core.tithi[1];
+                    sub += `<br>Then: <b>${t2.name}</b> · ${t2.start} – ${t2.end}`;
+                }
+                html += row("TI", "Tithi", t.name, sub);
+            }
+
+            // Nakshatra
+            if (core.nakshatra && core.nakshatra.length > 0) {
+                const n = core.nakshatra[0];
+                let sub = `Swami: ${n.lord} · ${n.start} – ${n.end}`;
+                if (core.nakshatra.length > 1) {
+                    const n2 = core.nakshatra[1];
+                    sub += `<br>Then: <b>${n2.name}</b> · ${n2.start} – ${n2.end}`;
+                }
+                html += row("NA", "Nakshatra", n.name, sub);
+            }
+
+            // Yoga
+            if (core.yoga && core.yoga.length > 0) {
+                const y = core.yoga[0];
+                let sub = `${y.start} – ${y.end}`;
+                if (core.yoga.length > 1) {
+                    const y2 = core.yoga[1];
+                    sub += `<br>Then: <b>${y2.name}</b> · ${y2.start} – ${y2.end}`;
+                }
+                html += row("YO", "Yoga", y.name, sub);
+            }
+
+            // Karana
+            if (core.karana && core.karana.length > 0) {
+                const k = core.karana[0];
+                let sub = `${k.start} – ${k.end}`;
+                if (core.karana.length > 1) {
+                    const k2 = core.karana[1];
+                    sub += `<br>Then: <b>${k2.name}</b> · ${k2.start} – ${k2.end}`;
+                }
+                html += row("KA", "Karana", k.name, sub);
+            }
+
+            // Rasi
+            const rasi = core.rasi;
+            if (rasi) {
+                const rname = rasi.name !== "N/A" ? rasi.name : "—";
+                const rlord = rasi.lord !== "N/A" ? `Swami: ${rasi.lord}` : "";
+                html += row("RA", "Rasi", rname, rlord);
+            }
+
+            return html;
+        }
+
+        function row(badge, label, value, sub = "") {
+            return `
+      <div class="panch-row">
+        <div class="badge">${badge}</div>
+        <div class="panch-info">
+          <div class="panch-label">${label}</div>
+          <div class="panch-value">${value || "—"}</div>
+          ${sub ? `<div class="panch-sub">${sub}</div>` : ""}
+        </div>
+      </div>`;
+        }
+
+        // ── Lunar rows builder ──
+        function buildLunarRows(data) {
+            const info = data.additional_info.timings_and_lunar_notes;
+            let html = "";
+
+            html += lrow("SR", "Sunrise", info.sunrise);
+            html += lrow("SS", "Sunset", info.sunset);
+            html += lrow("MR", "Moonrise", info.moonrise);
+            html += lrow("MS", "Moonset", info.moonset);
+            html += lrow("FM", "Next Full Moon", info.next_full_moon);
+            html += lrow("NM", "Next New Moon", info.next_new_moon);
+            html += lrow("AM", "Amanta Month", info.amanta_month);
+            html += lrow("PK", "Paksha", info.paksha);
+            html += lrow("PM", "Purnimanta", info.purnimanta_month);
+
+            return html;
+        }
+
+        function lrow(badge, label, value) {
+            return `
+      <div class="lunar-row">
+        <div class="lunar-badge">${badge}</div>
+        <div class="lunar-info">
+          <div class="lunar-label">${label}</div>
+          <div class="lunar-value">${value || "—"}</div>
+        </div>
+      </div>`;
+        }
+
+        // ── Main fetch ──
+        async function fetchPanchang() {
+            const city = document.getElementById("citySelect").value;
+            const date = document.getElementById("dateInput").value || todayISO();
+
+            document.getElementById("selectedDateLabel").textContent = formatDisplayDate(date);
+            document.getElementById("coreCardDate").textContent = shortDate(date);
+            document.getElementById("loadingOverlay").classList.remove("hidden");
+            document.getElementById("coreError").classList.add("hidden");
+            document.getElementById("lunarError").classList.add("hidden");
+
+            try {
+                const res = await fetch(`/panchang?city=${city}&date=${date}`);
+                const data = await res.json();
+
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+
+                document.getElementById("coreRows").innerHTML = buildCoreRows(data);
+                document.getElementById("lunarRows").innerHTML = buildLunarRows(data);
+
+            } catch (err) {
+                const msg = `❌ Data fetch mein error: ${err.message}`;
+                const errEl = document.getElementById("coreError");
+                errEl.textContent = msg;
+                errEl.classList.remove("hidden");
+            } finally {
+                document.getElementById("loadingOverlay").classList.add("hidden");
+            }
+        }
+
+        function loadToday() {
+            document.getElementById("dateInput").value = todayISO();
+            fetchPanchang();
+        }
+
+        function loadTomorrow() {
+            const d = new Date(todayISO() + "T00:00:00");
+            d.setDate(d.getDate() + 1);
+            const y = d.getFullYear();
+            const m = String(d.getMonth() + 1).padStart(2, "0");
+            const day = String(d.getDate()).padStart(2, "0");
+            document.getElementById("dateInput").value = `${y}-${m}-${day}`;
+            fetchPanchang();
+        }
+
+        // ── Init ──
+        document.addEventListener("DOMContentLoaded", () => {
+            document.getElementById("dateInput").value = todayISO();
+            fetchPanchang();
+        });
+    </script>
+</body>
+
+</html>
