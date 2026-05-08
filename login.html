@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Login / Signup - Thanathu Madom Devasthanam</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=Inter:wght@300..900&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="resposnive.css">
+
+    <style>
+        body {
+            background: #111;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Make the modal take up the screen nicely on the dedicated page */
+        .auth-page-wrapper {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, rgba(20, 10, 5, 0.95), rgba(40, 20, 10, 0.95)), url('./assets/images/gharouaj.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .auth-modal {
+            transform: none !important;
+            /* Override modal animation */
+            width: min(95%, 1000px);
+            min-height: 600px;
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.8);
+        }
+
+        .auth-modal-close {
+            display: none;
+            /* No close button on the dedicated page */
+        }
+
+        .auth-back-home {
+            position: absolute;
+            top: 24px;
+            left: 24px;
+            color: #ffcc80;
+            text-decoration: none;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 10;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 8px 16px;
+            border-radius: 99px;
+            backdrop-filter: blur(8px);
+        }
+
+        .auth-back-home:hover {
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+        .auth-inline-feedback {
+            margin: 0 0 16px;
+            padding: 12px 14px;
+            border-radius: 16px;
+            background: rgba(255, 211, 148, 0.14);
+            border: 1px solid rgba(255, 204, 128, 0.22);
+            color: #f5dcc0;
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="auth-page-wrapper">
+        <a href="index.html" class="auth-back-home">&larr; Back to Home</a>
+
+        <div class="auth-modal">
+            <div class="auth-modal-visual">
+                <div class="auth-modal-image"></div>
+                <div class="auth-modal-visual-text">
+                    <h3>Spiritual Journey</h3>
+                    <p>Join Thanathu Madom Devasthanam for personalized pujas and astrology guidance.</p>
+                </div>
+            </div>
+
+            <div class="auth-modal-content">
+                <!-- Login View -->
+                <div class="auth-view active" id="viewLogin">
+                    <h2>Welcome Back</h2>
+                    <p>Enter your details to access your spiritual profile.</p>
+                    <form id="formLogin">
+                        <label class="auth-field">
+                            <span>Email Address</span>
+                            <input type="email" id="loginEmail" placeholder="Enter your email" required>
+                        </label>
+                        <label class="auth-field" style="position: relative;">
+                            <span>Password</span>
+                            <input type="password" id="loginPassword" placeholder="Enter your password" required>
+                            <button type="button" class="auth-password-toggle" tabindex="-1">Show</button>
+                        </label>
+                        <div class="auth-options">
+                            <a href="#" id="linkForgotPassword">Forgot Password?</a>
+                        </div>
+                        <button type="submit" class="auth-submit-btn">Login</button>
+                    </form>
+                    <p class="auth-switch">Don't have an account? <a href="#" id="linkSignup">Sign up</a></p>
+                </div>
+
+                <!-- Signup View -->
+                <div class="auth-view" id="viewSignup">
+                    <h2>Create Account</h2>
+                    <p>Join our spiritual community today.</p>
+                    <form id="formSignup">
+                        <label class="auth-field">
+                            <span>Full Name</span>
+                            <input type="text" id="signupName" placeholder="Enter your name" required>
+                        </label>
+                        <label class="auth-field">
+                            <span>Email Address</span>
+                            <input type="email" id="signupEmail" placeholder="Enter your email" required>
+                        </label>
+                        <label class="auth-field" style="position: relative;">
+                            <span>Password</span>
+                            <input type="password" id="signupPassword" placeholder="Create a password" required
+                                minlength="6">
+                            <button type="button" class="auth-password-toggle" tabindex="-1">Show</button>
+                        </label>
+                        <button type="submit" class="auth-submit-btn">Sign Up</button>
+                    </form>
+                    <p class="auth-switch">Already have an account? <a href="#" id="linkLoginFromSignup">Log in</a></p>
+                </div>
+
+                <!-- Verify Signup View -->
+                <div class="auth-view" id="viewVerifySignup">
+                    <h2>Verify Email</h2>
+                    <p class="auth-inline-feedback" id="verifySignupMessage">Enter the 6-digit OTP sent to your email to verify your account.</p>
+                    <form id="formVerifySignup">
+                        <label class="auth-field">
+                            <span>6-Digit OTP</span>
+                            <input type="text" id="verifyOtp" placeholder="123456" required pattern="\d{6}">
+                        </label>
+                        <button type="submit" class="auth-submit-btn">Verify Account</button>
+                    </form>
+                    <p class="auth-switch"><a href="#" id="linkLoginFromVerify">Back to Login</a></p>
+                </div>
+
+                <!-- Forgot Password View -->
+                <div class="auth-view" id="viewForgotPassword">
+                    <h2>Reset Password</h2>
+                    <p>Enter your email to receive a 6-digit OTP.</p>
+                    <form id="formForgotPassword">
+                        <label class="auth-field">
+                            <span>Email Address</span>
+                            <input type="email" id="forgotEmail" placeholder="Enter your email" required>
+                        </label>
+                        <button type="submit" class="auth-submit-btn">Send OTP</button>
+                    </form>
+                    <p class="auth-switch"><a href="#" id="linkLoginFromForgot">Back to Login</a></p>
+                </div>
+
+                <!-- Reset Password View -->
+                <div class="auth-view" id="viewResetPassword">
+                    <h2>Enter OTP</h2>
+                    <p class="auth-inline-feedback" id="resetPasswordMessage">Enter the 6-digit OTP sent to your email and create a new password.</p>
+                    <form id="formResetPassword">
+                        <label class="auth-field">
+                            <span>6-Digit OTP</span>
+                            <input type="text" id="resetOtp" placeholder="123456" required pattern="\d{6}">
+                        </label>
+                        <label class="auth-field" style="position: relative;">
+                            <span>New Password</span>
+                            <input type="password" id="resetPassword" placeholder="Enter new password" required
+                                minlength="6">
+                            <button type="button" class="auth-password-toggle" tabindex="-1">Show</button>
+                        </label>
+                        <button type="submit" class="auth-submit-btn">Update Password</button>
+                    </form>
+                    <p class="auth-switch"><a href="#" id="linkLoginFromReset">Back to Login</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="login.js"></script>
+</body>
+
+</html>

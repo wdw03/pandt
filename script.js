@@ -87,7 +87,16 @@ function closeDrawer() {
 
 toggle.addEventListener("click", (e) => {
     e.stopPropagation();
-    isOpen ? closeDrawer() : openDrawer();
+    const token = localStorage.getItem('tmToken');
+    if (token) {
+        if (!isOpen) {
+            openDrawer();
+        } else {
+            closeDrawer();
+        }
+    } else {
+        window.location.href = 'login.html';
+    }
 });
 
 overlay.addEventListener("click", closeDrawer);
@@ -709,3 +718,432 @@ poojaSliders.forEach((slider) => {
     updateRightPanel(poojaSlidesData[initialRealIndex]);
     scheduleAutoplay();
 });
+
+const heroBookNowButton = document.querySelector(".booknow button");
+const heroExploreServicesButton = document.querySelector(".exprlorresrive button");
+const homeRouteChronicle = document.getElementById("home-route-chronicle");
+const homeRevealItems = Array.from(document.querySelectorAll("[data-home-reveal]"));
+const homeFloatCards = Array.from(document.querySelectorAll("[data-home-float-group] .home-route-floating-card"));
+
+if (heroBookNowButton) {
+    heroBookNowButton.addEventListener("click", () => {
+        window.location.href = "pooja.html";
+    });
+}
+
+if (heroExploreServicesButton && homeRouteChronicle) {
+    heroExploreServicesButton.addEventListener("click", () => {
+        homeRouteChronicle.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+    });
+}
+
+const initHomeRevealAnimations = () => {
+    if (!homeRevealItems.length) {
+        return;
+    }
+
+    if (typeof gsap === "undefined" || typeof IntersectionObserver === "undefined") {
+        homeRevealItems.forEach((item) => {
+            item.classList.add("is-visible");
+            item.style.opacity = "1";
+            item.style.transform = "none";
+        });
+        return;
+    }
+
+    gsap.set(homeRevealItems, {
+        opacity: 0,
+        y: 36
+    });
+
+    const revealObserver = new IntersectionObserver(
+        (entries, observer) => {
+            entries.forEach((entry) => {
+                if (!entry.isIntersecting) {
+                    return;
+                }
+
+                const item = entry.target;
+                const isSpotlight = item.classList.contains("home-route-spotlight");
+                const isPulseCard = item.classList.contains("home-route-pulse-card");
+                const direction = isSpotlight && Array.from(item.parentElement.children).indexOf(item) % 2 !== 0
+                    ? 48
+                    : -48;
+
+                item.classList.add("is-visible");
+
+                gsap.fromTo(
+                    item,
+                    {
+                        opacity: 0,
+                        y: 34,
+                        x: isSpotlight ? direction : 0,
+                        scale: isPulseCard ? 0.94 : 1
+                    },
+                    {
+                        opacity: 1,
+                        y: 0,
+                        x: 0,
+                        scale: 1,
+                        duration: isPulseCard ? 0.65 : 0.9,
+                        ease: "power3.out",
+                        clearProps: "transform"
+                    }
+                );
+
+                observer.unobserve(item);
+            });
+        },
+        {
+            threshold: 0.16,
+            rootMargin: "0px 0px -10% 0px"
+        }
+    );
+
+    homeRevealItems.forEach((item) => {
+        revealObserver.observe(item);
+    });
+};
+
+const initHomeFloatingCards = () => {
+    if (!homeFloatCards.length || typeof gsap === "undefined") {
+        return;
+    }
+
+    homeFloatCards.forEach((card, index) => {
+        const distance = 12 + index * 4;
+        const duration = 3.6 + index * 0.4;
+
+        gsap.to(card, {
+            y: `-=${distance}`,
+            rotation: index % 2 === 0 ? "+=1.2" : "-=1.2",
+            duration,
+            repeat: -1,
+            yoyo: true,
+            ease: "sine.inOut"
+        });
+    });
+};
+
+initHomeRevealAnimations();
+initHomeFloatingCards();
+
+const homeRoutePreviewTriggers = Array.from(document.querySelectorAll(".home-route-preview-trigger"));
+const homeProductGalleries = Array.from(document.querySelectorAll("[data-home-product-gallery]"));
+const homeContactSupportForm = document.getElementById("homeContactSupportForm");
+const homeContactFeedback = document.querySelector("[data-home-contact-feedback]");
+
+const initHomeRouteTextPreview = () => {
+    if (!homeRoutePreviewTriggers.length) {
+        return;
+    }
+
+    const preview = document.createElement("div");
+    preview.className = "home-route-hover-preview";
+    preview.setAttribute("aria-hidden", "true");
+    preview.innerHTML = `
+        <div class="home-route-hover-preview-card">
+            <span class="home-route-hover-preview-label">Full Route Summary</span>
+            <h4 class="home-route-hover-preview-title"></h4>
+            <div class="home-route-hover-preview-scroll">
+                <p class="home-route-hover-preview-body"></p>
+            </div>
+        </div>
+    `;
+
+    document.body.append(preview);
+
+    const titleNode = preview.querySelector(".home-route-hover-preview-title");
+    const bodyNode = preview.querySelector(".home-route-hover-preview-body");
+    let activeSource = null;
+    let hideTimer = null;
+
+    const getPreviewPayload = (trigger) => {
+        const copy = trigger.closest(".home-route-copy");
+
+        if (!copy) {
+            return null;
+        }
+
+        const title = copy.querySelector("h3")?.textContent?.trim() || "Route Details";
+        const summary = copy.querySelector(":scope > p")?.textContent?.trim() || "";
+        const metaLines = Array.from(copy.querySelectorAll(".home-route-copy-meta article"))
+            .map((item) => {
+                const label = item.querySelector("span")?.textContent?.trim() || "";
+                const value = item.querySelector("strong")?.textContent?.trim() || "";
+                return label && value ? `${label}: ${value}` : value;
+            })
+            .filter(Boolean);
+        const pointLines = Array.from(copy.querySelectorAll(".home-route-points li"))
+            .map((item) => `- ${item.textContent.trim()}`)
+            .filter(Boolean);
+
+        const bodyParts = [summary, ...metaLines, ...pointLines].filter(Boolean);
+
+        return {
+            title,
+            body: bodyParts.join("\n\n")
+        };
+    };
+
+    const clearHideTimer = () => {
+        if (hideTimer) {
+            clearTimeout(hideTimer);
+            hideTimer = null;
+        }
+    };
+
+    const positionPreview = (source) => {
+        const rect = source.getBoundingClientRect();
+        const previewRect = preview.getBoundingClientRect();
+        const width = previewRect.width || Math.min(540, window.innerWidth - 32);
+        const sideGap = 16;
+        const left = Math.min(
+            Math.max(rect.left + rect.width / 2 - width / 2, sideGap),
+            Math.max(sideGap, window.innerWidth - width - sideGap)
+        );
+        const preferredTop = rect.top - previewRect.height - 16;
+        const top = preferredTop > 20 ? preferredTop : Math.min(window.innerHeight - previewRect.height - 20, rect.bottom + 14);
+
+        preview.style.left = `${left}px`;
+        preview.style.top = `${Math.max(20, top)}px`;
+    };
+
+    const openPreview = (trigger) => {
+        const payload = getPreviewPayload(trigger);
+
+        if (!payload || !titleNode || !bodyNode) {
+            return;
+        }
+
+        clearHideTimer();
+        activeSource = trigger;
+        titleNode.textContent = payload.title;
+        bodyNode.textContent = payload.body;
+        preview.classList.add("is-visible");
+        preview.setAttribute("aria-hidden", "false");
+        positionPreview(trigger);
+    };
+
+    const closePreview = () => {
+        clearHideTimer();
+        activeSource = null;
+        preview.classList.remove("is-visible");
+        preview.setAttribute("aria-hidden", "true");
+    };
+
+    const scheduleClose = (relatedTarget = null) => {
+        if (relatedTarget && (preview.contains(relatedTarget) || activeSource?.contains(relatedTarget))) {
+            return;
+        }
+
+        clearHideTimer();
+        hideTimer = setTimeout(() => {
+            const sourceHovered = activeSource?.matches(":hover");
+            const previewHovered = preview.matches(":hover");
+            const sourceFocused = !!activeSource && activeSource.contains(document.activeElement);
+
+            if (sourceHovered || previewHovered || sourceFocused) {
+                return;
+            }
+
+            closePreview();
+        }, 120);
+    };
+
+    homeRoutePreviewTriggers.forEach((trigger) => {
+        trigger.addEventListener("mouseenter", () => {
+            openPreview(trigger);
+        });
+
+        trigger.addEventListener("focusin", () => {
+            openPreview(trigger);
+        });
+
+        trigger.addEventListener("click", () => {
+            openPreview(trigger);
+        });
+
+        trigger.addEventListener("mouseleave", (event) => {
+            scheduleClose(event.relatedTarget);
+        });
+
+        trigger.addEventListener("focusout", (event) => {
+            scheduleClose(event.relatedTarget);
+        });
+    });
+
+    preview.addEventListener("mouseenter", clearHideTimer);
+    preview.addEventListener("mouseleave", (event) => {
+        scheduleClose(event.relatedTarget);
+    });
+
+    window.addEventListener("resize", () => {
+        if (activeSource && preview.classList.contains("is-visible")) {
+            positionPreview(activeSource);
+        }
+    });
+
+    window.addEventListener(
+        "scroll",
+        () => {
+            if (activeSource && preview.classList.contains("is-visible")) {
+                positionPreview(activeSource);
+            }
+        },
+        true
+    );
+};
+
+const initHomeProductGalleries = () => {
+    if (!homeProductGalleries.length) {
+        return;
+    }
+
+    homeProductGalleries.forEach((gallery) => {
+        const images = String(gallery.getAttribute("data-product-images") || "")
+            .split("|")
+            .map((item) => item.trim())
+            .filter(Boolean);
+        const mainImage = gallery.querySelector(".home-product-main-image");
+        const dots = Array.from(gallery.querySelectorAll(".home-product-thumbs span"));
+
+        if (!mainImage || images.length <= 1) {
+            return;
+        }
+
+        let activeIndex = 0;
+        let timer = null;
+
+        const updateGallery = (index) => {
+            activeIndex = index;
+            mainImage.style.opacity = "0.35";
+
+            window.setTimeout(() => {
+                mainImage.src = images[activeIndex];
+                mainImage.style.opacity = "1";
+            }, 140);
+
+            dots.forEach((dot, dotIndex) => {
+                dot.classList.toggle("is-active", dotIndex === activeIndex);
+            });
+        };
+
+        const startGallery = () => {
+            if (timer) {
+                clearInterval(timer);
+            }
+
+            timer = setInterval(() => {
+                const nextIndex = (activeIndex + 1) % images.length;
+                updateGallery(nextIndex);
+            }, 2600);
+        };
+
+        gallery.addEventListener("mouseenter", () => {
+            if (timer) {
+                clearInterval(timer);
+                timer = null;
+            }
+        });
+
+        gallery.addEventListener("mouseleave", startGallery);
+
+        dots.forEach((dot, dotIndex) => {
+            dot.addEventListener("click", () => {
+                updateGallery(dotIndex);
+                startGallery();
+            });
+        });
+
+        startGallery();
+    });
+};
+
+const initHomeContactForm = () => {
+    if (!homeContactSupportForm) {
+        return;
+    }
+
+    homeContactSupportForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        const formData = new FormData(homeContactSupportForm);
+        const name = String(formData.get("name") || "").trim();
+        const email = String(formData.get("email") || "").trim();
+        const message = String(formData.get("message") || "").trim();
+
+        if (!name || !email || !message) {
+            if (homeContactFeedback) {
+                homeContactFeedback.textContent = "Please fill in all fields before sending your message.";
+                homeContactFeedback.style.color = "#b34b1e";
+            }
+            return;
+        }
+
+        if (homeContactFeedback) {
+            homeContactFeedback.textContent = `Thank you, ${name}. Your message has been received.`;
+            homeContactFeedback.style.color = "#3f7a2a";
+        }
+
+        homeContactSupportForm.reset();
+    });
+};
+
+initHomeRouteTextPreview();
+initHomeProductGalleries();
+initHomeContactForm();
+
+// =========================================================
+// PROFILE LOGIC (When logged in)
+// =========================================================
+
+const API_URL = '/api';
+
+// Load Profile Data
+async function loadProfileData() {
+    const token = localStorage.getItem('tmToken');
+    if (!token) return;
+
+    try {
+        const res = await fetch(`${API_URL}/user/profile`, {
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const data = await res.json();
+        if (data.success) {
+            // Update Drawer UI
+            const nameEl = document.querySelector('.profile-drawer-header h3');
+            const emailEl = document.querySelector('.profile-drawer-header p');
+            if(nameEl) nameEl.textContent = `Welcome, ${data.user.name}`;
+            if(emailEl) emailEl.textContent = data.user.email;
+        } else {
+            // Token might be expired
+            localStorage.removeItem('tmToken');
+        }
+    } catch (err) {
+        console.error('Error fetching profile', err);
+    }
+}
+
+// Check on load
+document.addEventListener('DOMContentLoaded', loadProfileData);
+
+// Add Logout button logic dynamically or bind if exists
+setTimeout(() => {
+    const drawerBody = document.querySelector('.profile-drawer-body');
+    if (drawerBody && !document.querySelector('.drawer-logout')) {
+        const logoutBtn = document.createElement('div');
+        logoutBtn.className = 'drawer-logout';
+        logoutBtn.textContent = 'Logout';
+        logoutBtn.addEventListener('click', () => {
+            localStorage.removeItem('tmToken');
+            closeDrawer();
+            alert('Logged out successfully.');
+            setTimeout(() => location.reload(), 500);
+        });
+        drawerBody.appendChild(logoutBtn);
+    }
+}, 1000);
