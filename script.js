@@ -1122,6 +1122,7 @@ async function loadProfileData() {
         } else {
             // Token might be expired
             localStorage.removeItem('tmToken');
+            localStorage.removeItem('tmUser');
         }
     } catch (err) {
         console.error('Error fetching profile', err);
@@ -1140,6 +1141,7 @@ setTimeout(() => {
         logoutBtn.textContent = 'Logout';
         logoutBtn.addEventListener('click', () => {
             localStorage.removeItem('tmToken');
+            localStorage.removeItem('tmUser');
             closeDrawer();
             alert('Logged out successfully.');
             setTimeout(() => location.reload(), 500);

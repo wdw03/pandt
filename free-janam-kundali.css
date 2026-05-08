@@ -666,6 +666,22 @@ body.janam-route-body {
     box-shadow: 5px 5px 0 rgba(0, 0, 0, 1);
 }
 
+.janam-primary-btn[href*="wa.me"] {
+    position: relative;
+    padding-left: 54px;
+}
+
+.janam-primary-btn[href*="wa.me"]::before {
+    content: "";
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    width: 20px;
+    height: 20px;
+    transform: translateY(-50%);
+    background: url("./assets/images/whatsapp-icon.svg") center / contain no-repeat;
+}
+
 .janam-submit-feedback {
     margin: 0;
     border: 2px solid #111;

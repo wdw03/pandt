@@ -2685,10 +2685,23 @@ body.home-page {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #00695c;
-    font-family: 'Inter', 'Poppins', sans-serif;
-    font-size: 13px;
-    font-weight: 700;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 58%;
+    color: transparent;
+    font-size: 0;
+}
+
+.home-page .home-cta-icon--phone {
+    background-image: url("./assets/images/phone-icon.svg");
+}
+
+.home-page .home-cta-icon--gmail {
+    background-image: url("./assets/images/gmail-icon.svg");
+}
+
+.home-page .home-cta-icon--whatsapp {
+    background-image: url("./assets/images/whatsapp-icon.svg");
 }
 
 .home-page .home-cta-channel strong {
@@ -2853,7 +2866,279 @@ body.home-page {
     gap: clamp(28px, 3vw, 44px);
 }
 
-.home-page .home-footer-logo {
+/* =============================================================
+   CONTACT SECTION (CTA)
+   ============================================================= */
+.home-cta {
+    padding: clamp(60px, 8vw, 100px) 0;
+    background: #fff8f0;
+    position: relative;
+    overflow: hidden;
+}
+
+.home-cta::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 10% 10%, rgba(255, 183, 77, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 90% 90%, rgba(255, 183, 77, 0.08) 0%, transparent 40%);
+    pointer-events: none;
+}
+
+.home-cta-inner {
+    width: min(100%, 1440px);
+    margin: 0 auto;
+    padding: 0 clamp(18px, 4vw, 64px);
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: clamp(40px, 6vw, 100px);
+    align-items: center;
+}
+
+@media (max-width: 991px) {
+    .home-cta-inner {
+        grid-template-columns: 1fr;
+        gap: 60px;
+    }
+}
+
+.home-cta-info {
+    max-width: 580px;
+}
+
+.home-cta-tag {
+    display: inline-block;
+    padding: 6px 16px;
+    border-radius: 999px;
+    background: rgba(143, 74, 22, 0.08);
+    color: #8f4a16;
+    font-family: 'Inter', 'Poppins', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.home-cta-info h2 {
+    margin-top: 18px;
+    color: #3e2723;
+    font-family: 'Cinzel', serif;
+    font-size: clamp(28px, 3.2vw, 48px);
+    font-weight: 700;
+    line-height: 1.15;
+}
+
+.home-cta-info > p {
+    margin-top: 20px;
+    color: #6d4c41;
+    font-family: 'Inter', 'Poppins', sans-serif;
+    font-size: clamp(15px, 1.1vw, 17px);
+    line-height: 1.7;
+}
+
+.home-cta-channels {
+    margin-top: 36px;
+    display: grid;
+    gap: 16px;
+}
+
+.home-cta-channel {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 20px 24px;
+    background: #fff;
+    border: 1.5px solid rgba(143, 74, 22, 0.1);
+    border-radius: 20px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.home-cta-channel:hover {
+    border-color: #8f4a16;
+    transform: translateX(6px);
+    box-shadow: 0 10px 24px rgba(143, 74, 22, 0.08);
+}
+
+.home-cta-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    background: rgba(143, 74, 22, 0.06);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 22px;
+}
+
+.home-cta-icon--phone { background-image: url("./assets/images/phone-icon.svg"); }
+.home-cta-icon--gmail { background-image: url("./assets/images/gmail-icon.svg"); }
+.home-cta-icon--whatsapp { background-image: url("./assets/images/whatsapp-icon.svg"); }
+
+.home-cta-channel div strong {
+    display: block;
+    color: #3e2723;
+    font-family: 'Inter', 'Poppins', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.home-cta-channel div span {
+    color: #6d4c41;
+    font-family: 'Inter', 'Poppins', sans-serif;
+    font-size: 14px;
+}
+
+.home-cta-address {
+    margin-top: 32px;
+    padding: 0 24px;
+}
+
+.home-cta-address strong {
+    display: block;
+    color: #3e2723;
+    font-family: 'Inter', 'Poppins', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.home-cta-address p {
+    margin-top: 6px;
+    color: #6d4c41;
+    font-family: 'Inter', 'Poppins', sans-serif;
+    font-size: 14px;
+}
+
+.home-cta-form-card {
+    background: #fff;
+    padding: clamp(30px, 4vw, 52px);
+    border-radius: 36px;
+    background-image: url("./assets/images/paper-texture.png"), 
+        linear-gradient(135deg, rgba(255, 255, 255, 0.99), rgba(255, 248, 235, 0.96));
+    border: 2px solid rgba(183, 120, 44, 0.14);
+    box-shadow: 8px 8px 0 rgba(143, 74, 22, 0.1);
+}
+
+.home-cta-form-card h3 {
+    color: #3e2723;
+    font-family: 'Inter', 'Poppins', sans-serif;
+    font-size: clamp(22px, 1.8vw, 30px);
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.home-cta-form-card > p {
+    margin-top: 10px;
+    color: #6d4c41;
+    font-family: 'Inter', 'Poppins', sans-serif;
+    font-size: clamp(13px, 0.9vw, 15px);
+    line-height: 1.7;
+}
+
+.home-cta-form {
+    margin-top: clamp(18px, 2vw, 26px);
+    display: grid;
+    gap: 16px;
+}
+
+.home-cta-field {
+    display: grid;
+    gap: 8px;
+}
+
+.home-cta-field span {
+    color: #5d4037;
+    font-family: 'Inter', 'Poppins', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.home-cta-field input,
+.home-cta-field textarea {
+    width: 100%;
+    padding: 14px 18px;
+    border: 2px solid rgba(109, 76, 65, 0.18);
+    border-radius: 16px;
+    background: #fffdf8;
+    font-family: 'Inter', 'Poppins', sans-serif;
+    font-size: 14px;
+    color: #3e2723;
+    outline: none;
+    resize: vertical;
+    transition: border-color 0.28s ease, box-shadow 0.28s ease, transform 0.28s ease;
+}
+
+.home-cta-field input:focus,
+.home-cta-field textarea:focus {
+    border-color: #8d6e63;
+    box-shadow: 0 6px 20px rgba(109, 76, 65, 0.12);
+    transform: translateY(-2px);
+}
+
+.home-cta-form-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 14px;
+}
+
+.home-cta-submit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    padding: 0 28px;
+    border: none;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #5d4037, #8d6e63);
+    color: #fff;
+    font-family: 'Inter', 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 10px 24px rgba(62, 39, 35, 0.2);
+}
+
+.home-cta-submit:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 32px rgba(62, 39, 35, 0.28);
+}
+
+.home-cta-feedback {
+    color: #00695c;
+    font-family: 'Inter', 'Poppins', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* =============================================================
+   FOOTER
+   ============================================================= */
+.home-footer {
+    margin-top: clamp(40px, 5vw, 72px);
+    background: linear-gradient(180deg, #1b0e06 0%, #0d0704 100%);
+    border-top: 1px solid rgba(255, 183, 77, 0.12);
+}
+
+.home-footer-inner {
+    width: min(100%, 1440px);
+    margin: 0 auto;
+    padding: clamp(36px, 4vw, 60px) clamp(18px, 4vw, 64px);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+    gap: clamp(28px, 3vw, 44px);
+}
+
+.home-footer-logo {
     width: 52px;
     height: 52px;
     border-radius: 16px;
@@ -2861,7 +3146,7 @@ body.home-page {
     box-shadow: 0 4px 16px rgba(255, 152, 0, 0.3);
 }
 
-.home-page .home-footer-brand h4 {
+.home-footer-brand h4 {
     margin-top: 14px;
     color: #ffcc80;
     font-family: 'Inter', 'Poppins', sans-serif;
@@ -2870,7 +3155,7 @@ body.home-page {
     text-transform: capitalize;
 }
 
-.home-page .home-footer-brand p {
+.home-footer-brand p {
     margin-top: 10px;
     color: rgba(255, 204, 128, 0.55);
     font-family: 'Inter', 'Poppins', sans-serif;
@@ -2878,13 +3163,13 @@ body.home-page {
     line-height: 1.7;
 }
 
-.home-page .home-footer-links {
+.home-footer-links {
     display: flex;
     flex-direction: column;
     gap: 12px;
 }
 
-.home-page .home-footer-links h5 {
+.home-footer-links h5 {
     color: #ffcc80;
     font-family: 'Inter', 'Poppins', sans-serif;
     font-size: 12px;
@@ -2894,7 +3179,7 @@ body.home-page {
     margin-bottom: 4px;
 }
 
-.home-page .home-footer-links a {
+.home-footer-links a {
     color: rgba(255, 204, 128, 0.6);
     text-decoration: none;
     font-family: 'Inter', 'Poppins', sans-serif;
@@ -2902,12 +3187,12 @@ body.home-page {
     transition: color 0.24s ease, padding-left 0.24s ease;
 }
 
-.home-page .home-footer-links a:hover {
+.home-footer-links a:hover {
     color: #ffcc80;
     padding-left: 6px;
 }
 
-.home-page .home-footer-social h5 {
+.home-footer-social h5 {
     color: #ffcc80;
     font-family: 'Inter', 'Poppins', sans-serif;
     font-size: 12px;
@@ -2917,13 +3202,13 @@ body.home-page {
     margin-bottom: 8px;
 }
 
-.home-page .home-footer-social-icons {
+.home-footer-social-icons {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
 }
 
-.home-page .home-footer-social-btn {
+.home-footer-social-btn {
     width: 44px;
     height: 44px;
     border-radius: 14px;
@@ -2934,19 +3219,42 @@ body.home-page {
     justify-content: center;
     color: #ffcc80;
     text-decoration: none;
-    font-family: 'Inter', 'Poppins', sans-serif;
-    font-size: 12px;
-    font-weight: 700;
+    font-size: 0;
     transition: background 0.28s ease, transform 0.28s ease, box-shadow 0.28s ease;
 }
 
-.home-page .home-footer-social-btn:hover {
+.home-footer-social-btn:hover {
     background: rgba(255, 152, 0, 0.15);
     transform: translateY(-3px);
     box-shadow: 0 8px 20px rgba(255, 152, 0, 0.15);
 }
 
-.home-page .home-footer-bottom {
+.home-footer-social-icon {
+    width: 22px;
+    height: 22px;
+    display: block;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+.home-footer-social-icon--whatsapp {
+    background-image: url("./assets/images/whatsapp-icon.svg");
+}
+
+.home-footer-social-icon--youtube {
+    background-image: url("./assets/images/youtube-icon.svg");
+}
+
+.home-footer-social-icon--gmail {
+    background-image: url("./assets/images/gmail-icon.svg");
+}
+
+.home-footer-social-icon--phone {
+    background-image: url("./assets/images/phone-icon.svg");
+}
+
+.home-footer-bottom {
     padding: clamp(18px, 2vw, 26px) clamp(18px, 4vw, 64px);
     border-top: 1px solid rgba(255, 183, 77, 0.08);
     text-align: center;
@@ -2956,7 +3264,7 @@ body.home-page {
     gap: 6px 24px;
 }
 
-.home-page .home-footer-bottom p {
+.home-footer-bottom p {
     color: rgba(255, 204, 128, 0.4);
     font-family: 'Inter', 'Poppins', sans-serif;
     font-size: clamp(12px, 0.8vw, 14px);

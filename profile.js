@@ -173,6 +173,8 @@ const removePhotoButton = document.getElementById("removeProfilePhotoBtn");
 const logoutButton = document.getElementById("logoutBtn");
 
 let pendingProfilePhoto = "";
+const PROFILE_IMAGE_MAX_BYTES = 4 * 1024 * 1024;
+const PROFILE_IMAGE_MAX_DIMENSION = 720;
 
 const setFeedback = (message, color) => {
     if (!feedbackNode) {
@@ -197,6 +199,62 @@ const getInitials = (name = "") => {
     return parts.map((part) => part.charAt(0).toUpperCase()).join("");
 };
 
+const normaliseWhatsapp = (value = "") => {
+    return String(value || "").replace(/\D/g, "").slice(0, 15);
+};
+
+const readFileAsDataUrl = (file) => {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+
+        reader.onload = () => {
+            resolve(String(reader.result || ""));
+        };
+
+        reader.onerror = () => {
+            reject(new Error("Unable to read the selected image."));
+        };
+
+        reader.readAsDataURL(file);
+    });
+};
+
+const compressImageDataUrl = (dataUrl, mimeType) => {
+    if (mimeType === "image/gif" || mimeType === "image/svg+xml") {
+        return Promise.resolve(dataUrl);
+    }
+
+    return new Promise((resolve, reject) => {
+        const image = new Image();
+
+        image.onload = () => {
+            const scale = Math.min(
+                1,
+                PROFILE_IMAGE_MAX_DIMENSION / Math.max(image.width || 1, image.height || 1)
+            );
+            const canvas = document.createElement("canvas");
+            canvas.width = Math.max(1, Math.round(image.width * scale));
+            canvas.height = Math.max(1, Math.round(image.height * scale));
+
+            const context = canvas.getContext("2d");
+
+            if (!context) {
+                resolve(dataUrl);
+                return;
+            }
+
+            context.drawImage(image, 0, 0, canvas.width, canvas.height);
+            resolve(canvas.toDataURL("image/jpeg", 0.86));
+        };
+
+        image.onerror = () => {
+            reject(new Error("Unable to process the selected image."));
+        };
+
+        image.src = dataUrl;
+    });
+};
+
 const updateAvatarPreview = (photo, name) => {
     if (!avatarNode || !avatarInitialsNode) {
         return;
@@ -204,9 +262,13 @@ const updateAvatarPreview = (photo, name) => {
 
     if (photo) {
         avatarNode.style.backgroundImage = `url("${photo}")`;
+        avatarNode.style.backgroundSize = "cover";
+        avatarNode.style.backgroundPosition = "center";
         avatarInitialsNode.style.display = "none";
     } else {
         avatarNode.style.backgroundImage = "";
+        avatarNode.style.backgroundSize = "";
+        avatarNode.style.backgroundPosition = "";
         avatarInitialsNode.textContent = getInitials(name);
         avatarInitialsNode.style.display = "block";
     }
@@ -249,6 +311,11 @@ const populateProfile = (user) => {
     }
 
     updateAvatarPreview(profilePhoto, profileName);
+
+    if (window.tmProfileSync) {
+        window.tmProfileSync.saveUser(user);
+        window.tmProfileSync.applyProfileToNav(user);
+    }
 };
 
 const fetchProfile = async () => {
@@ -269,6 +336,7 @@ const fetchProfile = async () => {
     } catch (error) {
         if (String(error.message || "").toLowerCase().includes("not authorized")) {
             localStorage.removeItem("tmToken");
+            localStorage.removeItem("tmUser");
             window.location.href = "login.html";
             return;
         }
@@ -277,8 +345,14 @@ const fetchProfile = async () => {
     }
 };
 
+const cachedProfileUser = window.tmProfileSync?.loadStoredUser?.();
+
+if (cachedProfileUser) {
+    populateProfile(cachedProfileUser);
+}
+
 if (photoInput) {
-    photoInput.addEventListener("change", () => {
+    photoInput.addEventListener("change", async () => {
         const file = photoInput.files?.[0];
 
         if (!file) {
@@ -290,13 +364,22 @@ if (photoInput) {
             return;
         }
 
-        const reader = new FileReader();
-        reader.onload = () => {
-            pendingProfilePhoto = String(reader.result || "");
+        if (file.size > PROFILE_IMAGE_MAX_BYTES) {
+            setFeedback("Please choose an image smaller than 4 MB.", "#b34b1e");
+            photoInput.value = "";
+            return;
+        }
+
+        try {
+            setFeedback("Optimising your profile photo...", "#7b5a21");
+            const rawImage = await readFileAsDataUrl(file);
+            pendingProfilePhoto = await compressImageDataUrl(rawImage, file.type);
             updateAvatarPreview(pendingProfilePhoto, nameInput?.value || "");
             setFeedback("Profile photo selected. Save profile to keep the change.", "#7b5a21");
-        };
-        reader.readAsDataURL(file);
+        } catch (error) {
+            setFeedback(error.message || "Unable to process your image right now.", "#b34b1e");
+            photoInput.value = "";
+        }
     });
 }
 
@@ -322,6 +405,8 @@ if (nameInput) {
 
 if (whatsappInput) {
     whatsappInput.addEventListener("input", () => {
+        whatsappInput.value = normaliseWhatsapp(whatsappInput.value);
+
         if (whatsappStateNode) {
             whatsappStateNode.textContent = whatsappInput.value.trim() || "Not added yet";
         }
@@ -334,7 +419,7 @@ if (profileForm) {
 
         const payload = {
             name: String(nameInput?.value || "").trim(),
-            whatsappNumber: String(whatsappInput?.value || "").trim(),
+            whatsappNumber: normaliseWhatsapp(whatsappInput?.value || ""),
             profilePhoto: pendingProfilePhoto
         };
 
@@ -372,6 +457,7 @@ if (profileForm) {
 if (logoutButton) {
     logoutButton.addEventListener("click", () => {
         localStorage.removeItem("tmToken");
+        localStorage.removeItem("tmUser");
         window.location.href = "login.html";
     });
 }

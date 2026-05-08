@@ -7,6 +7,46 @@ const generateToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '30d' });
 };
 
+const serializeUser = (user) => {
+    return {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        profilePhoto: user.profilePhoto || '',
+        whatsappNumber: user.whatsappNumber || '',
+        isVerified: !!user.isVerified
+    };
+};
+
+const normalizeWhatsappNumber = (value = '') => {
+    return String(value || '').replace(/\D/g, '').slice(0, 15);
+};
+
+const sanitizeProfilePhoto = (value) => {
+    if (value === undefined) {
+        return undefined;
+    }
+
+    const trimmed = String(value || '').trim();
+
+    if (!trimmed) {
+        return '';
+    }
+
+    const isDataImage = /^data:image\/(?:png|jpe?g|webp|gif|svg\+xml);base64,/i.test(trimmed);
+    const isRemoteImage = /^https?:\/\//i.test(trimmed);
+
+    if (!isDataImage && !isRemoteImage) {
+        throw new Error('Please upload a valid profile image.');
+    }
+
+    if (trimmed.length > 8 * 1024 * 1024) {
+        throw new Error('Profile photo is too large. Please use a smaller image.');
+    }
+
+    return trimmed;
+};
+
 // @desc    Register a user (Sends OTP)
 // @route   POST /api/auth/register
 exports.register = async (req, res) => {
@@ -77,7 +117,12 @@ exports.verifySignup = async (req, res) => {
         await user.save();
 
         const token = generateToken(user._id);
-        res.status(200).json({ success: true, token, message: 'Account verified successfully', user: { id: user._id, name: user.name, email: user.email } });
+        res.status(200).json({
+            success: true,
+            token,
+            message: 'Account verified successfully',
+            user: serializeUser(user)
+        });
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
     }
@@ -106,7 +151,7 @@ exports.login = async (req, res) => {
         res.status(200).json({
             success: true,
             token,
-            user: { id: user._id, name: user.name, email: user.email, profilePhoto: user.profilePhoto, whatsappNumber: user.whatsappNumber }
+            user: serializeUser(user)
         });
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
@@ -119,7 +164,7 @@ exports.getProfile = async (req, res) => {
     try {
         const user = await User.findById(req.user.id);
         if (!user) return res.status(404).json({ success: false, message: 'User not found' });
-        res.status(200).json({ success: true, user });
+        res.status(200).json({ success: true, user: serializeUser(user) });
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
     }
@@ -134,13 +179,31 @@ exports.updateProfile = async (req, res) => {
 
         if (!user) return res.status(404).json({ success: false, message: 'User not found' });
 
-        user.name = name || user.name;
-        user.whatsappNumber = whatsappNumber !== undefined ? whatsappNumber : user.whatsappNumber;
-        user.profilePhoto = profilePhoto !== undefined ? profilePhoto : user.profilePhoto;
+        const nextName = typeof name === 'string' ? name.trim() : user.name;
+
+        if (!nextName) {
+            return res.status(400).json({ success: false, message: 'Name is required' });
+        }
+
+        user.name = nextName;
+        user.whatsappNumber = whatsappNumber !== undefined
+            ? normalizeWhatsappNumber(whatsappNumber)
+            : user.whatsappNumber;
+
+        if (profilePhoto !== undefined) {
+            user.profilePhoto = sanitizeProfilePhoto(profilePhoto);
+        }
 
         await user.save();
-        res.status(200).json({ success: true, user });
+        res.status(200).json({ success: true, user: serializeUser(user) });
     } catch (error) {
+        if (
+            error.message === 'Please upload a valid profile image.' ||
+            error.message === 'Profile photo is too large. Please use a smaller image.'
+        ) {
+            return res.status(400).json({ success: false, message: error.message });
+        }
+
         res.status(500).json({ success: false, message: error.message });
     }
 };
@@ -209,13 +272,7 @@ exports.resetPassword = async (req, res) => {
             success: true,
             token,
             message: 'Password reset successful',
-            user: {
-                id: user._id,
-                name: user.name,
-                email: user.email,
-                profilePhoto: user.profilePhoto,
-                whatsappNumber: user.whatsappNumber
-            }
+            user: serializeUser(user)
         });
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });

@@ -181,25 +181,25 @@ const serviceItems = [
 
 const socialItems = [
     {
-        icon: "YT",
+        iconClass: "contact-icon-badge--youtube",
         title: "Click to Join Youtube Channel",
         caption: "Open YouTube",
         href: "https://www.youtube.com/"
     },
     {
-        icon: "WA",
+        iconClass: "contact-icon-badge--whatsapp",
         title: "Click to Join WhatsApp Channel",
         caption: "Open WhatsApp",
-        href: "https://www.whatsapp.com/"
+        href: "https://wa.me/919743045807"
     },
     {
-        icon: "FB",
+        iconClass: "contact-icon-badge--facebook",
         title: "Click to Join Facebook Page",
         caption: "Open Facebook",
         href: "https://www.facebook.com/"
     },
     {
-        icon: "IG",
+        iconClass: "contact-icon-badge--instagram",
         title: "Click to Join Instagram",
         caption: "Open Instagram",
         href: "https://www.instagram.com/"
@@ -257,8 +257,8 @@ const renderContactSocials = () => {
         link.rel = "noreferrer";
 
         const icon = document.createElement("span");
-        icon.className = "contact-icon-badge";
-        icon.textContent = item.icon;
+        icon.className = `contact-icon-badge contact-icon-badge--social ${item.iconClass}`;
+        icon.setAttribute("aria-hidden", "true");
 
         const copy = document.createElement("div");
 

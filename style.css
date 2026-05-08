@@ -691,44 +691,44 @@ body {
 
 
 .profile-item-icon {
-    background-image: url("./assets/images/profile-icon.png");
+    background-image: url("./assets/images/profile-icon.svg");
 }
 
 .pooja-item-icon {
-    background-image: url("./assets/images/pooja-icon.png");
+    background-image: url("./assets/images/pooja-icon.svg");
 }
 
 .kundali-item-icon {
-    background-image: url("./assets/images/kundali-icon.png");
+    background-image: url("./assets/images/kundali-icon.svg");
 }
 
 .book-pooja-icon {
-    background-image: url("./assets/images/book-pooja-icon.png");
+    background-image: url("./assets/images/book-pooja-icon.svg");
 }
 
 .book-kundali-icon {
-    background-image: url("./assets/images/book-kundali-icon.png");
+    background-image: url("./assets/images/book-kundali-icon.svg");
 }
 
 .store-item-icon {
-    background-image: url("./assets/images/store-icon.png");
+    background-image: url("./assets/images/store-icon.svg");
 }
 
 .gmail-icon {
-    background-image: url("./assets/images/gmail-icon.png");
+    background-image: url("./assets/images/gmail-icon.svg");
 }
 
 .whatsapp-icon {
-    background-image: url("./assets/images/whatsapp-icon.png");
+    background-image: url("./assets/images/whatsapp-icon.svg");
 }
 
 
 .kundali-match-icon {
-    background-image: url("./assets/images/kundali-match-icon.png");
+    background-image: url("./assets/images/kundali-match-icon.svg");
 }
 
 .janam-kundali-icon {
-    background-image: url("./assets/images/janam-kundali-icon.png");
+    background-image: url("./assets/images/janam-kundali-icon.svg");
 }
 
 .drawer-arrow {

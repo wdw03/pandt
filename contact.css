@@ -469,6 +469,30 @@ body.contact-route-body {
     color: #6f430b;
 }
 
+.contact-icon-badge--social {
+    font-size: 0;
+    color: transparent;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 68%;
+}
+
+.contact-icon-badge--youtube {
+    background-image: url("./assets/images/youtube-icon.svg");
+}
+
+.contact-icon-badge--whatsapp {
+    background-image: url("./assets/images/whatsapp-icon.svg");
+}
+
+.contact-icon-badge--facebook {
+    background-image: url("./assets/images/facebook-icon.svg");
+}
+
+.contact-icon-badge--instagram {
+    background-image: url("./assets/images/instagram-icon.svg");
+}
+
 .contact-social-link strong {
     font-size: clamp(18px, 1.4vw, 24px);
     line-height: 1.3;

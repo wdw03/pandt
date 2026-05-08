@@ -86,6 +86,9 @@ document.getElementById('formVerifySignup')?.addEventListener('submit', async (e
         const data = await res.json();
         if (data.success) {
             localStorage.setItem('tmToken', data.token);
+            if (data.user) {
+                localStorage.setItem('tmUser', JSON.stringify(data.user));
+            }
             alert('Verification Successful! You are now logged in.');
             window.location.href = 'index.html'; // Redirect to home
         } else {
@@ -111,6 +114,9 @@ document.getElementById('formLogin')?.addEventListener('submit', async (e) => {
         const data = await res.json();
         if (data.success) {
             localStorage.setItem('tmToken', data.token);
+            if (data.user) {
+                localStorage.setItem('tmUser', JSON.stringify(data.user));
+            }
             window.location.href = 'index.html'; // Redirect to home
         } else if (data.needsVerification) {
             alert(data.message);
@@ -167,6 +173,9 @@ document.getElementById('formResetPassword')?.addEventListener('submit', async (
         const data = await res.json();
         if (data.success) {
             localStorage.setItem('tmToken', data.token);
+            if (data.user) {
+                localStorage.setItem('tmUser', JSON.stringify(data.user));
+            }
             sessionStorage.removeItem('resetEmail');
             window.location.href = 'index.html';
         } else {
