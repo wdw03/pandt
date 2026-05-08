@@ -90,13 +90,13 @@
 
 <body>
     <div class="auth-page-wrapper">
-        <a href="index.html" class="auth-back-home">&larr; Back to Home</a>
+        <a href="index.html" class="auth-back-home"><span data-i18n="login_back_home">&larr; Back to Home</span></a>
 
         <div class="auth-modal">
             <div class="auth-modal-visual">
                 <div class="auth-modal-image"></div>
                 <div class="auth-modal-visual-text">
-                    <h3>Spiritual Journey</h3>
+                    <h3 data-i18n="login_journey">Spiritual Journey</h3>
                     <p>Join Thanathu Madom Devasthanam for personalized pujas and astrology guidance.</p>
                 </div>
             </div>
@@ -104,7 +104,7 @@
             <div class="auth-modal-content">
                 <!-- Login View -->
                 <div class="auth-view active" id="viewLogin">
-                    <h2>Welcome Back</h2>
+                    <h2 data-i18n="login_welcome">Welcome Back</h2>
                     <p>Enter your details to access your spiritual profile.</p>
                     <form id="formLogin">
                         <label class="auth-field">
@@ -119,14 +119,14 @@
                         <div class="auth-options">
                             <a href="#" id="linkForgotPassword">Forgot Password?</a>
                         </div>
-                        <button type="submit" class="auth-submit-btn">Login</button>
+                        <button type="submit" class="auth-submit-btn" data-i18n="login_btn">Login</button>
                     </form>
                     <p class="auth-switch">Don't have an account? <a href="#" id="linkSignup">Sign up</a></p>
                 </div>
 
                 <!-- Signup View -->
                 <div class="auth-view" id="viewSignup">
-                    <h2>Create Account</h2>
+                    <h2 data-i18n="login_create">Create Account</h2>
                     <p>Join our spiritual community today.</p>
                     <form id="formSignup">
                         <label class="auth-field">
@@ -143,42 +143,42 @@
                                 minlength="6">
                             <button type="button" class="auth-password-toggle" tabindex="-1">Show</button>
                         </label>
-                        <button type="submit" class="auth-submit-btn">Sign Up</button>
+                        <button type="submit" class="auth-submit-btn" data-i18n="signup_btn">Sign Up</button>
                     </form>
                     <p class="auth-switch">Already have an account? <a href="#" id="linkLoginFromSignup">Log in</a></p>
                 </div>
 
                 <!-- Verify Signup View -->
                 <div class="auth-view" id="viewVerifySignup">
-                    <h2>Verify Email</h2>
+                    <h2 data-i18n="login_verify">Verify Email</h2>
                     <p class="auth-inline-feedback" id="verifySignupMessage">Enter the 6-digit OTP sent to your email to verify your account.</p>
                     <form id="formVerifySignup">
                         <label class="auth-field">
                             <span>6-Digit OTP</span>
                             <input type="text" id="verifyOtp" placeholder="123456" required pattern="\d{6}">
                         </label>
-                        <button type="submit" class="auth-submit-btn">Verify Account</button>
+                        <button type="submit" class="auth-submit-btn" data-i18n="verify_btn">Verify Account</button>
                     </form>
                     <p class="auth-switch"><a href="#" id="linkLoginFromVerify">Back to Login</a></p>
                 </div>
 
                 <!-- Forgot Password View -->
                 <div class="auth-view" id="viewForgotPassword">
-                    <h2>Reset Password</h2>
+                    <h2 data-i18n="login_reset">Reset Password</h2>
                     <p>Enter your email to receive a 6-digit OTP.</p>
                     <form id="formForgotPassword">
                         <label class="auth-field">
                             <span>Email Address</span>
                             <input type="email" id="forgotEmail" placeholder="Enter your email" required>
                         </label>
-                        <button type="submit" class="auth-submit-btn">Send OTP</button>
+                        <button type="submit" class="auth-submit-btn" data-i18n="send_otp_btn">Send OTP</button>
                     </form>
                     <p class="auth-switch"><a href="#" id="linkLoginFromForgot">Back to Login</a></p>
                 </div>
 
                 <!-- Reset Password View -->
                 <div class="auth-view" id="viewResetPassword">
-                    <h2>Enter OTP</h2>
+                    <h2 data-i18n="login_enter_otp">Enter OTP</h2>
                     <p class="auth-inline-feedback" id="resetPasswordMessage">Enter the 6-digit OTP sent to your email and create a new password.</p>
                     <form id="formResetPassword">
                         <label class="auth-field">
@@ -191,7 +191,7 @@
                                 minlength="6">
                             <button type="button" class="auth-password-toggle" tabindex="-1">Show</button>
                         </label>
-                        <button type="submit" class="auth-submit-btn">Update Password</button>
+                        <button type="submit" class="auth-submit-btn" data-i18n="update_pass_btn">Update Password</button>
                     </form>
                     <p class="auth-switch"><a href="#" id="linkLoginFromReset">Back to Login</a></p>
                 </div>

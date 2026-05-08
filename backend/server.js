@@ -4,6 +4,7 @@ const cors = require('cors');
 require('dotenv').config();
 
 const authRoutes = require('./routes/authRoutes');
+const profileRoutes = require('./routes/profileRoutes');
 
 const app = express();
 
@@ -15,7 +16,7 @@ const path = require('path');
 
 // Routes
 app.use('/api/auth', authRoutes);
-app.use('/api/user', authRoutes); // Profile routes are in authRoutes
+app.use('/api/user', profileRoutes);
 
 // Serve frontend static files
 app.use(express.static(path.join(__dirname, '../')));
