@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="resposnive.css">
+    <link rel="stylesheet" href="horoscope-detail.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&display=swap" rel="stylesheet">
+    <title>Horoscope Detail</title>
+</head>
+
+<body class="horoscope-detail-body">
+    <div id="main" class="horoscope-detail-main">
+        <div id="navbar">
+            <div class="navbarmain">
+                <div class="navbarhelogmain">
+                    <div class="navbarlogo"></div>
+                    <div class="navbartext">
+                        <h4>thanathu madom devasthanam</h4>
+                    </div>
+                </div>
+                <div id="navbarlinks">
+                    <nav>
+                        <ul>
+                            <li><a href="index.html" data-i18n="nav_home">Home</a></li>
+                            <li><a href="pooja.html" data-i18n="nav_puja">Pooja</a></li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link-arrow"><span data-i18n="nav_kundali">Kundali</span><span class="arrow"></span></a>
+                                <div class="dropdown-menu">
+                                    <a href="kundali-matching.html" data-i18n="nav_kundali_match">Kundali Matching</a>
+                                    <a href="free-janam-kundali.html" data-i18n="nav_janam">Free Janam Kundali</a>
+                                </div>
+                            </li>
+                            <li><a href="panchang.html" data-i18n="nav_panchang">Panchang</a></li>
+                            <li><a href="about.html" data-i18n="nav_about">About</a></li>
+                            <li><a href="horoscope.html" data-i18n="nav_horoscope">Horoscope</a></li>
+                            <li><a href="astrology-gallery.html" data-i18n="nav_gallery">Astrology Gallery</a></li>
+                            <li><a href="contact.html" data-i18n="nav_contact">Contact Us</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="loglongu">
+                    <div class="language">
+                        <div class="langselected nav-link-arrow">
+                            <p>ENGLISH</p>
+                            <span class="arrow"></span>
+                        </div>
+                        <div class="languageoption">
+                            <a href="#">English</a>
+                            <a href="#">Hindi</a>
+                            <a href="#">Tamil</a>
+                            <a href="#">Telugu</a>
+                        </div>
+                    </div>
+
+                    <div class="profileicons" id="profileToggle"
+                        style="background-image: url('./assets/images/ic_user_profile.svg');">
+                    </div>
+                </div>
+
+                <div class="profile-drawer" id="profileDrawer">
+                    <div class="profile-drawer-header">
+                        <h3 data-i18n="drawer_welcome">Welcome to Thanathu Madom Devasthanam</h3>
+                        <p>Thanathu Madom Devasthanam</p>
+                    </div>
+
+                    <div class="profile-drawer-body">
+                        <h4 data-i18n="drawer_account">Account Details</h4>
+
+                        <a href="profile.html" class="drawer-item">
+                            <span class="drawer-left">
+                                <span class="drawer-icon profile-item-icon"></span>
+                                <span data-i18n="drawer_profile">My Profile</span>
+                            </span>
+                            <span class="drawer-arrow"></span>
+                        </a>
+
+                        <a href="#" class="drawer-item">
+                            <span class="drawer-left">
+                                <span class="drawer-icon pooja-item-icon"></span>
+                                <span data-i18n="drawer_puja_booking">My Puja Booking</span>
+                            </span>
+                            <span class="drawer-arrow"></span>
+                        </a>
+
+                        <a href="kundali-matching.html" class="drawer-item">
+                            <span class="drawer-left">
+                                <span class="drawer-icon kundali-item-icon"></span>
+                                <span data-i18n="drawer_kundali_booking">Kundali Booking</span>
+                            </span>
+                            <span class="drawer-arrow"></span>
+                        </a>
+
+                        <h4 data-i18n="drawer_services">Services</h4>
+
+                        <a href="#" class="drawer-item">
+                            <span class="drawer-left">
+                                <span class="drawer-icon book-pooja-icon"></span>
+                                <span data-i18n="drawer_book_pooja">Book a Pooja</span>
+                            </span>
+                            <span class="drawer-arrow"></span>
+                        </a>
+
+                        <div class="drawer-item drawer-accordion" id="bookKundaliAccordion">
+                            <div class="drawer-item-main" id="bookKundaliToggle">
+                                <span class="drawer-left">
+                                    <span class="drawer-icon book-kundali-icon"></span>
+                                    <span data-i18n="drawer_book_kundali">Book for Kundali</span>
+                                </span>
+                                <span class="drawer-arrow accordion-arrow"></span>
+                            </div>
+
+                            <div class="drawer-submenu" id="bookKundaliSubmenu">
+                                <a href="kundali-matching.html" class="drawer-subitem">
+                                    <span class="drawer-left">
+                                        <span class="drawer-icon kundali-match-icon"></span>
+                                        <span data-i18n="nav_kundali_match">Kundali Matching</span>
+                                    </span>
+                                    <span class="drawer-arrow"></span>
+                                </a>
+
+                                <a href="free-janam-kundali.html" class="drawer-subitem">
+                                    <span class="drawer-left">
+                                        <span class="drawer-icon janam-kundali-icon"></span>
+                                        <span data-i18n="nav_janam">Free Janam Kundali</span>
+                                    </span>
+                                    <span class="drawer-arrow"></span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <a href="#" class="drawer-item">
+                            <span class="drawer-left">
+                                <span class="drawer-icon store-item-icon"></span>
+                                <span data-i18n="drawer_store">Store</span>
+                            </span>
+                            <span class="drawer-arrow"></span>
+                        </a>
+                    </div>
+
+                    <div class="profile-drawer-footer">
+                        <p class="support-title" data-i18n="drawer_support">Help &amp; Support for Puja Booking</p>
+
+                        <a href="mailto:thanathumadomdevathanam@gmail.com" class="footer-btn support-btn">
+                            <span class="support-left">
+                                <span class="support-icon gmail-icon"></span>
+                                <span data-i18n="drawer_email">Email Us</span>
+                            </span>
+                            <span class="drawer-arrow"></span>
+                        </a>
+
+                        <a href="https://wa.me/919743045807" class="footer-btn support-btn">
+                            <span class="support-left">
+                                <span class="support-icon whatsapp-icon"></span>
+                                <span data-i18n="drawer_whatsapp">WhatsApp</span>
+                            </span>
+                            <span class="drawer-arrow"></span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="drawer-overlay" id="drawerOverlay"></div>
+            </div>
+        </div>
+
+        <main class="horoscope-detail-page">
+            <section class="horoscope-detail-hero">
+                <div class="horoscope-detail-copy">
+                    <span class="horoscope-detail-pill">Detailed Horoscope Reading</span>
+                    <div class="horoscope-detail-title-wrap">
+                        <h1 data-detail-sign-name>Aries Horoscope</h1>
+                        <p class="horoscope-detail-subtitle" data-detail-sign-hindi>Mesha</p>
+                    </div>
+                    <p class="horoscope-detail-intro">
+                        Open any rashi reading and see a cleaner daily breakdown with prediction, symbol, date, key
+                        indicators, and quick sign switching. This layout is ready for your future API data source.
+                    </p>
+
+                    <div class="horoscope-detail-chip-row" data-detail-meta-chips></div>
+
+                    <div class="horoscope-detail-hero-actions">
+                        <a href="horoscope.html" class="horoscope-detail-primary-btn">Back to All Rashis</a>
+                        <a href="#detail-insights" class="horoscope-detail-secondary-btn">View Daily Insights</a>
+                    </div>
+                </div>
+
+                <div class="horoscope-detail-visual">
+                    <div class="horoscope-detail-visual-card">
+                        <div class="horoscope-detail-orbit horoscope-detail-orbit-one"></div>
+                        <div class="horoscope-detail-orbit horoscope-detail-orbit-two"></div>
+                        <div class="horoscope-detail-main-art" data-detail-main-art></div>
+                        <div class="horoscope-detail-side-art" data-detail-side-art></div>
+                        <div class="horoscope-detail-symbol-card">
+                            <span>Symbol</span>
+                            <strong data-detail-symbol>♈</strong>
+                        </div>
+                        <div class="horoscope-detail-date-card">
+                            <span>Date</span>
+                            <strong data-detail-date>Saturday, May 09, 2026</strong>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="horoscope-detail-switcher">
+                <div class="horoscope-detail-switcher-head">
+                    <span class="horoscope-detail-section-tag">Switch Rashi</span>
+                    <h2>Jump to any zodiac sign instantly</h2>
+                </div>
+                <div class="horoscope-detail-zodiac-nav" data-detail-zodiac-nav></div>
+            </section>
+
+            <section class="horoscope-detail-insights" id="detail-insights">
+                <div class="horoscope-detail-reading-card">
+                    <div class="horoscope-detail-card-head">
+                        <span class="horoscope-detail-section-tag">Daily Prediction</span>
+                        <h2 data-detail-reading-title>Aries Reading for Today</h2>
+                    </div>
+                    <p class="horoscope-detail-reading-body" data-detail-prediction></p>
+                    <div class="horoscope-detail-highlight-grid" data-detail-highlights></div>
+                </div>
+
+                <div class="horoscope-detail-data-panel">
+                    <div class="horoscope-detail-card-head">
+                        <span class="horoscope-detail-section-tag">Quick Data</span>
+                        <h2>Core indicators</h2>
+                    </div>
+                    <div class="horoscope-detail-stat-grid" data-detail-stats></div>
+                </div>
+            </section>
+
+            <section class="horoscope-detail-secondary-grid">
+                <article class="horoscope-detail-panel">
+                    <div class="horoscope-detail-card-head">
+                        <span class="horoscope-detail-section-tag">Prediction Focus</span>
+                        <h2>How to read this horoscope</h2>
+                    </div>
+                    <div class="horoscope-detail-focus-list" data-detail-focus-list></div>
+                </article>
+
+                <article class="horoscope-detail-panel horoscope-detail-panel-visual">
+                    <div class="horoscope-detail-panel-image" data-detail-panel-image></div>
+                    <div class="horoscope-detail-panel-copy">
+                        <span>Daily Rashi Direction</span>
+                        <h3 data-detail-panel-title>Aries energy in focus</h3>
+                        <p data-detail-panel-copy>
+                            Use this section to present a clean visual summary for the selected sign while the API data
+                            powers the text and key fields around it.
+                        </p>
+                    </div>
+                </article>
+            </section>
+
+            <section class="horoscope-detail-nav-panel">
+                <div class="horoscope-detail-nav-copy">
+                    <span class="horoscope-detail-section-tag">Explore More</span>
+                    <h2>Move through all twelve daily readings</h2>
+                    <p>
+                        Keep users inside the horoscope experience with direct previous and next sign navigation, or
+                        send them back to the full all-rashi page.
+                    </p>
+                </div>
+
+                <div class="horoscope-detail-nav-actions">
+                    <a href="#" class="horoscope-detail-nav-link" data-detail-prev-link>Previous Sign</a>
+                    <a href="horoscope.html" class="horoscope-detail-nav-link is-main">All Horoscope Signs</a>
+                    <a href="#" class="horoscope-detail-nav-link" data-detail-next-link>Next Sign</a>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <footer class="home-footer">
+        <div class="home-footer-inner">
+            <div class="home-footer-brand">
+                <div class="home-footer-logo"></div>
+                <h4>Thanathu Madom Devasthanam</h4>
+                <p data-i18n="footer_tagline">Authentic Vedic rituals, astrology guidance, and spiritual services
+                    rooted in 250+ years of sacred tradition.</p>
+            </div>
+            <div class="home-footer-links">
+                <h5 data-i18n="footer_services">Our Services</h5>
+                <a href="pooja.html" data-i18n="nav_pooja">Pooja Booking</a>
+                <a href="kundali-matching.html" data-i18n="nav_kundali_match">Kundali Matching</a>
+                <a href="free-janam-kundali.html" data-i18n="nav_janam">Janam Kundali</a>
+                <a href="horoscope.html" data-i18n="nav_horoscope">Daily Horoscope</a>
+            </div>
+            <div class="home-footer-links">
+                <h5 data-i18n="footer_explore">Explore</h5>
+                <a href="panchang.html" data-i18n="nav_panchang">Panchang</a>
+                <a href="astrology-gallery.html" data-i18n="nav_gallery">Astrology Gallery</a>
+                <a href="about.html" data-i18n="nav_about">About Us</a>
+                <a href="contact.html" data-i18n="nav_contact">Contact Us</a>
+            </div>
+            <div class="home-footer-social">
+                <h5 data-i18n="footer_connect">Connect With Us</h5>
+                <div class="home-footer-social-icons">
+                    <a href="https://wa.me/919743045807" class="home-footer-social-btn" aria-label="WhatsApp">
+                        <span class="home-footer-social-icon home-footer-social-icon--whatsapp" aria-hidden="true"></span>
+                    </a>
+                    <a href="https://www.youtube.com/" class="home-footer-social-btn" target="_blank"
+                        rel="noreferrer" aria-label="YouTube">
+                        <span class="home-footer-social-icon home-footer-social-icon--youtube" aria-hidden="true"></span>
+                    </a>
+                    <a href="mailto:thanathumadomdevathanam@gmail.com" class="home-footer-social-btn"
+                        aria-label="Email">
+                        <span class="home-footer-social-icon home-footer-social-icon--gmail" aria-hidden="true"></span>
+                    </a>
+                    <a href="tel:+919743045807" class="home-footer-social-btn" aria-label="Phone">
+                        <span class="home-footer-social-icon home-footer-social-icon--phone" aria-hidden="true"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="home-footer-bottom">
+            <p>&copy; 2026 Thanathu Madom Devasthanam. All Rights Reserved.</p>
+            <p data-i18n="footer_made">Made with devotion for devotees worldwide.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+    <script src="profile-sync.js"></script>
+    <script src="translations.js"></script>
+    <script src="horoscope-detail.js"></script>
+</body>
+
+</html>

@@ -463,6 +463,8 @@ body.horoscope-route-body {
     display: flex;
     flex-direction: column;
     gap: 14px;
+    text-decoration: none;
+    color: inherit;
     transition: transform 0.18s ease, box-shadow 0.18s ease;
 }
 
@@ -550,6 +552,34 @@ body.horoscope-route-body {
     font-size: 13px;
     font-weight: 600;
     color: #6f4b24;
+}
+
+.horoscope-sign-link-meta {
+    margin-top: auto;
+    min-height: 38px;
+    padding: 0 14px;
+    border: 2px solid rgba(17, 17, 17, 0.12);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.88);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    font-family: 'Poppins', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #7a4d24;
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.horoscope-sign-card:hover .horoscope-sign-link-meta,
+.horoscope-sign-card:focus-visible .horoscope-sign-link-meta,
+.horoscope-sign-card:focus-within .horoscope-sign-link-meta {
+    background: linear-gradient(135deg, #ff9a2f 0%, #ffd186 100%);
+    color: #2d1b0f;
+    border-color: rgba(17, 17, 17, 0.22);
 }
 
 .horoscope-why-section,

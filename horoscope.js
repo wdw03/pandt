@@ -157,6 +157,7 @@ const successSlider = document.querySelector("[data-success-slider]");
 
 const zodiacSigns = [
     {
+        slug: "pisces",
         name: "Pisces",
         initials: "Pi",
         label: "Today",
@@ -165,6 +166,7 @@ const zodiacSigns = [
         end: "#4f6cd8"
     },
     {
+        slug: "aquarius",
         name: "Aquarius",
         initials: "Aq",
         label: "Today",
@@ -173,6 +175,7 @@ const zodiacSigns = [
         end: "#247b78"
     },
     {
+        slug: "capricorn",
         name: "Capricorn",
         initials: "Cp",
         label: "Today",
@@ -181,6 +184,7 @@ const zodiacSigns = [
         end: "#7a4d2d"
     },
     {
+        slug: "sagittarius",
         name: "Sagittarius",
         initials: "Sg",
         label: "Today",
@@ -189,6 +193,7 @@ const zodiacSigns = [
         end: "#e06b29"
     },
     {
+        slug: "scorpio",
         name: "Scorpio",
         initials: "Sc",
         label: "Today",
@@ -197,6 +202,7 @@ const zodiacSigns = [
         end: "#8c2f49"
     },
     {
+        slug: "libra",
         name: "Libra",
         initials: "Li",
         label: "Today",
@@ -205,6 +211,7 @@ const zodiacSigns = [
         end: "#a460ac"
     },
     {
+        slug: "virgo",
         name: "Virgo",
         initials: "Vi",
         label: "Today",
@@ -213,6 +220,7 @@ const zodiacSigns = [
         end: "#3f8b57"
     },
     {
+        slug: "leo",
         name: "Leo",
         initials: "Le",
         label: "Today",
@@ -221,6 +229,7 @@ const zodiacSigns = [
         end: "#e68a13"
     },
     {
+        slug: "cancer",
         name: "Cancer",
         initials: "Ca",
         label: "Today",
@@ -229,6 +238,7 @@ const zodiacSigns = [
         end: "#4a7ed5"
     },
     {
+        slug: "gemini",
         name: "Gemini",
         initials: "Ge",
         label: "Today",
@@ -237,6 +247,7 @@ const zodiacSigns = [
         end: "#30979a"
     },
     {
+        slug: "taurus",
         name: "Taurus",
         initials: "Ta",
         label: "Today",
@@ -245,6 +256,7 @@ const zodiacSigns = [
         end: "#7a7f26"
     },
     {
+        slug: "aries",
         name: "Aries",
         initials: "Ar",
         label: "Today",
@@ -305,8 +317,10 @@ const renderZodiacCards = () => {
     zodiacGrid.innerHTML = "";
 
     zodiacSigns.forEach((sign) => {
-        const card = document.createElement("article");
+        const card = document.createElement("a");
         card.className = "horoscope-sign-card";
+        card.href = `horoscope-detail.html?sign=${sign.slug}`;
+        card.setAttribute("aria-label", `Open detailed ${sign.name} horoscope`);
 
         const art = document.createElement("div");
         art.className = "horoscope-sign-art";
@@ -331,7 +345,11 @@ const renderZodiacCards = () => {
         subtitle.className = "horoscope-sign-subtitle";
         subtitle.textContent = sign.subtitle;
 
-        card.append(art, name, subtitle);
+        const linkMeta = document.createElement("span");
+        linkMeta.className = "horoscope-sign-link-meta";
+        linkMeta.textContent = "Open detailed reading";
+
+        card.append(art, name, subtitle, linkMeta);
         zodiacGrid.append(card);
     });
 };
