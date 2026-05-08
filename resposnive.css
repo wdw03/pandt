@@ -1550,16 +1550,6 @@ body.home-page {
     width: min(680px, calc(100vw - 32px));
 }
 
-/* Home Page Visual Polish */
-
-body.home-page {
-    background:
-        radial-gradient(circle at 8% 10%, rgba(255, 214, 126, 0.26), transparent 24%),
-        radial-gradient(circle at 92% 8%, rgba(255, 124, 58, 0.16), transparent 24%),
-        radial-gradient(circle at 70% 76%, rgba(255, 188, 112, 0.16), transparent 28%),
-        linear-gradient(180deg, #fffaf1 0%, #fff2de 42%, #ffe4c1 100%);
-}
-
 .home-page #homepage,
 .home-page #pooja,
 .home-page .home-route-gateway,
@@ -1580,22 +1570,6 @@ body.home-page {
     z-index: -1;
 }
 
-.home-page #homepage::before {
-    width: clamp(220px, 24vw, 360px);
-    height: clamp(220px, 24vw, 360px);
-    top: clamp(60px, 8vw, 100px);
-    left: clamp(-80px, -5vw, -24px);
-    background: radial-gradient(circle, rgba(255, 187, 93, 0.3) 0%, rgba(255, 187, 93, 0) 72%);
-}
-
-.home-page #homepage::after {
-    width: clamp(180px, 20vw, 300px);
-    height: clamp(180px, 20vw, 300px);
-    right: clamp(-50px, -4vw, -18px);
-    bottom: 8%;
-    background: radial-gradient(circle, rgba(255, 132, 64, 0.18) 0%, rgba(255, 132, 64, 0) 72%);
-}
-
 .home-page #pooja::before {
     width: clamp(180px, 16vw, 260px);
     height: clamp(180px, 16vw, 260px);
@@ -1610,137 +1584,6 @@ body.home-page {
     right: clamp(12px, 4vw, 72px);
     bottom: 6%;
     background: radial-gradient(circle, rgba(201, 118, 38, 0.14) 0%, rgba(201, 118, 38, 0) 72%);
-}
-
-.home-page .slidercontemain .sliderleft {
-    position: relative;
-    padding: clamp(18px, 1.8vw, 24px);
-    border-radius: clamp(28px, 2.4vw, 38px);
-    background:
-        linear-gradient(135deg, rgba(255, 255, 255, 0.84) 0%, rgba(255, 241, 221, 0.92) 100%);
-    box-shadow: 0 24px 50px rgba(82, 44, 14, 0.14);
-    overflow: hidden;
-}
-
-.home-page .slidercontemain .sliderleft::before,
-.home-page .slidercontemain .sliderleft::after {
-    content: "";
-    position: absolute;
-    border-radius: 999px;
-    pointer-events: none;
-}
-
-.home-page .slidercontemain .sliderleft::before {
-    width: clamp(180px, 18vw, 260px);
-    height: clamp(180px, 18vw, 260px);
-    right: -90px;
-    top: -120px;
-    background: radial-gradient(circle, rgba(255, 211, 117, 0.42) 0%, rgba(255, 211, 117, 0) 72%);
-}
-
-.home-page .slidercontemain .sliderleft::after {
-    width: clamp(160px, 14vw, 220px);
-    height: clamp(160px, 14vw, 220px);
-    left: -60px;
-    bottom: -70px;
-    background: radial-gradient(circle, rgba(255, 135, 75, 0.18) 0%, rgba(255, 135, 75, 0) 72%);
-}
-
-.home-page .slidetopleft,
-.home-page .slidemidleft,
-.home-page .slidefoterleft {
-    position: relative;
-    border: 2px solid #111;
-    border-radius: 28px;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(255, 248, 234, 0.96) 100%);
-    box-shadow: 7px 7px 0 rgba(0, 0, 0, 1);
-    overflow: hidden;
-}
-
-.home-page .slidetopleft {
-    background-color: #fff4e1;
-}
-
-.home-page .slidemidleft,
-.home-page .slidefoterleft {
-    padding: clamp(18px, 1.8vw, 24px);
-}
-
-.home-page .slidemidleft::before,
-.home-page .slidefoterleft::before {
-    content: "";
-    position: absolute;
-    inset: 10px;
-    border: 1px dashed rgba(17, 17, 17, 0.14);
-    border-radius: 20px;
-    pointer-events: none;
-}
-
-.home-page .hedadtext h1 {
-    color: #231206;
-    text-shadow: 0 10px 24px rgba(123, 71, 25, 0.12);
-    text-wrap: balance;
-}
-
-.home-page .textemidpara h3 {
-    display: inline-flex;
-    width: fit-content;
-    max-width: 100%;
-    min-height: 38px;
-    padding: 0 16px;
-    border: 2px solid #111;
-    border-radius: 999px;
-    background: #fff7e7;
-    box-shadow: 5px 5px 0 rgba(0, 0, 0, 1);
-    align-items: center;
-    color: #6b3f19;
-}
-
-.home-page .texthomeiconstext {
-    gap: 14px;
-}
-
-.home-page .verfiedpadints,
-.home-page .vidhivihan {
-    min-height: 66px;
-    padding: 10px 14px;
-    border: 2px solid #111;
-    border-radius: 24px;
-    background: rgba(255, 255, 255, 0.92);
-    box-shadow: 6px 6px 0 rgba(0, 0, 0, 1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
-}
-
-.home-page .verfiedpadints:hover,
-.home-page .vidhivihan:hover {
-    transform: translateY(-4px);
-    background: #fffaf2;
-    box-shadow: 8px 8px 0 rgba(0, 0, 0, 1);
-}
-
-.home-page .booknow button,
-.home-page .exprlorresrive button,
-.home-page .custom-button,
-.home-page .aboutbtn,
-.home-page .benefitbtn,
-.home-page .viewallbtn,
-.home-page .shareivutton button,
-.home-page .booknowb button {
-    border: 2px solid #111;
-    box-shadow: 6px 6px 0 rgba(0, 0, 0, 1);
-    transition: transform 0.28s ease, box-shadow 0.28s ease, background 0.28s ease, color 0.28s ease;
-}
-
-.home-page .booknow button:hover,
-.home-page .exprlorresrive button:hover,
-.home-page .custom-button:hover,
-.home-page .aboutbtn:hover,
-.home-page .benefitbtn:hover,
-.home-page .viewallbtn:hover,
-.home-page .shareivutton button:hover,
-.home-page .booknowb button:hover {
-    transform: translateY(-3px);
-    box-shadow: 8px 8px 0 rgba(0, 0, 0, 1);
 }
 
 .home-page #poojamain {
@@ -3530,4 +3373,325 @@ body.home-page {
 }
 .profile-drawer-body .drawer-logout:hover {
     background: rgba(233, 30, 99, 0.2);
+}
+
+/* =============================================================
+   HOME PAGE FLUID DESKTOP TUNING
+   ============================================================= */
+body.home-page {
+    --home-fluid-gap: clamp(18px, 2vw, 30px);
+    --home-fluid-space: clamp(18px, 4vw, 64px);
+}
+
+.home-page *,
+.home-page *::before,
+.home-page *::after {
+    box-sizing: border-box;
+}
+
+.home-page #main {
+    display: flex;
+    flex-direction: column;
+}
+
+.home-page #homepage,
+.home-page #pooja,
+.home-page .home-route-gateway,
+.home-page .home-route-chronicle,
+.home-page .home-products-showcase,
+.home-page .home-cta-contact,
+.home-page .home-footer {
+    width: 100%;
+}
+
+.home-page .slidercontemain,
+.home-page .slidercontemain .sliderleft,
+.home-page .slidercontemain .sliderright,
+.home-page .slidetextmain,
+.home-page .slidemidleft,
+.home-page .slidefoterleft,
+.home-page .leftpooja,
+.home-page .rightpooja,
+.home-page .leftpojamain,
+.home-page .rightpoojamain,
+.home-page .home-route-gateway-copy,
+.home-page .home-route-gateway-visual,
+.home-page .home-route-copy,
+.home-page .home-route-visual,
+.home-page .home-product-card,
+.home-page .home-product-copy,
+.home-page .home-cta-info,
+.home-page .home-cta-form-card,
+.home-page .home-footer-brand,
+.home-page .home-footer-links,
+.home-page .home-footer-social {
+    min-width: 0;
+}
+
+.home-page .slidercontemain {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, clamp(0px, 14vw, 220px));
+    gap: clamp(18px, 2.4vw, 42px);
+    align-items: center;
+    padding: clamp(24px, 4vh, 48px) var(--home-fluid-space) clamp(34px, 5vh, 64px);
+}
+
+.home-page .slidercontemain .sliderleft {
+    max-width: min(100%, 820px);
+    padding-left: 0;
+    padding-right: clamp(4px, 1.6vw, 20px);
+    gap: clamp(14px, 1.6vw, 24px);
+}
+
+.home-page .slidercontemain .sliderright {
+    width: 100%;
+    justify-self: end;
+}
+
+.home-page .slidemidleft,
+.home-page .slidefoterleft,
+.home-page .slidetextmain {
+    width: min(100%, 660px);
+}
+
+.home-page .hedadtext {
+    width: min(100%, 620px);
+}
+
+.home-page .hedadtext h1 {
+    font-size: clamp(24px, 2.35vw, 40px);
+    line-height: 1.15;
+    overflow-wrap: anywhere;
+    text-wrap: balance;
+}
+
+.home-page .textemidpara {
+    width: min(100%, 560px);
+}
+
+.home-page .textemidpara h3 {
+    max-width: 100%;
+    font-size: clamp(14px, 1.1vw, 19px);
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+    text-wrap: balance;
+}
+
+.home-page .texthomeiconstext {
+    width: min(100%, 580px);
+    gap: clamp(12px, 1.4vw, 18px);
+    align-items: stretch;
+}
+
+.home-page .verfiedpadints,
+.home-page .vidhivihan {
+    flex: 1 1 220px;
+    min-width: min(100%, 220px);
+}
+
+.home-page .verifiefpadits p,
+.home-page .vidhivihan .deepimgs p {
+    white-space: normal;
+    overflow-wrap: anywhere;
+}
+
+.home-page .sliderhometertexbtn {
+    width: min(100%, 580px);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+    gap: clamp(12px, 1.4vw, 18px);
+}
+
+.home-page .booknow,
+.home-page .exprlorresrive,
+.home-page .shareivutton,
+.home-page .booknowb {
+    min-width: 0;
+}
+
+.home-page .booknow button,
+.home-page .exprlorresrive button,
+.home-page .shareivutton button,
+.home-page .booknowb button,
+.home-page .custom-button,
+.home-page .aboutbtn,
+.home-page .benefitbtn,
+.home-page .viewallbtn {
+    width: 100%;
+    min-width: 0;
+    min-height: 48px;
+    height: auto;
+    padding: 14px 20px;
+    white-space: normal;
+    line-height: 1.35;
+    text-align: center;
+}
+
+.home-page #poojamain {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 580px), 1fr));
+    gap: clamp(24px, 3vw, 40px);
+    align-items: stretch;
+    justify-items: stretch;
+    padding: clamp(34px, 4vh, 72px) var(--home-fluid-space) clamp(26px, 3vh, 48px);
+}
+
+.home-page .leftpojamain {
+    width: 100%;
+    max-width: min(100%, 560px);
+}
+
+.home-page .rightpoojamain {
+    width: 100%;
+    max-width: min(100%, 640px);
+    height: 100%;
+}
+
+.home-page .midleftmain,
+.home-page .midlefttexs,
+.home-page .midtextpooja,
+.home-page .rightpoojaheader,
+.home-page .rightaboutpooja,
+.home-page .rightbenefitswrap,
+.home-page .benefititem {
+    min-width: 0;
+}
+
+.home-page .nameofpuja h2,
+.home-page [data-pooja-title],
+.home-page [data-pooja-subtitle],
+.home-page .previewtext,
+.home-page .benefithead p,
+.home-page .innerexpandbox p {
+    overflow-wrap: anywhere;
+    text-wrap: balance;
+}
+
+.home-page .home-route-gateway,
+.home-page .home-route-chronicle,
+.home-page .home-products-showcase,
+.home-page .home-cta-contact {
+    padding-left: var(--home-fluid-space);
+    padding-right: var(--home-fluid-space);
+}
+
+.home-page .home-route-gateway {
+    gap: clamp(26px, 4vw, 56px);
+}
+
+.home-page .home-route-gateway-copy {
+    max-width: min(100%, 760px);
+}
+
+.home-page .home-route-gateway-copy h2,
+.home-page .home-route-copy h3,
+.home-page .home-products-lead h2,
+.home-page .home-cta-info h2,
+.home-page .home-cta-form-card h3 {
+    overflow-wrap: anywhere;
+    text-wrap: balance;
+}
+
+.home-page .home-route-gateway-copy p,
+.home-page .home-route-copy > p,
+.home-page .home-route-points li,
+.home-page .home-route-visual-note strong,
+.home-page .home-route-visual-badge strong,
+.home-page .home-product-copy p,
+.home-page .home-cta-info > p,
+.home-page .home-cta-address p,
+.home-page .home-footer-brand p,
+.home-page .home-footer-links a,
+.home-page .home-footer-bottom p {
+    overflow-wrap: anywhere;
+}
+
+.home-page .home-route-gateway-visual {
+    min-height: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+    gap: clamp(18px, 2vw, 24px);
+    align-items: stretch;
+}
+
+.home-page .home-route-floating-card,
+.home-page .home-route-floating-card-main,
+.home-page .home-route-floating-card-side,
+.home-page .home-route-floating-card-bottom {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    max-width: none;
+    height: 100%;
+    transform: none;
+}
+
+.home-page .home-route-floating-card img {
+    height: clamp(180px, 18vw, 240px);
+}
+
+.home-page .home-route-spotlights {
+    gap: clamp(24px, 3vw, 36px);
+}
+
+.home-page .home-route-spotlight {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+    align-items: stretch;
+}
+
+.home-page .home-route-copy-meta,
+.home-page .home-route-chip-row,
+.home-page .home-route-copy-footer,
+.home-page .home-product-actions,
+.home-page .home-cta-form-actions,
+.home-page .home-footer-social-icons {
+    align-items: stretch;
+}
+
+.home-page .home-route-link-btn,
+.home-page .home-route-finale-btn,
+.home-page .home-product-btn,
+.home-page .home-cta-submit {
+    white-space: normal;
+    text-align: center;
+}
+
+.home-page .home-route-visual {
+    min-height: clamp(320px, 34vw, 480px);
+}
+
+.home-page .home-route-visual-note,
+.home-page .home-route-visual-badge {
+    max-width: min(82%, 280px);
+}
+
+.home-page .home-products-grid {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 290px), 1fr));
+}
+
+.home-page .home-product-media {
+    min-height: clamp(220px, 22vw, 300px);
+}
+
+.home-page .home-cta-contact-grid,
+.home-page .home-footer-inner {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+}
+
+.home-page .home-cta-channel,
+.home-page .home-contact-link-card,
+.home-page .home-product-card {
+    min-width: 0;
+}
+
+.home-page .home-cta-channel span:not(.home-cta-icon) {
+    overflow-wrap: anywhere;
+}
+
+.home-page .home-cta-field input,
+.home-page .home-cta-field textarea {
+    box-sizing: border-box;
+}
+
+.home-page .home-footer-inner {
+    align-items: start;
 }

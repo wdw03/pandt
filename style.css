@@ -722,6 +722,26 @@ body {
     background-image: url("./assets/images/whatsapp-icon.svg");
 }
 
+.whatsapp-inline-text {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45em;
+    vertical-align: middle;
+}
+
+.whatsapp-inline-icon {
+    width: 1.05em;
+    height: 1.05em;
+    flex: 0 0 auto;
+    display: inline-block;
+    background: url("./assets/images/whatsapp-icon.svg") center / contain no-repeat;
+    transform: translateY(-0.02em);
+}
+
+.whatsapp-inline-chip {
+    white-space: nowrap;
+}
+
 
 .kundali-match-icon {
     background-image: url("./assets/images/kundali-match-icon.svg");
