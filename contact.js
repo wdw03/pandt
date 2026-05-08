@@ -161,14 +161,14 @@ const serviceItems = [
         body: "Book authentic Vedic Puja and Homam rituals performed by experienced Kerala priests with personal sankalp and sacred procedure.",
         image: "./assets/images/lakshmipooja.jpg",
         href: "pooja.html",
-        button: "Open Puja Service"
+        button: "Explore Online Puja"
     },
     {
         title: "Online Astrology Consultation",
         body: "Connect for kundali guidance, prediction-based support, and detailed spiritual direction from trusted Thanathu Madom services.",
         image: "./assets/images/home-analyze.png",
         href: "kundali-matching.html",
-        button: "Open Astrology Service"
+        button: "Explore Astrology Guidance"
     },
     {
         title: "Online Energy Healing",
@@ -182,25 +182,25 @@ const serviceItems = [
 const socialItems = [
     {
         iconClass: "contact-icon-badge--youtube",
-        title: "Click to Join Youtube Channel",
-        caption: "Open YouTube",
+        title: "Join Our YouTube Channel",
+        caption: "Watch on YouTube",
         href: "https://www.youtube.com/"
     },
     {
         iconClass: "contact-icon-badge--whatsapp",
-        title: "Click to Join WhatsApp Channel",
+        title: "Chat With Us on WhatsApp",
         caption: "Open WhatsApp",
         href: "https://wa.me/919743045807"
     },
     {
         iconClass: "contact-icon-badge--facebook",
-        title: "Click to Join Facebook Page",
+        title: "Follow Our Facebook Page",
         caption: "Open Facebook",
         href: "https://www.facebook.com/"
     },
     {
         iconClass: "contact-icon-badge--instagram",
-        title: "Click to Join Instagram",
+        title: "Follow Us on Instagram",
         caption: "Open Instagram",
         href: "https://www.instagram.com/"
     }

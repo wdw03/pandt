@@ -846,7 +846,7 @@ const initHomeRouteTextPreview = () => {
     preview.setAttribute("aria-hidden", "true");
     preview.innerHTML = `
         <div class="home-route-hover-preview-card">
-            <span class="home-route-hover-preview-label">Full Route Summary</span>
+            <span class="home-route-hover-preview-label">Detailed Page Overview</span>
             <h4 class="home-route-hover-preview-title"></h4>
             <div class="home-route-hover-preview-scroll">
                 <p class="home-route-hover-preview-body"></p>
@@ -868,7 +868,7 @@ const initHomeRouteTextPreview = () => {
             return null;
         }
 
-        const title = copy.querySelector("h3")?.textContent?.trim() || "Route Details";
+        const title = copy.querySelector("h3")?.textContent?.trim() || "Page Overview";
         const summary = copy.querySelector(":scope > p")?.textContent?.trim() || "";
         const metaLines = Array.from(copy.querySelectorAll(".home-route-copy-meta article"))
             .map((item) => {
