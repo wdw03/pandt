@@ -12,6 +12,7 @@ body.home-page {
 
 .home-page #navbar {
     position: sticky;
+    top: 0;
     height: auto;
     min-height: clamp(74px, 6vw, 104px);
 }
@@ -21,30 +22,50 @@ body.home-page {
     padding-top: clamp(10px, 1vw, 16px);
     padding-bottom: clamp(10px, 1vw, 16px);
     flex-wrap: wrap;
+    align-items: center;
     row-gap: 12px;
+}
+
+.home-page #navbar .navbarmain > * {
+    min-width: 0;
 }
 
 .home-page .navbarhelogmain {
     flex: 1 1 260px;
+    max-width: min(100%, 420px);
+}
+
+.home-page .navbartext h4 {
+    white-space: normal;
+    max-width: 20ch;
 }
 
 .home-page #navbarlinks {
-    flex: 2 1 680px;
+    flex: 999 1 680px;
+    width: 100%;
 }
 
 .home-page #navbarlinks nav ul {
     flex-wrap: wrap;
+    justify-content: center;
+    column-gap: clamp(10px, 1.2vw, 22px);
     row-gap: 10px;
 }
 
+.home-page #navbarlinks nav ul li a {
+    font-size: clamp(14px, 0.85vw, 18px);
+}
+
 .home-page .loglongu {
-    flex: 0 1 auto;
+    flex: 0 1 220px;
+    flex-wrap: wrap;
     margin-left: auto;
+    row-gap: 10px;
 }
 
 .home-page #homepage {
     height: auto;
-    min-height: clamp(560px, 82vh, 920px);
+    min-height: clamp(560px, 84vh, 920px);
     margin-top: 0;
     overflow: hidden;
     display: flex;
@@ -64,14 +85,19 @@ body.home-page {
 
 .home-page .slidercontemain {
     min-height: inherit;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: space-between;
     align-items: center;
     gap: clamp(18px, 2.4vw, 44px);
-    padding: clamp(20px, 3vh, 40px) clamp(18px, 4vw, 72px);
+    padding: clamp(24px, 4vh, 48px) clamp(18px, 4vw, 72px) clamp(34px, 5vh, 64px);
 }
 
 .home-page .slidercontemain .sliderleft {
     flex: 1 1 560px;
     width: auto;
+    max-width: min(100%, 760px);
     min-width: 0;
     display: flex;
     flex-direction: column;
@@ -83,7 +109,7 @@ body.home-page {
 }
 
 .home-page .slidercontemain .sliderright {
-    flex: 1 1 220px;
+    flex: 0 1 clamp(120px, 16vw, 300px);
     width: auto;
     min-width: 0;
     min-height: inherit;
@@ -92,16 +118,18 @@ body.home-page {
 .home-page .slidetopleft {
     width: min(100%, clamp(220px, 28vw, 420px));
     height: clamp(88px, 12vh, 170px);
+    max-width: 100%;
 }
 
 .home-page .slidemidleft,
 .home-page .slidefoterleft {
     width: min(100%, clamp(340px, 46vw, 640px));
     margin-left: 0;
+    max-width: 100%;
 }
 
 .home-page .slidemidleft {
-    margin-top: 0;
+    margin-top: clamp(18px, 3vh, 32px);
     min-height: 0;
     display: flex;
     align-items: center;
@@ -118,6 +146,7 @@ body.home-page {
     flex-direction: column;
     justify-content: center;
     gap: clamp(10px, 1.4vh, 18px);
+    max-width: min(100%, 660px);
 }
 
 .home-page .hedadtext,
@@ -136,8 +165,21 @@ body.home-page {
     flex-wrap: wrap;
 }
 
+.home-page .sliderhometertexbtn {
+    align-items: stretch;
+}
+
 .home-page .booknow,
-.home-page .exprlorresrive,
+.home-page .exprlorresrive {
+    flex: 1 1 220px;
+}
+
+.home-page .booknow button,
+.home-page .exprlorresrive button {
+    width: 100%;
+    min-width: 0;
+}
+
 .home-page .shareivutton,
 .home-page .booknowb {
     flex: 1 1 190px;
@@ -160,6 +202,7 @@ body.home-page {
     grid-auto-rows: max-content;
     background-size: min(1200px, 100%);
     background-position: center top;
+    overflow: visible;
 }
 
 .home-page .leftpooja,
@@ -169,12 +212,14 @@ body.home-page {
     display: flex;
     align-items: stretch;
     justify-content: center;
+    min-width: 0;
 }
 
 .home-page .leftpojamain {
     width: min(100%, clamp(340px, 44vw, 520px));
     margin: 0 auto;
     justify-content: center;
+    min-width: 0;
 }
 
 .home-page .rightpooja {
@@ -185,6 +230,10 @@ body.home-page {
     width: min(100%, clamp(360px, 46vw, 600px));
     margin: 0 auto;
     min-height: 0;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(12px, 1vw, 16px);
 }
 
 .home-page .rightpoojaheader,
@@ -193,8 +242,21 @@ body.home-page {
 .home-page .rightcta,
 .home-page .rightviewallwrap,
 .home-page .midleft,
-.home-page .pooja-slider-shell {
+.home-page .pooja-slider-shell,
+.home-page .detailspooja,
+.home-page .previewtext,
+.home-page .benefithead p,
+.home-page .innerexpandbox p {
     width: 100%;
+}
+
+.home-page .detailspooja,
+.home-page .previewtext,
+.home-page .benefithead p,
+.home-page .innerexpandbox p,
+.home-page [data-pooja-title],
+.home-page [data-pooja-subtitle] {
+    overflow-wrap: anywhere;
 }
 
 .home-page .rightviewallwrap {
@@ -206,12 +268,23 @@ body.home-page {
     flex: 1 1 180px;
 }
 
+.home-page .pooja-slider-btn {
+    top: clamp(250px, 28vw, 360px);
+    width: clamp(42px, 3vw, 54px);
+    height: clamp(42px, 3vw, 54px);
+}
+
 .home-page .pooja-slider-btn-prev {
     left: clamp(12px, 1.5vw, 24px);
 }
 
 .home-page .pooja-slider-btn-next {
     right: clamp(12px, 1.5vw, 24px);
+}
+
+.home-page .pooja-slider-btn-icon {
+    width: clamp(16px, 1.1vw, 22px);
+    height: clamp(16px, 1.1vw, 22px);
 }
 
 .home-page .pooja-hover-preview {
