@@ -511,9 +511,10 @@ const TRANSLATIONS = {
 
 function applyLanguage(lang) {
   if (!TRANSLATIONS[lang]) lang = 'en';
-  const t = TRANSLATIONS[lang];
-  document.querySelectorAll('[data-i18n]').forEach(el => {
-    const key = el.getAttribute('data-i18n');
+  var t = TRANSLATIONS[lang];
+  var labelMap = { 'en': 'ENGLISH', 'hi': 'HINDI', 'ta': 'TAMIL', 'te': 'TELUGU' };
+  document.querySelectorAll('[data-i18n]').forEach(function(el) {
+    var key = el.getAttribute('data-i18n');
     if (t[key]) {
       if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
         el.placeholder = t[key];
@@ -523,33 +524,26 @@ function applyLanguage(lang) {
     }
   });
   localStorage.setItem('tmLang', lang);
-  const sel = document.getElementById('languageSelect');
-  if (sel) sel.value = lang;
+  var langLabel = document.querySelector('.langselected p');
+  if (langLabel && labelMap[lang]) langLabel.textContent = labelMap[lang];
 }
 
 function initLanguageSwitcher() {
-  const saved = localStorage.getItem('tmLang') || 'en';
+  var saved = localStorage.getItem('tmLang') || 'en';
   applyLanguage(saved);
-  const sel = document.getElementById('languageSelect');
-  if (sel) {
-    sel.value = saved;
-    sel.addEventListener('change', function () {
-      applyLanguage(this.value);
+
+  var langOptions = document.querySelectorAll('.languageoption a');
+  var langMap = { 'english': 'en', 'hindi': 'hi', 'tamil': 'ta', 'telugu': 'te' };
+
+  langOptions.forEach(function(opt) {
+    opt.addEventListener('click', function(e) {
+      e.preventDefault();
+      var lang = langMap[opt.textContent.trim().toLowerCase()];
+      if (lang) {
+        applyLanguage(lang);
+      }
     });
-  }
-  const mobileSel = document.getElementById('mobileLanguageSelect');
-  if (mobileSel) {
-    mobileSel.value = saved;
-    mobileSel.addEventListener('change', function () {
-      applyLanguage(this.value);
-      if (sel) sel.value = this.value;
-    });
-  }
-  if (sel && mobileSel) {
-    sel.addEventListener('change', function () {
-      mobileSel.value = this.value;
-    });
-  }
+  });
 }
 
 document.addEventListener('DOMContentLoaded', initLanguageSwitcher);
