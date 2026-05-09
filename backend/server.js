@@ -2,7 +2,10 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const path = require('path');
-require('dotenv').config({ path: path.join(__dirname, '.env') });
+const dotenv = require('dotenv');
+
+dotenv.config({ path: path.join(__dirname, '.env') });
+dotenv.config({ path: path.join(__dirname, '../.env') });
 
 const app = express();
 
@@ -38,8 +41,14 @@ app.use('/api', panchangProxyRoutes);
 
 // Connect to MongoDB and start server
 const PORT = process.env.PORT || 5000;
+const mongoUri = process.env.MONGODB_URI || process.env.MONGO_URI;
 
-mongoose.connect(process.env.MONGODB_URI)
+if (!mongoUri) {
+    console.error('MongoDB connection error: missing MONGO_URI or MONGODB_URI in backend/.env');
+    process.exit(1);
+}
+
+mongoose.connect(mongoUri)
     .then(() => {
         console.log('✅ MongoDB Connected');
         app.listen(PORT, () => {

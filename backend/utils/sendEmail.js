@@ -3,8 +3,8 @@ const nodemailer = require('nodemailer');
 let cachedTransporter = null;
 
 const getMailConfig = () => {
-    const emailUser = String(process.env.EMAIL_USER || '').trim();
-    const emailPass = String(process.env.EMAIL_PASS || '')
+    const emailUser = String(process.env.EMAIL_USER || process.env.SMTP_USER || '').trim();
+    const emailPass = String(process.env.EMAIL_PASS || process.env.SMTP_PASS || '')
         .trim()
         .replace(/\s+/g, '');
     const fromName = String(process.env.FROM_NAME || 'Thanathu Madom').trim();
@@ -15,10 +15,10 @@ const getMailConfig = () => {
         throw new Error('Missing email credentials. Please set EMAIL_USER and EMAIL_PASS in backend/.env');
     }
 
-    const customHost = String(process.env.EMAIL_HOST || '').trim();
+    const customHost = String(process.env.EMAIL_HOST || process.env.SMTP_HOST || '').trim();
 
     if (customHost) {
-        const port = Number(process.env.EMAIL_PORT || 587);
+        const port = Number(process.env.EMAIL_PORT || process.env.SMTP_PORT || 587);
         const secure =
             String(process.env.EMAIL_SECURE || '')
                 .trim()
