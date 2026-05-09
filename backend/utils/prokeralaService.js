@@ -398,6 +398,23 @@ const fetchPanchangData = async ({ lat = '25.5941', lng = '85.1376', date = '', 
     return mapPanchangResponse(rawData, city, parsedDate);
 };
 
+const pickPredictionFromList = (predictionList, type) => {
+    if (!Array.isArray(predictionList) || predictionList.length === 0) {
+        return {};
+    }
+
+    if (type && type.toLowerCase() !== 'all') {
+        const match = predictionList.find(
+            (item) => normalizeText(item?.type).toLowerCase() === type.toLowerCase()
+        );
+        if (match) {
+            return match;
+        }
+    }
+
+    return predictionList[0] || {};
+};
+
 const fetchHoroscopeData = async ({ sign = 'aries', type = 'general', date = '' } = {}) => {
     const parsedDate = parseIsoDate(date);
     const apiDateTime = formatApiDateTime(parsedDate);
@@ -407,33 +424,50 @@ const fetchHoroscopeData = async ({ sign = 'aries', type = 'general', date = '' 
         datetime: apiDateTime
     });
 
-    return mapSingleHoroscope(rawData, sign, parsedDate);
+    // ProKerala v2 advanced endpoint always wraps results in data.daily_predictions[]
+    const predictions = Array.isArray(rawData?.data?.daily_predictions)
+        ? rawData.data.daily_predictions
+        : [];
+    const targetKey = String(sign || '').toLowerCase();
+    const entry = predictions.find(
+        (item) => normalizeText(item?.sign?.name).toLowerCase() === targetKey
+    ) || predictions[0] || {};
+
+    const selectedPrediction = pickPredictionFromList(entry.predictions, type);
+
+    return mapSingleHoroscope({ data: selectedPrediction }, targetKey, parsedDate);
 };
 
 const fetchAllHoroscopes = async ({ type = 'general', date = '' } = {}) => {
     const parsedDate = parseIsoDate(date);
     const apiDateTime = formatApiDateTime(parsedDate);
-    const rawData = await prokeralaGet(HOROSCOPE_URL, {
-        sign: 'all',
-        type,
-        datetime: apiDateTime
-    });
 
-    const predictions = Array.isArray(rawData?.data?.daily_predictions)
-        ? rawData.data.daily_predictions
-        : [];
+    let predictions = [];
+    let warning = null;
+
+    try {
+        const rawData = await prokeralaGet(HOROSCOPE_URL, {
+            sign: 'all',
+            type,
+            datetime: apiDateTime
+        });
+
+        predictions = Array.isArray(rawData?.data?.daily_predictions)
+            ? rawData.data.daily_predictions
+            : [];
+    } catch (error) {
+        warning = error.message || 'Failed to fetch horoscope from ProKerala';
+    }
 
     const bySign = {};
 
     predictions.forEach((entry) => {
         const signKey = normalizeText(entry?.sign?.name).toLowerCase();
-        const predictionList = Array.isArray(entry?.predictions) ? entry.predictions : [];
-
-        let selectedPrediction = predictionList[0] || {};
-        if (type !== 'all') {
-            selectedPrediction = predictionList.find((item) => normalizeText(item?.type).toLowerCase() === type.toLowerCase()) || selectedPrediction || {};
+        if (!signKey || !zodiacSigns[signKey]) {
+            return;
         }
 
+        const selectedPrediction = pickPredictionFromList(entry.predictions, type);
         bySign[signKey] = mapSingleHoroscope({ data: selectedPrediction }, signKey, parsedDate);
     });
 
@@ -443,7 +477,7 @@ const fetchAllHoroscopes = async ({ type = 'general', date = '' } = {}) => {
         }
     });
 
-    return bySign;
+    return { signs: bySign, warning };
 };
 
 module.exports = {

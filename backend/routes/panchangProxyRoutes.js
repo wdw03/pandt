@@ -32,68 +32,56 @@ router.get('/panchang', async (req, res) => {
     }
 });
 
-router.get('/horoscope/all', async (req, res) => {
+const handleAllHoroscopes = async (req, res) => {
+    const horoscopeType = req.query.type || 'general';
+    const dateValue = req.query.date || '';
+    const today = dateValue || new Date().toISOString().slice(0, 10);
+
     try {
-        const horoscopeType = req.query.type || 'general';
-        const dateValue = req.query.date || '';
-        const data = await fetchAllHoroscopes({
+        const result = await fetchAllHoroscopes({
             type: horoscopeType,
             date: dateValue
         });
 
-        return res.json({
-            status: 'success',
+        const response = {
+            status: result.warning ? 'partial' : 'success',
             success: true,
             type: horoscopeType,
-            date: dateValue || new Date().toISOString().slice(0, 10),
-            data
-        });
-    } catch (error) {
-        return res.status(502).json({
-            status: 'error',
-            success: false,
-            message: `Horoscope service unavailable: ${error.message}`
-        });
-    }
-});
+            date: today,
+            data: result.signs
+        };
 
-router.get('/horoscope', async (req, res) => {
-    try {
-        const horoscopeType = req.query.type || 'general';
-        const dateValue = req.query.date || '';
-        const data = await fetchAllHoroscopes({
-            type: horoscopeType,
-            date: dateValue
-        });
-
-        return res.json({
-            status: 'success',
-            success: true,
-            type: horoscopeType,
-            date: dateValue || new Date().toISOString().slice(0, 10),
-            data
-        });
-    } catch (error) {
-        return res.status(502).json({
-            status: 'error',
-            success: false,
-            message: `Horoscope service unavailable: ${error.message}`
-        });
-    }
-});
-
-router.get('/horoscope/:sign', async (req, res) => {
-    try {
-        const sign = String(req.params.sign || '').toLowerCase();
-
-        if (!zodiacSigns[sign]) {
-            return res.status(400).json({
-                status: 'error',
-                success: false,
-                message: `Invalid zodiac sign. Use one of: ${Object.keys(zodiacSigns).join(', ')}`
-            });
+        if (result.warning) {
+            response.warning = `Live horoscope unavailable: ${result.warning}`;
         }
 
+        return res.json(response);
+    } catch (error) {
+        return res.status(502).json({
+            status: 'error',
+            success: false,
+            type: horoscopeType,
+            date: today,
+            message: `Horoscope service unavailable: ${error.message}`
+        });
+    }
+};
+
+router.get('/horoscope/all', handleAllHoroscopes);
+router.get('/horoscope', handleAllHoroscopes);
+
+router.get('/horoscope/:sign', async (req, res) => {
+    const sign = String(req.params.sign || '').toLowerCase();
+
+    if (!zodiacSigns[sign]) {
+        return res.status(400).json({
+            status: 'error',
+            success: false,
+            message: `Invalid zodiac sign. Use one of: ${Object.keys(zodiacSigns).join(', ')}`
+        });
+    }
+
+    try {
         const data = await fetchHoroscopeData({
             sign,
             type: req.query.type || 'general',

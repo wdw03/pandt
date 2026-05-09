@@ -157,13 +157,46 @@ const getHoroscopeData = async () => {
         const response = await fetch(`/api/horoscope/all?type=general`);
         const result = await response.json();
 
-        if ((result.status === 'success' || result.success) && result.data) {
+        if (result && result.data && typeof result.data === 'object') {
             return result;
         }
+
+        return {
+            status: 'error',
+            data: null,
+            warning: result?.message || result?.warning || 'Horoscope service unavailable.'
+        };
     } catch (e) {
         console.error('Horoscope fetch error', e);
+        return {
+            status: 'error',
+            data: null,
+            warning: 'Could not reach the horoscope service. Please try again later.'
+        };
     }
-    return null;
+};
+
+const showHoroscopeNotice = (message, tone = 'warning') => {
+    if (!message) {
+        return;
+    }
+
+    const reading = document.querySelector('.horoscope-detail-reading-card');
+    if (!reading) {
+        console.warn('horoscope notice:', message);
+        return;
+    }
+
+    let notice = document.querySelector('[data-detail-notice]');
+    if (!notice) {
+        notice = document.createElement('div');
+        notice.setAttribute('data-detail-notice', '');
+        notice.className = 'horoscope-detail-notice';
+        reading.prepend(notice);
+    }
+
+    notice.dataset.tone = tone;
+    notice.textContent = message;
 };
 
 const signOrder = [
@@ -180,6 +213,21 @@ const signOrder = [
     "aquarius",
     "pisces"
 ];
+
+const localSignInfo = {
+    aries: { name: 'Aries', hindi: 'मेष', symbol: '♈' },
+    taurus: { name: 'Taurus', hindi: 'वृषभ', symbol: '♉' },
+    gemini: { name: 'Gemini', hindi: 'मिथुन', symbol: '♊' },
+    cancer: { name: 'Cancer', hindi: 'कर्क', symbol: '♋' },
+    leo: { name: 'Leo', hindi: 'सिंह', symbol: '♌' },
+    virgo: { name: 'Virgo', hindi: 'कन्या', symbol: '♍' },
+    libra: { name: 'Libra', hindi: 'तुला', symbol: '♎' },
+    scorpio: { name: 'Scorpio', hindi: 'वृश्चिक', symbol: '♏' },
+    sagittarius: { name: 'Sagittarius', hindi: 'धनु', symbol: '♐' },
+    capricorn: { name: 'Capricorn', hindi: 'मकर', symbol: '♑' },
+    aquarius: { name: 'Aquarius', hindi: 'कुंभ', symbol: '♒' },
+    pisces: { name: 'Pisces', hindi: 'मीन', symbol: '♓' }
+};
 
 const signVisuals = {
     aries: {
@@ -615,15 +663,62 @@ const renderNavLinks = (activeSign) => {
     }
 };
 
+const buildLocalSignData = (signKey) => {
+    const localInfo = localSignInfo[signKey] || {};
+    const today = new Date();
+    return {
+        zodiac_sign: localInfo.name || (signKey.charAt(0).toUpperCase() + signKey.slice(1)),
+        zodiac_sign_hindi: localInfo.hindi || '',
+        symbol: localInfo.symbol || '',
+        date: `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`,
+        date_formatted: today.toLocaleDateString('en-US', {
+            weekday: 'long',
+            month: 'long',
+            day: '2-digit',
+            year: 'numeric'
+        }),
+        prediction: '',
+        lucky_color: 'N/A',
+        lucky_number: 'N/A',
+        lucky_time: 'N/A',
+        mood: 'N/A',
+        compatibility: 'N/A',
+        overall_rating: 0
+    };
+};
+
 const renderSelectedSign = async () => {
     const activeSign = getSignFromQuery();
-    horoscopeApiResponse = await getHoroscopeData();
-    if (!horoscopeApiResponse) return;
-    const signData = horoscopeApiResponse.data[activeSign];
     const visual = signVisuals[activeSign];
 
-    if (!signData || !visual) {
+    if (!visual) {
         return;
+    }
+
+    horoscopeApiResponse = await getHoroscopeData();
+
+    let signData = horoscopeApiResponse?.data?.[activeSign];
+    let warningMessage = horoscopeApiResponse?.warning || null;
+
+    if (!signData) {
+        // Backend totally failed — render with local placeholder so the page is not blank
+        signData = buildLocalSignData(activeSign);
+        horoscopeApiResponse = horoscopeApiResponse || { type: 'general', data: {} };
+        if (!horoscopeApiResponse.data) {
+            horoscopeApiResponse.data = {};
+        }
+        signOrder.forEach((key) => {
+            if (!horoscopeApiResponse.data[key]) {
+                horoscopeApiResponse.data[key] = buildLocalSignData(key);
+            }
+        });
+        warningMessage = warningMessage || 'Live horoscope data is currently unavailable.';
+    } else if (!signData.prediction) {
+        warningMessage = warningMessage || 'Live prediction is not available right now. Please check back soon.';
+    }
+
+    if (warningMessage) {
+        showHoroscopeNotice(warningMessage);
     }
 
     const signName = sanitizeText(signData.zodiac_sign);
