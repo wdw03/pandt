@@ -15,6 +15,7 @@ CORS(app)
 # ─────────────────────────────────────────
 #  CONFIG
 # ─────────────────────────────────────────
+<<<<<<< Updated upstream
 import os
 CLIENT_ID     = os.environ.get("PROKERALA_CLIENT_ID", "")
 CLIENT_SECRET = os.environ.get("PROKERALA_CLIENT_SECRET", "")
@@ -23,6 +24,10 @@ if not CLIENT_ID or not CLIENT_SECRET:
         "ProKerala credentials missing. Set PROKERALA_CLIENT_ID and "
         "PROKERALA_CLIENT_SECRET environment variables (e.g. via .env)."
     )
+=======
+CLIENT_ID     = "7fe10a80-d193-457f-b6d5-a04f04879464"
+CLIENT_SECRET = "F7llJdILlqFsnOllif4EdQFdlBESGXvbt5iP9CrW"
+>>>>>>> Stashed changes
 
 TOKEN_URL     = "https://api.prokerala.com/token"
 PANCHANG_URL  = "https://api.prokerala.com/v2/astrology/panchang"

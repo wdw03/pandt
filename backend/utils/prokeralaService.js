@@ -1,5 +1,6 @@
 const SiteConfig = require('../models/SiteConfig');
 
+<<<<<<< Updated upstream
 // Credentials are loaded from (in order): SiteConfig (admin DB), env vars,
 // then the hardcoded fallback below. The hardcoded fallback exists ONLY as a
 // last-resort dev convenience and MUST NOT be relied on in production —
@@ -7,6 +8,10 @@ const SiteConfig = require('../models/SiteConfig');
 // set them through the admin SiteConfig (panchangClientId / panchangClientSecret).
 const DEFAULT_CLIENT_ID = '';
 const DEFAULT_CLIENT_SECRET = '';
+=======
+const DEFAULT_CLIENT_ID = '7fe10a80-d193-457f-b6d5-a04f04879464';
+const DEFAULT_CLIENT_SECRET = 'F7llJdILlqFsnOllif4EdQFdlBESGXvbt5iP9CrW';
+>>>>>>> Stashed changes
 const TOKEN_URL = 'https://api.prokerala.com/token';
 const PANCHANG_URL = 'https://api.prokerala.com/v2/astrology/panchang';
 const HOROSCOPE_URL = 'https://api.prokerala.com/v2/horoscope/daily/advanced';
