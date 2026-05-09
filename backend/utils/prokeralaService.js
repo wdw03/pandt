@@ -1,7 +1,12 @@
 const SiteConfig = require('../models/SiteConfig');
 
-const DEFAULT_CLIENT_ID = 'd45fe2a1-99f9-4b48-ae08-ae8fb6abe1a6';
-const DEFAULT_CLIENT_SECRET = 'wWkGgybm8WEigOqCrCdTAKKiLbQkAPUiDIFiWQn2';
+// Credentials are loaded from (in order): SiteConfig (admin DB), env vars,
+// then the hardcoded fallback below. The hardcoded fallback exists ONLY as a
+// last-resort dev convenience and MUST NOT be relied on in production —
+// configure PROKERALA_CLIENT_ID / PROKERALA_CLIENT_SECRET in backend/.env or
+// set them through the admin SiteConfig (panchangClientId / panchangClientSecret).
+const DEFAULT_CLIENT_ID = '';
+const DEFAULT_CLIENT_SECRET = '';
 const TOKEN_URL = 'https://api.prokerala.com/token';
 const PANCHANG_URL = 'https://api.prokerala.com/v2/astrology/panchang';
 const HOROSCOPE_URL = 'https://api.prokerala.com/v2/horoscope/daily/advanced';
@@ -321,10 +326,16 @@ const getCredentials = async () => {
         SiteConfig.getVal('panchangClientSecret', process.env.PROKERALA_CLIENT_SECRET || DEFAULT_CLIENT_SECRET)
     ]);
 
-    return {
-        clientId: configClientId || DEFAULT_CLIENT_ID,
-        clientSecret: configClientSecret || DEFAULT_CLIENT_SECRET
-    };
+    const clientId = configClientId || process.env.PROKERALA_CLIENT_ID || DEFAULT_CLIENT_ID;
+    const clientSecret = configClientSecret || process.env.PROKERALA_CLIENT_SECRET || DEFAULT_CLIENT_SECRET;
+
+    if (!clientId || !clientSecret) {
+        throw new Error(
+            'ProKerala credentials are not configured. Set PROKERALA_CLIENT_ID and PROKERALA_CLIENT_SECRET in backend/.env, or save panchangClientId/panchangClientSecret via the admin SiteConfig.'
+        );
+    }
+
+    return { clientId, clientSecret };
 };
 
 const getAccessToken = async () => {
