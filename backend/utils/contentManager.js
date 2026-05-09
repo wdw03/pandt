@@ -361,11 +361,14 @@ const defaultVideos = [
     }
 ];
 
+// SiteConfig defaults are seeded into MongoDB on first boot. Credential keys are
+// intentionally seeded as empty strings — the admin must populate them via the
+// admin dashboard Settings panel (or via env vars). Never hardcode real secrets here.
 const defaultSiteConfigs = [
     { key: 'kundaliMatchingPrice', value: 'Rs 800' },
     { key: 'janamKundaliPrice', value: 'Rs 300' },
-    { key: 'panchangClientId', value: 'd45fe2a1-99f9-4b48-ae08-ae8fb6abe1a6' },
-    { key: 'panchangClientSecret', value: 'wWkGgybm8WEigOqCrCdTAKKiLbQkAPUiDIFiWQn2' }
+    { key: 'panchangClientId', value: '' },
+    { key: 'panchangClientSecret', value: '' }
 ];
 
 module.exports = {

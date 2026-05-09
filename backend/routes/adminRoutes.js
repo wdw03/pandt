@@ -67,6 +67,7 @@ router.put('/contact-submissions/:id/read', adminProtect, ctrl.markContactRead);
 
 router.get('/config', adminProtect, ctrl.getConfig);
 router.put('/config', adminProtect, ctrl.updateConfig);
+router.post('/config/prokerala/test', adminProtect, ctrl.testProkeralaCredentials);
 
 router.post('/upload', adminProtect, upload.single('image'), ctrl.uploadImage);
 

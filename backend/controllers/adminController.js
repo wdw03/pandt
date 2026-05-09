@@ -347,6 +347,70 @@ exports.getConfig = async (req, res) => {
     }
 };
 
+exports.testProkeralaCredentials = async (req, res) => {
+    try {
+        const { clientId, clientSecret } = req.body || {};
+        const trimmedId = cleanString(clientId);
+        const trimmedSecret = cleanString(clientSecret);
+
+        if (!trimmedId || !trimmedSecret) {
+            return res.status(400).json({
+                success: false,
+                message: 'Both Client ID and Client Secret are required to test the connection.'
+            });
+        }
+
+        const tokenResponse = await fetch('https://api.prokerala.com/token', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams({
+                grant_type: 'client_credentials',
+                client_id: trimmedId,
+                client_secret: trimmedSecret
+            })
+        });
+
+        const tokenData = await tokenResponse.json().catch(() => ({}));
+
+        if (!tokenResponse.ok || !tokenData.access_token) {
+            return res.status(400).json({
+                success: false,
+                message:
+                    tokenData.error_description ||
+                    tokenData.message ||
+                    'ProKerala rejected these credentials. Double-check the Client ID and Secret.'
+            });
+        }
+
+        // Decode JWT payload (no signature check) to surface remaining credits.
+        let creditsRemaining = null;
+        try {
+            const payload = JSON.parse(
+                Buffer.from(tokenData.access_token.split('.')[1], 'base64').toString('utf-8')
+            );
+            if (typeof payload?.credits_remaining === 'number') {
+                creditsRemaining = payload.credits_remaining;
+            }
+        } catch (_) {
+            // ignore decode errors
+        }
+
+        return res.json({
+            success: true,
+            message: 'ProKerala credentials are valid. Token received.',
+            data: {
+                expiresIn: tokenData.expires_in || null,
+                creditsRemaining
+            }
+        });
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: `Could not reach ProKerala: ${error.message}`
+        });
+    }
+};
+
 exports.updateConfig = async (req, res) => {
     try {
         const updates = req.body || {};
