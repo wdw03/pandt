@@ -150,8 +150,32 @@ const initializeJanamNavbar = () => {
 
 initializeJanamNavbar();
 
+const janamApiOrigin = (() => {
+    const protocol = window.location.protocol;
+    const hostname = window.location.hostname;
+    const port = window.location.port;
+
+    if (protocol === "file:") {
+        return "http://localhost:5000";
+    }
+
+    if (hostname === "127.0.0.1" || hostname === "localhost") {
+        if (!port || port === "5000") {
+            return `${window.location.protocol}//${window.location.hostname}${port ? `:${port}` : ""}`;
+        }
+
+        return `${window.location.protocol}//${window.location.hostname}:5000`;
+    }
+
+    return "";
+})();
+
+const janamApiUrl = (path) => `${janamApiOrigin}${path}`;
+
 const janamForm = document.getElementById("janamKundaliForm");
 const janamFeedback = document.querySelector("[data-janam-feedback]");
+const janamPriceDisplays = Array.from(document.querySelectorAll("[data-janam-price-display]"));
+const janamPriceInlineText = Array.from(document.querySelectorAll("[data-janam-price-inline]"));
 
 const fillSelectOptions = (select, options, placeholder) => {
     if (!select) {
@@ -278,6 +302,35 @@ const showJanamFeedback = (message, state) => {
     janamFeedback.dataset.feedbackState = state;
 };
 
+const updateJanamPriceUI = (priceLabel) => {
+    const safePrice = priceLabel?.trim() || "Rs 300";
+
+    janamPriceDisplays.forEach((node) => {
+        node.textContent = safePrice;
+    });
+
+    janamPriceInlineText.forEach((node) => {
+        node.textContent = safePrice;
+    });
+};
+
+const loadJanamPrice = async () => {
+    try {
+        const response = await fetch(janamApiUrl("/api/public/config/prices"), {
+            cache: "no-store"
+        });
+        const result = await response.json();
+
+        if (!result?.success) {
+            return;
+        }
+
+        updateJanamPriceUI(result.data?.janamKundaliPrice);
+    } catch (error) {
+        console.error("Unable to load Janam Kundali price", error);
+    }
+};
+
 const collectJanamPayload = (form) => {
     const formData = new FormData(form);
     const payload = Object.fromEntries(formData.entries());
@@ -295,7 +348,7 @@ const handleJanamSubmit = () => {
         return;
     }
 
-    janamForm.addEventListener("submit", (event) => {
+    janamForm.addEventListener("submit", async (event) => {
         event.preventDefault();
 
         if (!janamForm.reportValidity()) {
@@ -309,27 +362,44 @@ const handleJanamSubmit = () => {
         const payload = collectJanamPayload(janamForm);
         const paymentUrl = janamForm.dataset.paymentUrl?.trim() || "";
 
-        sessionStorage.setItem("freeJanamKundaliLead", JSON.stringify(payload));
+        try {
+            const response = await fetch(janamApiUrl('/api/public/janam-submit'), {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            const result = await response.json();
 
-        showJanamFeedback(
-            "Details submitted successfully. Your Free Janam Kundali information is saved, and you can now connect this flow to your payment page whenever you want.",
-            "success"
-        );
+            if (result.success) {
+                showJanamFeedback("Details submitted successfully. Redirecting to payment...", "success");
+                janamFeedback?.scrollIntoView({ behavior: "smooth", block: "nearest" });
 
-        janamFeedback?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+                if (!paymentUrl) {
+                    return;
+                }
 
-        if (!paymentUrl) {
-            return;
+                const pricesResponse = await fetch(janamApiUrl('/api/public/config/prices'), {
+                    cache: 'no-store'
+                });
+                const pricesData = await pricesResponse.json();
+                const priceMatch = pricesData.data.janamKundaliPrice?.match(/\d+/) || ["300"];
+                const price = priceMatch[0];
+
+                const paymentDestination = new URL(paymentUrl, window.location.href);
+                paymentDestination.searchParams.set("service", "free-janam-kundali");
+                paymentDestination.searchParams.set("price", price);
+                paymentDestination.searchParams.set("whatsapp", payload.whatsappNumber || "");
+
+                window.setTimeout(() => {
+                    window.location.href = paymentDestination.toString();
+                }, 700);
+            } else {
+                showJanamFeedback(result.message || "Failed to submit.", "error");
+            }
+        } catch (error) {
+            console.error(error);
+            showJanamFeedback("An error occurred during submission.", "error");
         }
-
-        const paymentDestination = new URL(paymentUrl, window.location.href);
-        paymentDestination.searchParams.set("service", "free-janam-kundali");
-        paymentDestination.searchParams.set("price", "300");
-        paymentDestination.searchParams.set("whatsapp", payload.whatsappNumber || "");
-
-        window.setTimeout(() => {
-            window.location.href = paymentDestination.toString();
-        }, 700);
     });
 };
 
@@ -373,3 +443,5 @@ initializeJanamForm();
 handleJanamSubmit();
 initializeJanamFaq();
 animateJanamPage();
+loadJanamPrice();
+

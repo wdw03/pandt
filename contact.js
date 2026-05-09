@@ -275,7 +275,7 @@ const renderContactSocials = () => {
 };
 
 if (contactSupportForm) {
-    contactSupportForm.addEventListener("submit", (event) => {
+    contactSupportForm.addEventListener("submit", async (event) => {
         event.preventDefault();
 
         const formData = new FormData(contactSupportForm);
@@ -291,14 +291,36 @@ if (contactSupportForm) {
             return;
         }
 
-        if (contactFeedback) {
-            contactFeedback.textContent = `Thank you, ${name}. Your message has been recorded and we will reach out soon.`;
-            contactFeedback.style.color = "#3f7a2a";
-        }
+        try {
+            const response = await fetch('/api/public/contact-submit', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, email, message })
+            });
+            const result = await response.json();
 
-        contactSupportForm.reset();
+            if (result.success) {
+                if (contactFeedback) {
+                    contactFeedback.textContent = `Thank you, ${name}. Your message has been recorded and we will reach out soon.`;
+                    contactFeedback.style.color = "#3f7a2a";
+                }
+                contactSupportForm.reset();
+            } else {
+                if (contactFeedback) {
+                    contactFeedback.textContent = result.message || "Failed to send message.";
+                    contactFeedback.style.color = "#b34b1e";
+                }
+            }
+        } catch (e) {
+            console.error('Contact submit error', e);
+            if (contactFeedback) {
+                contactFeedback.textContent = "An error occurred. Please try again.";
+                contactFeedback.style.color = "#b34b1e";
+            }
+        }
     });
 }
 
 renderContactServices();
 renderContactSocials();
+

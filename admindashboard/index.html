@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login — Thanathu Madom</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="admin.css">
+</head>
+
+<body class="admin-login-body">
+    <div class="admin-login-bg">
+        <div class="admin-login-orb admin-login-orb--1"></div>
+        <div class="admin-login-orb admin-login-orb--2"></div>
+        <div class="admin-login-orb admin-login-orb--3"></div>
+    </div>
+
+    <main class="admin-login-wrapper">
+        <div class="admin-login-card" id="loginCard">
+            <div class="admin-login-header">
+                <div class="admin-login-logo">🕉️</div>
+                <h1>Admin Panel</h1>
+                <p>Thanathu Madom Devasthanam</p>
+            </div>
+
+            <form id="adminLoginForm" class="admin-login-form" autocomplete="off">
+                <div class="admin-field">
+                    <label for="adminUsername">Username</label>
+                    <input type="text" id="adminUsername" name="username" placeholder="Enter admin username" required
+                        autofocus>
+                </div>
+                <div class="admin-field">
+                    <label for="adminPassword">Password</label>
+                    <div class="admin-field-pass">
+                        <input type="password" id="adminPassword" name="password" placeholder="Enter password" required>
+                        <button type="button" class="admin-pass-toggle" id="passToggle">Show</button>
+                    </div>
+                </div>
+                <p class="admin-login-error" id="loginError"></p>
+                <button type="submit" class="admin-login-btn" id="loginBtn">
+                    <span>Sign In</span>
+                    <span class="admin-login-btn-loader" id="loginLoader"></span>
+                </button>
+            </form>
+
+            <div class="admin-login-footer">
+                <p>Secure admin access only</p>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const API = '/api/admin';
+
+        if (localStorage.getItem('adminToken')) {
+            window.location.href = 'dashboard.html';
+        }
+
+        document.getElementById('passToggle').addEventListener('click', function () {
+            const inp = document.getElementById('adminPassword');
+            inp.type = inp.type === 'password' ? 'text' : 'password';
+            this.textContent = inp.type === 'password' ? 'Show' : 'Hide';
+        });
+
+        document.getElementById('adminLoginForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const errEl = document.getElementById('loginError');
+            const btn = document.getElementById('loginBtn');
+            const loader = document.getElementById('loginLoader');
+            errEl.textContent = '';
+            btn.classList.add('is-loading');
+
+            try {
+                const res = await fetch(`${API}/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        username: document.getElementById('adminUsername').value,
+                        password: document.getElementById('adminPassword').value
+                    })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    localStorage.setItem('adminToken', data.token);
+                    localStorage.setItem('adminUser', JSON.stringify(data.admin));
+                    window.location.href = 'dashboard.html';
+                } else {
+                    errEl.textContent = data.message || 'Login failed';
+                }
+            } catch (err) {
+                errEl.textContent = 'Server error. Make sure backend is running on port 5000.';
+            }
+            btn.classList.remove('is-loading');
+        });
+    </script>
+</body>
+
+</html>

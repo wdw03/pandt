@@ -208,66 +208,9 @@ const reviews = [
     }
 ];
 
-const videoItems = [
-    {
-        title: "Daily Astrology Guidance",
-        description: "Watch a sample spiritual video with a real YouTube thumbnail. Future links can be added to the same array.",
-        url: "https://youtu.be/SyqgAt-T0iQ?si=5nkmY-a5iSJEzV35"
-    },
-    {
-        title: "Weekly Energy Insights",
-        description: "Placeholder-ready card for another YouTube link from your admin panel later.",
-        url: ""
-    },
-    {
-        title: "Remedy and Ritual Tips",
-        description: "Use this slot for stronger remedy guidance or puja-related video explainers.",
-        url: ""
-    },
-    {
-        title: "Relationship and Horoscope Reading",
-        description: "Another future-ready video block so you can keep extending the gallery without changing markup.",
-        url: ""
-    },
-    {
-        title: "Career and Prosperity Astrology",
-        description: "Ideal for a future business-growth or career-timing astrology video.",
-        url: ""
-    }
-];
+let videoItems = [];
 
-const products = [
-    {
-        title: "5 Mukhi Rudraksha White Crystal Bracelet",
-        description: "The five Mukhi Rudraksha brings positive energy to the wearer. This Rudraksha improves the respiratory...",
-        price: "₹ 80",
-        seller: "Energised spiritual product",
-        images: [
-            "./assets/images/astromallProduct_291713351741.png",
-            "./assets/images/images.jpg"
-        ]
-    },
-    {
-        title: "Green Cut Natural Emerald Beryl Gemstone",
-        description: "barmunda gems Green Cut Natural Emerald Beryl Gemstone (11.5 carat)",
-        price: "Selling at ₹ 4500",
-        seller: "Customer image",
-        images: [
-            "./assets/images/astromallProduct_281709056206.png",
-            "./assets/images/images.jpg"
-        ]
-    },
-    {
-        title: "Gold Art India Lord Ganesha Decorative Gift",
-        description: "Lord Ganesha for Gift Ganesha for car Dashboard Ganesha Showpiece Diwali Gifts Birthday Gifts Decorative...",
-        price: "Selling at ₹ 750",
-        seller: "Customer image",
-        images: [
-            "./assets/images/astromallProduct_271709056132.png",
-            "./assets/images/images.jpg"
-        ]
-    }
-];
+let products = [];
 
 const blogs = [
     {
@@ -796,7 +739,30 @@ const initializeAccordion = () => {
 
 renderZodiacCards();
 renderReviewMarquee();
-renderVideoCarousel();
-renderProducts();
+
+
 renderBlogCarousel();
 initializeAccordion();
+
+(async () => {
+    try {
+        const [videosRes, productsRes] = await Promise.all([
+            fetch('/api/public/videos'),
+            fetch('/api/public/products')
+        ]);
+        const videosData = await videosRes.json();
+        const productsData = await productsRes.json();
+        
+        if (videosData.success) {
+            videoItems = videosData.data;
+        }
+        if (productsData.success) {
+            products = productsData.data;
+        }
+    } catch (e) {
+        console.error('Error fetching gallery data:', e);
+    }
+    
+    renderVideoCarousel();
+    renderProducts();
+})();

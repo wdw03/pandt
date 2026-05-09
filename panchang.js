@@ -416,7 +416,52 @@ const buildFallbackData = (date) => {
     };
 };
 
-const getPanchangData = (date) => {
+const getPanchangData = async (date) => {
+    try {
+        const query = new URLSearchParams({
+            lat: "25.5941",
+            lng: "85.1376",
+            city: "Patna",
+            date: formatIsoDateLocal(date)
+        });
+        const response = await fetch(`/api/panchang?${query.toString()}`);
+        const result = await response.json();
+
+        if ((result.success || result.status === "success") && result.data) {
+            if (Array.isArray(result.data.primary) && Array.isArray(result.data.additional)) {
+                return {
+                    primary: result.data.primary,
+                    additional: result.data.additional
+                };
+            }
+
+            const core = result.data.daily_core_details || {};
+            const notes = result.data.timings_and_lunar_notes || {};
+
+            return {
+                primary: [
+                    { label: "Tithi", value: core.tithi?.name || "N/A", icon: core.tithi?.code || "TI" },
+                    { label: "Nakshatra", value: core.nakshatra?.name || "N/A", icon: core.nakshatra?.code || "NA" },
+                    { label: "Yoga", value: core.yoga?.name || "N/A", icon: core.yoga?.code || "YO" },
+                    { label: "Karana", value: core.karana?.name || "N/A", icon: core.karana?.code || "KA" },
+                    { label: "Rasi", value: core.rasi?.name || "N/A", icon: core.rasi?.code || "RA" }
+                ],
+                additional: [
+                    { label: "Sunrise", value: notes.sunrise?.time || "N/A", icon: notes.sunrise?.code || "SR" },
+                    { label: "Sunset", value: notes.sunset?.time || "N/A", icon: notes.sunset?.code || "SS" },
+                    { label: "Moonrise", value: notes.moonrise?.time || "N/A", icon: notes.moonrise?.code || "MR" },
+                    { label: "Moonset", value: notes.moonset?.time || "N/A", icon: notes.moonset?.code || "MS" },
+                    { label: "Next Full Moon", value: notes.next_full_moon?.date || "N/A", icon: notes.next_full_moon?.code || "FM" },
+                    { label: "Next New Moon", value: notes.next_new_moon?.date || "N/A", icon: notes.next_new_moon?.code || "NM" },
+                    { label: "Amanta Month", value: notes.amanta_month?.name || "N/A", icon: notes.amanta_month?.code || "AM" },
+                    { label: "Paksha", value: notes.paksha?.name || "N/A", icon: notes.paksha?.code || "PK" },
+                    { label: "Purnimanta", value: notes.purnimanta?.name || "N/A", icon: notes.purnimanta?.code || "PM" }
+                ]
+            };
+        }
+    } catch (e) {
+        console.error('Panchang fetch error', e);
+    }
     const key = formatIsoDateLocal(date);
     return seededPanchangData[key] || buildFallbackData(date);
 };
@@ -470,8 +515,8 @@ const updateJumpButtons = () => {
     });
 };
 
-const renderSelectedPanchang = () => {
-    const data = getPanchangData(selectedDate);
+const renderSelectedPanchang = async () => {
+    const data = await getPanchangData(selectedDate);
     const pakshaData = data.additional.find((item) => item.label === "Paksha");
 
     if (panchangDateInput) {
@@ -538,3 +583,4 @@ jumpButtons.forEach((button) => {
 });
 
 renderSelectedPanchang();
+

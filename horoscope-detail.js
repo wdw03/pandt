@@ -150,180 +150,20 @@ const initializeHoroscopeDetailNavbar = () => {
 
 initializeHoroscopeDetailNavbar();
 
-const horoscopeApiResponse = {
-    data: {
-        aquarius: {
-            compatibility: "N/A",
-            date: "2026-05-09",
-            date_formatted: "Saturday, May 09, 2026",
-            lucky_color: "N/A",
-            lucky_number: "N/A",
-            lucky_time: "N/A",
-            mood: "N/A",
-            overall_rating: 0,
-            prediction: "The Sun in Taurus keeps you practical, helping you stay productive, though moments of self-indulgent behavior may influence your choices. The Moon in Aquarius enhances your imaginative side, but may also bring erratic tendencies and an aloof mood. Saturn in conjunction with Neptune can trigger self-doubt, create a sense of detachment, and lead to subtle perception shifts, making it important to stay grounded and clear-headed.",
-            symbol: "♒",
-            zodiac_sign: "Aquarius",
-            zodiac_sign_hindi: "कुंभ"
-        },
-        aries: {
-            compatibility: "N/A",
-            date: "2026-05-09",
-            date_formatted: "Saturday, May 09, 2026",
-            lucky_color: "N/A",
-            lucky_number: "N/A",
-            lucky_time: "N/A",
-            mood: "N/A",
-            overall_rating: 0,
-            prediction: "Your resourceful nature is heightened by the Sun in Taurus. You may find yourself quite productive, yet be cautious of possessive tendencies. The Moon in Aquarius might make you feel detached, leading to unpredictable and erratic emotional shifts. With Mars square Jupiter, successful activity is within reach, but beware of recklessness. Your physical strength will propel you forward.",
-            symbol: "♈",
-            zodiac_sign: "Aries",
-            zodiac_sign_hindi: "मेष"
-        },
-        cancer: {
-            compatibility: "N/A",
-            date: "2026-05-09",
-            date_formatted: "Saturday, May 09, 2026",
-            lucky_color: "N/A",
-            lucky_number: "N/A",
-            lucky_time: "N/A",
-            mood: "N/A",
-            overall_rating: 0,
-            prediction: "The Sun in Taurus makes you resourceful, guiding a conservative approach, though moments of self-indulgent behavior may surface. The Moon in Aquarius keeps you courteous, yet you may feel dispassionate and somewhat aloof. Moon trine Uranus makes you feel alive, brings constructive changes, and may leave you slightly startled. Moon in conjunction with Pluto triggers intense emotional experiences, creating overwhelm and influencing your mood deeply.",
-            symbol: "♋",
-            zodiac_sign: "Cancer",
-            zodiac_sign_hindi: "कर्क"
-        },
-        capricorn: {
-            compatibility: "N/A",
-            date: "2026-05-09",
-            date_formatted: "Saturday, May 09, 2026",
-            lucky_color: "N/A",
-            lucky_number: "N/A",
-            lucky_time: "N/A",
-            mood: "N/A",
-            overall_rating: 0,
-            prediction: "You may find yourself feeling a bit conservative, as the influence of the Sun in Taurus prompts you to hold onto familiar routines. However, your imaginative side, guided by the Moon in Aquarius, may inspire new ideas. Be aware of potential self-doubt, as Saturn&#039;s influence brings anxiety. Stay courteous in interactions to navigate any erratic situations with grace, and remember to avoid self-indulgent tendencies.",
-            symbol: "♑",
-            zodiac_sign: "Capricorn",
-            zodiac_sign_hindi: "मकर"
-        },
-        gemini: {
-            compatibility: "N/A",
-            date: "2026-05-09",
-            date_formatted: "Saturday, May 09, 2026",
-            lucky_color: "N/A",
-            lucky_number: "N/A",
-            lucky_time: "N/A",
-            mood: "N/A",
-            overall_rating: 0,
-            prediction: "The Sun in Taurus encourages a practical approach, guiding you to stay conservative, though stubborn tendencies may influence your actions. The Moon in Aquarius keeps you courteous, enhances your imaginative side, and may bring erratic moods. Sun conjunction Mercury highlights the Mercury transit, supports conversations, and encourages a new business venture. Mercury square Pluto may bring coercion in conversations, reveal hidden forces, and deepen psychological awareness.",
-            symbol: "♊",
-            zodiac_sign: "Gemini",
-            zodiac_sign_hindi: "मिथुन"
-        },
-        leo: {
-            compatibility: "N/A",
-            date: "2026-05-09",
-            date_formatted: "Saturday, May 09, 2026",
-            lucky_color: "N/A",
-            lucky_number: "N/A",
-            lucky_time: "N/A",
-            mood: "N/A",
-            overall_rating: 0,
-            prediction: "The Sun in Taurus makes you resourceful, helping you stay productive, though stubborn tendencies may influence your decisions. The Moon in Aquarius enhances your imaginative side, but may also bring erratic behavior and an aloof mood. Sun conjunction with Mercury, sparks initiative, supports a new business venture, and encourages plans for the future. Sun in sextile Jupiter brings a positive outlook, aiding integration and enriching your experience.",
-            symbol: "♌",
-            zodiac_sign: "Leo",
-            zodiac_sign_hindi: "सिंह"
-        },
-        libra: {
-            compatibility: "N/A",
-            date: "2026-05-09",
-            date_formatted: "Saturday, May 09, 2026",
-            lucky_color: "N/A",
-            lucky_number: "N/A",
-            lucky_time: "N/A",
-            mood: "N/A",
-            overall_rating: 0,
-            prediction: " The Sun in Taurus encourages a conservative approach, though possessive tendencies may arise, and stubborn behavior could influence your actions. The Moon in Aquarius may make you feel detached, with a dispassionate outlook and moments of aloofness. Venus in Libra helps restore balance, softening your mood and guiding you toward harmony, allowing you to navigate the day with grace and emotional awareness.",
-            symbol: "♎",
-            zodiac_sign: "Libra",
-            zodiac_sign_hindi: "तुला"
-        },
-        pisces: {
-            compatibility: "N/A",
-            date: "2026-05-09",
-            date_formatted: "Saturday, May 09, 2026",
-            lucky_color: "N/A",
-            lucky_number: "N/A",
-            lucky_time: "N/A",
-            mood: "N/A",
-            overall_rating: 0,
-            prediction: "The Sun in Taurus keeps you practical, helping you stay productive, though stubborn tendencies may influence your decisions. The Moon in Aquarius may make you feel dispassionate, with moments of erratic behavior and an aloof attitude. Sun in sextile to Jupiter brings a positive outlook, encouraging group activities and supporting idealism. Mars square Jupiter drives energetic activity, awakens a desire for inclusion, and may involve testing efforts throughout the day.",
-            symbol: "♓",
-            zodiac_sign: "Pisces",
-            zodiac_sign_hindi: "मीन"
-        },
-        sagittarius: {
-            compatibility: "N/A",
-            date: "2026-05-09",
-            date_formatted: "Saturday, May 09, 2026",
-            lucky_color: "N/A",
-            lucky_number: "N/A",
-            lucky_time: "N/A",
-            mood: "N/A",
-            overall_rating: 0,
-            prediction: "The Sun in Taurus keeps you practical, encouraging a conservative approach, though moments of self-indulgent behavior may arise. The Moon in Aquarius makes you courteous, yet you may feel dispassionate and somewhat aloof. Sun sextile Jupiter supports participation, strengthens your sense of authority, and adds valuable experience. Mars square Jupiter drives energetic activity, expands your sphere of influence, and may trigger impulsiveness in your actions.",
-            symbol: "♐",
-            zodiac_sign: "Sagittarius",
-            zodiac_sign_hindi: "धनु"
-        },
-        scorpio: {
-            compatibility: "N/A",
-            date: "2026-05-09",
-            date_formatted: "Saturday, May 09, 2026",
-            lucky_color: "N/A",
-            lucky_number: "N/A",
-            lucky_time: "N/A",
-            mood: "N/A",
-            overall_rating: 0,
-            prediction: "The Sun in Taurus encourages a practical approach, guiding you to stay conservative, though stubborn tendencies may influence your decisions. The Moon in Aquarius may make you feel detached, while maintaining a courteous attitude, with moments of erratic behavior. Mars square Jupiter supports intelligent planning, encourages personal growth, and brings situations that involve testing efforts throughout the day.",
-            symbol: "♏",
-            zodiac_sign: "Scorpio",
-            zodiac_sign_hindi: "वृश्चिक"
-        },
-        taurus: {
-            compatibility: "N/A",
-            date: "2026-05-09",
-            date_formatted: "Saturday, May 09, 2026",
-            lucky_color: "N/A",
-            lucky_number: "N/A",
-            lucky_time: "N/A",
-            mood: "N/A",
-            overall_rating: 0,
-            prediction: "Taurus, the Sun in your sign encourages a practical approach, though stubborn tendencies may influence your decisions, and moments of self-indulgent behavior could arise. The Moon in Aquarius may bring an unpredictable mood, with erratic thoughts and an aloof attitude shaping your interactions. Venus in Taurus helps restore emotional balance, guiding you toward comfort, stability, and a more grounded approach throughout the day.",
-            symbol: "♉",
-            zodiac_sign: "Taurus",
-            zodiac_sign_hindi: "वृषभ"
-        },
-        virgo: {
-            compatibility: "N/A",
-            date: "2026-05-09",
-            date_formatted: "Saturday, May 09, 2026",
-            lucky_color: "N/A",
-            lucky_number: "N/A",
-            lucky_time: "N/A",
-            mood: "N/A",
-            overall_rating: 0,
-            prediction: " Virgos will find their practical nature harmonizing with a detached perspective, thanks to the Sun in Taurus and Moon in Aquarius. This blend encourages productive conversations and courteous interactions. However, be mindful of potential arguments and frustrations due to Mercury Square Pluto, as psychological awareness and the study of hidden aspects are highlighted. Maintain a conservative approach to balance your mood.",
-            symbol: "♍",
-            zodiac_sign: "Virgo",
-            zodiac_sign_hindi: "कन्या"
+let horoscopeApiResponse = null;
+
+const getHoroscopeData = async () => {
+    try {
+        const response = await fetch(`/api/horoscope/all?type=general`);
+        const result = await response.json();
+
+        if ((result.status === 'success' || result.success) && result.data) {
+            return result;
         }
-    },
-    date: "2026-05-09",
-    status: "success",
-    type: "general"
+    } catch (e) {
+        console.error('Horoscope fetch error', e);
+    }
+    return null;
 };
 
 const signOrder = [
@@ -484,7 +324,7 @@ const sanitizeText = (value) => decodeEntities(String(value ?? "")).replace(/\s+
 const getSignFromQuery = () => {
     const params = new URLSearchParams(window.location.search);
     const sign = sanitizeText(params.get("sign")).toLowerCase();
-    return horoscopeApiResponse.data[sign] ? sign : "aries";
+    return signOrder.includes(sign) ? sign : "aries";
 };
 
 const getDisplayValue = (value, fallbackText = "Live update soon") => {
@@ -775,8 +615,10 @@ const renderNavLinks = (activeSign) => {
     }
 };
 
-const renderSelectedSign = () => {
+const renderSelectedSign = async () => {
     const activeSign = getSignFromQuery();
+    horoscopeApiResponse = await getHoroscopeData();
+    if (!horoscopeApiResponse) return;
     const signData = horoscopeApiResponse.data[activeSign];
     const visual = signVisuals[activeSign];
 
@@ -853,3 +695,4 @@ const renderSelectedSign = () => {
 };
 
 renderSelectedSign();
+

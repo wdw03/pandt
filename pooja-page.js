@@ -150,15 +150,16 @@ const initializePoojaNavbar = () => {
 
 initializePoojaNavbar();
 
-const poojaPageData = Array.isArray(window.poojaSlidesData) ? window.poojaSlidesData : [];
-const poojaList = document.querySelector("[data-pooja-list]");
-const searchInput = document.querySelector("[data-pooja-search]");
-const resultsCount = document.querySelector("[data-pooja-results-count]");
-const emptyState = document.querySelector("[data-pooja-empty]");
-const clearSearchButton = document.querySelector("[data-pooja-clear-search]");
-const quickSearchButtons = document.querySelectorAll("[data-pooja-quick-search]");
+const initPoojaPage = () => {
+    const poojaPageData = Array.isArray(window.poojaSlidesData) ? window.poojaSlidesData : [];
+    const poojaList = document.querySelector("[data-pooja-list]");
+    const searchInput = document.querySelector("[data-pooja-search]");
+    const resultsCount = document.querySelector("[data-pooja-results-count]");
+    const emptyState = document.querySelector("[data-pooja-empty]");
+    const clearSearchButton = document.querySelector("[data-pooja-clear-search]");
+    const quickSearchButtons = document.querySelectorAll("[data-pooja-quick-search]");
 
-if (poojaList && searchInput && resultsCount && emptyState) {
+    if (poojaList && searchInput && resultsCount && emptyState) {
     const escapeHtml = (value = "") => {
         return String(value)
             .replace(/&/g, "&amp;")
@@ -262,22 +263,52 @@ if (poojaList && searchInput && resultsCount && emptyState) {
             .join("");
     };
 
+    const resolvePoojaImage = (value = "") => {
+        if (!value) {
+            return "";
+        }
+
+        if (
+            value.startsWith("http://") ||
+            value.startsWith("https://") ||
+            value.startsWith("data:")
+        ) {
+            return value;
+        }
+
+        if (value.startsWith("/")) {
+            return value;
+        }
+
+        if (value.startsWith("./")) {
+            return value;
+        }
+
+        if (value.startsWith("assets/")) {
+            return `./${value}`;
+        }
+
+        return value;
+    };
+
     const createPoojaCardMarkup = (pooja, index, query, highlightedSlug) => {
         const isHighlighted = highlightedSlug && highlightedSlug === pooja.slug;
         const cardClasses = `midleftmain pooja-route-card${isHighlighted ? " is-highlighted" : ""}`;
+        const slideSlug = escapeHtml(pooja.slug || normalizePoojaSlug(pooja.title));
+        const slideImage = escapeHtml(resolvePoojaImage(pooja.image));
 
         return `
             <article
                 class="${cardClasses}"
-                id="pooja-${escapeHtml(pooja.slug)}"
+                id="pooja-${slideSlug}"
                 data-pooja-card
-                data-pooja-slug="${escapeHtml(pooja.slug)}"
+                data-pooja-slug="${slideSlug}"
                 style="--pooja-card-index: ${index};"
             >
                 <div
                     class="midleftimg"
                     data-pooja-tag="${escapeHtml(pooja.imageTag)}"
-                    style="background-image: url('${escapeHtml(pooja.image)}');"
+                    style="background-image: url('${slideImage}');"
                 ></div>
 
                 <div class="midlefttexs">
@@ -285,7 +316,7 @@ if (poojaList && searchInput && resultsCount && emptyState) {
                         <div class="pooja-route-card-header">
                             <span class="pooja-route-kicker">Pooja Service</span>
                             <div class="nameofpuja">
-                                <h2>${highlightMatch(pooja.title, query)}</h2>
+                                <h2>${highlightMatch(pooja.title || "Pooja", query)}</h2>
                             </div>
                             <p class="pooja-route-card-subtitle">${highlightMatch(pooja.subtitle, query)}</p>
                         </div>
@@ -326,10 +357,10 @@ if (poojaList && searchInput && resultsCount && emptyState) {
 
                         <div class="poojabutonsd">
                             <div class="shareivutton">
-                                <button type="button" data-pooja-share="${escapeHtml(pooja.slug)}">share</button>
+                                <button type="button" data-pooja-share="${slideSlug}">share</button>
                             </div>
                             <div class="booknowb">
-                                <button type="button" data-pooja-book="${escapeHtml(pooja.slug)}">book now</button>
+                                <button type="button" data-pooja-book="${slideSlug}">book now</button>
                             </div>
                         </div>
                     </div>
@@ -681,4 +712,11 @@ if (poojaList && searchInput && resultsCount && emptyState) {
 
     searchInput.value = initialSearchValue;
     renderPoojaCards(initialSearchValue);
+}
+};
+
+if (window.poojaSlidesData) {
+    initPoojaPage();
+} else {
+    window.addEventListener('poojaDataLoaded', initPoojaPage);
 }

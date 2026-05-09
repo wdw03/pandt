@@ -189,7 +189,6 @@ if (topImage) {
 }
 
 const poojaSliders = document.querySelectorAll("[data-pooja-slider]");
-const poojaSlidesData = Array.isArray(window.poojaSlidesData) ? window.poojaSlidesData : [];
 const normalizePoojaSlug = (value = "") => {
     return value
         .toLowerCase()
@@ -261,7 +260,18 @@ const renderPoojaBenefits = (benefits) => {
         .join("");
 };
 
+const initHomePoojaSliders = () => {
+    const poojaSlidesData = Array.isArray(window.poojaSlidesData) ? window.poojaSlidesData : [];
+
+    if (!poojaSlidesData.length) {
+        return;
+    }
+
 poojaSliders.forEach((slider) => {
+    if (slider.dataset.poojaInitialized === "true") {
+        return;
+    }
+
     const track = slider.querySelector("[data-pooja-track]");
     const prevButton = slider.querySelector(".pooja-slider-btn-prev");
     const nextButton = slider.querySelector(".pooja-slider-btn-next");
@@ -283,11 +293,12 @@ poojaSliders.forEach((slider) => {
         !aboutPreview ||
         !aboutHeading ||
         !aboutBody ||
-        !benefitsContainer ||
-        !poojaSlidesData.length
+        !benefitsContainer
     ) {
         return;
     }
+
+    slider.dataset.poojaInitialized = "true";
 
     track.innerHTML = renderPoojaSlides(poojaSlidesData);
 
@@ -718,6 +729,10 @@ poojaSliders.forEach((slider) => {
     updateRightPanel(poojaSlidesData[initialRealIndex]);
     scheduleAutoplay();
 });
+};
+
+initHomePoojaSliders();
+window.addEventListener("poojaDataLoaded", initHomePoojaSliders);
 
 const heroBookNowButton = document.querySelector(".booknow button");
 const heroExploreServicesButton = document.querySelector(".exprlorresrive button");
@@ -835,6 +850,65 @@ const homeRoutePreviewTriggers = Array.from(document.querySelectorAll(".home-rou
 const homeProductGalleries = Array.from(document.querySelectorAll("[data-home-product-gallery]"));
 const homeContactSupportForm = document.getElementById("homeContactSupportForm");
 const homeContactFeedback = document.querySelector("[data-home-contact-feedback]");
+const homeKundaliPriceNodes = Array.from(document.querySelectorAll("[data-home-kundali-price]"));
+const homeJanamPriceNodes = Array.from(document.querySelectorAll("[data-home-janam-price]"));
+const homeApiOrigin = (() => {
+    const protocol = window.location.protocol;
+    const hostname = window.location.hostname;
+    const port = window.location.port;
+
+    if (protocol === "file:") {
+        return "http://localhost:5000";
+    }
+
+    if (hostname === "127.0.0.1" || hostname === "localhost") {
+        if (!port || port === "5000") {
+            return `${window.location.protocol}//${window.location.hostname}${port ? `:${port}` : ""}`;
+        }
+
+        return `${window.location.protocol}//${window.location.hostname}:5000`;
+    }
+
+    return "";
+})();
+
+const homeApiUrl = (path) => `${homeApiOrigin}${path}`;
+
+const updateHomeConfigPrices = ({ kundaliMatchingPrice, janamKundaliPrice } = {}) => {
+    const kundaliPrice = kundaliMatchingPrice?.trim() || "Rs 800";
+    const janamPrice = janamKundaliPrice?.trim() || "Rs 300";
+
+    homeKundaliPriceNodes.forEach((node) => {
+        node.textContent = `${kundaliPrice} pricing`;
+    });
+
+    homeJanamPriceNodes.forEach((node) => {
+        node.textContent = `${janamPrice} pricing`;
+    });
+};
+
+const loadHomeConfigPrices = async () => {
+    if (!homeKundaliPriceNodes.length && !homeJanamPriceNodes.length) {
+        return;
+    }
+
+    try {
+        const response = await fetch(homeApiUrl("/api/public/config/prices"), {
+            cache: "no-store"
+        });
+        const result = await response.json();
+
+        if (!result?.success) {
+            return;
+        }
+
+        updateHomeConfigPrices(result.data || {});
+    } catch (error) {
+        console.error("Unable to load homepage pricing config", error);
+    }
+};
+
+loadHomeConfigPrices();
 
 const initHomeRouteTextPreview = () => {
     if (!homeRoutePreviewTriggers.length) {
@@ -1068,7 +1142,7 @@ const initHomeContactForm = () => {
         return;
     }
 
-    homeContactSupportForm.addEventListener("submit", (event) => {
+    homeContactSupportForm.addEventListener("submit", async (event) => {
         event.preventDefault();
 
         const formData = new FormData(homeContactSupportForm);
@@ -1084,12 +1158,33 @@ const initHomeContactForm = () => {
             return;
         }
 
-        if (homeContactFeedback) {
-            homeContactFeedback.textContent = `Thank you, ${name}. Your message has been received.`;
-            homeContactFeedback.style.color = "#3f7a2a";
-        }
+        try {
+            const response = await fetch('/api/public/contact-submit', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, email, message })
+            });
+            const result = await response.json();
 
-        homeContactSupportForm.reset();
+            if (result.success) {
+                if (homeContactFeedback) {
+                    homeContactFeedback.textContent = `Thank you, ${name}. Your message has been received.`;
+                    homeContactFeedback.style.color = "#3f7a2a";
+                }
+                homeContactSupportForm.reset();
+            } else {
+                if (homeContactFeedback) {
+                    homeContactFeedback.textContent = result.message || "Failed to send message.";
+                    homeContactFeedback.style.color = "#b34b1e";
+                }
+            }
+        } catch (e) {
+            console.error('Contact submit error', e);
+            if (homeContactFeedback) {
+                homeContactFeedback.textContent = "An error occurred. Please try again.";
+                homeContactFeedback.style.color = "#b34b1e";
+            }
+        }
     });
 };
 

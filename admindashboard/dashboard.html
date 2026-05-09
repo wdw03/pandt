@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard — Thanathu Madom Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body class="admin-dash-body">
+    <!-- Sidebar -->
+    <aside class="admin-sidebar" id="adminSidebar">
+        <div class="admin-sidebar-brand">
+            <span class="admin-sidebar-logo">🕉️</span>
+            <h2>Admin Panel</h2>
+        </div>
+        <nav class="admin-sidebar-nav">
+            <button class="admin-nav-item is-active" data-section="overview">
+                <span class="admin-nav-icon">📊</span><span class="admin-nav-label">Overview</span>
+            </button>
+            <button class="admin-nav-item" data-section="pooja-slides">
+                <span class="admin-nav-icon">🕉️</span><span class="admin-nav-label">Pooja Slides</span>
+            </button>
+            <button class="admin-nav-item" data-section="products">
+                <span class="admin-nav-icon">🛍️</span><span class="admin-nav-label">Astromall Products</span>
+            </button>
+            <button class="admin-nav-item" data-section="videos">
+                <span class="admin-nav-icon">🎬</span><span class="admin-nav-label">Astrology Videos</span>
+            </button>
+            <button class="admin-nav-item" data-section="kundali-matching">
+                <span class="admin-nav-icon">💑</span><span class="admin-nav-label">Kundali Matching</span>
+            </button>
+            <button class="admin-nav-item" data-section="janam-kundali">
+                <span class="admin-nav-icon">📜</span><span class="admin-nav-label">Janam Kundali</span>
+            </button>
+            <button class="admin-nav-item" data-section="contacts">
+                <span class="admin-nav-icon">📬</span><span class="admin-nav-label">Contact Messages</span>
+            </button>
+            <button class="admin-nav-item" data-section="settings">
+                <span class="admin-nav-icon">⚙️</span><span class="admin-nav-label">Settings</span>
+            </button>
+        </nav>
+        <div class="admin-sidebar-footer">
+            <button class="admin-logout-btn" id="logoutBtn">
+                <span>🚪</span><span>Logout</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="admin-main" id="adminMain">
+        <!-- Top Bar -->
+        <header class="admin-topbar">
+            <button class="admin-hamburger" id="hamburgerBtn">☰</button>
+            <h3 id="topbarTitle">Dashboard Overview</h3>
+            <div class="admin-topbar-right">
+                <span id="adminName">Admin</span>
+            </div>
+        </header>
+
+        <!-- Content Sections -->
+        <div class="admin-content" id="adminContent">
+
+            <!-- OVERVIEW -->
+            <section class="admin-section is-active" data-panel="overview" id="panelOverview">
+                <div class="admin-stats-grid" id="statsGrid"></div>
+            </section>
+
+            <!-- POOJA SLIDES -->
+            <section class="admin-section" data-panel="pooja-slides" id="panelPoojaSlides">
+                <div class="admin-section-header">
+                    <h2>Pooja Slides</h2>
+                    <button class="admin-btn admin-btn-primary" id="btnAddSlide">+ New Slide</button>
+                </div>
+                <div class="admin-table-wrap">
+                    <table class="admin-table" id="slidesTable">
+                        <thead><tr><th>Image</th><th>Title</th><th>Price</th><th>Status</th><th>Actions</th></tr></thead>
+                        <tbody id="slidesBody"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- PRODUCTS -->
+            <section class="admin-section" data-panel="products" id="panelProducts">
+                <div class="admin-section-header">
+                    <h2>Astromall Products</h2>
+                    <button class="admin-btn admin-btn-primary" id="btnAddProduct">+ New Product</button>
+                </div>
+                <div class="admin-table-wrap">
+                    <table class="admin-table" id="productsTable">
+                        <thead><tr><th>Image</th><th>Title</th><th>Price</th><th>Product ID</th><th>Actions</th></tr></thead>
+                        <tbody id="productsBody"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- VIDEOS -->
+            <section class="admin-section" data-panel="videos" id="panelVideos">
+                <div class="admin-section-header">
+                    <h2>Astrology Videos</h2>
+                    <button class="admin-btn admin-btn-primary" id="btnAddVideo">+ New Video</button>
+                </div>
+                <div class="admin-table-wrap">
+                    <table class="admin-table" id="videosTable">
+                        <thead><tr><th>Title</th><th>URL</th><th>Actions</th></tr></thead>
+                        <tbody id="videosBody"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- KUNDALI MATCHING SUBMISSIONS -->
+            <section class="admin-section" data-panel="kundali-matching" id="panelKundaliMatching">
+                <div class="admin-section-header"><h2>Kundali Matching Submissions</h2></div>
+                <div class="admin-table-wrap">
+                    <table class="admin-table" id="kundaliTable">
+                        <thead><tr><th>#</th><th>Boy Name</th><th>Girl Name</th><th>WhatsApp</th><th>User</th><th>Status</th><th>Date</th><th>Details</th></tr></thead>
+                        <tbody id="kundaliBody"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- JANAM KUNDALI SUBMISSIONS -->
+            <section class="admin-section" data-panel="janam-kundali" id="panelJanamKundali">
+                <div class="admin-section-header"><h2>Janam Kundali Submissions</h2></div>
+                <div class="admin-table-wrap">
+                    <table class="admin-table" id="janamTable">
+                        <thead><tr><th>#</th><th>Name</th><th>Gender</th><th>Birth Place</th><th>WhatsApp</th><th>Status</th><th>Date</th><th>Details</th></tr></thead>
+                        <tbody id="janamBody"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- CONTACT MESSAGES -->
+            <section class="admin-section" data-panel="contacts" id="panelContacts">
+                <div class="admin-section-header"><h2>Contact Messages</h2></div>
+                <div class="admin-table-wrap">
+                    <table class="admin-table" id="contactsTable">
+                        <thead><tr><th>#</th><th>Name</th><th>Email</th><th>Message</th><th>Status</th><th>Date</th></tr></thead>
+                        <tbody id="contactsBody"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- SETTINGS -->
+            <section class="admin-section" data-panel="settings" id="panelSettings">
+                <div class="admin-section-header"><h2>Site Settings</h2></div>
+                <form class="admin-settings-form" id="settingsForm">
+                    <div class="admin-settings-group">
+                        <h3>💰 Pricing</h3>
+                        <div class="admin-field">
+                            <label>Kundali Matching Price</label>
+                            <input type="text" id="cfgKundaliPrice" placeholder="Rs 800" maxlength="20">
+                        </div>
+                        <div class="admin-field">
+                            <label>Janam Kundali Price</label>
+                            <input type="text" id="cfgJanamPrice" placeholder="Rs 300" maxlength="20">
+                        </div>
+                    </div>
+                    <div class="admin-settings-group">
+                        <h3>🔑 ProKerala API Keys</h3>
+                        <div class="admin-field">
+                            <label>Client ID</label>
+                            <input type="text" id="cfgClientId" placeholder="Client ID">
+                        </div>
+                        <div class="admin-field">
+                            <label>Client Secret</label>
+                            <input type="text" id="cfgClientSecret" placeholder="Client Secret">
+                        </div>
+                    </div>
+                    <button type="submit" class="admin-btn admin-btn-primary">Save Settings</button>
+                    <p class="admin-settings-msg" id="settingsMsg"></p>
+                </form>
+            </section>
+        </div>
+    </main>
+
+    <!-- MODAL -->
+    <div class="admin-modal-overlay" id="modalOverlay">
+        <div class="admin-modal" id="adminModal">
+            <div class="admin-modal-header">
+                <h3 id="modalTitle">Create</h3>
+                <button class="admin-modal-close" id="modalClose">&times;</button>
+            </div>
+            <div class="admin-modal-body" id="modalBody"></div>
+        </div>
+    </div>
+
+    <!-- TOAST -->
+    <div class="admin-toast-container" id="toastContainer"></div>
+
+    <script src="admin.js"></script>
+</body>
+</html>

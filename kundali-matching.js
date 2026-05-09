@@ -150,8 +150,31 @@ const initializeKundaliNavbar = () => {
 
 initializeKundaliNavbar();
 
+const kundaliApiOrigin = (() => {
+    const protocol = window.location.protocol;
+    const hostname = window.location.hostname;
+    const port = window.location.port;
+
+    if (protocol === "file:") {
+        return "http://localhost:5000";
+    }
+
+    if (hostname === "127.0.0.1" || hostname === "localhost") {
+        if (!port || port === "5000") {
+            return `${window.location.protocol}//${window.location.hostname}${port ? `:${port}` : ""}`;
+        }
+
+        return `${window.location.protocol}//${window.location.hostname}:5000`;
+    }
+
+    return "";
+})();
+
+const kundaliApiUrl = (path) => `${kundaliApiOrigin}${path}`;
+
 const kundaliForm = document.getElementById("kundaliMatchingForm");
 const feedbackElement = document.querySelector("[data-kundali-feedback]");
+const kundaliPriceDisplays = Array.from(document.querySelectorAll("[data-kundali-price-display]"));
 
 const populateSelectOptions = (select, options, placeholder) => {
     if (!select) {
@@ -283,6 +306,31 @@ const showKundaliFeedback = (message, state) => {
     feedbackElement.dataset.feedbackState = state;
 };
 
+const updateKundaliPriceUI = (priceLabel) => {
+    const safePrice = priceLabel?.trim() || "Rs 800";
+
+    kundaliPriceDisplays.forEach((node) => {
+        node.textContent = safePrice;
+    });
+};
+
+const loadKundaliPrice = async () => {
+    try {
+        const response = await fetch(kundaliApiUrl("/api/public/config/prices"), {
+            cache: "no-store"
+        });
+        const result = await response.json();
+
+        if (!result?.success) {
+            return;
+        }
+
+        updateKundaliPriceUI(result.data?.kundaliMatchingPrice);
+    } catch (error) {
+        console.error("Unable to load Kundali Matching price", error);
+    }
+};
+
 const collectKundaliPayload = (form) => {
     const formData = new FormData(form);
     const payload = Object.fromEntries(formData.entries());
@@ -305,7 +353,7 @@ const handleKundaliSubmit = () => {
         return;
     }
 
-    kundaliForm.addEventListener("submit", (event) => {
+    kundaliForm.addEventListener("submit", async (event) => {
         event.preventDefault();
 
         if (!kundaliForm.reportValidity()) {
@@ -319,27 +367,44 @@ const handleKundaliSubmit = () => {
         const payload = collectKundaliPayload(kundaliForm);
         const paymentUrl = kundaliForm.dataset.paymentUrl?.trim() || "";
 
-        sessionStorage.setItem("kundaliMatchingLead", JSON.stringify(payload));
+        try {
+            const response = await fetch(kundaliApiUrl('/api/public/kundali-submit'), {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            const result = await response.json();
 
-        showKundaliFeedback(
-            "Details submitted successfully. Your Kundali Matching information is ready, and you can now connect this form to your payment page redirect whenever you want.",
-            "success"
-        );
+            if (result.success) {
+                showKundaliFeedback("Details submitted successfully. Redirecting to payment...", "success");
+                feedbackElement?.scrollIntoView({ behavior: "smooth", block: "nearest" });
 
-        feedbackElement?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+                if (!paymentUrl) {
+                    return;
+                }
 
-        if (!paymentUrl) {
-            return;
+                const pricesResponse = await fetch(kundaliApiUrl('/api/public/config/prices'), {
+                    cache: 'no-store'
+                });
+                const pricesData = await pricesResponse.json();
+                const priceMatch = pricesData.data.kundaliMatchingPrice.match(/\d+/) || ["800"];
+                const price = priceMatch[0];
+
+                const paymentDestination = new URL(paymentUrl, window.location.href);
+                paymentDestination.searchParams.set("service", "kundali-matching");
+                paymentDestination.searchParams.set("price", price);
+                paymentDestination.searchParams.set("whatsapp", payload.whatsappNumber || "");
+
+                window.setTimeout(() => {
+                    window.location.href = paymentDestination.toString();
+                }, 700);
+            } else {
+                showKundaliFeedback(result.message || "Failed to submit.", "error");
+            }
+        } catch (error) {
+            console.error(error);
+            showKundaliFeedback("An error occurred during submission.", "error");
         }
-
-        const paymentDestination = new URL(paymentUrl, window.location.href);
-        paymentDestination.searchParams.set("service", "kundali-matching");
-        paymentDestination.searchParams.set("price", "800");
-        paymentDestination.searchParams.set("whatsapp", payload.whatsappNumber || "");
-
-        window.setTimeout(() => {
-            window.location.href = paymentDestination.toString();
-        }, 700);
     });
 };
 
@@ -364,3 +429,4 @@ const animateKundaliPage = () => {
 initializeKundaliForm();
 handleKundaliSubmit();
 animateKundaliPage();
+loadKundaliPrice();
