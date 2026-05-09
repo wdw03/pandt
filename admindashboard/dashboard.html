@@ -158,13 +158,21 @@
                     </div>
                     <div class="admin-settings-group">
                         <h3>🔑 ProKerala API Keys</h3>
+                        <p class="admin-settings-help">
+                            Saved in MongoDB (SiteConfig). Get these from
+                            <a href="https://www.prokerala.com/account/api-keys/" target="_blank" rel="noopener">prokerala.com → API Keys</a>.
+                        </p>
                         <div class="admin-field">
                             <label>Client ID</label>
-                            <input type="text" id="cfgClientId" placeholder="Client ID">
+                            <input type="text" id="cfgClientId" placeholder="Client ID" autocomplete="off">
                         </div>
                         <div class="admin-field">
                             <label>Client Secret</label>
-                            <input type="text" id="cfgClientSecret" placeholder="Client Secret">
+                            <input type="password" id="cfgClientSecret" placeholder="Client Secret" autocomplete="off">
+                        </div>
+                        <div class="admin-settings-actions">
+                            <button type="button" class="admin-btn admin-btn-secondary" id="testProkeralaBtn">Test Connection</button>
+                            <span class="admin-settings-test-msg" id="prokeralaTestMsg"></span>
                         </div>
                     </div>
                     <button type="submit" class="admin-btn admin-btn-primary">Save Settings</button>

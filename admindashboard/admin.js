@@ -1171,6 +1171,42 @@ const loadSettings = async () => {
     document.getElementById('cfgClientSecret').value = result.data.panchangClientSecret || '';
 };
 
+const testProkeralaBtn = document.getElementById('testProkeralaBtn');
+
+if (testProkeralaBtn) {
+    testProkeralaBtn.addEventListener('click', async () => {
+        const msg = document.getElementById('prokeralaTestMsg');
+        const clientId = document.getElementById('cfgClientId').value.trim();
+        const clientSecret = document.getElementById('cfgClientSecret').value.trim();
+
+        if (!clientId || !clientSecret) {
+            msg.textContent = 'Enter both Client ID and Client Secret first.';
+            msg.style.color = 'var(--danger)';
+            return;
+        }
+
+        testProkeralaBtn.disabled = true;
+        msg.textContent = 'Testing…';
+        msg.style.color = 'var(--muted, #555)';
+
+        const result = await apiPost('/config/prokerala/test', { clientId, clientSecret });
+
+        testProkeralaBtn.disabled = false;
+
+        if (!result?.success) {
+            msg.textContent = result?.message || 'Connection test failed.';
+            msg.style.color = 'var(--danger)';
+            return;
+        }
+
+        const credits = result.data?.creditsRemaining;
+        const creditsLabel =
+            typeof credits === 'number' ? ` Credits remaining: ${credits}.` : '';
+        msg.textContent = `Credentials valid.${creditsLabel}`;
+        msg.style.color = 'var(--success)';
+    });
+}
+
 document.getElementById('settingsForm').addEventListener('submit', async (event) => {
     event.preventDefault();
 

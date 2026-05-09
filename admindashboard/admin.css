@@ -479,3 +479,8 @@ img { max-width: 100%; display: block; }
     .admin-upload-card { grid-template-columns: 1fr; }
     .admin-image-chip { grid-template-columns: 1fr; }
 }
+
+.admin-settings-help { font-size: 0.85rem; color: var(--text-muted, #777); margin: -8px 0 14px; line-height: 1.5; }
+.admin-settings-help a { color: var(--accent); text-decoration: underline; }
+.admin-settings-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 4px; }
+.admin-settings-test-msg { font-size: 0.85rem; min-height: 18px; }
