@@ -1,17 +1,10 @@
 const SiteConfig = require('../models/SiteConfig');
 
-<<<<<<< Updated upstream
 // Credentials are loaded from (in order): SiteConfig (admin DB), env vars,
-// then the hardcoded fallback below. The hardcoded fallback exists ONLY as a
-// last-resort dev convenience and MUST NOT be relied on in production —
-// configure PROKERALA_CLIENT_ID / PROKERALA_CLIENT_SECRET in backend/.env or
-// set them through the admin SiteConfig (panchangClientId / panchangClientSecret).
+// then the fallback below. Keep the fallback empty so real keys are supplied
+// through admin settings or environment variables instead of being hardcoded.
 const DEFAULT_CLIENT_ID = '';
 const DEFAULT_CLIENT_SECRET = '';
-=======
-const DEFAULT_CLIENT_ID = '7fe10a80-d193-457f-b6d5-a04f04879464';
-const DEFAULT_CLIENT_SECRET = 'F7llJdILlqFsnOllif4EdQFdlBESGXvbt5iP9CrW';
->>>>>>> Stashed changes
 const TOKEN_URL = 'https://api.prokerala.com/token';
 const PANCHANG_URL = 'https://api.prokerala.com/v2/astrology/panchang';
 const HOROSCOPE_URL = 'https://api.prokerala.com/v2/horoscope/daily/advanced';
@@ -19,18 +12,18 @@ const AYANAMSA = 1;
 const IST_OFFSET = '+05:30';
 
 const zodiacSigns = {
-    aries: { name: 'Aries', hindi: 'मेष', symbol: '♈' },
-    taurus: { name: 'Taurus', hindi: 'वृषभ', symbol: '♉' },
-    gemini: { name: 'Gemini', hindi: 'मिथुन', symbol: '♊' },
-    cancer: { name: 'Cancer', hindi: 'कर्क', symbol: '♋' },
-    leo: { name: 'Leo', hindi: 'सिंह', symbol: '♌' },
-    virgo: { name: 'Virgo', hindi: 'कन्या', symbol: '♍' },
-    libra: { name: 'Libra', hindi: 'तुला', symbol: '♎' },
-    scorpio: { name: 'Scorpio', hindi: 'वृश्चिक', symbol: '♏' },
-    sagittarius: { name: 'Sagittarius', hindi: 'धनु', symbol: '♐' },
-    capricorn: { name: 'Capricorn', hindi: 'मकर', symbol: '♑' },
-    aquarius: { name: 'Aquarius', hindi: 'कुंभ', symbol: '♒' },
-    pisces: { name: 'Pisces', hindi: 'मीन', symbol: '♓' }
+    aries: { name: 'Aries', hindi: 'à¤®à¥‡à¤·', symbol: 'â™ˆ' },
+    taurus: { name: 'Taurus', hindi: 'à¤µà¥ƒà¤·à¤­', symbol: 'â™‰' },
+    gemini: { name: 'Gemini', hindi: 'à¤®à¤¿à¤¥à¥à¤¨', symbol: 'â™Š' },
+    cancer: { name: 'Cancer', hindi: 'à¤•à¤°à¥à¤•', symbol: 'â™‹' },
+    leo: { name: 'Leo', hindi: 'à¤¸à¤¿à¤‚à¤¹', symbol: 'â™Œ' },
+    virgo: { name: 'Virgo', hindi: 'à¤•à¤¨à¥à¤¯à¤¾', symbol: 'â™' },
+    libra: { name: 'Libra', hindi: 'à¤¤à¥à¤²à¤¾', symbol: 'â™Ž' },
+    scorpio: { name: 'Scorpio', hindi: 'à¤µà¥ƒà¤¶à¥à¤šà¤¿à¤•', symbol: 'â™' },
+    sagittarius: { name: 'Sagittarius', hindi: 'à¤§à¤¨à¥', symbol: 'â™' },
+    capricorn: { name: 'Capricorn', hindi: 'à¤®à¤•à¤°', symbol: 'â™‘' },
+    aquarius: { name: 'Aquarius', hindi: 'à¤•à¥à¤‚à¤­', symbol: 'â™’' },
+    pisces: { name: 'Pisces', hindi: 'à¤®à¥€à¤¨', symbol: 'â™“' }
 };
 
 const defaultCities = [
@@ -336,7 +329,7 @@ const getCredentials = async () => {
 
     if (!clientId || !clientSecret) {
         throw new Error(
-            'ProKerala credentials are not configured. Set PROKERALA_CLIENT_ID and PROKERALA_CLIENT_SECRET in backend/.env, or save panchangClientId/panchangClientSecret via the admin SiteConfig.'
+            'ProKerala credentials are not configured. Set PROKERALA_CLIENT_ID and PROKERALA_CLIENT_SECRET in environment variables, or save panchangClientId/panchangClientSecret from the admin panel.'
         );
     }
 
@@ -440,7 +433,6 @@ const fetchHoroscopeData = async ({ sign = 'aries', type = 'general', date = '' 
         datetime: apiDateTime
     });
 
-    // ProKerala v2 advanced endpoint always wraps results in data.daily_predictions[]
     const predictions = Array.isArray(rawData?.data?.daily_predictions)
         ? rawData.data.daily_predictions
         : [];
