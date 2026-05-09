@@ -509,31 +509,200 @@ const TRANSLATIONS = {
   },
 };
 
+var TM_EXTRA_TRANSLATIONS = {
+  en: {
+    site_title_home: 'Thanathu Madom Devasthanam | Sacred Vedic Rituals & Astrology',
+    site_title_janam: 'Free Janam Kundali',
+    site_title_horoscope_detail: 'Horoscope Detail',
+    site_title_login: 'Login / Signup - Thanathu Madom Devasthanam',
+    ph_full_name: 'Enter your full name',
+    ph_email_address: 'Enter your email address',
+    ph_help_message: 'Tell us how we can help you',
+    ph_birth_place: 'Enter your birthplace',
+    ph_whatsapp_10: 'Enter your 10-digit WhatsApp number',
+    ph_boy_full_name: 'Enter the boy\'s full name',
+    ph_boy_birth_city: 'Enter the boy\'s birth city',
+    ph_girl_full_name: 'Enter the girl\'s full name',
+    ph_girl_birth_city: 'Enter the girl\'s birth city',
+    ph_email: 'Enter your email',
+    ph_password: 'Enter your password',
+    ph_name: 'Enter your name',
+    ph_create_password: 'Create a password',
+    ph_otp_6: '123456',
+    ph_new_password: 'Enter new password',
+    ph_pooja_search: 'Search by pooja name or keyword',
+    ph_registered_email: 'Your registered email address',
+    ph_whatsapp_add: 'Add your 10-digit WhatsApp number'
+  }
+};
+
+Object.keys(TM_EXTRA_TRANSLATIONS).forEach(function(lang) {
+  TRANSLATIONS[lang] = Object.assign({}, TRANSLATIONS[lang] || {}, TM_EXTRA_TRANSLATIONS[lang]);
+});
+
+var TM_LANGUAGE_LABELS = {
+  en: 'ENGLISH',
+  hi: 'HINDI',
+  ta: 'TAMIL',
+  te: 'TELUGU'
+};
+
+var TM_TRANSLATION_SELECTORS = [
+  '[data-i18n]',
+  '[data-i18n-html]',
+  '[data-i18n-placeholder]',
+  '[data-i18n-title]',
+  '[data-i18n-alt]',
+  '[data-i18n-aria-label]',
+  '[data-i18n-value]'
+];
+
+var TM_CURRENT_LANGUAGE = 'en';
+var TM_TRANSLATION_OBSERVER = null;
+
+function getTranslationValue(key, lang, el) {
+  var english = TRANSLATIONS.en || {};
+  var requested = TRANSLATIONS[lang] || english;
+  var lockedContainer = el && typeof el.closest === 'function' ? el.closest('[data-i18n-lock]') : null;
+  var lockedLang = lockedContainer ? lockedContainer.getAttribute('data-i18n-lock') : '';
+  var useEnglishNavbar = el && typeof el.closest === 'function' && el.closest('#navbar') && !el.closest('.language');
+  var effectiveLang = lockedLang || (useEnglishNavbar ? 'en' : lang);
+  var scoped = TRANSLATIONS[effectiveLang] || english;
+
+  return scoped[key] || requested[key] || english[key] || '';
+}
+
+function applyTranslatedText(el, value) {
+  if (!value) return;
+
+  if (el.tagName === 'INPUT') {
+    var inputType = (el.getAttribute('type') || '').toLowerCase();
+    if (inputType === 'button' || inputType === 'submit' || inputType === 'reset') {
+      el.value = value;
+      return;
+    }
+  }
+
+  el.textContent = value;
+}
+
+function translateElement(el, lang) {
+  if (!(el instanceof Element) && !(el instanceof HTMLTitleElement)) {
+    return;
+  }
+
+  if (el.hasAttribute && el.hasAttribute('data-i18n-html')) {
+    var htmlKey = el.getAttribute('data-i18n-html');
+    var htmlValue = getTranslationValue(htmlKey, lang, el);
+    if (htmlValue) el.innerHTML = htmlValue;
+  }
+
+  if (el.hasAttribute && el.hasAttribute('data-i18n')) {
+    applyTranslatedText(el, getTranslationValue(el.getAttribute('data-i18n'), lang, el));
+  }
+
+  if (el.hasAttribute && el.hasAttribute('data-i18n-placeholder')) {
+    var placeholderValue = getTranslationValue(el.getAttribute('data-i18n-placeholder'), lang, el);
+    if (placeholderValue) el.setAttribute('placeholder', placeholderValue);
+  }
+
+  if (el.hasAttribute && el.hasAttribute('data-i18n-title')) {
+    var titleValue = getTranslationValue(el.getAttribute('data-i18n-title'), lang, el);
+    if (titleValue) el.setAttribute('title', titleValue);
+  }
+
+  if (el.hasAttribute && el.hasAttribute('data-i18n-alt')) {
+    var altValue = getTranslationValue(el.getAttribute('data-i18n-alt'), lang, el);
+    if (altValue) el.setAttribute('alt', altValue);
+  }
+
+  if (el.hasAttribute && el.hasAttribute('data-i18n-aria-label')) {
+    var ariaValue = getTranslationValue(el.getAttribute('data-i18n-aria-label'), lang, el);
+    if (ariaValue) el.setAttribute('aria-label', ariaValue);
+  }
+
+  if (el.hasAttribute && el.hasAttribute('data-i18n-value')) {
+    var valueText = getTranslationValue(el.getAttribute('data-i18n-value'), lang, el);
+    if (valueText) el.setAttribute('value', valueText);
+  }
+}
+
+function translateTree(root, lang) {
+  if (!root || typeof root.querySelectorAll !== 'function') {
+    return;
+  }
+
+  var selector = TM_TRANSLATION_SELECTORS.join(', ');
+
+  if (root instanceof Element && root.matches(selector)) {
+    translateElement(root, lang);
+  }
+
+  root.querySelectorAll(selector).forEach(function(el) {
+    translateElement(el, lang);
+  });
+}
+
+function updateLanguageLabel(lang) {
+  var langLabel = document.querySelector('.langselected p');
+  if (langLabel && TM_LANGUAGE_LABELS[lang]) {
+    langLabel.textContent = TM_LANGUAGE_LABELS[lang];
+  }
+}
+
 function applyLanguage(lang) {
   if (!TRANSLATIONS[lang]) lang = 'en';
-  var t = TRANSLATIONS[lang];
-  var labelMap = { 'en': 'ENGLISH', 'hi': 'HINDI', 'ta': 'TAMIL', 'te': 'TELUGU' };
-  document.querySelectorAll('[data-i18n]').forEach(function(el) {
-    var key = el.getAttribute('data-i18n');
-    if (t[key]) {
-      if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
-        el.placeholder = t[key];
-      } else {
-        el.textContent = t[key];
-      }
-    }
-  });
+
+  TM_CURRENT_LANGUAGE = lang;
+  document.documentElement.lang = lang;
+
+  if (document.body) {
+    document.body.classList.add('lang-switching');
+  }
+
+  translateTree(document, lang);
   localStorage.setItem('tmLang', lang);
-  var langLabel = document.querySelector('.langselected p');
-  if (langLabel && labelMap[lang]) langLabel.textContent = labelMap[lang];
+  updateLanguageLabel(lang);
+
+  window.setTimeout(function() {
+    if (document.body) {
+      document.body.classList.remove('lang-switching');
+    }
+  }, 220);
+
+  document.dispatchEvent(new CustomEvent('tm:language-changed', {
+    detail: { lang: lang }
+  }));
+}
+
+function observeDynamicTranslations() {
+  if (TM_TRANSLATION_OBSERVER || typeof MutationObserver === 'undefined' || !document.body) {
+    return;
+  }
+
+  TM_TRANSLATION_OBSERVER = new MutationObserver(function(mutations) {
+    mutations.forEach(function(mutation) {
+      mutation.addedNodes.forEach(function(node) {
+        if (node.nodeType === 1) {
+          translateTree(node, TM_CURRENT_LANGUAGE);
+        }
+      });
+    });
+  });
+
+  TM_TRANSLATION_OBSERVER.observe(document.body, {
+    childList: true,
+    subtree: true
+  });
 }
 
 function initLanguageSwitcher() {
   var saved = localStorage.getItem('tmLang') || 'en';
-  applyLanguage(saved);
-
   var langOptions = document.querySelectorAll('.languageoption a');
   var langMap = { 'english': 'en', 'hindi': 'hi', 'tamil': 'ta', 'telugu': 'te' };
+
+  applyLanguage(saved);
+  observeDynamicTranslations();
 
   langOptions.forEach(function(opt) {
     opt.addEventListener('click', function(e) {
@@ -545,5 +714,18 @@ function initLanguageSwitcher() {
     });
   });
 }
+
+window.TM_I18N = {
+  applyLanguage: applyLanguage,
+  getCurrentLanguage: function() {
+    return TM_CURRENT_LANGUAGE;
+  },
+  translateKey: function(key, lang) {
+    return getTranslationValue(key, lang || TM_CURRENT_LANGUAGE, document.body);
+  },
+  translateTree: function(root) {
+    translateTree(root || document, TM_CURRENT_LANGUAGE);
+  }
+};
 
 document.addEventListener('DOMContentLoaded', initLanguageSwitcher);

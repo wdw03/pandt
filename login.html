@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Login / Signup - Thanathu Madom Devasthanam</title>
+    <title data-i18n="site_title_login">Login / Signup - Thanathu Madom Devasthanam</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -285,11 +285,11 @@
                     <form id="formLogin">
                         <label class="auth-field">
                             <span>Email Address</span>
-                            <input type="email" id="loginEmail" placeholder="Enter your email" required>
+                            <input type="email" id="loginEmail" placeholder="Enter your email" data-i18n-placeholder="ph_email" required>
                         </label>
                         <label class="auth-field" style="position: relative;">
                             <span>Password</span>
-                            <input type="password" id="loginPassword" placeholder="Enter your password" required>
+                            <input type="password" id="loginPassword" placeholder="Enter your password" data-i18n-placeholder="ph_password" required>
                             <button type="button" class="auth-password-toggle" tabindex="-1">Show</button>
                         </label>
                         <div class="auth-options">
@@ -307,15 +307,15 @@
                     <form id="formSignup">
                         <label class="auth-field">
                             <span>Full Name</span>
-                            <input type="text" id="signupName" placeholder="Enter your name" required>
+                            <input type="text" id="signupName" placeholder="Enter your name" data-i18n-placeholder="ph_name" required>
                         </label>
                         <label class="auth-field">
                             <span>Email Address</span>
-                            <input type="email" id="signupEmail" placeholder="Enter your email" required>
+                            <input type="email" id="signupEmail" placeholder="Enter your email" data-i18n-placeholder="ph_email" required>
                         </label>
                         <label class="auth-field" style="position: relative;">
                             <span>Password</span>
-                            <input type="password" id="signupPassword" placeholder="Create a password" required
+                            <input type="password" id="signupPassword" placeholder="Create a password" data-i18n-placeholder="ph_create_password" required
                                 minlength="6">
                             <button type="button" class="auth-password-toggle" tabindex="-1">Show</button>
                         </label>
@@ -331,7 +331,7 @@
                     <form id="formVerifySignup">
                         <label class="auth-field">
                             <span>6-Digit OTP</span>
-                            <input type="text" id="verifyOtp" placeholder="123456" required pattern="\d{6}">
+                            <input type="text" id="verifyOtp" placeholder="123456" data-i18n-placeholder="ph_otp_6" required pattern="\d{6}">
                         </label>
                         <button type="submit" class="auth-submit-btn" data-i18n="verify_btn">Verify Account</button>
                     </form>
@@ -345,7 +345,7 @@
                     <form id="formForgotPassword">
                         <label class="auth-field">
                             <span>Email Address</span>
-                            <input type="email" id="forgotEmail" placeholder="Enter your email" required>
+                            <input type="email" id="forgotEmail" placeholder="Enter your email" data-i18n-placeholder="ph_email" required>
                         </label>
                         <button type="submit" class="auth-submit-btn" data-i18n="send_otp_btn">Send OTP</button>
                     </form>
@@ -359,11 +359,11 @@
                     <form id="formResetPassword">
                         <label class="auth-field">
                             <span>6-Digit OTP</span>
-                            <input type="text" id="resetOtp" placeholder="123456" required pattern="\d{6}">
+                            <input type="text" id="resetOtp" placeholder="123456" data-i18n-placeholder="ph_otp_6" required pattern="\d{6}">
                         </label>
                         <label class="auth-field" style="position: relative;">
                             <span>New Password</span>
-                            <input type="password" id="resetPassword" placeholder="Enter new password" required
+                            <input type="password" id="resetPassword" placeholder="Enter new password" data-i18n-placeholder="ph_new_password" required
                                 minlength="6">
                             <button type="button" class="auth-password-toggle" tabindex="-1">Show</button>
                         </label>

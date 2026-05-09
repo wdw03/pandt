@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="profile.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&display=swap" rel="stylesheet">
-    <title>My Profile</title>
+    <title data-i18n="drawer_profile">My Profile</title>
 </head>
 
 <body class="profile-route-body">
@@ -254,19 +254,19 @@
                         <div class="profile-form-grid">
                             <label class="profile-field">
                                 <span>Full Name</span>
-                                <input type="text" id="profileName" name="name" placeholder="Enter your full name" required>
+                                <input type="text" id="profileName" name="name" placeholder="Enter your full name" data-i18n-placeholder="ph_full_name" required>
                             </label>
 
                             <label class="profile-field">
                                 <span>Email Address</span>
-                                <input type="email" id="profileEmail" name="email" placeholder="Your registered email address" readonly>
+                                <input type="email" id="profileEmail" name="email" placeholder="Your registered email address" data-i18n-placeholder="ph_registered_email" readonly>
                             </label>
 
                             <label class="profile-field profile-field-full">
                                 <span class="whatsapp-inline-text"><span class="whatsapp-inline-icon"
                                         aria-hidden="true"></span>WhatsApp Number</span>
                                 <input type="tel" id="profileWhatsapp" name="whatsappNumber"
-                                    placeholder="Add your 10-digit WhatsApp number">
+                                    placeholder="Add your 10-digit WhatsApp number" data-i18n-placeholder="ph_whatsapp_add">
                             </label>
                         </div>
 
