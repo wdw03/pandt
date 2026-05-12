@@ -458,6 +458,25 @@ body.home-page {
     line-height: 1.65;
 }
 
+@media (max-width: 980px) {
+    .home-page #navbarlinks {
+        flex: 0 0 auto;
+        width: clamp(210px, 52vw, 340px);
+        max-width: calc(100vw - 18px);
+    }
+
+    .home-page #navbarlinks nav ul {
+        justify-content: flex-start;
+    }
+}
+
+@media (max-width: 640px) {
+    .home-page #navbarlinks {
+        width: clamp(210px, 62vw, 300px);
+        max-width: calc(100vw - 14px);
+    }
+}
+
 .home-page .home-route-gateway-visual {
     position: relative;
     min-height: clamp(460px, 62vw, 760px);

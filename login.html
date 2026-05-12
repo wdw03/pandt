@@ -25,6 +25,341 @@
             overflow-x: hidden;
         }
 
+        .login-topbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 50;
+            padding: 20px clamp(18px, 3vw, 34px);
+            pointer-events: none;
+        }
+
+        .login-topbar-shell {
+            width: min(1280px, 100%);
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
+            padding: 14px 18px;
+            border-radius: 26px;
+            border: 1px solid rgba(255, 215, 176, 0.2);
+            background: rgba(18, 10, 6, 0.72);
+            backdrop-filter: blur(18px);
+            box-shadow: 0 20px 44px rgba(0, 0, 0, 0.34);
+            pointer-events: auto;
+        }
+
+        .login-topbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 0;
+            text-decoration: none;
+        }
+
+        .login-topbar-brand-mark {
+            width: 48px;
+            height: 48px;
+            flex: 0 0 48px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 207, 155, 0.28);
+            background:
+                radial-gradient(circle at 30% 30%, rgba(255, 208, 142, 0.95), rgba(120, 52, 18, 0.92)),
+                url('./assets/images/gharouaj.jpg');
+            background-size: cover;
+            background-position: center;
+            box-shadow: inset 0 0 0 2px rgba(255, 245, 230, 0.12);
+        }
+
+        .login-topbar-brand-copy {
+            min-width: 0;
+        }
+
+        .login-topbar-brand-copy strong,
+        .login-topbar-brand-copy span {
+            display: block;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .login-topbar-brand-copy strong {
+            color: #fff4e7;
+            font: 600 clamp(14px, 1.05vw, 16px) 'Cinzel', serif;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        .login-topbar-brand-copy span {
+            color: rgba(255, 223, 191, 0.72);
+            font: 500 clamp(11px, 0.82vw, 12px) 'Inter', sans-serif;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        .login-topbar-links {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .login-topbar-links a,
+        .login-profile-link {
+            color: #ffe6cb;
+            text-decoration: none;
+            padding: 11px 16px;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 214, 175, 0.08);
+            font: 500 13px 'Inter', sans-serif;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            transition: transform 0.24s ease, border-color 0.24s ease, background 0.24s ease, color 0.24s ease;
+        }
+
+        .login-topbar-links a:hover,
+        .login-profile-link:hover {
+            transform: translateY(-1px);
+            background: rgba(255, 207, 155, 0.12);
+            border-color: rgba(255, 207, 155, 0.28);
+            color: #fff7ee;
+        }
+
+        .login-topbar-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-left: auto;
+        }
+
+        .login-menu-toggle,
+        .login-profile-button,
+        .login-mobile-profile-trigger {
+            border: 0;
+            cursor: pointer;
+            transition: transform 0.24s ease, box-shadow 0.24s ease, background 0.24s ease;
+        }
+
+        .login-menu-toggle:hover,
+        .login-profile-button:hover,
+        .login-mobile-profile-trigger:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 14px 28px rgba(0, 0, 0, 0.28);
+        }
+
+        .login-menu-toggle {
+            display: none;
+            width: 54px;
+            height: 54px;
+            border-radius: 18px;
+            background: rgba(255, 244, 228, 0.1);
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+        }
+
+        .login-menu-toggle-lines {
+            position: relative;
+            width: 22px;
+            height: 16px;
+        }
+
+        .login-menu-toggle-lines span {
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 2px;
+            border-radius: 999px;
+            background: #fff2e2;
+            transition: transform 0.24s ease, opacity 0.24s ease, top 0.24s ease;
+        }
+
+        .login-menu-toggle-lines span:nth-child(1) {
+            top: 0;
+        }
+
+        .login-menu-toggle-lines span:nth-child(2) {
+            top: 7px;
+        }
+
+        .login-menu-toggle-lines span:nth-child(3) {
+            top: 14px;
+        }
+
+        .login-topbar-shell.is-nav-open .login-menu-toggle-lines span:nth-child(1) {
+            top: 7px;
+            transform: rotate(45deg);
+        }
+
+        .login-topbar-shell.is-nav-open .login-menu-toggle-lines span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .login-topbar-shell.is-nav-open .login-menu-toggle-lines span:nth-child(3) {
+            top: 7px;
+            transform: rotate(-45deg);
+        }
+
+        .login-profile-button,
+        .login-mobile-profile-trigger {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background:
+                linear-gradient(135deg, rgba(255, 207, 155, 0.18), rgba(255, 255, 255, 0.05)),
+                rgba(255, 245, 232, 0.08);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-profile-button::before,
+        .login-mobile-profile-trigger::before {
+            content: "";
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: url('./assets/images/ic_user_profile.svg') center/contain no-repeat;
+            filter: brightness(1.3);
+        }
+
+        .login-mobile-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 48;
+            background: rgba(6, 3, 2, 0.5);
+            backdrop-filter: blur(3px);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.28s ease, visibility 0.28s ease;
+        }
+
+        .login-mobile-nav,
+        .login-mobile-profile {
+            position: fixed;
+            right: 0;
+            z-index: 60;
+            width: min(84vw, 360px);
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            padding: 22px;
+            background: rgba(16, 8, 5, 0.94);
+            border-left: 1px solid rgba(255, 214, 175, 0.14);
+            box-shadow: -20px 0 44px rgba(0, 0, 0, 0.34);
+            transition: transform 0.34s ease;
+        }
+
+        .login-mobile-nav {
+            top: 0;
+            bottom: 0;
+            transform: translateX(108%);
+            overflow-y: auto;
+        }
+
+        .login-mobile-profile {
+            bottom: 24px;
+            border-radius: 28px 0 0 28px;
+            transform: translateX(108%);
+            max-height: min(72vh, 460px);
+        }
+
+        .login-mobile-nav.is-open,
+        .login-mobile-profile.is-open,
+        .login-mobile-overlay.is-open {
+            transform: translateX(0);
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .login-mobile-nav-head,
+        .login-mobile-profile-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+        }
+
+        .login-mobile-nav-head strong,
+        .login-mobile-profile-head strong {
+            color: #fff2e0;
+            font: 600 18px 'Cinzel', serif;
+            letter-spacing: 0.05em;
+        }
+
+        .login-mobile-close {
+            width: 42px;
+            height: 42px;
+            border: 0;
+            border-radius: 14px;
+            cursor: pointer;
+            color: #fff2e0;
+            background: rgba(255, 243, 223, 0.08);
+            font-size: 22px;
+        }
+
+        .login-mobile-nav-links,
+        .login-mobile-profile-links {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .login-mobile-nav-links a,
+        .login-mobile-profile-links a {
+            color: #fff1df;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+            padding: 14px 16px;
+            border-radius: 18px;
+            border: 1px solid rgba(255, 214, 175, 0.1);
+            background: rgba(255, 248, 238, 0.04);
+            font: 500 14px 'Inter', sans-serif;
+        }
+
+        .login-mobile-nav-links a::after,
+        .login-mobile-profile-links a::after {
+            content: "→";
+            color: rgba(255, 229, 202, 0.8);
+            font-size: 15px;
+        }
+
+        .login-mobile-profile-copy {
+            padding: 16px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 214, 175, 0.1);
+            background: rgba(255, 248, 238, 0.04);
+        }
+
+        .login-mobile-profile-copy h4 {
+            margin: 0 0 8px;
+            color: #fff4e8;
+            font: 600 16px 'Cinzel', serif;
+        }
+
+        .login-mobile-profile-copy p {
+            margin: 0;
+            color: rgba(255, 226, 196, 0.78);
+            font: 400 13px/1.7 'Inter', sans-serif;
+        }
+
+        .login-mobile-profile-trigger {
+            display: none;
+            position: fixed;
+            right: 18px;
+            bottom: 18px;
+            z-index: 52;
+            box-shadow: 0 18px 30px rgba(0, 0, 0, 0.3);
+        }
+
         /* Make the modal take up the screen nicely on the dedicated page */
         .auth-page-wrapper {
             width: 100%;
@@ -261,10 +596,133 @@
         .login-page .home-footer-bottom p {
             overflow-wrap: anywhere;
         }
+
+        @media (max-width: 920px) {
+            .login-topbar {
+                padding-inline: 14px;
+            }
+
+            .login-topbar-shell {
+                gap: 12px;
+                padding: 12px 14px;
+            }
+
+            .login-topbar-links,
+            .login-profile-button {
+                display: none;
+            }
+
+            .login-menu-toggle,
+            .login-mobile-profile-trigger {
+                display: inline-flex;
+            }
+
+            .auth-back-home {
+                top: 92px;
+                left: 14px;
+                max-width: calc(100% - 28px);
+            }
+
+            .auth-page-wrapper {
+                padding-top: 134px;
+            }
+        }
+
+        @media (max-width: 580px) {
+            .login-topbar-brand-copy span {
+                display: none;
+            }
+
+            .login-topbar-brand-copy strong {
+                font-size: 12px;
+                letter-spacing: 0.04em;
+            }
+
+            .login-mobile-nav,
+            .login-mobile-profile {
+                width: min(92vw, 360px);
+            }
+
+            .auth-back-home {
+                padding: 9px 14px;
+                font-size: 12px;
+            }
+        }
     </style>
 </head>
 
 <body class="login-page">
+    <div class="login-topbar">
+        <div class="login-topbar-shell" id="loginTopbarShell">
+            <a href="index.html" class="login-topbar-brand" aria-label="Go to home page">
+                <span class="login-topbar-brand-mark" aria-hidden="true"></span>
+                <span class="login-topbar-brand-copy">
+                    <strong>Thanathu Madom</strong>
+                    <span>Devasthanam</span>
+                </span>
+            </a>
+
+            <div class="login-topbar-links">
+                <a href="index.html">Home</a>
+                <a href="pooja.html">Pooja</a>
+                <a href="kundali-matching.html">Kundali</a>
+                <a href="panchang.html">Panchang</a>
+                <a href="horoscope.html">Horoscope</a>
+                <a href="contact.html">Contact</a>
+            </div>
+
+            <div class="login-topbar-actions">
+                <a href="profile.html" class="login-profile-link login-profile-button" id="loginDesktopProfile" aria-label="Open profile"></a>
+                <button class="login-menu-toggle" id="loginMenuToggle" type="button" aria-label="Open navigation menu" aria-expanded="false">
+                    <span class="login-menu-toggle-lines" aria-hidden="true">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="login-mobile-overlay" id="loginMobileOverlay"></div>
+
+    <aside class="login-mobile-nav" id="loginMobileNav" aria-hidden="true">
+        <div class="login-mobile-nav-head">
+            <strong>Navigation</strong>
+            <button class="login-mobile-close" id="loginMobileNavClose" type="button" aria-label="Close navigation menu">&times;</button>
+        </div>
+        <div class="login-mobile-nav-links">
+            <a href="index.html">Home</a>
+            <a href="pooja.html">Pooja</a>
+            <a href="kundali-matching.html">Kundali Matching</a>
+            <a href="free-janam-kundali.html">Janam Kundali</a>
+            <a href="panchang.html">Panchang</a>
+            <a href="horoscope.html">Horoscope</a>
+            <a href="astrology-gallery.html">Astrology Gallery</a>
+            <a href="about.html">About Us</a>
+            <a href="contact.html">Contact Us</a>
+        </div>
+    </aside>
+
+    <button class="login-mobile-profile-trigger" id="loginMobileProfileTrigger" type="button" aria-label="Open profile panel"></button>
+
+    <aside class="login-mobile-profile" id="loginMobileProfile" aria-hidden="true">
+        <div class="login-mobile-profile-head">
+            <strong>Profile</strong>
+            <button class="login-mobile-close" id="loginMobileProfileClose" type="button" aria-label="Close profile panel">&times;</button>
+        </div>
+        <div class="login-mobile-profile-copy">
+            <h4>Login Access</h4>
+            <p>Open your account, continue your spiritual journey, or move quickly to support and booking pages.</p>
+        </div>
+        <div class="login-mobile-profile-links">
+            <a href="profile.html">My Profile</a>
+            <a href="contact.html">Need Help</a>
+            <a href="https://wa.me/919743045807">WhatsApp Support</a>
+            <a href="index.html">Back to Home</a>
+        </div>
+    </aside>
+
     <div class="auth-page-wrapper">
         <a href="index.html" class="auth-back-home"><span data-i18n="login_back_home">&larr; Back to Home</span></a>
 

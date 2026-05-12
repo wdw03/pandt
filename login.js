@@ -6,6 +6,64 @@ const authViews = document.querySelectorAll('.auth-view');
 const API_URL = '/api';
 const verifySignupMessage = document.getElementById('verifySignupMessage');
 const resetPasswordMessage = document.getElementById('resetPasswordMessage');
+const loginTopbarShell = document.getElementById('loginTopbarShell');
+const loginMenuToggle = document.getElementById('loginMenuToggle');
+const loginMobileNav = document.getElementById('loginMobileNav');
+const loginMobileNavClose = document.getElementById('loginMobileNavClose');
+const loginMobileProfile = document.getElementById('loginMobileProfile');
+const loginMobileProfileTrigger = document.getElementById('loginMobileProfileTrigger');
+const loginMobileProfileClose = document.getElementById('loginMobileProfileClose');
+const loginMobileOverlay = document.getElementById('loginMobileOverlay');
+
+let loginActivePanel = '';
+
+function syncLoginPanelState(panelName) {
+    loginActivePanel = panelName;
+
+    const isNavOpen = panelName === 'nav';
+    const isProfileOpen = panelName === 'profile';
+    const hasOpenPanel = Boolean(panelName);
+
+    loginTopbarShell?.classList.toggle('is-nav-open', isNavOpen);
+    loginMenuToggle?.setAttribute('aria-expanded', isNavOpen ? 'true' : 'false');
+    loginMobileNav?.classList.toggle('is-open', isNavOpen);
+    loginMobileProfile?.classList.toggle('is-open', isProfileOpen);
+    loginMobileOverlay?.classList.toggle('is-open', hasOpenPanel);
+    loginMobileNav?.setAttribute('aria-hidden', isNavOpen ? 'false' : 'true');
+    loginMobileProfile?.setAttribute('aria-hidden', isProfileOpen ? 'false' : 'true');
+}
+
+function openLoginPanel(panelName) {
+    syncLoginPanelState(panelName);
+}
+
+function closeLoginPanels() {
+    syncLoginPanelState('');
+}
+
+loginMenuToggle?.addEventListener('click', () => {
+    openLoginPanel(loginActivePanel === 'nav' ? '' : 'nav');
+});
+
+loginMobileProfileTrigger?.addEventListener('click', () => {
+    openLoginPanel(loginActivePanel === 'profile' ? '' : 'profile');
+});
+
+loginMobileNavClose?.addEventListener('click', closeLoginPanels);
+loginMobileProfileClose?.addEventListener('click', closeLoginPanels);
+loginMobileOverlay?.addEventListener('click', closeLoginPanels);
+
+document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+        closeLoginPanels();
+    }
+});
+
+window.addEventListener('resize', () => {
+    if (window.innerWidth > 920) {
+        closeLoginPanels();
+    }
+});
 
 // Check if already logged in, redirect to home
 if (localStorage.getItem('tmToken')) {
