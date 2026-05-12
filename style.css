@@ -902,20 +902,6 @@ body.site-mobile-nav-open .site-nav-scrim {
         scrollbar-width: thin;
     }
 
-    #navbarlinks::before {
-        content: "Navigation";
-        display: block;
-        width: 100%;
-        margin: 0 0 14px;
-        padding: 0 4px 14px;
-        border-bottom: 1px solid rgba(255, 214, 175, 0.16);
-        color: #fff3e1;
-        font-family: 'Cinzel', serif;
-        font-size: 18px;
-        font-weight: 600;
-        letter-spacing: 0.06em;
-    }
-
     body.site-mobile-nav-open #navbarlinks {
         transform: translateX(0);
     }
