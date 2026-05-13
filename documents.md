@@ -2,6 +2,145 @@
 
 Ye guide Hinglish me hai, aur specifically **is project ko cPanel par host karne** ke liye likhi gayi hai.
 
+## Sabse Pehle: cPanel `Create Application` me kya fill karna hai
+
+Agar tum `Setup Node.js App` ya `Application Manager` ke andar `Create Application` screen par ho, to normal case me ye values fill karni hongi:
+
+- **Node.js version**: `20` ya `22`
+- **Application mode**: `Production`
+- **Application root**: `panditpujaweb/backend`
+- **Application URL**:
+  - agar poora site main domain par chalana hai: apna main domain select karo
+  - agar subdomain par chalana hai: apna subdomain select karo
+  - path usually `/` rakho
+- **Application startup file**: `server.js`
+
+### Isko exact kaise samjho
+
+Ye project aise chalta hai:
+
+- frontend files root project folder me hain
+- backend Node app `backend/` folder me hai
+- backend hi poora frontend bhi serve karta hai
+
+Isliye app root **hamesha backend folder** hona chahiye.
+
+### Agar folder extract karne ke baad structure aisa hai
+
+```text
+home/
+  panditpujaweb/
+    index.html
+    assets/
+    backend/
+      server.js
+```
+
+to:
+
+- **Application root** = `panditpujaweb/backend`
+
+### Agar galti se double folder ban gaya ho
+
+Jaise:
+
+```text
+home/
+  panditpujaweb/
+    panditpujaweb/
+      index.html
+      backend/
+        server.js
+```
+
+to:
+
+- **Application root** = `panditpujaweb/panditpujaweb/backend`
+
+Isliye create karne se pehle `File Manager` me jaake check zarur karna.
+
+---
+
+## `Environment variables` ko cPanel me alag se bharna hai ya file upload karni hai?
+
+Agar tum **alag se cPanel me `Add variable` bharna nahi chahte**, to koi problem nahi.
+
+Is project me tum **seedha `backend/.env` file upload** kar sakte ho.
+
+Ye project ka backend already `backend/.env` read karta hai, isliye:
+
+- cPanel me alag se `Environment variables` bharna **zaroori nahi**
+- tum zip ke andar `backend/.env` rakh sakte ho
+- ya extract karne ke baad `backend` folder ke andar `.env` bana sakte ho
+
+### Tumhe kaunsi file upload karni hai
+
+Path ye hoga:
+
+```text
+panditpujaweb/backend/.env
+```
+
+### `backend/.env` file me kya likhna hai
+
+Is file ke andar ye values honi chahiye:
+
+```text
+MONGO_URI=mongodb://...ya-apna-mongodb-atlas-uri...
+JWT_SECRET=apna-koi-lamba-random-secret
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=465
+SMTP_USER=your-email@gmail.com
+SMTP_PASS=your-gmail-app-password
+SMTP_FROM=Thanathu Madom <your-email@gmail.com>
+PROKERALA_CLIENT_ID=your-prokerala-client-id
+PROKERALA_CLIENT_SECRET=your-prokerala-client-secret
+```
+
+### Simple rule
+
+- agar `backend/.env` file sahi jagah upload hai, to cPanel ke `Environment variables` section ko blank chhod sakte ho
+- agar `.env` upload nahi karna chahte, tab hi `Add variable` use karo
+
+### Important notes
+
+- `SMTP_PASS` me **normal Gmail password nahi**, **App Password** use karo
+- `JWT_SECRET` simple mat rakho, lamba random secret rakho
+- `PORT` manually add karne ki zarurat nahi hai
+- `.env` ka naam exactly `.env` hi hona chahiye, `.env.txt` nahi
+- file `backend` folder ke andar hi honi chahiye, root folder me nahi
+
+### Best aur easiest method
+
+Tumhare case me easiest method ye hai:
+
+1. apne local project me `backend/.env` ready rakho
+2. poora project zip karo
+3. cPanel me upload + extract karo
+4. `Create Application` me sirf app root aur startup file set karo
+5. alag se `Environment variables` fill mat karo
+
+---
+
+## cPanel form fill karne ka quick example
+
+Agar tumhara project folder name `panditpujaweb` hai aur domain ready hai, to form kuch aisa dikhega:
+
+- **Node.js version**: `20`
+- **Application mode**: `Production`
+- **Application root**: `panditpujaweb/backend`
+- **Application URL**: `yourdomain.com`
+- **Application startup file**: `server.js`
+
+Phir:
+
+1. `Create` par click karo
+2. app create hone ke baad `Open Terminal` ya `Enter to virtual environment` options dekho
+3. `npm install` chalao
+4. app ko restart karo
+
+---
+
 Project ka current setup:
 
 - frontend static HTML/CSS/JS files root folder me hain
@@ -416,4 +555,3 @@ Current codebase already:
 - seed script available hai
 
 Isliye deployment mostly configuration ka kaam hai, architecture rewrite ka nahi.
-

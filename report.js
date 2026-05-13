@@ -169,28 +169,32 @@ const escapeHtml = (value = "") => {
     return div.innerHTML;
 };
 
-const assetUrl = (value = "") => {
-    if (!value) {
-        return "";
+const openProtectedUserFile = async (endpoint = "", suggestedName = "report", forceDownload = false) => {
+    const response = await fetch(`${endpoint}${forceDownload ? "?download=1" : ""}`, {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    });
+
+    if (!response.ok) {
+        throw new Error("Unable to open your report file right now.");
     }
 
-    if (
-        value.startsWith("http://") ||
-        value.startsWith("https://") ||
-        value.startsWith("data:")
-    ) {
-        return value;
+    const blob = await response.blob();
+    const objectUrl = URL.createObjectURL(blob);
+
+    if (forceDownload) {
+        const link = document.createElement("a");
+        link.href = objectUrl;
+        link.download = suggestedName || "report";
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+    } else {
+        window.open(objectUrl, "_blank", "noopener");
     }
 
-    if (value.startsWith("/")) {
-        return value;
-    }
-
-    if (value.startsWith("./")) {
-        return value.slice(1);
-    }
-
-    return `/${value.replace(/^\/+/, "")}`;
+    window.setTimeout(() => URL.revokeObjectURL(objectUrl), 15000);
 };
 
 const setReportFeedback = (message = "", color = "#4b3a28", visible = true) => {
@@ -246,8 +250,7 @@ const renderReports = (reports = []) => {
     }
 
     reportListNode.innerHTML = reports.map((entry) => {
-        const hasReport = !!entry.report?.fileUrl;
-        const reportUrl = assetUrl(entry.report?.fileUrl || "");
+        const hasReport = !!entry.report?.hasFile;
         const birthPlace = entry.type === "matching"
             ? [entry.boyData?.birthCity, entry.girlData?.birthCity].filter(Boolean).join(" / ")
             : entry.singleData?.birthPlace || "-";
@@ -294,8 +297,8 @@ const renderReports = (reports = []) => {
                         <p>${escapeHtml(entry.report?.originalName || "Saved file is available now.")}</p>
                         ${entry.report?.note ? `<p class="report-report-note">${escapeHtml(entry.report.note)}</p>` : ""}
                         <div class="report-file-actions">
-                            <a href="${escapeHtml(reportUrl)}" target="_blank" rel="noopener" class="report-view-btn">View Report</a>
-                            <a href="${escapeHtml(reportUrl)}" download class="report-download-btn">Download Report</a>
+                            <button type="button" class="report-view-btn" onclick="openUserReportFile('${entry._id}', false, '${escapeHtml(entry.report?.originalName || "report")}')">View Report</button>
+                            <button type="button" class="report-download-btn" onclick="openUserReportFile('${entry._id}', true, '${escapeHtml(entry.report?.originalName || "report")}')">Download Report</button>
                         </div>
                     </div>
                 ` : `
@@ -324,7 +327,7 @@ const updateSummary = (summary = {}) => {
 };
 
 const markReportsAsSeen = async (reports = []) => {
-    const targets = reports.filter((entry) => entry.report?.fileUrl && !entry.report?.isSeen);
+    const targets = reports.filter((entry) => entry.report?.hasFile && !entry.report?.isSeen);
 
     if (!targets.length) {
         return;
@@ -404,3 +407,12 @@ const animateReportPage = () => {
 
 animateReportPage();
 loadReports();
+
+window.openUserReportFile = async (id, forceDownload = false, fileName = "report") => {
+    try {
+        await openProtectedUserFile(`${API_URL}/user/reports/${id}/file`, fileName, forceDownload);
+    } catch (error) {
+        console.error(error);
+        setReportFeedback(error.message || "Unable to open your report right now.", "#b34b1e", true);
+    }
+};

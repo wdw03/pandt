@@ -17,7 +17,18 @@ const partnerSchema = new mongoose.Schema({
 const reportSchema = new mongoose.Schema({
     title: { type: String, default: '' },
     note: { type: String, default: '' },
+    storage: {
+        type: String,
+        enum: ['', 'database', 'file'],
+        default: ''
+    },
     fileUrl: { type: String, default: '' },
+    fileData: {
+        type: Buffer,
+        default: null,
+        select: false
+    },
+    fileSize: { type: Number, default: 0 },
     originalName: { type: String, default: '' },
     mimeType: { type: String, default: '' },
     uploadedAt: { type: Date, default: null },

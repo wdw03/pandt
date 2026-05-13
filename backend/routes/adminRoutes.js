@@ -7,10 +7,8 @@ const ctrl = require('../controllers/adminController');
 
 const router = express.Router();
 const uploadDir = path.join(__dirname, '../../assets/uploads');
-const reportUploadDir = path.join(__dirname, '../../assets/reports');
 
 fs.mkdirSync(uploadDir, { recursive: true });
-fs.mkdirSync(reportUploadDir, { recursive: true });
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -39,19 +37,8 @@ const upload = multer({
     }
 });
 
-const reportStorage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, reportUploadDir);
-    },
-    filename: (req, file, cb) => {
-        const extension = path.extname(file.originalname) || '.pdf';
-        const uniqueName = `report_${Date.now()}_${Math.random().toString(36).slice(2, 8)}${extension}`;
-        cb(null, uniqueName);
-    }
-});
-
 const reportUpload = multer({
-    storage: reportStorage,
+    storage: multer.memoryStorage(),
     limits: { fileSize: 12 * 1024 * 1024 },
     fileFilter: (req, file, cb) => {
         const allowedExtensions = /pdf|jpeg|jpg|png|gif|webp/;
@@ -98,6 +85,7 @@ router.delete('/videos/:id', adminProtect, ctrl.deleteVideo);
 router.get('/kundali-submissions', adminProtect, ctrl.getKundaliSubmissions);
 router.put('/kundali-submissions/:id/status', adminProtect, ctrl.updateKundaliStatus);
 router.put('/kundali-submissions/:id/report', adminProtect, reportUpload.single('report'), ctrl.uploadKundaliReport);
+router.get('/kundali-submissions/:id/report/file', adminProtect, ctrl.downloadAdminKundaliReport);
 router.get('/contact-submissions', adminProtect, ctrl.getContactSubmissions);
 router.put('/contact-submissions/:id/read', adminProtect, ctrl.markContactRead);
 

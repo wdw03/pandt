@@ -118,6 +118,34 @@ const apiDelete = (url) => apiRequest(url, {
     headers: getAuthHeaders(false)
 });
 
+const openProtectedAdminFile = async (url, suggestedName = 'report', forceDownload = false) => {
+    const response = await fetch(url, {
+        headers: {
+            Authorization: `Bearer ${getToken()}`
+        }
+    });
+
+    if (!response.ok) {
+        throw new Error('Unable to open report file');
+    }
+
+    const blob = await response.blob();
+    const objectUrl = URL.createObjectURL(blob);
+
+    if (forceDownload) {
+        const link = document.createElement('a');
+        link.href = objectUrl;
+        link.download = suggestedName || 'report';
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+    } else {
+        window.open(objectUrl, '_blank', 'noopener');
+    }
+
+    window.setTimeout(() => URL.revokeObjectURL(objectUrl), 15000);
+};
+
 const uploadImages = async (files) => {
     const urls = [];
 
@@ -184,7 +212,7 @@ const detailItem = (label, value, full = false) => {
 };
 
 const reportBadgeHtml = (submission) => {
-    const hasReport = !!submission.report?.fileUrl;
+    const hasReport = !!submission.report?.hasFile;
 
     if (!hasReport) {
         return '<span class="admin-badge admin-badge-warning">Pending</span>';
@@ -1102,7 +1130,7 @@ window.viewKundali = async (id, type) => {
     detailsHtml += detailItem('User Name', submission.userProfile?.name);
     detailsHtml += detailItem('User Email', submission.userProfile?.email);
     detailsHtml += detailItem('Status', submission.status || 'pending');
-    detailsHtml += detailItem('Report Availability', submission.report?.fileUrl ? 'Uploaded' : 'Not uploaded');
+    detailsHtml += detailItem('Report Availability', submission.report?.hasFile ? 'Uploaded' : 'Not uploaded');
     detailsHtml += '</div>';
     detailsHtml += `
         <div class="admin-report-panel">
@@ -1113,7 +1141,7 @@ window.viewKundali = async (id, type) => {
                 </div>
                 ${reportBadgeHtml(submission)}
             </div>
-            ${submission.report?.fileUrl ? `
+            ${submission.report?.hasFile ? `
                 <div class="admin-report-current">
                     <div class="admin-report-current-copy">
                         <strong>${escapeHtml(submission.report.title || 'Uploaded report')}</strong>
@@ -1122,8 +1150,8 @@ window.viewKundali = async (id, type) => {
                         ${submission.report.note ? `<p>${escapeHtml(submission.report.note)}</p>` : ''}
                     </div>
                     <div class="admin-report-current-actions">
-                        <a class="admin-btn admin-btn-secondary admin-btn-sm" href="${escapeHtml(assetUrl(submission.report.fileUrl))}" target="_blank" rel="noopener">View File</a>
-                        <a class="admin-btn admin-btn-primary admin-btn-sm" href="${escapeHtml(assetUrl(submission.report.fileUrl))}" download>Download</a>
+                        <button class="admin-btn admin-btn-secondary admin-btn-sm" type="button" onclick="openAdminSubmissionReport('${submission._id}', false)">View File</button>
+                        <button class="admin-btn admin-btn-primary admin-btn-sm" type="button" onclick="openAdminSubmissionReport('${submission._id}', true, '${escapeHtml(submission.report.originalName || 'report')}')">Download</button>
                     </div>
                 </div>
             ` : `
@@ -1215,6 +1243,18 @@ window.uploadKundaliReport = async (id, type) => {
     showToast(file ? 'Report uploaded successfully' : 'Report details saved');
     closeModal();
     await loadKundali(type);
+};
+
+window.openAdminSubmissionReport = async (id, forceDownload = false, fileName = 'report') => {
+    try {
+        await openProtectedAdminFile(
+            `${API}/kundali-submissions/${id}/report/file${forceDownload ? '?download=1' : ''}`,
+            fileName,
+            forceDownload
+        );
+    } catch (error) {
+        showToast(error.message || 'Unable to open report file', 'error');
+    }
 };
 
 const loadContacts = async () => {

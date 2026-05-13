@@ -1,3 +1,5 @@
+const fs = require('fs');
+const path = require('path');
 const jwt = require('jsonwebtoken');
 const Admin = require('../models/Admin');
 const PoojaSlide = require('../models/PoojaSlide');
@@ -26,16 +28,75 @@ const generateAdminToken = (id) => {
     return jwt.sign({ id, role: 'admin' }, process.env.JWT_SECRET, { expiresIn: '7d' });
 };
 
+const submissionHasReport = (submission) => {
+    const report = submission?.report || {};
+    return !!(
+        report.fileData?.length ||
+        report.fileUrl ||
+        (report.storage === 'database' && (Number(report.fileSize || 0) > 0 || cleanString(report.originalName)))
+    );
+};
+
+const resolveLegacyReportPath = (fileUrl = '') => {
+    const normalized = cleanString(fileUrl).replace(/\\/g, '/').replace(/^\/+/, '');
+
+    if (!normalized) {
+        return '';
+    }
+
+    return path.join(__dirname, '../../', normalized);
+};
+
+const buildReportMeta = (submission, endpointBase) => {
+    const report = submission?.report || {};
+
+    return {
+        title: report.title || '',
+        note: report.note || '',
+        storage: report.storage || (report.fileData?.length ? 'database' : report.fileUrl ? 'file' : ''),
+        fileSize: Number(report.fileSize || (report.fileData?.length || 0)),
+        originalName: report.originalName || '',
+        mimeType: report.mimeType || '',
+        uploadedAt: report.uploadedAt || null,
+        isSeen: !!report.isSeen,
+        hasFile: submissionHasReport(submission),
+        fileEndpoint: submissionHasReport(submission) ? endpointBase : ''
+    };
+};
+
 const normalizeSubmission = (submission) => {
     const source = submission.toObject ? submission.toObject() : submission;
 
     return {
         ...source,
-        report: {
-            ...(source.report || {}),
-            fileUrl: toWebAssetPath(source.report?.fileUrl)
-        }
+        report: buildReportMeta(source, `/api/admin/kundali-submissions/${source._id}/report/file`)
     };
+};
+
+const streamSubmissionReport = (res, submission, forceDownload = false) => {
+    const report = submission?.report || {};
+    const mimeType = cleanString(report.mimeType) || 'application/octet-stream';
+    const originalName = cleanString(report.originalName) || 'kundali-report';
+
+    res.setHeader('Content-Type', mimeType);
+    res.setHeader(
+        'Content-Disposition',
+        `${forceDownload ? 'attachment' : 'inline'}; filename="${encodeURIComponent(originalName)}"`
+    );
+
+    if (report.fileData?.length) {
+        return res.send(report.fileData);
+    }
+
+    if (report.fileUrl) {
+        const legacyPath = resolveLegacyReportPath(report.fileUrl);
+
+        if (legacyPath && fs.existsSync(legacyPath)) {
+            return res.sendFile(legacyPath);
+        }
+    }
+
+    return res.status(404).json({ success: false, message: 'Report file not found' });
 };
 
 exports.adminLogin = async (req, res) => {
@@ -318,7 +379,7 @@ exports.updateKundaliStatus = async (req, res) => {
 
 exports.uploadKundaliReport = async (req, res) => {
     try {
-        const submission = await KundaliSubmission.findById(req.params.id);
+        const submission = await KundaliSubmission.findById(req.params.id).select('+report.fileData');
 
         if (!submission) {
             return res.status(404).json({ success: false, message: 'Submission not found' });
@@ -339,18 +400,19 @@ exports.uploadKundaliReport = async (req, res) => {
             submission.report = {
                 title: title || `${submission.type === 'matching' ? 'Kundali Matching' : 'Janam Kundali'} Report`,
                 note,
-                fileUrl: `/assets/reports/${req.file.filename}`,
+                storage: 'database',
+                fileUrl: '',
+                fileData: req.file.buffer,
+                fileSize: Number(req.file.size || req.file.buffer?.length || 0),
                 originalName: req.file.originalname || '',
                 mimeType: req.file.mimetype || '',
                 uploadedAt: new Date(),
                 isSeen: false
             };
         } else {
-            submission.report = {
-                ...(submission.report?.toObject ? submission.report.toObject() : submission.report || {}),
-                title,
-                note: note || submission.report?.note || ''
-            };
+            submission.report = submission.report || {};
+            submission.report.title = title;
+            submission.report.note = note || submission.report?.note || '';
         }
 
         if (nextStatus) {
@@ -366,6 +428,20 @@ exports.uploadKundaliReport = async (req, res) => {
         });
     } catch (error) {
         return res.status(400).json({ success: false, message: error.message });
+    }
+};
+
+exports.downloadAdminKundaliReport = async (req, res) => {
+    try {
+        const submission = await KundaliSubmission.findById(req.params.id).select('+report.fileData');
+
+        if (!submission || !submissionHasReport(submission)) {
+            return res.status(404).json({ success: false, message: 'Report not found' });
+        }
+
+        return streamSubmissionReport(res, submission, req.query.download === '1');
+    } catch (error) {
+        return res.status(500).json({ success: false, message: error.message });
     }
 };
 
