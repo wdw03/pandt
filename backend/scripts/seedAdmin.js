@@ -3,10 +3,14 @@ const mongoose = require('mongoose');
 const Admin = require('../models/Admin');
 const { ensureCoreAdminContent } = require('../utils/contentBootstrap');
 
-const MONGO_URI = process.env.MONGODB_URI;
+const MONGO_URI = process.env.MONGODB_URI || process.env.MONGO_URI;
 
 async function seed() {
     try {
+        if (!MONGO_URI) {
+            throw new Error('Missing MONGO_URI or MONGODB_URI in backend/.env');
+        }
+
         await mongoose.connect(MONGO_URI);
         console.log('Connected to MongoDB');
 

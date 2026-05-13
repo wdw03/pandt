@@ -848,8 +848,10 @@ initHomeFloatingCards();
 
 const homeRoutePreviewTriggers = Array.from(document.querySelectorAll(".home-route-preview-trigger"));
 const homeProductGalleries = Array.from(document.querySelectorAll("[data-home-product-gallery]"));
-const homeContactSupportForm = document.getElementById("homeContactSupportForm");
-const homeContactFeedback = document.querySelector("[data-home-contact-feedback]");
+const homeContactSupportForm = document.getElementById("homeContactSupportForm")
+    || document.getElementById("homeFooterContactForm");
+const homeContactFeedback = document.querySelector("[data-home-contact-feedback]")
+    || document.querySelector("[data-home-footer-feedback]");
 const homeKundaliPriceNodes = Array.from(document.querySelectorAll("[data-home-kundali-price]"));
 const homeJanamPriceNodes = Array.from(document.querySelectorAll("[data-home-janam-price]"));
 const homeApiOrigin = (() => {
@@ -1159,7 +1161,7 @@ const initHomeContactForm = () => {
         }
 
         try {
-            const response = await fetch('/api/public/contact-submit', {
+            const response = await fetch(`${homeApiOrigin}/api/public/contact-submit`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ name, email, message })
