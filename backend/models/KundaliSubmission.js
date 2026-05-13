@@ -14,11 +14,27 @@ const partnerSchema = new mongoose.Schema({
     birthPlace: { type: String, default: '' }
 }, { _id: false });
 
+const reportSchema = new mongoose.Schema({
+    title: { type: String, default: '' },
+    note: { type: String, default: '' },
+    fileUrl: { type: String, default: '' },
+    originalName: { type: String, default: '' },
+    mimeType: { type: String, default: '' },
+    uploadedAt: { type: Date, default: null },
+    isSeen: { type: Boolean, default: false }
+}, { _id: false });
+
 const kundaliSubmissionSchema = new mongoose.Schema({
     type: {
         type: String,
         enum: ['matching', 'janam'],
         required: true
+    },
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        default: null,
+        index: true
     },
     boyData: { type: partnerSchema, default: null },
     girlData: { type: partnerSchema, default: null },
@@ -32,6 +48,10 @@ const kundaliSubmissionSchema = new mongoose.Schema({
         type: String,
         enum: ['pending', 'processing', 'completed'],
         default: 'pending'
+    },
+    report: {
+        type: reportSchema,
+        default: () => ({})
     }
 }, { timestamps: true });
 

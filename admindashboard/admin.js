@@ -183,6 +183,20 @@ const detailItem = (label, value, full = false) => {
     `;
 };
 
+const reportBadgeHtml = (submission) => {
+    const hasReport = !!submission.report?.fileUrl;
+
+    if (!hasReport) {
+        return '<span class="admin-badge admin-badge-warning">Pending</span>';
+    }
+
+    if (submission.report?.isSeen) {
+        return '<span class="admin-badge admin-badge-success">Seen</span>';
+    }
+
+    return '<span class="admin-badge admin-badge-info">New</span>';
+};
+
 const sectionTitles = {
     overview: 'Dashboard Overview',
     'pooja-slides': 'Pooja Slides',
@@ -1025,6 +1039,7 @@ const loadKundali = async (type) => {
                         <small>${escapeHtml(submission.userProfile?.email || '')}</small>
                     </td>
                     <td><span class="admin-badge admin-badge-info">${escapeHtml(submission.status || 'pending')}</span></td>
+                    <td>${reportBadgeHtml(submission)}</td>
                     <td><small>${new Date(submission.createdAt).toLocaleDateString()}</small></td>
                     <td><button class="admin-btn admin-btn-secondary admin-btn-sm" onclick="viewKundali('${submission._id}', 'matching')">View</button></td>
                 </tr>
@@ -1039,6 +1054,7 @@ const loadKundali = async (type) => {
                 <td>${escapeHtml(submission.singleData?.birthPlace || '-')}</td>
                 <td>${escapeHtml(submission.whatsappNumber || '-')}</td>
                 <td><span class="admin-badge admin-badge-info">${escapeHtml(submission.status || 'pending')}</span></td>
+                <td>${reportBadgeHtml(submission)}</td>
                 <td><small>${new Date(submission.createdAt).toLocaleDateString()}</small></td>
                 <td><button class="admin-btn admin-btn-secondary admin-btn-sm" onclick="viewKundali('${submission._id}', 'janam')">View</button></td>
             </tr>
@@ -1047,7 +1063,7 @@ const loadKundali = async (type) => {
 
     document.getElementById(targetId).innerHTML = rows.join('') || `
         <tr>
-            <td colspan="8" style="text-align:center;color:var(--text-muted)">No submissions found.</td>
+            <td colspan="9" style="text-align:center;color:var(--text-muted)">No submissions found.</td>
         </tr>
     `;
 };
@@ -1086,7 +1102,49 @@ window.viewKundali = async (id, type) => {
     detailsHtml += detailItem('User Name', submission.userProfile?.name);
     detailsHtml += detailItem('User Email', submission.userProfile?.email);
     detailsHtml += detailItem('Status', submission.status || 'pending');
+    detailsHtml += detailItem('Report Availability', submission.report?.fileUrl ? 'Uploaded' : 'Not uploaded');
     detailsHtml += '</div>';
+    detailsHtml += `
+        <div class="admin-report-panel">
+            <div class="admin-report-panel-head">
+                <div>
+                    <h4>User Report Upload</h4>
+                    <p>Upload PDF or image report for this submission. Once uploaded, it will appear on the user's Reports page.</p>
+                </div>
+                ${reportBadgeHtml(submission)}
+            </div>
+            ${submission.report?.fileUrl ? `
+                <div class="admin-report-current">
+                    <div class="admin-report-current-copy">
+                        <strong>${escapeHtml(submission.report.title || 'Uploaded report')}</strong>
+                        <span>${escapeHtml(submission.report.originalName || 'Saved file')}</span>
+                        <small>${submission.report.uploadedAt ? `Uploaded on ${new Date(submission.report.uploadedAt).toLocaleString()}` : 'Upload time unavailable'}</small>
+                        ${submission.report.note ? `<p>${escapeHtml(submission.report.note)}</p>` : ''}
+                    </div>
+                    <div class="admin-report-current-actions">
+                        <a class="admin-btn admin-btn-secondary admin-btn-sm" href="${escapeHtml(assetUrl(submission.report.fileUrl))}" target="_blank" rel="noopener">View File</a>
+                        <a class="admin-btn admin-btn-primary admin-btn-sm" href="${escapeHtml(assetUrl(submission.report.fileUrl))}" download>Download</a>
+                    </div>
+                </div>
+            ` : `
+                <div class="admin-report-empty">No report has been uploaded for this user yet.</div>
+            `}
+            <div class="admin-form-grid admin-form-grid-2">
+                <label class="admin-field">
+                    <span>Report Title</span>
+                    <input type="text" id="reportTitleInput" maxlength="100" value="${escapeHtml(submission.report?.title || '')}" placeholder="Kundali analysis report">
+                </label>
+                <label class="admin-field">
+                    <span>Upload Report File</span>
+                    <input type="file" id="reportUploadInput" accept=".pdf,image/*">
+                </label>
+                <label class="admin-field admin-field-span-2">
+                    <span>Admin Note</span>
+                    <textarea id="reportNoteInput" maxlength="300" placeholder="Optional note for the user">${escapeHtml(submission.report?.note || '')}</textarea>
+                </label>
+            </div>
+        </div>
+    `;
     detailsHtml += `
         <div class="admin-modal-actions">
             <select id="statusSelect">
@@ -1095,6 +1153,7 @@ window.viewKundali = async (id, type) => {
                 <option value="completed" ${submission.status === 'completed' ? 'selected' : ''}>Completed</option>
             </select>
             <button class="admin-btn admin-btn-primary admin-btn-sm" onclick="updateKStatus('${submission._id}', '${type}')">Update Status</button>
+            <button class="admin-btn admin-btn-secondary admin-btn-sm" onclick="uploadKundaliReport('${submission._id}', '${type}')">Upload Report</button>
         </div>
     `;
 
@@ -1111,6 +1170,49 @@ window.updateKStatus = async (id, type) => {
     }
 
     showToast('Submission status updated');
+    closeModal();
+    await loadKundali(type);
+};
+
+window.uploadKundaliReport = async (id, type) => {
+    const reportFileInput = document.getElementById('reportUploadInput');
+    const reportTitleInput = document.getElementById('reportTitleInput');
+    const reportNoteInput = document.getElementById('reportNoteInput');
+    const statusSelect = document.getElementById('statusSelect');
+    const file = reportFileInput?.files?.[0] || null;
+    const title = String(reportTitleInput?.value || '').trim();
+    const note = String(reportNoteInput?.value || '').trim();
+    const status = String(statusSelect?.value || '').trim();
+
+    if (!file && !title && !note && !status) {
+        showToast('Choose a report file or add report details first', 'error');
+        return;
+    }
+
+    const formData = new FormData();
+
+    if (file) {
+        formData.append('report', file);
+    }
+
+    formData.append('title', title);
+    formData.append('note', note);
+    formData.append('status', status);
+
+    const result = await apiRequest(`/kundali-submissions/${id}/report`, {
+        method: 'PUT',
+        headers: {
+            Authorization: `Bearer ${getToken()}`
+        },
+        body: formData
+    });
+
+    if (!result?.success) {
+        showToast(result?.message || 'Unable to upload report', 'error');
+        return;
+    }
+
+    showToast(file ? 'Report uploaded successfully' : 'Report details saved');
     closeModal();
     await loadKundali(type);
 };

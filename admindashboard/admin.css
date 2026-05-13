@@ -259,6 +259,75 @@ img { max-width: 100%; display: block; }
 .admin-detail-item p { font-size: 0.9rem; color: var(--text-primary); word-break: break-word; }
 .admin-detail-full { grid-column: 1 / -1; }
 
+.admin-report-panel {
+    margin-top: 20px;
+    padding: 18px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: linear-gradient(180deg, rgba(212, 168, 83, 0.05), rgba(255, 255, 255, 0.02));
+    display: grid;
+    gap: 16px;
+}
+
+.admin-report-panel-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
+.admin-report-panel-head h4 {
+    font-size: 1rem;
+    color: var(--accent);
+    margin-bottom: 4px;
+}
+
+.admin-report-panel-head p {
+    color: var(--text-secondary);
+    font-size: 0.84rem;
+    max-width: 54ch;
+}
+
+.admin-report-current,
+.admin-report-empty {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--bg-card);
+    padding: 14px 16px;
+}
+
+.admin-report-current {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.admin-report-current-copy {
+    display: grid;
+    gap: 4px;
+}
+
+.admin-report-current-copy strong {
+    color: var(--text-primary);
+}
+
+.admin-report-current-copy span,
+.admin-report-current-copy small,
+.admin-report-current-copy p,
+.admin-report-empty {
+    color: var(--text-secondary);
+    font-size: 0.84rem;
+}
+
+.admin-report-current-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
 .admin-form-stack { display: grid; gap: 18px; }
 .admin-form-grid { display: grid; gap: 16px; }
 .admin-form-grid-2 { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }

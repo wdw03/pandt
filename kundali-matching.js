@@ -366,11 +366,17 @@ const handleKundaliSubmit = () => {
 
         const payload = collectKundaliPayload(kundaliForm);
         const paymentUrl = kundaliForm.dataset.paymentUrl?.trim() || "";
+        const token = localStorage.getItem("tmToken");
+        const headers = { 'Content-Type': 'application/json' };
+
+        if (token) {
+            headers.Authorization = `Bearer ${token}`;
+        }
 
         try {
             const response = await fetch(kundaliApiUrl('/api/public/kundali-submit'), {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers,
                 body: JSON.stringify(payload)
             });
             const result = await response.json();

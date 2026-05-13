@@ -1,4 +1,5 @@
 const express = require('express');
+const jwt = require('jsonwebtoken');
 const PoojaSlide = require('../models/PoojaSlide');
 const Product = require('../models/Product');
 const VideoItem = require('../models/VideoItem');
@@ -6,6 +7,7 @@ const RouteSection = require('../models/RouteSection');
 const KundaliSubmission = require('../models/KundaliSubmission');
 const ContactSubmission = require('../models/ContactSubmission');
 const SiteConfig = require('../models/SiteConfig');
+const User = require('../models/User');
 const { toWebAssetPath } = require('../utils/contentManager');
 const {
     ensurePoojaSlidesSeeded,
@@ -15,6 +17,27 @@ const {
 } = require('../utils/contentBootstrap');
 
 const router = express.Router();
+
+const getOptionalAuthUser = async (req) => {
+    try {
+        const header = req.headers.authorization || '';
+
+        if (!header.startsWith('Bearer ')) {
+            return null;
+        }
+
+        const token = header.split(' ')[1];
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+        if (!decoded?.id) {
+            return null;
+        }
+
+        return User.findById(decoded.id).select('name email');
+    } catch (error) {
+        return null;
+    }
+};
 
 router.get('/pooja-slides', async (req, res) => {
     try {
@@ -88,6 +111,7 @@ router.get('/config/prices', async (req, res) => {
 
 router.post('/kundali-submit', async (req, res) => {
     try {
+        const authUser = await getOptionalAuthUser(req);
         const {
             boyName,
             boyBirthDay,
@@ -114,6 +138,7 @@ router.post('/kundali-submit', async (req, res) => {
 
         const submission = await KundaliSubmission.create({
             type: 'matching',
+            userId: authUser?._id || null,
             boyData: {
                 name: boyName,
                 birthDay: boyBirthDay,
@@ -138,8 +163,8 @@ router.post('/kundali-submit', async (req, res) => {
             },
             whatsappNumber: whatsappNumber || '',
             userProfile: {
-                name: userName || '',
-                email: userEmail || ''
+                name: authUser?.name || userName || '',
+                email: authUser?.email || userEmail || ''
             }
         });
 
@@ -155,6 +180,7 @@ router.post('/kundali-submit', async (req, res) => {
 
 router.post('/janam-submit', async (req, res) => {
     try {
+        const authUser = await getOptionalAuthUser(req);
         const {
             fullName,
             birthPlace,
@@ -172,6 +198,7 @@ router.post('/janam-submit', async (req, res) => {
 
         const submission = await KundaliSubmission.create({
             type: 'janam',
+            userId: authUser?._id || null,
             singleData: {
                 name: fullName,
                 birthPlace,
@@ -185,8 +212,8 @@ router.post('/janam-submit', async (req, res) => {
             },
             whatsappNumber: whatsappNumber || '',
             userProfile: {
-                name: userName || fullName || '',
-                email: userEmail || ''
+                name: authUser?.name || userName || fullName || '',
+                email: authUser?.email || userEmail || ''
             }
         });
 

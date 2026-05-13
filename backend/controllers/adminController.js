@@ -26,6 +26,18 @@ const generateAdminToken = (id) => {
     return jwt.sign({ id, role: 'admin' }, process.env.JWT_SECRET, { expiresIn: '7d' });
 };
 
+const normalizeSubmission = (submission) => {
+    const source = submission.toObject ? submission.toObject() : submission;
+
+    return {
+        ...source,
+        report: {
+            ...(source.report || {}),
+            fileUrl: toWebAssetPath(source.report?.fileUrl)
+        }
+    };
+};
+
 exports.adminLogin = async (req, res) => {
     try {
         const { username, password } = req.body;
@@ -144,7 +156,7 @@ exports.updateRouteSection = async (req, res) => {
         const section = await RouteSection.findByIdAndUpdate(
             req.params.id,
             payload,
-            { new: true, runValidators: true }
+            { returnDocument: 'after', runValidators: true }
         );
 
         if (!section) {
@@ -280,7 +292,7 @@ exports.getKundaliSubmissions = async (req, res) => {
         const typeFilter = req.query.type;
         const query = typeFilter ? { type: typeFilter } : {};
         const submissions = await KundaliSubmission.find(query).sort({ createdAt: -1 });
-        return res.json({ success: true, data: submissions });
+        return res.json({ success: true, data: submissions.map(normalizeSubmission) });
     } catch (error) {
         return res.status(500).json({ success: false, message: error.message });
     }
@@ -291,7 +303,7 @@ exports.updateKundaliStatus = async (req, res) => {
         const submission = await KundaliSubmission.findByIdAndUpdate(
             req.params.id,
             { status: req.body.status },
-            { new: true }
+            { returnDocument: 'after' }
         );
 
         if (!submission) {
@@ -299,6 +311,59 @@ exports.updateKundaliStatus = async (req, res) => {
         }
 
         return res.json({ success: true, data: submission });
+    } catch (error) {
+        return res.status(400).json({ success: false, message: error.message });
+    }
+};
+
+exports.uploadKundaliReport = async (req, res) => {
+    try {
+        const submission = await KundaliSubmission.findById(req.params.id);
+
+        if (!submission) {
+            return res.status(404).json({ success: false, message: 'Submission not found' });
+        }
+
+        const title = cleanString(req.body.title) || cleanString(submission.report?.title);
+        const note = cleanString(req.body.note);
+        const nextStatus = cleanString(req.body.status);
+
+        if (!req.file && !title && !note && !nextStatus) {
+            return res.status(400).json({
+                success: false,
+                message: 'Choose a report file or add report details before saving.'
+            });
+        }
+
+        if (req.file) {
+            submission.report = {
+                title: title || `${submission.type === 'matching' ? 'Kundali Matching' : 'Janam Kundali'} Report`,
+                note,
+                fileUrl: `/assets/reports/${req.file.filename}`,
+                originalName: req.file.originalname || '',
+                mimeType: req.file.mimetype || '',
+                uploadedAt: new Date(),
+                isSeen: false
+            };
+        } else {
+            submission.report = {
+                ...(submission.report?.toObject ? submission.report.toObject() : submission.report || {}),
+                title,
+                note: note || submission.report?.note || ''
+            };
+        }
+
+        if (nextStatus) {
+            submission.status = nextStatus;
+        }
+
+        await submission.save();
+
+        return res.json({
+            success: true,
+            message: 'Report uploaded successfully',
+            data: normalizeSubmission(submission)
+        });
     } catch (error) {
         return res.status(400).json({ success: false, message: error.message });
     }
@@ -318,7 +383,7 @@ exports.markContactRead = async (req, res) => {
         const submission = await ContactSubmission.findByIdAndUpdate(
             req.params.id,
             { isRead: true },
-            { new: true }
+            { returnDocument: 'after' }
         );
 
         if (!submission) {

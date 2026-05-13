@@ -361,11 +361,17 @@ const handleJanamSubmit = () => {
 
         const payload = collectJanamPayload(janamForm);
         const paymentUrl = janamForm.dataset.paymentUrl?.trim() || "";
+        const token = localStorage.getItem("tmToken");
+        const headers = { 'Content-Type': 'application/json' };
+
+        if (token) {
+            headers.Authorization = `Bearer ${token}`;
+        }
 
         try {
             const response = await fetch(janamApiUrl('/api/public/janam-submit'), {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers,
                 body: JSON.stringify(payload)
             });
             const result = await response.json();

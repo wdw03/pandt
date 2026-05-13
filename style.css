@@ -422,6 +422,7 @@ body {
     cursor: pointer;
     transition: all 0.3s ease;
     flex-shrink: 0;
+    position: relative;
 }
 
 .profileicons:hover {
@@ -799,12 +800,67 @@ body.site-mobile-nav-open .site-nav-scrim {
     background-image: url("./assets/images/store-icon.svg");
 }
 
+.reports-item-icon {
+    background-image: url("./assets/images/report-icon.svg");
+}
+
 .gmail-icon {
     background-image: url("./assets/images/gmail-icon.svg");
 }
 
 .whatsapp-icon {
     background-image: url("./assets/images/whatsapp-icon.svg");
+}
+
+.profileicons.has-report-notification::after {
+    content: attr(data-report-count);
+    position: absolute;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    top: -4px;
+    right: -4px;
+    border-radius: 999px;
+    border: 2px solid #ffffff;
+    background: #ef4444;
+    color: #ffffff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Poppins', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 1;
+    box-shadow: 0 4px 10px rgba(239, 68, 68, 0.28);
+}
+
+.drawer-item--reports .drawer-left {
+    width: 100%;
+}
+
+.drawer-item--reports .drawer-label-group {
+    min-width: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.drawer-report-badge {
+    min-width: 22px;
+    height: 22px;
+    padding: 0 8px;
+    margin-left: auto;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #ef4444 0%, #f97316 100%);
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Poppins', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1;
+    box-shadow: 0 4px 10px rgba(249, 115, 22, 0.22);
 }
 
 .whatsapp-inline-text {

@@ -5,6 +5,66 @@
     const DEFAULT_PROFILE_ICON = "./assets/images/ic_user_profile.svg";
     const DEFAULT_DRAWER_TITLE = "Welcome to Thanathu Madom Devasthanam";
     const DEFAULT_DRAWER_SUBTITLE = "Thanathu Madom Devasthanam";
+    const REPORT_LINK_SELECTOR = ".drawer-item--reports";
+
+    const ensureReportsDrawerLink = () => {
+        document.querySelectorAll(".profile-drawer-body").forEach((drawerBody) => {
+            if (!drawerBody || drawerBody.querySelector(REPORT_LINK_SELECTOR)) {
+                return;
+            }
+
+            const reportLink = document.createElement("a");
+            reportLink.href = "report.html";
+            reportLink.className = "drawer-item drawer-item--reports";
+            reportLink.innerHTML = `
+                <span class="drawer-left">
+                    <span class="drawer-icon reports-item-icon"></span>
+                    <span class="drawer-label-group">
+                        <span>My Reports</span>
+                    </span>
+                    <span class="drawer-report-badge" hidden>0</span>
+                </span>
+                <span class="drawer-arrow"></span>
+            `;
+
+            const anchorAfter = drawerBody.querySelector('a[href="kundali-matching.html"]');
+
+            if (anchorAfter?.parentNode === drawerBody) {
+                anchorAfter.insertAdjacentElement("afterend", reportLink);
+                return;
+            }
+
+            const serviceHeading = Array.from(drawerBody.querySelectorAll("h4")).find((node) =>
+                String(node.textContent || "").toLowerCase().includes("services")
+            );
+
+            if (serviceHeading) {
+                serviceHeading.insertAdjacentElement("beforebegin", reportLink);
+                return;
+            }
+
+            drawerBody.appendChild(reportLink);
+        });
+    };
+
+    const setReportBadge = (count = 0) => {
+        const safeCount = Number.isFinite(Number(count)) ? Math.max(0, Number(count)) : 0;
+
+        document.querySelectorAll(".drawer-report-badge").forEach((badge) => {
+            badge.textContent = safeCount > 99 ? "99+" : String(safeCount);
+            badge.hidden = safeCount <= 0;
+        });
+
+        document.querySelectorAll(".profileicons").forEach((icon) => {
+            icon.classList.toggle("has-report-notification", safeCount > 0);
+
+            if (safeCount > 0) {
+                icon.setAttribute("data-report-count", safeCount > 99 ? "99+" : String(safeCount));
+            } else {
+                icon.removeAttribute("data-report-count");
+            }
+        });
+    };
 
     const normalizeStoredUser = (user) => {
         if (!user || typeof user !== "object") {
@@ -129,12 +189,45 @@
         }
     };
 
+    const fetchReportSummary = async () => {
+        const token = localStorage.getItem(TOKEN_KEY);
+
+        if (!token) {
+            setReportBadge(0);
+            return null;
+        }
+
+        try {
+            const response = await fetch(`${API_URL}/user/reports/summary`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+
+            const data = await response.json();
+
+            if (!response.ok || !data.success) {
+                throw new Error(data.message || "Unable to load report summary");
+            }
+
+            setReportBadge(data.data?.unseenReports || 0);
+            return data.data || null;
+        } catch (error) {
+            setReportBadge(0);
+            return null;
+        }
+    };
+
     window.tmProfileSync = {
         applyProfileToNav,
         fetchProfile,
+        fetchReportSummary,
         loadStoredUser,
-        saveUser
+        saveUser,
+        refreshReportSummary: fetchReportSummary
     };
+
+    ensureReportsDrawerLink();
 
     const cachedUser = loadStoredUser();
 
@@ -146,5 +239,8 @@
 
     if (localStorage.getItem(TOKEN_KEY)) {
         fetchProfile();
+        fetchReportSummary();
+    } else {
+        setReportBadge(0);
     }
 })();
