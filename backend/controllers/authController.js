@@ -58,7 +58,7 @@ exports.register = async (req, res) => {
         }
 
         let user = await User.findOne({ email });
-        
+
         if (user) {
             if (user.isVerified) {
                 return res.status(400).json({ success: false, message: 'User already exists and is verified. Please log in.' });
@@ -282,3 +282,5 @@ exports.resetPassword = async (req, res) => {
         res.status(500).json({ success: false, message: error.message });
     }
 };
+
+// kid
