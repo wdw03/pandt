@@ -1,4 +1,4 @@
-const initializeGalleryNavbar = () => {
+﻿const initializeGalleryNavbar = () => {
     const toggle = document.getElementById("profileToggle");
     const drawer = document.getElementById("profileDrawer");
     const overlay = document.getElementById("drawerOverlay");
@@ -179,31 +179,31 @@ const reviews = [
     {
         name: "Meera S",
         initials: "MS",
-        stars: "★★★★★",
+        stars: "â˜…â˜…â˜…â˜…â˜…",
         text: "Daily guidance and puja support dono bahut genuine lage. Reading clear thi aur experience peaceful tha."
     },
     {
         name: "Rohan V",
         initials: "RV",
-        stars: "★★★★★",
+        stars: "â˜…â˜…â˜…â˜…â˜…",
         text: "Kundali aur Panchang details ka layout samajhna easy hai. Thanathu Madom ka trust feel hota hai."
     },
     {
         name: "Anjali P",
         initials: "AP",
-        stars: "★★★★★",
+        stars: "â˜…â˜…â˜…â˜…â˜…",
         text: "Puja booking ke baad jo clarity mili aur ritual process ka explanation mila, wo really helpful tha."
     },
     {
         name: "Suresh K",
         initials: "SK",
-        stars: "★★★★★",
+        stars: "â˜…â˜…â˜…â˜…â˜…",
         text: "Horoscope aur astrology content bahut premium lag raha hai. Reading smooth hai aur cards clean hain."
     },
     {
         name: "Divya N",
         initials: "DN",
-        stars: "★★★★★",
+        stars: "â˜…â˜…â˜…â˜…â˜…",
         text: "Products, blogs, videos sab ek jagah dekhna easy ho gaya. Overall page design bahut sundar bana hai."
     }
 ];
@@ -766,3 +766,4 @@ initializeAccordion();
     renderVideoCarousel();
     renderProducts();
 })();
+

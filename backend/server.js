@@ -8,16 +8,27 @@ dotenv.config({ path: path.join(__dirname, '.env') });
 dotenv.config({ path: path.join(__dirname, '../.env') });
 
 const app = express();
+const rootDir = path.join(__dirname, '../');
+
+const servePage = (page) => (req, res) => {
+    res.sendFile(path.join(rootDir, page));
+};
 
 // Middleware
 app.use(cors());
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
+// Page aliases
+app.get(['/horoscope', '/horoscope/', '/horoscope.html'], servePage('horoscope.html'));
+app.get(['/astrology', '/astrology/', '/astrology.html'], servePage('horoscope.html'));
+app.get(['/premium-pooja', '/premium-pooja/', '/premium-pooja.html'], servePage('premium-pooja.html'));
+app.get(['/horoscope-detail', '/horoscope-detail/', '/horoscope-detail.html'], servePage('horoscope-detail.html'));
+
 // Static files
-app.use(express.static(path.join(__dirname, '../')));
-app.use('/admin', express.static(path.join(__dirname, '../admindashboard')));
-app.use('/assets/uploads', express.static(path.join(__dirname, '../assets/uploads')));
+app.use(express.static(rootDir));
+app.use('/admin', express.static(path.join(rootDir, 'admindashboard')));
+app.use('/assets/uploads', express.static(path.join(rootDir, 'assets/uploads')));
 
 // Routes - Auth
 const authRoutes = require('./routes/authRoutes');

@@ -1,4 +1,4 @@
-body.horoscope-route-body {
+﻿body.horoscope-route-body {
     min-height: 100vh;
     overflow-x: hidden;
     background:
@@ -816,3 +816,4 @@ body.horoscope-route-body {
     min-height: 100%;
     justify-content: center;
 }
+
