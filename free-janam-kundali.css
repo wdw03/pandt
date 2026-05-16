@@ -679,7 +679,7 @@ body.janam-route-body {
     width: 20px;
     height: 20px;
     transform: translateY(-50%);
-    background: url("./assets/images/whatsapp-icon.svg") center / contain no-repeat;
+    background: url("./assets/images/whatsapp-icon.jpg") center / contain no-repeat;
 }
 
 .janam-submit-feedback {

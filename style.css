@@ -809,7 +809,7 @@ body.site-mobile-nav-open .site-nav-scrim {
 }
 
 .whatsapp-icon {
-    background-image: url("./assets/images/whatsapp-icon.svg");
+    background-image: url("./assets/images/whatsapp-icon.jpg");
 }
 
 .profileicons.has-report-notification::after {
@@ -875,7 +875,7 @@ body.site-mobile-nav-open .site-nav-scrim {
     height: 1.05em;
     flex: 0 0 auto;
     display: inline-block;
-    background: url("./assets/images/whatsapp-icon.svg") center / contain no-repeat;
+    background: url("./assets/images/whatsapp-icon.jpg") center / contain no-repeat;
     transform: translateY(-0.02em);
 }
 
