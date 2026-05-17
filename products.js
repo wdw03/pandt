@@ -183,6 +183,21 @@ const productsState = {
     filtered: []
 };
 
+const getProductIdentifier = (product) => {
+    return product.productId || product._id || "";
+};
+
+const getProductDetailUrl = (product) => {
+    const identifier = getProductIdentifier(product);
+    return identifier
+        ? `product-detail.html?id=${encodeURIComponent(identifier)}`
+        : "products.html";
+};
+
+const getAbsoluteProductDetailUrl = (product) => {
+    return new URL(getProductDetailUrl(product), window.location.href).toString();
+};
+
 const getProductImages = (product) => {
     const images = Array.isArray(product.images)
         ? product.images.filter(Boolean)
@@ -200,7 +215,10 @@ const getProductActionLink = (product) => {
         return product.productLink;
     }
 
-    const message = encodeURIComponent(`Namaste, I want details for ${product.title} (${product.price}).`);
+    const detailUrl = getAbsoluteProductDetailUrl(product);
+    const message = encodeURIComponent(
+        `Namaste, I want to buy ${product.title} (${product.price || "Price on request"}). Product details: ${detailUrl}`
+    );
     return `https://wa.me/919743045807?text=${message}`;
 };
 
@@ -309,8 +327,17 @@ const renderProducts = () => {
 
     productsState.filtered.forEach((product) => {
         const images = getProductImages(product);
+        const detailUrl = getProductDetailUrl(product);
+        const detailShareUrl = getAbsoluteProductDetailUrl(product);
+        const descriptionCopy = product.detailIntro || product.description || "Product details will be added from the admin panel.";
+        const highlights = Array.isArray(product.highlights)
+            ? product.highlights.filter(Boolean).slice(0, 3)
+            : [];
         const card = document.createElement("article");
         card.className = "products-product-card";
+        card.tabIndex = 0;
+        card.setAttribute("role", "link");
+        card.setAttribute("aria-label", `Open details for ${product.title || "product"}`);
 
         const gallery = document.createElement("div");
         gallery.className = "products-product-gallery";
@@ -360,30 +387,53 @@ const renderProducts = () => {
             gallery.append(dots);
         }
 
+        const content = document.createElement("div");
+        content.className = "products-product-content";
+
+        const topline = document.createElement("div");
+        topline.className = "products-product-topline";
+
+        const sellerValue = document.createElement("span");
+        sellerValue.className = "products-product-seller";
+        sellerValue.textContent = product.seller || "Sacred Store";
+
         const price = document.createElement("div");
         price.className = "products-product-price";
         price.textContent = product.price || "Price on request";
 
-        const head = document.createElement("div");
-        head.className = "products-product-head";
+        topline.append(sellerValue, price);
 
-        const sellerMeta = document.createElement("div");
-        sellerMeta.className = "products-product-meta";
-
-        const sellerLabel = document.createElement("span");
-        sellerLabel.textContent = "Seller / Tag";
-
-        const sellerValue = document.createElement("strong");
-        sellerValue.textContent = product.seller || "Sacred Store";
-
-        sellerMeta.append(sellerLabel, sellerValue);
-        head.append(sellerMeta, price);
+        const titleLink = document.createElement("a");
+        titleLink.className = "products-product-title-link";
+        titleLink.href = detailUrl;
 
         const title = document.createElement("h3");
         title.textContent = product.title || "Spiritual Product";
+        titleLink.append(title);
 
         const description = document.createElement("p");
-        description.textContent = product.description || "Details will be updated from the admin panel.";
+        description.className = "products-product-copy";
+        description.textContent = descriptionCopy;
+
+        content.append(topline, titleLink, description);
+
+        if (highlights.length) {
+            const highlightRow = document.createElement("div");
+            highlightRow.className = "products-product-highlights";
+
+            highlights.forEach((highlight) => {
+                const chip = document.createElement("span");
+                chip.className = "products-product-highlight";
+                chip.textContent = highlight;
+                highlightRow.append(chip);
+            });
+
+            content.append(highlightRow);
+        }
+
+        const openCopy = document.createElement("div");
+        openCopy.className = "products-product-open";
+        openCopy.textContent = "Click anywhere on the card to view full product details.";
 
         const actions = document.createElement("div");
         actions.className = "products-product-actions";
@@ -393,7 +443,7 @@ const renderProducts = () => {
         primaryAction.href = getProductActionLink(product);
         primaryAction.target = "_blank";
         primaryAction.rel = "noreferrer";
-        primaryAction.textContent = product.productLink ? "View Product" : "Enquire on WhatsApp";
+        primaryAction.textContent = "Buy Now";
 
         const shareButton = document.createElement("button");
         shareButton.type = "button";
@@ -407,7 +457,7 @@ const renderProducts = () => {
                     await navigator.share({
                         title: product.title || "Thanathu Madom Product",
                         text: shareText,
-                        url: getProductActionLink(product)
+                        url: detailShareUrl
                     });
                     return;
                 } catch (error) {
@@ -416,7 +466,7 @@ const renderProducts = () => {
             }
 
             if (navigator.clipboard?.writeText) {
-                await navigator.clipboard.writeText(shareText);
+                await navigator.clipboard.writeText(`${shareText}\n${detailShareUrl}`);
                 shareButton.textContent = "Copied";
                 window.setTimeout(() => {
                     shareButton.textContent = "Share";
@@ -426,8 +476,32 @@ const renderProducts = () => {
 
         actions.append(primaryAction, shareButton);
 
-        card.append(gallery, head, title, description, actions);
+        card.append(gallery, content, openCopy, actions);
         productsGrid.append(card);
+
+        const openDetails = () => {
+            window.location.href = detailUrl;
+        };
+
+        card.addEventListener("click", (event) => {
+            if (
+                event.target.closest(".products-product-action") ||
+                event.target.closest(".products-product-nav") ||
+                event.target.closest(".products-product-dot") ||
+                event.target.closest(".products-product-title-link")
+            ) {
+                return;
+            }
+
+            openDetails();
+        });
+
+        card.addEventListener("keydown", (event) => {
+            if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                openDetails();
+            }
+        });
 
         initializeProductCarousel(gallery, images);
     });
@@ -448,9 +522,13 @@ const filterProducts = () => {
         const searchableText = [
             product.title,
             product.description,
+            product.detailIntro,
+            product.detailBody,
             product.seller,
             product.price,
-            product.productId
+            product.productId,
+            ...(Array.isArray(product.highlights) ? product.highlights : []),
+            ...(Array.isArray(product.detailPoints) ? product.detailPoints : [])
         ]
             .filter(Boolean)
             .join(" ")

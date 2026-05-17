@@ -21,6 +21,67 @@ const escapeHtml = (value = '') => {
     return div.innerHTML;
 };
 
+const compactWhitespace = (value = '') => {
+    return String(value).replace(/\s+/g, ' ').trim();
+};
+
+const chunkLongText = (value = '', maxLength = 120) => {
+    const normalized = compactWhitespace(value);
+
+    if (!normalized) {
+        return [];
+    }
+
+    if (normalized.length <= maxLength) {
+        return [normalized];
+    }
+
+    const words = normalized.split(' ');
+    const chunks = [];
+    let current = '';
+
+    words.forEach((word) => {
+        if (word.length > maxLength) {
+            if (current) {
+                chunks.push(current);
+                current = '';
+            }
+
+            for (let index = 0; index < word.length; index += maxLength) {
+                chunks.push(word.slice(index, index + maxLength));
+            }
+            return;
+        }
+
+        const nextValue = current ? `${current} ${word}` : word;
+
+        if (nextValue.length <= maxLength) {
+            current = nextValue;
+            return;
+        }
+
+        if (current) {
+            chunks.push(current);
+        }
+
+        current = word;
+    });
+
+    if (current) {
+        chunks.push(current);
+    }
+
+    return chunks;
+};
+
+const toChunkedLineArray = (value = '', maxLength = 120) => {
+    return String(value)
+        .split(/\r?\n/)
+        .map((entry) => compactWhitespace(entry))
+        .filter(Boolean)
+        .flatMap((entry) => chunkLongText(entry, maxLength));
+};
+
 const assetUrl = (value = '') => {
     if (!value) {
         return '';
@@ -228,7 +289,7 @@ const reportBadgeHtml = (submission) => {
 const sectionTitles = {
     overview: 'Dashboard Overview',
     'pooja-slides': 'Pooja Slides',
-    products: 'Astromall Products',
+    products: 'Products',
     videos: 'Astrology Videos',
     'kundali-matching': 'Kundali Matching',
     'janam-kundali': 'Janam Kundali',
@@ -826,6 +887,11 @@ const bindProductForm = (product = {}) => {
     form.addEventListener('submit', async (event) => {
         event.preventDefault();
 
+        const normalizedHighlights = toChunkedLineArray(form.highlights.value, 120);
+        const normalizedDetailPoints = toChunkedLineArray(form.detailPoints.value, 180);
+        const rawHighlightLines = form.highlights.value.split(/\r?\n/).map((entry) => compactWhitespace(entry)).filter(Boolean);
+        const rawDetailPointLines = form.detailPoints.value.split(/\r?\n/).map((entry) => compactWhitespace(entry)).filter(Boolean);
+
         const payload = {
             title: form.title.value.trim(),
             seller: form.seller.value.trim(),
@@ -836,16 +902,17 @@ const bindProductForm = (product = {}) => {
             description: form.description.value.trim(),
             detailIntro: form.detailIntro.value.trim(),
             detailBody: form.detailBody.value.trim(),
-            highlights: form.highlights.value
-                .split(/\r?\n/)
-                .map((entry) => entry.trim())
-                .filter(Boolean),
-            detailPoints: form.detailPoints.value
-                .split(/\r?\n/)
-                .map((entry) => entry.trim())
-                .filter(Boolean),
+            highlights: normalizedHighlights,
+            detailPoints: normalizedDetailPoints,
             images
         };
+
+        if (
+            normalizedHighlights.length > rawHighlightLines.length ||
+            normalizedDetailPoints.length > rawDetailPointLines.length
+        ) {
+            showToast('Long highlight or detail lines were split automatically to fit the product layout.', 'info');
+        }
 
         const result = product._id
             ? await apiPut(`/products/${product._id}`, payload)

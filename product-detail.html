@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="resposnive.css">
+    <link rel="stylesheet" href="products.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&display=swap" rel="stylesheet">
+    <title>Product Details | Thanathu Madom Devasthanam</title>
+</head>
+
+<body class="products-route-body product-detail-body">
+    <div id="main" class="products-route-main">
+        <div id="navbar">
+            <div class="navbarmain">
+                <div class="navbarhelogmain">
+                    <div class="navbarlogo"></div>
+                    <div class="navbartext">
+                        <h4>thanathu madom devasthanam</h4>
+                    </div>
+                </div>
+                <div id="navbarlinks">
+                    <nav>
+                        <ul>
+                            <li><a href="index.html" data-i18n="nav_home">Home</a></li>
+                            <li><a href="pooja.html" data-i18n="nav_puja">Puja</a></li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link-arrow"><span data-i18n="nav_kundali">Kundali</span><span
+                                        class="arrow"></span></a>
+                                <div class="dropdown-menu">
+                                    <a href="kundali-matching.html" data-i18n="nav_kundali_match">Kundali Matching</a>
+                                    <a href="free-janam-kundali.html" data-i18n="nav_janam">Free Janam Kundali</a>
+                                </div>
+                            </li>
+                            <li><a href="panchang.html" data-i18n="nav_panchang">Panchang</a></li>
+                            <li><a href="about.html" data-i18n="nav_about">About</a></li>
+                            <li><a href="horoscope.html" data-i18n="nav_horoscope">Astrology</a></li>
+                            <li><a href="astrology-gallery.html" data-i18n="nav_gallery">Astrology</a></li>
+                            <li><a href="products.html">Products</a></li>
+                            <li><a href="contact.html" data-i18n="nav_contact">Contact Us</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="loglongu">
+                    <div class="language">
+                        <div class="langselected nav-link-arrow">
+                            <p>ENGLISH</p>
+                            <span class="arrow"></span>
+                        </div>
+                        <div class="languageoption">
+                            <a href="#">English</a>
+                            <a href="#">Hindi</a>
+                            <a href="#">Tamil</a>
+                            <a href="#">Telugu</a>
+                        </div>
+                    </div>
+
+                    <div class="profileicons" id="profileToggle"
+                        style="background-image: url('./assets/images/ic_user_profile.svg');">
+                    </div>
+                </div>
+
+                <div class="profile-drawer" id="profileDrawer">
+                    <div class="profile-drawer-header">
+                        <h3 data-i18n="drawer_welcome">Welcome to Thanathu Madom Devasthanam</h3>
+                        <p>Thanathu Madom Devasthanam</p>
+                    </div>
+
+                    <div class="profile-drawer-body">
+                        <h4 data-i18n="drawer_account">Account Details</h4>
+
+                        <a href="profile.html" class="drawer-item">
+                            <span class="drawer-left">
+                                <span class="drawer-icon profile-item-icon"></span>
+                                <span data-i18n="drawer_profile">My Profile</span>
+                            </span>
+                            <span class="drawer-arrow"></span>
+                        </a>
+
+                        <a href="#" class="drawer-item">
+                            <span class="drawer-left">
+                                <span class="drawer-icon pooja-item-icon"></span>
+                                <span data-i18n="drawer_puja_booking">My Puja Booking</span>
+                            </span>
+                            <span class="drawer-arrow"></span>
+                        </a>
+
+                        <a href="kundali-matching.html" class="drawer-item">
+                            <span class="drawer-left">
+                                <span class="drawer-icon kundali-item-icon"></span>
+                                <span data-i18n="drawer_kundali_booking">Kundali Booking</span>
+                            </span>
+                            <span class="drawer-arrow"></span>
+                        </a>
+
+                        <h4 data-i18n="drawer_services">Services</h4>
+
+                        <a href="pooja.html" class="drawer-item">
+                            <span class="drawer-left">
+                                <span class="drawer-icon book-pooja-icon"></span>
+                                <span data-i18n="drawer_book_pooja">Book a Puja</span>
+                            </span>
+                            <span class="drawer-arrow"></span>
+                        </a>
+
+                        <div class="drawer-item drawer-accordion" id="bookKundaliAccordion">
+                            <div class="drawer-item-main" id="bookKundaliToggle">
+                                <span class="drawer-left">
+                                    <span class="drawer-icon book-kundali-icon"></span>
+                                    <span data-i18n="drawer_book_kundali">Book for Kundali</span>
+                                </span>
+                                <span class="drawer-arrow accordion-arrow"></span>
+                            </div>
+
+                            <div class="drawer-submenu" id="bookKundaliSubmenu">
+                                <a href="kundali-matching.html" class="drawer-subitem">
+                                    <span class="drawer-left">
+                                        <span class="drawer-icon kundali-match-icon"></span>
+                                        <span data-i18n="nav_kundali_match">Kundali Matching</span>
+                                    </span>
+                                    <span class="drawer-arrow"></span>
+                                </a>
+
+                                <a href="free-janam-kundali.html" class="drawer-subitem">
+                                    <span class="drawer-left">
+                                        <span class="drawer-icon janam-kundali-icon"></span>
+                                        <span data-i18n="nav_janam">Free Janam Kundali</span>
+                                    </span>
+                                    <span class="drawer-arrow"></span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <a href="products.html" class="drawer-item">
+                            <span class="drawer-left">
+                                <span class="drawer-icon store-item-icon"></span>
+                                <span data-i18n="drawer_store">Store</span>
+                            </span>
+                            <span class="drawer-arrow"></span>
+                        </a>
+                    </div>
+
+                    <div class="profile-drawer-footer">
+                        <p class="support-title" data-i18n="drawer_support">Help &amp; Support for Puja Booking</p>
+
+                        <a href="mailto:thanathumadomdevathanam@gmail.com" class="footer-btn support-btn">
+                            <span class="support-left">
+                                <span class="support-icon gmail-icon"></span>
+                                <span data-i18n="drawer_email">Email Us</span>
+                            </span>
+                            <span class="drawer-arrow"></span>
+                        </a>
+
+                        <a href="https://wa.me/919743045807" class="footer-btn support-btn">
+                            <span class="support-left">
+                                <span class="support-icon whatsapp-icon"></span>
+                                <span data-i18n="drawer_whatsapp">WhatsApp</span>
+                            </span>
+                            <span class="drawer-arrow"></span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="drawer-overlay" id="drawerOverlay"></div>
+            </div>
+        </div>
+
+        <main class="product-detail-page">
+            <div class="product-detail-empty" data-product-empty hidden>
+                <a class="product-detail-back" href="products.html">Back to Products</a>
+            </div>
+
+            <div data-product-detail hidden></div>
+        </main>
+    </div>
+
+    <footer class="home-footer">
+        <div class="home-footer-inner">
+            <div class="home-footer-brand">
+                <div class="home-footer-logo"></div>
+                <h4>Thanathu Madom Devasthanam</h4>
+                <p data-i18n="footer_tagline">Authentic Vedic rituals, astrology guidance, and spiritual services
+                    rooted in 250+ years of sacred tradition.</p>
+            </div>
+            <div class="home-footer-links">
+                <h5 data-i18n="footer_services">Our Services</h5>
+                <a href="pooja.html" data-i18n="nav_pooja">Puja Booking</a>
+                <a href="kundali-matching.html" data-i18n="nav_kundali_match">Kundali Matching</a>
+                <a href="free-janam-kundali.html" data-i18n="nav_janam">Janam Kundali</a>
+                <a href="horoscope.html" data-i18n="nav_horoscope">Astrology</a>
+            </div>
+            <div class="home-footer-links">
+                <h5 data-i18n="footer_explore">Explore</h5>
+                <a href="panchang.html" data-i18n="nav_panchang">Panchang</a>
+                <a href="astrology-gallery.html" data-i18n="nav_gallery">Astrology</a>
+                <a href="products.html">Products</a>
+                <a href="about.html" data-i18n="nav_about">About Us</a>
+                <a href="contact.html" data-i18n="nav_contact">Contact Us</a>
+            </div>
+            <div class="home-footer-social">
+                <h5 data-i18n="footer_connect">Connect With Us</h5>
+                <div class="home-footer-social-icons">
+                    <a href="https://wa.me/919743045807" class="home-footer-social-btn" aria-label="WhatsApp">
+                        <span class="home-footer-social-icon home-footer-social-icon--whatsapp"
+                            aria-hidden="true"></span>
+                    </a>
+                    <a href="https://www.youtube.com/" class="home-footer-social-btn" target="_blank" rel="noreferrer"
+                        aria-label="YouTube">
+                        <span class="home-footer-social-icon home-footer-social-icon--youtube"
+                            aria-hidden="true"></span>
+                    </a>
+                    <a href="mailto:thanathumadomdevathanam@gmail.com" class="home-footer-social-btn"
+                        aria-label="Email">
+                        <span class="home-footer-social-icon home-footer-social-icon--gmail" aria-hidden="true"></span>
+                    </a>
+                    <a href="tel:+919743045807" class="home-footer-social-btn" aria-label="Phone">
+                        <span class="home-footer-social-icon home-footer-social-icon--phone" aria-hidden="true"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="home-footer-bottom">
+            <p>&copy; 2026 Thanathu Madom Devasthanam. All Rights Reserved.</p>
+            <p data-i18n="footer_made">Made with devotion for devotees worldwide.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+    <script src="site-mobile-navbar.js"></script>
+    <script src="profile-sync.js"></script>
+    <script src="translations.js"></script>
+    <script src="product-detail.js"></script>
+</body>
+
+</html>
