@@ -27,6 +27,12 @@ const poojaSlideSchema = new mongoose.Schema({
     aboutPreview: { type: String, maxlength: 200, default: '' },
     aboutHeading: { type: String, maxlength: 80, default: '' },
     aboutBody: { type: String, maxlength: 500, default: '' },
+    detailIntro: { type: String, maxlength: 500, default: '' },
+    detailBody: { type: String, maxlength: 5000, default: '' },
+    detailHighlights: [{ type: String, maxlength: 140 }],
+    ritualSteps: [{ type: String, maxlength: 260 }],
+    preparationNotes: [{ type: String, maxlength: 240 }],
+    suitableFor: [{ type: String, maxlength: 180 }],
     benefits: [benefitSchema],
     order: { type: Number, default: 0 },
     isActive: { type: Boolean, default: true }

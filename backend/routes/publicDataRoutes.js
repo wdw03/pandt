@@ -19,6 +19,13 @@ const {
 
 const router = express.Router();
 
+const normalizePoojaSlideForPublic = (slide) => {
+    return {
+        ...slide.toObject(),
+        image: toWebAssetPath(slide.image)
+    };
+};
+
 const normalizeProductForPublic = (product) => {
     return {
         ...product.toObject(),
@@ -51,11 +58,26 @@ router.get('/pooja-slides', async (req, res) => {
     try {
         await ensurePoojaSlidesSeeded();
         const slides = await PoojaSlide.find({ isActive: true }).sort({ order: 1, createdAt: -1 });
-        const normalizedSlides = slides.map((slide) => ({
-            ...slide.toObject(),
-            image: toWebAssetPath(slide.image)
-        }));
+        const normalizedSlides = slides.map(normalizePoojaSlideForPublic);
         return res.json({ success: true, data: normalizedSlides });
+    } catch (error) {
+        return res.status(500).json({ success: false, message: error.message });
+    }
+});
+
+router.get('/pooja-slides/:slug', async (req, res) => {
+    try {
+        await ensurePoojaSlidesSeeded();
+        const slide = await PoojaSlide.findOne({
+            isActive: true,
+            slug: String(req.params.slug || '').trim().toLowerCase()
+        });
+
+        if (!slide) {
+            return res.status(404).json({ success: false, message: 'Puja not found' });
+        }
+
+        return res.json({ success: true, data: normalizePoojaSlideForPublic(slide) });
     } catch (error) {
         return res.status(500).json({ success: false, message: error.message });
     }

@@ -24,6 +24,8 @@ app.get(['/horoscope', '/horoscope/', '/horoscope.html'], servePage('horoscope.h
 app.get(['/astrology', '/astrology/', '/astrology.html'], servePage('horoscope.html'));
 app.get(['/premium-pooja', '/premium-pooja/', '/premium-pooja.html'], servePage('premium-pooja.html'));
 app.get(['/horoscope-detail', '/horoscope-detail/', '/horoscope-detail.html'], servePage('horoscope-detail.html'));
+app.get(['/puja-detail', '/puja-detail/', '/puja-detail.html'], servePage('puja-detail.html'));
+app.get(['/puja/:slug', '/puja/:slug/', '/pooja/:slug', '/pooja/:slug/'], servePage('puja-detail.html'));
 
 // Static files
 app.use(express.static(rootDir));

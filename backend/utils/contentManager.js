@@ -210,6 +210,12 @@ const normalizePoojaSlidePayload = (input = {}, existing = {}) => {
         aboutPreview: cleanString(resolveIncoming(input, 'aboutPreview', existing.aboutPreview)),
         aboutHeading: cleanString(resolveIncoming(input, 'aboutHeading', existing.aboutHeading)),
         aboutBody: cleanString(resolveIncoming(input, 'aboutBody', existing.aboutBody)),
+        detailIntro: cleanString(resolveIncoming(input, 'detailIntro', existing.detailIntro)),
+        detailBody: cleanString(resolveIncoming(input, 'detailBody', existing.detailBody)),
+        detailHighlights: toLimitedStringArray(input.detailHighlights ?? existing.detailHighlights ?? [], 140),
+        ritualSteps: toLimitedStringArray(input.ritualSteps ?? existing.ritualSteps ?? [], 260),
+        preparationNotes: toLimitedStringArray(input.preparationNotes ?? existing.preparationNotes ?? [], 240),
+        suitableFor: toLimitedStringArray(input.suitableFor ?? existing.suitableFor ?? [], 180),
         benefits: toBenefitArray(input.benefits ?? existing.benefits ?? []),
         order: toNumber(input.order ?? existing.order, 0),
         isActive: toBoolean(input.isActive ?? existing.isActive, true)
@@ -257,6 +263,28 @@ const defaultPoojaSlides = [
         aboutPreview: 'Maha Yag Pooja is performed with authentic Vedic discipline to energise the space and invite auspicious vibrations.',
         aboutHeading: 'About Maha Yag Pooja',
         aboutBody: 'Maha Yag Pooja is a deeply spiritual fire ritual performed for harmony, purification and blessings. When done with proper mantras and offerings, it helps elevate the environment, support family wellbeing and create a more auspicious atmosphere.',
+        detailIntro: 'Maha Yag Puja is a complete Vedic fire offering performed with sankalp, mantra discipline, sacred offerings and priestly guidance for devotees who want a stronger spiritual atmosphere around family wellbeing, prosperity and divine grace.',
+        detailBody: 'This puja is usually chosen when the family wants a more complete ritual experience instead of a very short offering. The sankalp is taken with personal intention, the ritual is performed with authentic procedure, and the fire-based worship becomes the core sacred medium through which prayers are offered. Devotees often choose this puja when they are entering a new phase of life, beginning a major effort, praying for peace at home or seeking divine support with sincerity and reverence. The ritual experience is designed to feel devotional, structured and spiritually elevating.\n\nMaha Yag Puja can also be positioned as a high-value service for those who want more than a simple booking card. The full detail page can explain the devotional mood, priestly discipline, spiritual purpose, preparation steps, what the family should expect, and how the blessings are invoked during the sacred procedure. This makes the puja easier to understand and increases trust before a devotee confirms the booking.',
+        detailHighlights: [
+            'Authentic sankalp and fire ritual procedure',
+            'Performed for peace, purification and blessings',
+            'Suitable for major family prayers and auspicious beginnings'
+        ],
+        ritualSteps: [
+            'The ritual begins with sankalp in the devotee name and purpose of the puja.',
+            'Sacred mantras, fire offerings and traditional items are used in sequence with priestly guidance.',
+            'The closing prayer focuses on divine blessings, peace and positive energy for the family.'
+        ],
+        preparationNotes: [
+            'Keep the devotee name, nakshatra details or intention ready before confirmation.',
+            'Maintain a clean and prayerful space if the family wants to join devotionally from home.',
+            'Useful items or participation instructions can be shared in advance through the booking flow.'
+        ],
+        suitableFor: [
+            'Families seeking peace, purification and positive vibrations',
+            'Auspicious beginnings, spiritual support and major personal intentions',
+            'Devotees who prefer a more complete and traditional Vedic ritual experience'
+        ],
         benefits: [
             {
                 preview: 'Peace and positive energy',
@@ -288,6 +316,28 @@ const defaultPoojaSlides = [
         aboutPreview: 'Lakshmi Pooja is performed to seek the blessings of Maa Lakshmi for prosperity, peace and auspicious growth.',
         aboutHeading: 'About Lakshmi Pooja',
         aboutBody: 'Lakshmi Pooja is performed to invoke the blessings of Goddess Lakshmi for financial wellbeing, happiness and sacred abundance. With disciplined rituals and devotion, it helps create a prayerful environment aligned with prosperity and grace.',
+        detailIntro: 'Lakshmi Puja is a sacred prosperity ritual offered with devotion to Maa Lakshmi for abundance, grace, family harmony and a stronger sense of auspicious flow in the home or workplace.',
+        detailBody: 'This puja is especially meaningful for devotees who want to pray for prosperity with reverence rather than treating wealth only as a material goal. The ritual focuses on invoking grace, harmony, auspiciousness and a softer energy of abundance in life. It can be positioned for festival bookings, home worship, special prayer days, financial stability prayers or family blessings related to success and peace. The detail page gives enough room to explain the devotional meaning of the puja, the spirit of the worship and the sacred mood around Lakshmi worship.\n\nBecause the puja is deeply associated with abundance and auspicious growth, it also works well as a strongly visual premium service page. The admin can explain the value of the ritual, the recommended situations for booking, the blessings devotees usually pray for and any special spiritual context that should be shared before the ritual is performed.',
+        detailHighlights: [
+            'Dedicated to Maa Lakshmi for abundance and grace',
+            'Auspicious ritual for home, work and festive prayer',
+            'Ideal for devotees seeking prosperity with spiritual balance'
+        ],
+        ritualSteps: [
+            'The puja begins with sankalp and devotional invocation to Maa Lakshmi.',
+            'Offerings, mantra chanting and sacred procedure are carried out with a calm prosperity-focused intent.',
+            'The ritual concludes with prayer for abundance, harmony and auspicious blessings.'
+        ],
+        preparationNotes: [
+            'A clean altar or prayer area is recommended before the ritual begins.',
+            'The devotee can keep a specific prayer intention related to prosperity, harmony or household grace.',
+            'Festival or special-day booking notes can be added from the dashboard when required.'
+        ],
+        suitableFor: [
+            'Prosperity prayers for home and family wellbeing',
+            'Festive worship, auspicious growth and peaceful abundance',
+            'Devotees seeking a grace-oriented Lakshmi ritual experience'
+        ],
         benefits: [
             {
                 preview: 'Attracts wealth and abundance',
@@ -319,6 +369,28 @@ const defaultPoojaSlides = [
         aboutPreview: 'Ghar Pooja is a sacred home ritual performed to purify the space and fill it with peaceful, uplifting energy.',
         aboutHeading: 'About Ghar Pooja',
         aboutBody: 'Ghar Pooja is performed for household peace, purity and family wellbeing. When done with authentic procedures, it helps remove heaviness from the environment and supports a safer, more balanced and auspicious home atmosphere.',
+        detailIntro: 'Ghar Puja is a home-focused ritual chosen for space purification, family harmony, protection, sacred beginnings and a calmer devotional environment inside the household.',
+        detailBody: 'This puja is highly relevant when a family wants to pray specifically for the house itself, not only for an individual intention. It supports purification, emotional softness, peaceful energy and a stronger devotional atmosphere in the living space. It can be used for new homes, re-entry into a space, important family transitions, prayer before settling into a routine or simply when the family wants spiritual cleansing and positive vibrations around the home.\n\nOn the detail page, this puja can be explained in a very practical and meaningful way. The admin can describe why devotees book it, what kind of blessing they usually seek, how the ritual helps the home environment and what kind of preparation or participation is recommended. This makes the page feel useful, rich and easier to trust before the booking decision is taken.',
+        detailHighlights: [
+            'Home purification and family peace focus',
+            'Designed for calm, harmony and sacred household energy',
+            'Useful for new beginnings, shifts and spiritual settling'
+        ],
+        ritualSteps: [
+            'The ritual starts with a sankalp for the home, family peace and purification.',
+            'Traditional procedure is followed to bless the space and invite positive vibrations.',
+            'Final prayers focus on protection, auspiciousness and a balanced domestic atmosphere.'
+        ],
+        preparationNotes: [
+            'The home area should be kept neat and prayer-ready before the ritual time.',
+            'The family can share any special intention related to peace, transition or new beginnings.',
+            'Additional notes about the property or family context can be added from the admin dashboard if needed.'
+        ],
+        suitableFor: [
+            'New homes, house entry and domestic transitions',
+            'Families praying for protection, calm and spiritual balance',
+            'Devotees wanting a cleaner and more uplifting home atmosphere'
+        ],
         benefits: [
             {
                 preview: 'Purifies the living space',
