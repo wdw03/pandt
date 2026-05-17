@@ -158,6 +158,7 @@ const initPoojaPage = () => {
     const emptyState = document.querySelector("[data-pooja-empty]");
     const clearSearchButton = document.querySelector("[data-pooja-clear-search]");
     const quickSearchButtons = document.querySelectorAll("[data-pooja-quick-search]");
+    const servicesGrid = document.querySelector("[data-pooja-services-grid]");
 
     if (poojaList && searchInput && resultsCount && emptyState) {
     const escapeHtml = (value = "") => {
@@ -187,6 +188,20 @@ const initPoojaPage = () => {
             .replace(/\bPooja\b/g, "Puja")
             .replace(/\bpoojas\b/g, "pujas")
             .replace(/\bpooja\b/g, "puja");
+    };
+
+    const getPoojaDetailUrl = (slug = "") => {
+        const normalizedSlug = normalizePoojaSlug(slug);
+
+        if (!normalizedSlug) {
+            return "pooja.html";
+        }
+
+        if (window.location.protocol === "file:") {
+            return `puja-detail.html?slug=${encodeURIComponent(normalizedSlug)}`;
+        }
+
+        return `/puja/${encodeURIComponent(normalizedSlug)}`;
     };
 
     const highlightMatch = (value = "", query = "") => {
@@ -297,6 +312,45 @@ const initPoojaPage = () => {
         }
 
         return value;
+    };
+
+    const createPoojaServiceCardMarkup = (pooja, index) => {
+        const slideSlug = escapeHtml(pooja.slug || normalizePoojaSlug(pooja.title));
+        const slideImage = escapeHtml(resolvePoojaImage(pooja.image));
+        const title = escapeHtml(formatPujaText(pooja.title || "Puja Service"));
+        const description = escapeHtml(
+            formatPujaText(
+                pooja.cardDescription ||
+                pooja.aboutPreview ||
+                pooja.subtitle ||
+                "Book this puja with sacred procedure, personal sankalp and guided support."
+            )
+        );
+        const tag = escapeHtml(formatPujaText(pooja.imageTag || "Sacred Puja"));
+        const price = escapeHtml(formatPujaText(pooja.priceLabel || "Booking Open"));
+
+        return `
+            <article class="pooja-service-card" style="--pooja-service-index: ${index};">
+                <div class="pooja-service-visual">
+                    <div class="pooja-service-image" style="background-image: linear-gradient(rgba(16, 8, 2, 0.08), rgba(16, 8, 2, 0.18)), url('${slideImage}')"></div>
+                    <span class="pooja-service-chip">${tag}</span>
+                    <span class="pooja-service-price">${price}</span>
+                </div>
+                <h3>${title}</h3>
+                <p>${description}</p>
+                <a class="pooja-service-btn" href="${getPoojaDetailUrl(slideSlug)}">View Full Puja</a>
+            </article>
+        `;
+    };
+
+    const renderPoojaServiceCards = () => {
+        if (!servicesGrid) {
+            return;
+        }
+
+        servicesGrid.innerHTML = poojaPageData
+            .map((pooja, index) => createPoojaServiceCardMarkup(pooja, index))
+            .join("");
     };
 
     const createPoojaCardMarkup = (pooja, index, query, highlightedSlug) => {
@@ -719,6 +773,7 @@ const initPoojaPage = () => {
     });
 
     searchInput.value = initialSearchValue;
+    renderPoojaServiceCards();
     renderPoojaCards(initialSearchValue);
 }
 };

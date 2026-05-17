@@ -178,31 +178,31 @@ const reviews = [
     {
         name: "Meera S",
         initials: "MS",
-        stars: "â˜…â˜…â˜…â˜…â˜…",
+        stars: "★★★★★",
         text: "Daily guidance and puja support dono bahut genuine lage. Reading clear thi aur experience peaceful tha."
     },
     {
         name: "Rohan V",
         initials: "RV",
-        stars: "â˜…â˜…â˜…â˜…â˜…",
+        stars: "★★★★★",
         text: "Kundali aur Panchang details ka layout samajhna easy hai. Thanathu Madom ka trust feel hota hai."
     },
     {
         name: "Anjali P",
         initials: "AP",
-        stars: "â˜…â˜…â˜…â˜…â˜…",
+        stars: "★★★★★",
         text: "Puja booking ke baad jo clarity mili aur ritual process ka explanation mila, wo really helpful tha."
     },
     {
         name: "Suresh K",
         initials: "SK",
-        stars: "â˜…â˜…â˜…â˜…â˜…",
+        stars: "★★★★★",
         text: "Horoscope aur astrology content bahut premium lag raha hai. Reading smooth hai aur cards clean hain."
     },
     {
         name: "Divya N",
         initials: "DN",
-        stars: "â˜…â˜…â˜…â˜…â˜…",
+        stars: "★★★★★",
         text: "Blogs, videos aur daily astrology content sab ek jagah dekhna easy ho gaya. Overall page design bahut sundar bana hai."
     }
 ];

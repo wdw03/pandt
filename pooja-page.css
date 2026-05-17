@@ -262,6 +262,171 @@ body.pooja-route-body {
     color: #4b3a28;
 }
 
+.pooja-route-services {
+    border: 2px solid #111;
+    border-radius: clamp(28px, 2.6vw, 40px);
+    background: linear-gradient(135deg, rgba(255, 254, 249, 0.98) 0%, rgba(255, 243, 221, 0.98) 100%);
+    box-shadow: clamp(8px, 1vw, 12px) clamp(8px, 1vw, 12px) 0 rgba(0, 0, 0, 1);
+    padding: clamp(22px, 2.4vw, 34px);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.pooja-route-services-head {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.pooja-route-services-head > div {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.pooja-route-services-tag {
+    width: fit-content;
+    min-height: 36px;
+    padding: 0 16px;
+    border: 2px solid #111;
+    border-radius: 999px;
+    background: #fff7df;
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Poppins', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #5a3b18;
+}
+
+.pooja-route-services-head h2,
+.pooja-service-card h3 {
+    margin: 0;
+    font-family: 'Cinzel', serif;
+    color: #1d1208;
+    text-wrap: balance;
+}
+
+.pooja-route-services-head h2 {
+    font-size: clamp(28px, 2.5vw, 40px);
+    line-height: 1.2;
+}
+
+.pooja-route-services-head p,
+.pooja-service-card p {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(14px, 1vw, 16px);
+    line-height: 1.78;
+    color: #4b3a28;
+}
+
+.pooja-route-services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+    gap: 18px;
+}
+
+.pooja-service-card {
+    border: 2px solid #111;
+    border-radius: 28px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(255, 248, 232, 0.98) 100%);
+    box-shadow: 7px 7px 0 rgba(0, 0, 0, 1);
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    min-width: 0;
+    opacity: 0;
+    transform: translateY(18px);
+    animation: poojaRouteCardIn 0.48s ease forwards;
+    animation-delay: calc(var(--pooja-service-index, 0) * 70ms);
+}
+
+.pooja-service-visual {
+    position: relative;
+    min-height: 220px;
+    border-radius: 24px;
+    overflow: hidden;
+    background: linear-gradient(160deg, #fff6e6 0%, #ffdca8 100%);
+}
+
+.pooja-service-image {
+    position: absolute;
+    inset: 0;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.pooja-service-chip,
+.pooja-service-price {
+    position: absolute;
+    min-height: 40px;
+    padding: 0 16px;
+    border: 2px solid #111;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.92);
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Poppins', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    color: #2f1e12;
+}
+
+.pooja-service-chip {
+    top: 14px;
+    left: 14px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.pooja-service-price {
+    right: 14px;
+    bottom: 14px;
+    background: linear-gradient(135deg, #ff7a00 0%, #ffb347 100%);
+    color: #fffaf0;
+}
+
+.pooja-service-card h3 {
+    font-size: clamp(24px, 2vw, 30px);
+    line-height: 1.22;
+}
+
+.pooja-service-btn {
+    min-height: 50px;
+    margin-top: auto;
+    padding: 0 22px;
+    border: 2px solid #111;
+    border-radius: 999px;
+    box-shadow: 5px 5px 0 rgba(0, 0, 0, 1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #ff7a00 0%, #ffb347 100%);
+    color: #fffaf0;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.pooja-service-btn:hover,
+.pooja-service-btn:focus-visible {
+    transform: translate(-2px, -2px);
+    box-shadow: 7px 7px 0 rgba(0, 0, 0, 1);
+    outline: none;
+}
+
 .pooja-route-list {
     display: flex;
     flex-direction: column;
@@ -437,6 +602,315 @@ body.pooja-route-body {
     font-size: 14px;
     line-height: 1.7;
     color: #4b3a28;
+}
+
+.puja-detail-body {
+    background: #ffffff !important;
+}
+
+.puja-detail-body .pooja-route-main {
+    background: #ffffff !important;
+}
+
+.puja-detail-page {
+    width: min(1380px, calc(100% - clamp(24px, 3.6vw, 72px)));
+    margin: 0 auto;
+    padding: calc(clamp(86px, 6vw, 116px) + clamp(20px, 2vw, 32px)) 0 clamp(56px, 5vw, 80px);
+    display: flex;
+    flex-direction: column;
+    gap: clamp(18px, 2vw, 28px);
+}
+
+.puja-detail-hero-shell,
+.puja-detail-story,
+.puja-detail-benefits,
+.puja-detail-panel,
+.puja-detail-summary-card,
+.puja-detail-empty {
+    border: 2px solid #111;
+    border-radius: clamp(28px, 2.6vw, 40px);
+    background: #ffffff;
+    box-shadow: none;
+}
+
+.puja-detail-empty[hidden],
+[data-puja-detail-root][hidden] {
+    display: none !important;
+}
+
+.puja-detail-empty {
+    width: fit-content;
+    max-width: 100%;
+    padding: clamp(18px, 2vw, 24px);
+    justify-self: center;
+}
+
+.puja-detail-hero-shell {
+    padding: clamp(22px, 2.6vw, 36px);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr));
+    gap: clamp(20px, 2vw, 30px);
+}
+
+.puja-detail-visual,
+.puja-detail-copy,
+.puja-detail-story-main {
+    min-width: 0;
+}
+
+.puja-detail-image-wrap {
+    position: relative;
+    min-height: clamp(320px, 34vw, 520px);
+    border: 2px solid #111;
+    border-radius: 32px;
+    overflow: hidden;
+    background: linear-gradient(160deg, #fff6e6 0%, #ffdca8 100%);
+}
+
+.puja-detail-image-wrap img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+}
+
+.puja-detail-image-tag,
+.puja-detail-image-price,
+.puja-detail-kicker,
+.puja-detail-section-tag,
+.puja-detail-back-link {
+    width: fit-content;
+    min-height: 36px;
+    padding: 0 16px;
+    border: 2px solid #111;
+    border-radius: 999px;
+    background: #fff7df;
+    box-shadow: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Poppins', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #5a3b18;
+    text-decoration: none;
+}
+
+.puja-detail-image-tag,
+.puja-detail-image-price {
+    position: absolute;
+}
+
+.puja-detail-image-tag {
+    top: 18px;
+    left: 18px;
+}
+
+.puja-detail-image-price {
+    right: 18px;
+    bottom: 18px;
+    background: linear-gradient(135deg, #ff7a00 0%, #ffb347 100%);
+    color: #fffaf0;
+}
+
+.puja-detail-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    justify-content: center;
+}
+
+.puja-detail-copy h1,
+.puja-detail-story-main h2,
+.puja-detail-benefits h2,
+.puja-detail-panel h3,
+.puja-detail-summary-card h3,
+.puja-detail-benefit-card h3 {
+    margin: 0;
+    font-family: 'Cinzel', serif;
+    color: #1d1208;
+    text-wrap: balance;
+}
+
+.puja-detail-copy h1 {
+    font-size: clamp(34px, 3.1vw, 52px);
+    line-height: 1.08;
+}
+
+.puja-detail-subtitle,
+.puja-detail-intro,
+.puja-detail-story-main p,
+.puja-detail-long-copy p,
+.puja-detail-summary-card p,
+.puja-detail-benefit-card p,
+.puja-detail-list li,
+.puja-detail-mini-list li {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(14px, 1vw, 16px);
+    line-height: 1.78;
+    color: #4b3a28;
+}
+
+.puja-detail-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+}
+
+.puja-detail-primary-btn,
+.puja-detail-secondary-btn {
+    min-height: 50px;
+    padding: 0 22px;
+    border: 2px solid #111;
+    border-radius: 999px;
+    box-shadow: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.puja-detail-primary-btn {
+    background: linear-gradient(135deg, #ff7a00 0%, #ffb347 100%);
+    color: #fffaf0;
+}
+
+.puja-detail-secondary-btn {
+    background: #fffdf8;
+    color: #2f1e12;
+    cursor: pointer;
+}
+
+.puja-detail-primary-btn:hover,
+.puja-detail-primary-btn:focus-visible,
+.puja-detail-secondary-btn:hover,
+.puja-detail-secondary-btn:focus-visible,
+.puja-detail-back-link:hover,
+.puja-detail-back-link:focus-visible {
+    transform: translate(-2px, -2px);
+    box-shadow: none;
+    outline: none;
+}
+
+.puja-detail-highlights {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.puja-detail-highlights span,
+.puja-detail-benefit-tag {
+    min-height: 34px;
+    padding: 0 14px;
+    border: 2px solid #111;
+    border-radius: 999px;
+    background: #fff;
+    box-shadow: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Poppins', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    color: #6a461d;
+}
+
+.puja-detail-story,
+.puja-detail-content-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+    gap: 18px;
+}
+
+.puja-detail-story {
+    padding: clamp(22px, 2.4vw, 34px);
+    align-items: start;
+}
+
+.puja-detail-story-main,
+.puja-detail-summary-card {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.puja-detail-summary-card {
+    padding: clamp(20px, 2vw, 28px);
+}
+
+.puja-detail-mini-list,
+.puja-detail-list {
+    margin: 0;
+    padding-left: 20px;
+    display: grid;
+    gap: 10px;
+}
+
+.puja-detail-mini-list {
+    padding-left: 0;
+    list-style: none;
+}
+
+.puja-detail-mini-list li {
+    border: 2px solid rgba(17, 17, 17, 0.08);
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.72);
+    padding: 12px 14px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 12px;
+    justify-content: space-between;
+}
+
+.puja-detail-mini-list strong {
+    color: #1d1208;
+}
+
+.puja-detail-list li::marker {
+    color: #ff7a00;
+}
+
+.puja-detail-benefits {
+    padding: clamp(22px, 2.4vw, 34px);
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.puja-detail-section-head {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.puja-detail-benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+    gap: 18px;
+}
+
+.puja-detail-benefit-card,
+.puja-detail-panel {
+    padding: clamp(18px, 1.8vw, 24px);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.puja-detail-content-grid {
+    gap: 18px;
+}
+
+.puja-detail-panel-wide {
+    grid-column: 1 / -1;
 }
 
 @keyframes poojaRouteCardIn {

@@ -476,6 +476,10 @@ const slideFormHtml = (slide = {}) => {
     const benefits = Array.isArray(slide.benefits) && slide.benefits.length
         ? slide.benefits
         : [{}];
+    const detailHighlights = Array.isArray(slide.detailHighlights) ? slide.detailHighlights : [];
+    const ritualSteps = Array.isArray(slide.ritualSteps) ? slide.ritualSteps : [];
+    const preparationNotes = Array.isArray(slide.preparationNotes) ? slide.preparationNotes : [];
+    const suitableFor = Array.isArray(slide.suitableFor) ? slide.suitableFor : [];
 
     return `
         <form id="slideForm" class="admin-form-stack">
@@ -519,7 +523,7 @@ const slideFormHtml = (slide = {}) => {
                     <div class="admin-upload-top">
                         <div>
                             <h4>Pooja image</h4>
-                            <p>Upload the main image that should appear on the home slider and pooja route page.</p>
+                            <p>Upload the main image that should appear on the home slider, puja route page and the new puja service cards section.</p>
                         </div>
                         <div class="admin-upload-actions">
                             <label class="admin-btn admin-btn-secondary admin-btn-sm">
@@ -535,7 +539,7 @@ const slideFormHtml = (slide = {}) => {
             </div>
 
             <div class="admin-field">
-                <label>Card Description (max 200)</label>
+                <label>Service / Card Description (max 200)</label>
                 <textarea name="cardDescription" maxlength="200">${escapeHtml(slide.cardDescription || '')}</textarea>
                 <div class="char-count"></div>
             </div>
@@ -557,6 +561,37 @@ const slideFormHtml = (slide = {}) => {
                 <label>About Body (max 500)</label>
                 <textarea name="aboutBody" maxlength="500">${escapeHtml(slide.aboutBody || '')}</textarea>
                 <div class="char-count"></div>
+            </div>
+
+            <div class="admin-field">
+                <label>Detail Intro for Full Puja Page (max 500)</label>
+                <textarea name="detailIntro" maxlength="500" placeholder="This short intro appears in the hero section of the full puja detail page.">${escapeHtml(slide.detailIntro || '')}</textarea>
+                <div class="char-count"></div>
+            </div>
+
+            <div class="admin-field">
+                <label>Full Detail Body for Puja Page (max 5000)</label>
+                <textarea name="detailBody" maxlength="5000" rows="10" placeholder="Write the full long-form puja explanation here. This is the main rich content shown on the dedicated puja detail page.">${escapeHtml(slide.detailBody || '')}</textarea>
+                <div class="char-count"></div>
+            </div>
+
+            <div class="admin-form-grid admin-form-grid-2">
+                <div class="admin-field">
+                    <label>Detail Highlights (one per line)</label>
+                    <textarea name="detailHighlights" rows="6" placeholder="Authentic Vedic process&#10;Personal sankalp&#10;Suitable for family peace">${escapeHtml(detailHighlights.join('\n'))}</textarea>
+                </div>
+                <div class="admin-field">
+                    <label>Ritual Steps (one per line)</label>
+                    <textarea name="ritualSteps" rows="6" placeholder="Sankalp is taken&#10;Mantras and offerings are performed&#10;Blessings are concluded">${escapeHtml(ritualSteps.join('\n'))}</textarea>
+                </div>
+                <div class="admin-field">
+                    <label>Preparation Notes (one per line)</label>
+                    <textarea name="preparationNotes" rows="6" placeholder="Keep intention ready&#10;Prepare prayer space&#10;Share family details if needed">${escapeHtml(preparationNotes.join('\n'))}</textarea>
+                </div>
+                <div class="admin-field">
+                    <label>Suitable For (one per line)</label>
+                    <textarea name="suitableFor" rows="6" placeholder="Family peace&#10;Auspicious beginnings&#10;Prosperity prayers">${escapeHtml(suitableFor.join('\n'))}</textarea>
+                </div>
             </div>
 
             <div class="admin-field">
@@ -659,6 +694,11 @@ const bindSlideForm = (slide = {}) => {
     form.addEventListener('submit', async (event) => {
         event.preventDefault();
 
+        const normalizedDetailHighlights = toChunkedLineArray(form.detailHighlights.value, 140);
+        const normalizedRitualSteps = toChunkedLineArray(form.ritualSteps.value, 260);
+        const normalizedPreparationNotes = toChunkedLineArray(form.preparationNotes.value, 240);
+        const normalizedSuitableFor = toChunkedLineArray(form.suitableFor.value, 180);
+
         const payload = {
             title: form.title.value.trim(),
             slug: form.slug.value.trim(),
@@ -671,6 +711,12 @@ const bindSlideForm = (slide = {}) => {
             aboutPreview: form.aboutPreview.value.trim(),
             aboutHeading: form.aboutHeading.value.trim(),
             aboutBody: form.aboutBody.value.trim(),
+            detailIntro: form.detailIntro.value.trim(),
+            detailBody: form.detailBody.value.trim(),
+            detailHighlights: normalizedDetailHighlights,
+            ritualSteps: normalizedRitualSteps,
+            preparationNotes: normalizedPreparationNotes,
+            suitableFor: normalizedSuitableFor,
             isActive: form.isActive.value === 'true',
             benefits: Array.from(benefitsStack.querySelectorAll('[data-benefit-row]'))
                 .map((row) => ({

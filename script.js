@@ -206,6 +206,28 @@ const formatPujaText = (value = "") => {
 const requestedPoojaSlug = normalizePoojaSlug(
     new URLSearchParams(window.location.search).get("pooja") || ""
 );
+const isHomeFileProtocol = window.location.protocol === "file:";
+const getHomePoojaDetailUrl = (value = "") => {
+    const slug = normalizePoojaSlug(value);
+
+    if (!slug) {
+        return isHomeFileProtocol ? "http://localhost:5000/pooja.html" : `${window.location.origin}/pooja.html`;
+    }
+
+    if (isHomeFileProtocol) {
+        return `http://localhost:5000/puja/${slug}`;
+    }
+
+    if (
+        (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") &&
+        window.location.port &&
+        window.location.port !== "5000"
+    ) {
+        return `${window.location.protocol}//${window.location.hostname}:5000/puja/${slug}`;
+    }
+
+    return `${window.location.origin}/puja/${slug}`;
+};
 
 const renderPoojaSlides = (slides) => {
     return slides
@@ -235,7 +257,7 @@ const renderPoojaSlides = (slides) => {
                             <div class="pricepooja" data-price-label="${pooja.priceLabel}"></div>
                             <div class="poojabutonsd">
                                 <div class="shareivutton"><button type="button">share</button></div>
-                                <div class="booknowb"><button type="button">book now</button></div>
+                                <div class="booknowb"><button type="button">know more</button></div>
                             </div>
                         </div>
                     </div>
@@ -274,71 +296,71 @@ const initHomePoojaSliders = () => {
         return;
     }
 
-poojaSliders.forEach((slider) => {
-    if (slider.dataset.poojaInitialized === "true") {
-        return;
-    }
+    poojaSliders.forEach((slider) => {
+        if (slider.dataset.poojaInitialized === "true") {
+            return;
+        }
 
-    const track = slider.querySelector("[data-pooja-track]");
-    const prevButton = slider.querySelector(".pooja-slider-btn-prev");
-    const nextButton = slider.querySelector(".pooja-slider-btn-next");
-    const rightPanel = slider.querySelector(".rightpoojamain");
-    const title = slider.querySelector("[data-pooja-title]");
-    const subtitle = slider.querySelector("[data-pooja-subtitle]");
-    const aboutPreview = slider.querySelector("[data-pooja-about-preview]");
-    const aboutHeading = slider.querySelector("[data-pooja-about-heading]");
-    const aboutBody = slider.querySelector("[data-pooja-about-body]");
-    const benefitsContainer = slider.querySelector("[data-pooja-benefits]");
+        const track = slider.querySelector("[data-pooja-track]");
+        const prevButton = slider.querySelector(".pooja-slider-btn-prev");
+        const nextButton = slider.querySelector(".pooja-slider-btn-next");
+        const rightPanel = slider.querySelector(".rightpoojamain");
+        const title = slider.querySelector("[data-pooja-title]");
+        const subtitle = slider.querySelector("[data-pooja-subtitle]");
+        const aboutPreview = slider.querySelector("[data-pooja-about-preview]");
+        const aboutHeading = slider.querySelector("[data-pooja-about-heading]");
+        const aboutBody = slider.querySelector("[data-pooja-about-body]");
+        const benefitsContainer = slider.querySelector("[data-pooja-benefits]");
 
-    if (
-        !track ||
-        !prevButton ||
-        !nextButton ||
-        !rightPanel ||
-        !title ||
-        !subtitle ||
-        !aboutPreview ||
-        !aboutHeading ||
-        !aboutBody ||
-        !benefitsContainer
-    ) {
-        return;
-    }
+        if (
+            !track ||
+            !prevButton ||
+            !nextButton ||
+            !rightPanel ||
+            !title ||
+            !subtitle ||
+            !aboutPreview ||
+            !aboutHeading ||
+            !aboutBody ||
+            !benefitsContainer
+        ) {
+            return;
+        }
 
-    slider.dataset.poojaInitialized = "true";
+        slider.dataset.poojaInitialized = "true";
 
-    track.innerHTML = renderPoojaSlides(poojaSlidesData);
+        track.innerHTML = renderPoojaSlides(poojaSlidesData);
 
-    const realSlides = Array.from(track.querySelectorAll("[data-pooja-slide]"));
-    const firstClone = realSlides[0].cloneNode(true);
-    const lastClone = realSlides[realSlides.length - 1].cloneNode(true);
+        const realSlides = Array.from(track.querySelectorAll("[data-pooja-slide]"));
+        const firstClone = realSlides[0].cloneNode(true);
+        const lastClone = realSlides[realSlides.length - 1].cloneNode(true);
 
-    firstClone.setAttribute("data-pooja-clone", "true");
-    lastClone.setAttribute("data-pooja-clone", "true");
+        firstClone.setAttribute("data-pooja-clone", "true");
+        lastClone.setAttribute("data-pooja-clone", "true");
 
-    track.append(firstClone);
-    track.prepend(lastClone);
+        track.append(firstClone);
+        track.prepend(lastClone);
 
-    const slides = Array.from(track.querySelectorAll("[data-pooja-slide]"));
-    const realSlideCount = realSlides.length;
-    const initialRequestedIndex = requestedPoojaSlug
-        ? poojaSlidesData.findIndex((pooja) => {
-            return normalizePoojaSlug(pooja.slug || pooja.title) === requestedPoojaSlug;
-        })
-        : -1;
-    const initialRealIndex = initialRequestedIndex >= 0 ? initialRequestedIndex : 0;
-    let activeIndex = initialRealIndex;
-    let currentPosition = initialRealIndex + 1;
-    let autoplayTimer = null;
-    let clickPauseTimer = null;
-    let isAnimating = false;
-    const autoplayDelay = 3000;
-    const pauseReasons = new Set();
-    const hoverPreview = document.createElement("div");
+        const slides = Array.from(track.querySelectorAll("[data-pooja-slide]"));
+        const realSlideCount = realSlides.length;
+        const initialRequestedIndex = requestedPoojaSlug
+            ? poojaSlidesData.findIndex((pooja) => {
+                return normalizePoojaSlug(pooja.slug || pooja.title) === requestedPoojaSlug;
+            })
+            : -1;
+        const initialRealIndex = initialRequestedIndex >= 0 ? initialRequestedIndex : 0;
+        let activeIndex = initialRealIndex;
+        let currentPosition = initialRealIndex + 1;
+        let autoplayTimer = null;
+        let clickPauseTimer = null;
+        let isAnimating = false;
+        const autoplayDelay = 3000;
+        const pauseReasons = new Set();
+        const hoverPreview = document.createElement("div");
 
-    hoverPreview.className = "pooja-hover-preview";
-    hoverPreview.setAttribute("aria-hidden", "true");
-    hoverPreview.innerHTML = `
+        hoverPreview.className = "pooja-hover-preview";
+        hoverPreview.setAttribute("aria-hidden", "true");
+        hoverPreview.innerHTML = `
         <div class="pooja-hover-preview-card">
             <span class="pooja-hover-preview-label">Full Details</span>
             <h4 class="pooja-hover-preview-title"></h4>
@@ -348,394 +370,449 @@ poojaSliders.forEach((slider) => {
         </div>
     `;
 
-    document.body.append(hoverPreview);
+        document.body.append(hoverPreview);
 
-    const hoverPreviewLabel = hoverPreview.querySelector(".pooja-hover-preview-label");
-    const hoverPreviewTitle = hoverPreview.querySelector(".pooja-hover-preview-title");
-    const hoverPreviewBody = hoverPreview.querySelector(".pooja-hover-preview-body");
-    let activePreviewSource = null;
-    let previewHideTimer = null;
+        const hoverPreviewLabel = hoverPreview.querySelector(".pooja-hover-preview-label");
+        const hoverPreviewTitle = hoverPreview.querySelector(".pooja-hover-preview-title");
+        const hoverPreviewBody = hoverPreview.querySelector(".pooja-hover-preview-body");
+        let activePreviewSource = null;
+        let previewHideTimer = null;
 
-    const getRealIndexFromPosition = (position) => {
-        if (position === 0) {
-            return realSlideCount - 1;
-        }
-
-        if (position === realSlideCount + 1) {
-            return 0;
-        }
-
-        return position - 1;
-    };
-
-    const setTrackPosition = (position, withTransition = true) => {
-        track.style.transition = withTransition ? "" : "none";
-        track.style.transform = `translateX(-${position * 100}%)`;
-    };
-
-    const syncSlides = () => {
-        slides.forEach((slide, slideIndex) => {
-            const isActive = slideIndex === currentPosition;
-            slide.classList.toggle("is-active", isActive);
-            slide.setAttribute("aria-hidden", String(!isActive));
-            slide.toggleAttribute("inert", !isActive);
-        });
-    };
-
-    const animatePanel = () => {
-        if (typeof gsap === "undefined") {
-            return;
-        }
-
-        const targets = [
-            title,
-            subtitle,
-            aboutPreview,
-            aboutHeading,
-            aboutBody,
-            ...benefitsContainer.querySelectorAll(".benefititem")
-        ];
-
-        gsap.killTweensOf(targets);
-        gsap.fromTo(
-            targets,
-            { opacity: 0, y: 16 },
-            {
-                opacity: 1,
-                y: 0,
-                duration: 0.38,
-                stagger: 0.04,
-                ease: "power2.out",
-                overwrite: true
+        const getRealIndexFromPosition = (position) => {
+            if (position === 0) {
+                return realSlideCount - 1;
             }
-        );
-    };
 
-    const updateRightPanel = (pooja) => {
-        title.textContent = formatPujaText(pooja.title);
-        subtitle.textContent = formatPujaText(pooja.subtitle);
-        aboutPreview.textContent = formatPujaText(pooja.aboutPreview);
-        aboutHeading.textContent = formatPujaText(pooja.aboutHeading);
-        aboutBody.textContent = formatPujaText(pooja.aboutBody);
-        benefitsContainer.innerHTML = renderPoojaBenefits(pooja.benefits);
-        bindHoverPreviewSources();
-        animatePanel();
-    };
+            if (position === realSlideCount + 1) {
+                return 0;
+            }
 
-    const updateButtons = () => {
-        const shouldDisable = realSlideCount <= 1;
-        prevButton.disabled = shouldDisable;
-        nextButton.disabled = shouldDisable;
-    };
+            return position - 1;
+        };
 
-    const clearAutoplay = () => {
-        if (autoplayTimer) {
-            clearTimeout(autoplayTimer);
-            autoplayTimer = null;
-        }
-    };
+        const setTrackPosition = (position, withTransition = true) => {
+            track.style.transition = withTransition ? "" : "none";
+            track.style.transform = `translateX(-${position * 100}%)`;
+        };
 
-    const scheduleAutoplay = () => {
-        clearAutoplay();
+        const syncSlides = () => {
+            slides.forEach((slide, slideIndex) => {
+                const isActive = slideIndex === currentPosition;
+                slide.classList.toggle("is-active", isActive);
+                slide.setAttribute("aria-hidden", String(!isActive));
+                slide.toggleAttribute("inert", !isActive);
+            });
+        };
 
-        if (pauseReasons.size || realSlideCount <= 1 || isAnimating) {
-            return;
-        }
-
-        autoplayTimer = setTimeout(() => {
-            moveSlider(1);
-        }, autoplayDelay);
-    };
-
-    const pauseAutoplay = (reason) => {
-        pauseReasons.add(reason);
-        clearAutoplay();
-    };
-
-    const resumeAutoplay = (reason) => {
-        pauseReasons.delete(reason);
-
-        if (!pauseReasons.size) {
-            scheduleAutoplay();
-        }
-    };
-
-    const triggerTemporaryPause = () => {
-        pauseAutoplay("click-interaction");
-
-        if (clickPauseTimer) {
-            clearTimeout(clickPauseTimer);
-        }
-
-        clickPauseTimer = setTimeout(() => {
-            resumeAutoplay("click-interaction");
-        }, 5000);
-    };
-
-    const clearPreviewHideTimer = () => {
-        if (previewHideTimer) {
-            clearTimeout(previewHideTimer);
-            previewHideTimer = null;
-        }
-    };
-
-    const positionHoverPreview = (sourceElement) => {
-        const rect = sourceElement.getBoundingClientRect();
-        const previewRect = hoverPreview.getBoundingClientRect();
-        const previewWidth = previewRect.width || Math.min(720, window.innerWidth - 32);
-        const previewHeight = previewRect.height || 0;
-        const sideGap = 16;
-        const left = Math.min(
-            Math.max(rect.left + rect.width / 2 - previewWidth / 2, sideGap),
-            Math.max(sideGap, window.innerWidth - previewWidth - sideGap)
-        );
-        const preferredTop = rect.top - previewHeight - 18;
-        const top = Math.max(24, Math.min(72, preferredTop));
-
-        hoverPreview.style.left = `${left}px`;
-        hoverPreview.style.top = `${top}px`;
-    };
-
-    const openHoverPreview = (sourceElement, payload) => {
-        if (
-            !payload ||
-            !hoverPreviewLabel ||
-            !hoverPreviewTitle ||
-            !hoverPreviewBody ||
-            !payload.title ||
-            !payload.body
-        ) {
-            return;
-        }
-
-        clearPreviewHideTimer();
-        activePreviewSource = sourceElement;
-        hoverPreviewLabel.textContent = payload.label || "Full Details";
-        hoverPreviewTitle.textContent = payload.title;
-        hoverPreviewBody.textContent = payload.body;
-        hoverPreview.setAttribute("aria-hidden", "false");
-        positionHoverPreview(sourceElement);
-        hoverPreview.classList.add("is-visible");
-        pauseAutoplay("hover-preview");
-    };
-
-    const closeHoverPreview = () => {
-        clearPreviewHideTimer();
-        activePreviewSource = null;
-        hoverPreview.classList.remove("is-visible");
-        hoverPreview.setAttribute("aria-hidden", "true");
-        resumeAutoplay("hover-preview");
-    };
-
-    const scheduleHoverPreviewClose = (relatedTarget = null) => {
-        if (
-            relatedTarget &&
-            (hoverPreview.contains(relatedTarget) || activePreviewSource?.contains(relatedTarget))
-        ) {
-            return;
-        }
-
-        clearPreviewHideTimer();
-        previewHideTimer = setTimeout(() => {
-            const previewHovered = hoverPreview.matches(":hover");
-            const sourceHovered = activePreviewSource?.matches(":hover");
-            const sourceFocused =
-                !!activePreviewSource && activePreviewSource.contains(document.activeElement);
-
-            if (previewHovered || sourceHovered || sourceFocused) {
+        const animatePanel = () => {
+            if (typeof gsap === "undefined") {
                 return;
             }
 
-            closeHoverPreview();
-        }, 120);
-    };
+            const targets = [
+                title,
+                subtitle,
+                aboutPreview,
+                aboutHeading,
+                aboutBody,
+                ...benefitsContainer.querySelectorAll(".benefititem")
+            ];
 
-    const bindHoverPreviewSource = (element, getPayload) => {
-        if (!element || element.dataset.hoverPreviewBound === "true") {
-            return;
-        }
-
-        element.dataset.hoverPreviewBound = "true";
-
-        const showPreview = () => {
-            openHoverPreview(element, getPayload());
+            gsap.killTweensOf(targets);
+            gsap.fromTo(
+                targets,
+                { opacity: 0, y: 16 },
+                {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.38,
+                    stagger: 0.04,
+                    ease: "power2.out",
+                    overwrite: true
+                }
+            );
         };
 
-        element.addEventListener("mouseenter", showPreview);
-        element.addEventListener("focusin", showPreview);
-        element.addEventListener("mouseleave", (event) => {
-            scheduleHoverPreviewClose(event.relatedTarget);
-        });
-        element.addEventListener("focusout", (event) => {
-            scheduleHoverPreviewClose(event.relatedTarget);
-        });
-    };
+        const updateRightPanel = (pooja) => {
+            title.textContent = formatPujaText(pooja.title);
+            subtitle.textContent = formatPujaText(pooja.subtitle);
+            aboutPreview.textContent = formatPujaText(pooja.aboutPreview);
+            aboutHeading.textContent = formatPujaText(pooja.aboutHeading);
+            aboutBody.textContent = formatPujaText(pooja.aboutBody);
+            benefitsContainer.innerHTML = renderPoojaBenefits(pooja.benefits);
+            bindHoverPreviewSources();
+            animatePanel();
+        };
 
-    const bindHoverPreviewSources = () => {
-        track.querySelectorAll(".detailspooja").forEach((element) => {
-            bindHoverPreviewSource(element, () => {
-                const slide = element.closest(".pooja-slide");
-                const detailTitle =
-                    slide?.querySelector(".nameofpuja h2")?.textContent?.trim() ||
-                    title.textContent.trim();
-                const detailBody = element.querySelector("p")?.textContent?.trim() || "";
+        const updateButtons = () => {
+            const shouldDisable = realSlideCount <= 1;
+            prevButton.disabled = shouldDisable;
+            nextButton.disabled = shouldDisable;
+        };
 
-                return {
-                    label: "Puja Details",
-                    title: detailTitle,
-                    body: detailBody
-                };
-            });
-        });
-
-        bindHoverPreviewSource(slider.querySelector(".rightaboutpooja.expandcard"), () => {
-            return {
-                label: "About",
-                title: aboutHeading.textContent.trim() || title.textContent.trim(),
-                body: aboutBody.textContent.trim()
-            };
-        });
-
-        slider.querySelectorAll(".benefititem.expandcard").forEach((element) => {
-            bindHoverPreviewSource(element, () => {
-                const benefitTitle =
-                    element.querySelector(".innerexpandbox h4")?.textContent?.trim() || "Benefit";
-                const benefitBody =
-                    element.querySelector(".innerexpandbox p")?.textContent?.trim() || "";
-
-                return {
-                    label: "Benefit",
-                    title: benefitTitle,
-                    body: benefitBody
-                };
-            });
-        });
-    };
-
-    const updateSlider = (position) => {
-        currentPosition = position;
-        activeIndex = getRealIndexFromPosition(position);
-        setTrackPosition(currentPosition);
-        syncSlides();
-        updateRightPanel(poojaSlidesData[activeIndex]);
-    };
-
-    const jumpToPosition = (position) => {
-        currentPosition = position;
-        activeIndex = getRealIndexFromPosition(position);
-        setTrackPosition(currentPosition, false);
-        syncSlides();
-        track.offsetHeight;
-        track.style.transition = "";
-    };
-
-    const moveSlider = (step) => {
-        if (isAnimating || realSlideCount <= 1) {
-            return;
-        }
-
-        isAnimating = true;
-        updateSlider(currentPosition + step);
-        clearAutoplay();
-    };
-
-    const attachPauseHandlers = (element, token) => {
-        if (!element) {
-            return;
-        }
-
-        element.addEventListener("pointerenter", () => {
-            pauseAutoplay(token);
-        });
-
-        element.addEventListener("pointerleave", () => {
-            resumeAutoplay(token);
-        });
-
-        element.addEventListener("focusin", () => {
-            pauseAutoplay(token);
-        });
-
-        element.addEventListener("focusout", (event) => {
-            if (!element.contains(event.relatedTarget)) {
-                resumeAutoplay(token);
+        const clearAutoplay = () => {
+            if (autoplayTimer) {
+                clearTimeout(autoplayTimer);
+                autoplayTimer = null;
             }
+        };
+
+        const scheduleAutoplay = () => {
+            clearAutoplay();
+
+            if (pauseReasons.size || realSlideCount <= 1 || isAnimating) {
+                return;
+            }
+
+            autoplayTimer = setTimeout(() => {
+                moveSlider(1);
+            }, autoplayDelay);
+        };
+
+        const pauseAutoplay = (reason) => {
+            pauseReasons.add(reason);
+            clearAutoplay();
+        };
+
+        const resumeAutoplay = (reason) => {
+            pauseReasons.delete(reason);
+
+            if (!pauseReasons.size) {
+                scheduleAutoplay();
+            }
+        };
+
+        const triggerTemporaryPause = () => {
+            pauseAutoplay("click-interaction");
+
+            if (clickPauseTimer) {
+                clearTimeout(clickPauseTimer);
+            }
+
+            clickPauseTimer = setTimeout(() => {
+                resumeAutoplay("click-interaction");
+            }, 5000);
+        };
+
+        const clearPreviewHideTimer = () => {
+            if (previewHideTimer) {
+                clearTimeout(previewHideTimer);
+                previewHideTimer = null;
+            }
+        };
+
+        const positionHoverPreview = (sourceElement) => {
+            const rect = sourceElement.getBoundingClientRect();
+            const previewRect = hoverPreview.getBoundingClientRect();
+            const previewWidth = previewRect.width || Math.min(720, window.innerWidth - 32);
+            const previewHeight = previewRect.height || 0;
+            const sideGap = 16;
+            const left = Math.min(
+                Math.max(rect.left + rect.width / 2 - previewWidth / 2, sideGap),
+                Math.max(sideGap, window.innerWidth - previewWidth - sideGap)
+            );
+            const preferredTop = rect.top - previewHeight - 18;
+            const top = Math.max(24, Math.min(72, preferredTop));
+
+            hoverPreview.style.left = `${left}px`;
+            hoverPreview.style.top = `${top}px`;
+        };
+
+        const openHoverPreview = (sourceElement, payload) => {
+            if (
+                !payload ||
+                !hoverPreviewLabel ||
+                !hoverPreviewTitle ||
+                !hoverPreviewBody ||
+                !payload.title ||
+                !payload.body
+            ) {
+                return;
+            }
+
+            clearPreviewHideTimer();
+            activePreviewSource = sourceElement;
+            hoverPreviewLabel.textContent = payload.label || "Full Details";
+            hoverPreviewTitle.textContent = payload.title;
+            hoverPreviewBody.textContent = payload.body;
+            hoverPreview.setAttribute("aria-hidden", "false");
+            positionHoverPreview(sourceElement);
+            hoverPreview.classList.add("is-visible");
+            pauseAutoplay("hover-preview");
+        };
+
+        const closeHoverPreview = () => {
+            clearPreviewHideTimer();
+            activePreviewSource = null;
+            hoverPreview.classList.remove("is-visible");
+            hoverPreview.setAttribute("aria-hidden", "true");
+            resumeAutoplay("hover-preview");
+        };
+
+        const scheduleHoverPreviewClose = (relatedTarget = null) => {
+            if (
+                relatedTarget &&
+                (hoverPreview.contains(relatedTarget) || activePreviewSource?.contains(relatedTarget))
+            ) {
+                return;
+            }
+
+            clearPreviewHideTimer();
+            previewHideTimer = setTimeout(() => {
+                const previewHovered = hoverPreview.matches(":hover");
+                const sourceHovered = activePreviewSource?.matches(":hover");
+                const sourceFocused =
+                    !!activePreviewSource && activePreviewSource.contains(document.activeElement);
+
+                if (previewHovered || sourceHovered || sourceFocused) {
+                    return;
+                }
+
+                closeHoverPreview();
+            }, 120);
+        };
+
+        const bindHoverPreviewSource = (element, getPayload) => {
+            if (!element || element.dataset.hoverPreviewBound === "true") {
+                return;
+            }
+
+            element.dataset.hoverPreviewBound = "true";
+
+            const showPreview = () => {
+                openHoverPreview(element, getPayload());
+            };
+
+            element.addEventListener("mouseenter", showPreview);
+            element.addEventListener("focusin", showPreview);
+            element.addEventListener("mouseleave", (event) => {
+                scheduleHoverPreviewClose(event.relatedTarget);
+            });
+            element.addEventListener("focusout", (event) => {
+                scheduleHoverPreviewClose(event.relatedTarget);
+            });
+        };
+
+        const bindHoverPreviewSources = () => {
+            track.querySelectorAll(".detailspooja").forEach((element) => {
+                bindHoverPreviewSource(element, () => {
+                    const slide = element.closest(".pooja-slide");
+                    const detailTitle =
+                        slide?.querySelector(".nameofpuja h2")?.textContent?.trim() ||
+                        title.textContent.trim();
+                    const detailBody = element.querySelector("p")?.textContent?.trim() || "";
+
+                    return {
+                        label: "Puja Details",
+                        title: detailTitle,
+                        body: detailBody
+                    };
+                });
+            });
+
+            bindHoverPreviewSource(slider.querySelector(".rightaboutpooja.expandcard"), () => {
+                return {
+                    label: "About",
+                    title: aboutHeading.textContent.trim() || title.textContent.trim(),
+                    body: aboutBody.textContent.trim()
+                };
+            });
+
+            slider.querySelectorAll(".benefititem.expandcard").forEach((element) => {
+                bindHoverPreviewSource(element, () => {
+                    const benefitTitle =
+                        element.querySelector(".innerexpandbox h4")?.textContent?.trim() || "Benefit";
+                    const benefitBody =
+                        element.querySelector(".innerexpandbox p")?.textContent?.trim() || "";
+
+                    return {
+                        label: "Benefit",
+                        title: benefitTitle,
+                        body: benefitBody
+                    };
+                });
+            });
+        };
+
+        const updateSlider = (position) => {
+            currentPosition = position;
+            activeIndex = getRealIndexFromPosition(position);
+            setTrackPosition(currentPosition);
+            syncSlides();
+            updateRightPanel(poojaSlidesData[activeIndex]);
+        };
+
+        const jumpToPosition = (position) => {
+            currentPosition = position;
+            activeIndex = getRealIndexFromPosition(position);
+            setTrackPosition(currentPosition, false);
+            syncSlides();
+            track.offsetHeight;
+            track.style.transition = "";
+        };
+
+        const moveSlider = (step) => {
+            if (isAnimating || realSlideCount <= 1) {
+                return;
+            }
+
+            isAnimating = true;
+            updateSlider(currentPosition + step);
+            clearAutoplay();
+        };
+
+        const attachPauseHandlers = (element, token) => {
+            if (!element) {
+                return;
+            }
+
+            element.addEventListener("pointerenter", () => {
+                pauseAutoplay(token);
+            });
+
+            element.addEventListener("pointerleave", () => {
+                resumeAutoplay(token);
+            });
+
+            element.addEventListener("focusin", () => {
+                pauseAutoplay(token);
+            });
+
+            element.addEventListener("focusout", (event) => {
+                if (!element.contains(event.relatedTarget)) {
+                    resumeAutoplay(token);
+                }
+            });
+
+            element.addEventListener("pointerdown", () => {
+                triggerTemporaryPause();
+            });
+        };
+
+        const copyPoojaShareLink = async (button, pooja) => {
+            const shareUrl = getHomePoojaDetailUrl(pooja.slug || pooja.title);
+            const defaultLabel = button.dataset.defaultLabel || button.textContent.trim() || "share";
+            button.dataset.defaultLabel = defaultLabel;
+
+            try {
+                if (navigator.clipboard?.writeText) {
+                    await navigator.clipboard.writeText(shareUrl);
+                } else {
+                    const helperInput = document.createElement("input");
+                    helperInput.value = shareUrl;
+                    helperInput.setAttribute("readonly", "true");
+                    helperInput.style.position = "absolute";
+                    helperInput.style.left = "-9999px";
+                    document.body.append(helperInput);
+                    helperInput.select();
+                    document.execCommand("copy");
+                    helperInput.remove();
+                }
+
+                button.textContent = "copied";
+            } catch (error) {
+                console.error("Unable to copy puja link", error);
+                button.textContent = "copy link";
+            }
+
+            window.setTimeout(() => {
+                button.textContent = defaultLabel;
+            }, 1600);
+        };
+
+        track.addEventListener("transitionend", (event) => {
+            if (event.target !== track || event.propertyName !== "transform") {
+                return;
+            }
+
+            if (currentPosition === 0) {
+                jumpToPosition(realSlideCount);
+            } else if (currentPosition === realSlideCount + 1) {
+                jumpToPosition(1);
+            }
+
+            isAnimating = false;
+            scheduleAutoplay();
         });
 
-        element.addEventListener("pointerdown", () => {
+        prevButton.addEventListener("click", () => {
+            closeHoverPreview();
             triggerTemporaryPause();
+            moveSlider(-1);
         });
-    };
 
-    track.addEventListener("transitionend", (event) => {
-        if (event.target !== track || event.propertyName !== "transform") {
-            return;
-        }
+        nextButton.addEventListener("click", () => {
+            closeHoverPreview();
+            triggerTemporaryPause();
+            moveSlider(1);
+        });
 
-        if (currentPosition === 0) {
-            jumpToPosition(realSlideCount);
-        } else if (currentPosition === realSlideCount + 1) {
-            jumpToPosition(1);
-        }
+        hoverPreview.addEventListener("mouseenter", () => {
+            clearPreviewHideTimer();
+            pauseAutoplay("hover-preview");
+        });
 
-        isAnimating = false;
-        scheduleAutoplay();
-    });
+        hoverPreview.addEventListener("mouseleave", (event) => {
+            scheduleHoverPreviewClose(event.relatedTarget);
+        });
 
-    prevButton.addEventListener("click", () => {
-        closeHoverPreview();
-        triggerTemporaryPause();
-        moveSlider(-1);
-    });
+        window.addEventListener(
+            "scroll",
+            () => {
+                if (activePreviewSource && hoverPreview.classList.contains("is-visible")) {
+                    positionHoverPreview(activePreviewSource);
+                }
+            },
+            true
+        );
 
-    nextButton.addEventListener("click", () => {
-        closeHoverPreview();
-        triggerTemporaryPause();
-        moveSlider(1);
-    });
-
-    hoverPreview.addEventListener("mouseenter", () => {
-        clearPreviewHideTimer();
-        pauseAutoplay("hover-preview");
-    });
-
-    hoverPreview.addEventListener("mouseleave", (event) => {
-        scheduleHoverPreviewClose(event.relatedTarget);
-    });
-
-    window.addEventListener(
-        "scroll",
-        () => {
+        window.addEventListener("resize", () => {
             if (activePreviewSource && hoverPreview.classList.contains("is-visible")) {
                 positionHoverPreview(activePreviewSource);
             }
-        },
-        true
-    );
+        });
 
-    window.addEventListener("resize", () => {
-        if (activePreviewSource && hoverPreview.classList.contains("is-visible")) {
-            positionHoverPreview(activePreviewSource);
-        }
+        attachPauseHandlers(rightPanel, "right-panel");
+        attachPauseHandlers(prevButton, "prev-button");
+        attachPauseHandlers(nextButton, "next-button");
+
+        track.querySelectorAll(".detailspooja").forEach((element, index) => {
+            attachPauseHandlers(element, `detail-${index}`);
+        });
+
+        track.querySelectorAll(".booknowb button").forEach((element, index) => {
+            attachPauseHandlers(element, `book-${index}`);
+            element.addEventListener("click", () => {
+                const slide = element.closest("[data-pooja-slide]");
+                const slideSlug = slide?.dataset?.poojaSlug || "";
+                const pooja = poojaSlidesData.find((item) => {
+                    return normalizePoojaSlug(item.slug || item.title) === normalizePoojaSlug(slideSlug);
+                }) || poojaSlidesData[activeIndex];
+
+                triggerTemporaryPause();
+                window.location.href = getHomePoojaDetailUrl(pooja.slug || pooja.title);
+            });
+        });
+
+        track.querySelectorAll(".shareivutton button").forEach((button, index) => {
+            attachPauseHandlers(button, `share-${index}`);
+            button.addEventListener("click", () => {
+                const slide = button.closest("[data-pooja-slide]");
+                const slideSlug = slide?.dataset?.poojaSlug || "";
+                const pooja = poojaSlidesData.find((item) => {
+                    return normalizePoojaSlug(item.slug || item.title) === normalizePoojaSlug(slideSlug);
+                }) || poojaSlidesData[activeIndex];
+
+                triggerTemporaryPause();
+                copyPoojaShareLink(button, pooja);
+            });
+        });
+
+        updateButtons();
+        jumpToPosition(initialRealIndex + 1);
+        updateRightPanel(poojaSlidesData[initialRealIndex]);
+        scheduleAutoplay();
     });
-
-    attachPauseHandlers(rightPanel, "right-panel");
-    attachPauseHandlers(prevButton, "prev-button");
-    attachPauseHandlers(nextButton, "next-button");
-
-    track.querySelectorAll(".detailspooja").forEach((element, index) => {
-        attachPauseHandlers(element, `detail-${index}`);
-    });
-
-    track.querySelectorAll(".booknowb button").forEach((element, index) => {
-        attachPauseHandlers(element, `book-${index}`);
-    });
-
-    updateButtons();
-    jumpToPosition(initialRealIndex + 1);
-    updateRightPanel(poojaSlidesData[initialRealIndex]);
-    scheduleAutoplay();
-});
 };
 
 initHomePoojaSliders();
@@ -850,6 +927,7 @@ initHomeFloatingCards();
 
 const homeRoutePreviewTriggers = Array.from(document.querySelectorAll(".home-route-preview-trigger"));
 const homeProductGalleries = Array.from(document.querySelectorAll("[data-home-product-gallery]"));
+const homeFeedbackTrack = document.querySelector("[data-home-feedback-track]");
 const homeContactSupportForm = document.getElementById("homeContactSupportForm")
     || document.getElementById("homeFooterContactForm");
 const homeContactFeedback = document.querySelector("[data-home-contact-feedback]")
@@ -877,6 +955,38 @@ const homeApiOrigin = (() => {
 })();
 
 const homeApiUrl = (path) => `${homeApiOrigin}${path}`;
+const homeFeedbackReviews = [
+    {
+        name: "Meera S",
+        initials: "MS",
+        stars: "★★★★★",
+        text: "Daily guidance and puja support dono bahut genuine lage. Reading clear thi aur experience peaceful tha."
+    },
+    {
+        name: "Rohan V",
+        initials: "RV",
+        stars: "★★★★★",
+        text: "Kundali aur Panchang details ka layout samajhna easy hai. Thanathu Madom ka trust feel hota hai."
+    },
+    {
+        name: "Anjali P",
+        initials: "AP",
+        stars: "★★★★★",
+        text: "Puja booking ke baad jo clarity mili aur ritual process ka explanation mila, wo really helpful tha."
+    },
+    {
+        name: "Suresh K",
+        initials: "SK",
+        stars: "★★★★★",
+        text: "Horoscope aur astrology content bahut premium lag raha hai. Reading smooth hai aur cards clean hain."
+    },
+    {
+        name: "Divya N",
+        initials: "DN",
+        stars: "★★★★★",
+        text: "Blogs, videos aur daily astrology content sab ek jagah dekhna easy ho gaya. Overall page design bahut sundar bana hai."
+    }
+];
 
 const updateHomeConfigPrices = ({ kundaliMatchingPrice, janamKundaliPrice } = {}) => {
     const kundaliPrice = kundaliMatchingPrice?.trim() || "Rs 800";
@@ -913,6 +1023,58 @@ const loadHomeConfigPrices = async () => {
 };
 
 loadHomeConfigPrices();
+
+const renderHomeFeedbackMarquee = () => {
+    if (!homeFeedbackTrack) {
+        return;
+    }
+
+    homeFeedbackTrack.innerHTML = "";
+
+    const createFeedbackCard = (review) => {
+        const card = document.createElement("article");
+        card.className = "home-feedback-card";
+
+        const head = document.createElement("div");
+        head.className = "home-feedback-head";
+
+        const avatar = document.createElement("span");
+        avatar.className = "home-feedback-avatar";
+        avatar.textContent = review.initials;
+
+        const nameWrap = document.createElement("div");
+
+        const name = document.createElement("div");
+        name.className = "home-feedback-name";
+        name.textContent = review.name;
+
+        const stars = document.createElement("div");
+        stars.className = "home-feedback-stars";
+        stars.textContent = review.stars;
+
+        nameWrap.append(name, stars);
+        head.append(avatar, nameWrap);
+
+        const text = document.createElement("p");
+        text.textContent = review.text;
+
+        card.append(head, text);
+        return card;
+    };
+
+    for (let index = 0; index < 2; index += 1) {
+        const group = document.createElement("div");
+        group.className = "home-feedback-group";
+
+        homeFeedbackReviews.forEach((review) => {
+            group.append(createFeedbackCard(review));
+        });
+
+        homeFeedbackTrack.append(group);
+    }
+};
+
+renderHomeFeedbackMarquee();
 
 const initHomeRouteTextPreview = () => {
     if (!homeRoutePreviewTriggers.length) {
@@ -1216,8 +1378,8 @@ async function loadProfileData() {
             // Update Drawer UI
             const nameEl = document.querySelector('.profile-drawer-header h3');
             const emailEl = document.querySelector('.profile-drawer-header p');
-            if(nameEl) nameEl.textContent = `Welcome, ${data.user.name}`;
-            if(emailEl) emailEl.textContent = data.user.email;
+            if (nameEl) nameEl.textContent = `Welcome, ${data.user.name}`;
+            if (emailEl) emailEl.textContent = data.user.email;
         } else {
             // Token might be expired
             localStorage.removeItem('tmToken');

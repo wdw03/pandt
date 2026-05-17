@@ -4,10 +4,37 @@
     const navLinks = document.getElementById('navbarlinks');
     const utilityWrap = navbar?.querySelector('.loglongu');
     const profileButton = document.getElementById('profileToggle');
+    const brandWrap = navbar?.querySelector('.navbarhelogmain');
+    const brandTargets = navbar ? Array.from(navbar.querySelectorAll('.navbarhelogmain, .navbarlogo, .navbartext')) : [];
 
     if (!navbar || !navShell || !navLinks || !utilityWrap) {
         return;
     }
+
+    const homeUrl = window.location.protocol === 'file:' ? 'index.html' : '/index.html';
+
+    const goHome = () => {
+        window.location.href = homeUrl;
+    };
+
+    if (brandWrap) {
+        brandWrap.style.cursor = 'pointer';
+        brandWrap.setAttribute('role', 'link');
+        brandWrap.setAttribute('tabindex', '0');
+        brandWrap.setAttribute('aria-label', 'Open home page');
+
+        brandWrap.addEventListener('click', goHome);
+        brandWrap.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                goHome();
+            }
+        });
+    }
+
+    brandTargets.forEach((target) => {
+        target.style.cursor = 'pointer';
+    });
 
     const mobileQuery = window.matchMedia('(max-width: 980px)');
 
