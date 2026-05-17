@@ -204,6 +204,20 @@ const initPoojaPage = () => {
         return `/puja/${encodeURIComponent(normalizedSlug)}`;
     };
 
+    const getHomeBookingUrl = (slug = "") => {
+        const normalizedSlug = normalizePoojaSlug(slug);
+        const baseUrl = window.location.protocol === "file:"
+            ? new URL("index.html", window.location.href)
+            : new URL("/index.html", window.location.origin);
+
+        if (normalizedSlug) {
+            baseUrl.searchParams.set("pooja", normalizedSlug);
+        }
+
+        baseUrl.hash = "pooja";
+        return baseUrl.toString();
+    };
+
     const highlightMatch = (value = "", query = "") => {
         const searchQuery = normalizeSearchValue(query);
 
@@ -622,14 +636,7 @@ const initPoojaPage = () => {
             button.dataset.poojaActionBound = "true";
             button.addEventListener("click", () => {
                 const slug = button.dataset.poojaBook || "";
-                const bookUrl = new URL("index.html", window.location.href);
-
-                if (slug) {
-                    bookUrl.searchParams.set("pooja", slug);
-                }
-
-                bookUrl.hash = "pooja";
-                window.location.href = bookUrl.toString();
+                window.location.href = getHomeBookingUrl(slug);
             });
         });
 
@@ -641,11 +648,7 @@ const initPoojaPage = () => {
             button.dataset.poojaActionBound = "true";
             button.addEventListener("click", async () => {
                 const slug = button.dataset.poojaShare || "";
-                const shareUrl = new URL("pooja.html", window.location.href);
-
-                if (slug) {
-                    shareUrl.searchParams.set("pooja", slug);
-                }
+                const shareUrl = new URL(getPoojaDetailUrl(slug), window.location.href);
 
                 try {
                     if (navigator.clipboard) {
