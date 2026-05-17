@@ -117,6 +117,59 @@ const toStringArray = (value) => {
     return [];
 };
 
+const chunkLongText = (value = '', maxLength = 120) => {
+    const normalized = cleanString(value).replace(/\s+/g, ' ');
+
+    if (!normalized) {
+        return [];
+    }
+
+    if (normalized.length <= maxLength) {
+        return [normalized];
+    }
+
+    const words = normalized.split(' ');
+    const chunks = [];
+    let current = '';
+
+    words.forEach((word) => {
+        if (word.length > maxLength) {
+            if (current) {
+                chunks.push(current);
+                current = '';
+            }
+
+            for (let index = 0; index < word.length; index += maxLength) {
+                chunks.push(word.slice(index, index + maxLength));
+            }
+            return;
+        }
+
+        const nextValue = current ? `${current} ${word}` : word;
+
+        if (nextValue.length <= maxLength) {
+            current = nextValue;
+            return;
+        }
+
+        if (current) {
+            chunks.push(current);
+        }
+
+        current = word;
+    });
+
+    if (current) {
+        chunks.push(current);
+    }
+
+    return chunks;
+};
+
+const toLimitedStringArray = (value, maxLength) => {
+    return toStringArray(value).flatMap((entry) => chunkLongText(entry, maxLength));
+};
+
 const toBenefitArray = (value) => {
     if (Array.isArray(value)) {
         return value
@@ -171,8 +224,8 @@ const normalizeProductPayload = (input = {}, existing = {}) => {
         seller: cleanString(resolveIncoming(input, 'seller', existing.seller)),
         detailIntro: cleanString(resolveIncoming(input, 'detailIntro', existing.detailIntro)),
         detailBody: cleanString(resolveIncoming(input, 'detailBody', existing.detailBody)),
-        highlights: toStringArray(input.highlights ?? existing.highlights ?? []),
-        detailPoints: toStringArray(input.detailPoints ?? existing.detailPoints ?? []),
+        highlights: toLimitedStringArray(input.highlights ?? existing.highlights ?? [], 120),
+        detailPoints: toLimitedStringArray(input.detailPoints ?? existing.detailPoints ?? [], 180),
         images: toStringArray(input.images ?? existing.images ?? []).map(toWebAssetPath),
         productLink: cleanString(resolveIncoming(input, 'productLink', existing.productLink)),
         order: toNumber(input.order ?? existing.order, 0),
