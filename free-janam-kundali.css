@@ -841,3 +841,8 @@ body.janam-route-body {
 .janam-faq-item.is-open .janam-faq-content {
     max-height: 420px;
 }
+
+/* Janam Shadow Cleanup */
+body.janam-route-body * {
+    box-shadow: none !important;
+}

@@ -817,3 +817,14 @@
     justify-content: center;
 }
 
+/* Horoscope White Surface Cleanup */
+body.horoscope-route-body,
+body.horoscope-route-body #main,
+body.horoscope-route-body .horoscope-route-main {
+    background: #ffffff !important;
+}
+
+body.horoscope-route-body * {
+    box-shadow: none !important;
+}
+

@@ -3179,6 +3179,7 @@ body.home-page {
     color: #ffcc80;
     text-decoration: none;
     font-size: 0;
+    overflow: hidden;
     transition: background 0.28s ease, transform 0.28s ease, box-shadow 0.28s ease;
 }
 
@@ -3189,9 +3190,13 @@ body.home-page {
 }
 
 .home-footer-social-icon {
+    flex: 0 0 22px;
     width: 22px;
+    min-width: 22px;
     height: 22px;
+    min-height: 22px;
     display: block;
+    opacity: 1;
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
@@ -3203,6 +3208,14 @@ body.home-page {
 
 .home-footer-social-icon--youtube {
     background-image: url("./assets/images/youtube-icon.svg");
+}
+
+.home-footer-social-icon--facebook {
+    background-image: url("./assets/images/facebook-icon.svg");
+}
+
+.home-footer-social-icon--instagram {
+    background-image: url("./assets/images/instagram-icon.svg");
 }
 
 .home-footer-social-icon--gmail {
@@ -3850,4 +3863,246 @@ body.home-page {
 
 .home-page .home-footer-inner {
     align-items: start;
+}
+
+/* =============================================================
+   HOME PAGE CLEANUP PASS
+   ============================================================= */
+.home-page #poojamain,
+.home-page .leftpojamain,
+.home-page .rightpoojamain,
+.home-page .rightaboutpooja,
+.home-page .rightbenefitswrap,
+.home-page .benefititem,
+.home-page .home-route-gateway-copy,
+.home-page .home-route-chronicle-head,
+.home-page .home-route-finale-copy,
+.home-page .home-route-pulse-card,
+.home-page .home-route-floating-card,
+.home-page .home-route-spotlight,
+.home-page .home-route-finale,
+.home-page .home-cta-info,
+.home-page .home-cta-form-card {
+    box-shadow: 0 18px 36px rgba(122, 70, 15, 0.08) !important;
+}
+
+.home-page .home-route-floating-card,
+.home-page .home-route-floating-card-main,
+.home-page .home-route-floating-card-side,
+.home-page .home-route-floating-card-bottom {
+    transform: none !important;
+}
+
+.home-page .home-route-floating-card::after {
+    display: none;
+}
+
+.home-page .pooja-slider-btn {
+    width: clamp(28px, 2.4vw, 38px);
+    height: clamp(54px, 4.4vw, 72px);
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none !important;
+    padding: 0;
+}
+
+.home-page .pooja-slider-btn:hover,
+.home-page .pooja-slider-btn:active {
+    background: transparent;
+    box-shadow: none !important;
+}
+
+.home-page .pooja-slider-btn-icon {
+    width: 0;
+    height: 0;
+    background: none !important;
+    border-top: clamp(14px, 1.2vw, 18px) solid transparent;
+    border-bottom: clamp(14px, 1.2vw, 18px) solid transparent;
+    transition: filter 0.2s ease, transform 0.2s ease;
+}
+
+.home-page .pooja-slider-btn-prev .pooja-slider-btn-icon,
+.home-page .pooja-slider-btn-prev:hover .pooja-slider-btn-icon,
+.home-page .pooja-slider-btn-prev:focus-visible .pooja-slider-btn-icon {
+    border-right: clamp(20px, 1.8vw, 28px) solid #b35d08;
+    border-left: 0;
+    transform: none !important;
+    filter: drop-shadow(0 4px 10px rgba(179, 93, 8, 0.22));
+}
+
+.home-page .pooja-slider-btn-next .pooja-slider-btn-icon,
+.home-page .pooja-slider-btn-next:hover .pooja-slider-btn-icon,
+.home-page .pooja-slider-btn-next:focus-visible .pooja-slider-btn-icon {
+    border-left: clamp(20px, 1.8vw, 28px) solid #b35d08;
+    border-right: 0;
+    transform: none !important;
+    filter: drop-shadow(0 4px 10px rgba(179, 93, 8, 0.22));
+}
+
+.home-page .pooja-slider-btn:focus-visible {
+    outline: 2px solid rgba(179, 93, 8, 0.45);
+    outline-offset: 6px;
+}
+
+.home-page .home-route-spotlight:nth-child(1),
+.home-page .home-route-spotlight:nth-child(2),
+.home-page .home-route-spotlight:nth-child(4) {
+    background:
+        radial-gradient(circle at 10% 12%, rgba(254, 175, 78, 0.22), transparent 34%),
+        radial-gradient(circle at 88% 84%, rgba(217, 121, 13, 0.14), transparent 28%),
+        linear-gradient(135deg, rgba(255, 251, 244, 0.99) 0%, rgba(255, 242, 219, 0.97) 100%) !important;
+    border-color: rgba(179, 93, 8, 0.18) !important;
+    box-shadow: 0 22px 44px rgba(179, 93, 8, 0.1) !important;
+}
+
+.home-page .home-route-spotlight:nth-child(1)::before,
+.home-page .home-route-spotlight:nth-child(2)::before,
+.home-page .home-route-spotlight:nth-child(4)::before {
+    background: radial-gradient(circle, rgba(254, 175, 78, 0.2) 0%, transparent 70%) !important;
+}
+
+.home-page .home-route-spotlight:nth-child(1)::after,
+.home-page .home-route-spotlight:nth-child(2)::after,
+.home-page .home-route-spotlight:nth-child(4)::after {
+    background: linear-gradient(115deg, transparent 0%, transparent 40%, rgba(254, 175, 78, 0.22) 50%, transparent 60%) !important;
+}
+
+.home-page .home-route-spotlight:nth-child(1) .home-route-copy h3,
+.home-page .home-route-spotlight:nth-child(2) .home-route-copy h3,
+.home-page .home-route-spotlight:nth-child(4) .home-route-copy h3,
+.home-page .home-route-spotlight:nth-child(1) .home-route-copy-meta article strong,
+.home-page .home-route-spotlight:nth-child(2) .home-route-copy-meta article strong,
+.home-page .home-route-spotlight:nth-child(4) .home-route-copy-meta article strong,
+.home-page .home-route-spotlight:nth-child(1) .home-route-visual-note strong,
+.home-page .home-route-spotlight:nth-child(2) .home-route-visual-note strong,
+.home-page .home-route-spotlight:nth-child(4) .home-route-visual-note strong,
+.home-page .home-route-spotlight:nth-child(1) .home-route-visual-badge strong,
+.home-page .home-route-spotlight:nth-child(2) .home-route-visual-badge strong,
+.home-page .home-route-spotlight:nth-child(4) .home-route-visual-badge strong {
+    color: #7f4307 !important;
+}
+
+.home-page .home-route-spotlight:nth-child(1) .home-route-kicker,
+.home-page .home-route-spotlight:nth-child(2) .home-route-kicker,
+.home-page .home-route-spotlight:nth-child(4) .home-route-kicker,
+.home-page .home-route-spotlight:nth-child(1) .home-route-copy-footer>span,
+.home-page .home-route-spotlight:nth-child(2) .home-route-copy-footer>span,
+.home-page .home-route-spotlight:nth-child(4) .home-route-copy-footer>span,
+.home-page .home-route-spotlight:nth-child(1) .home-route-copy-meta article span,
+.home-page .home-route-spotlight:nth-child(2) .home-route-copy-meta article span,
+.home-page .home-route-spotlight:nth-child(4) .home-route-copy-meta article span,
+.home-page .home-route-spotlight:nth-child(1) .home-route-visual-note span,
+.home-page .home-route-spotlight:nth-child(2) .home-route-visual-note span,
+.home-page .home-route-spotlight:nth-child(4) .home-route-visual-note span,
+.home-page .home-route-spotlight:nth-child(1) .home-route-visual-badge span,
+.home-page .home-route-spotlight:nth-child(2) .home-route-visual-badge span,
+.home-page .home-route-spotlight:nth-child(4) .home-route-visual-badge span {
+    color: #b35d08 !important;
+}
+
+.home-page .home-route-spotlight:nth-child(1) .home-route-copy>p,
+.home-page .home-route-spotlight:nth-child(2) .home-route-copy>p,
+.home-page .home-route-spotlight:nth-child(4) .home-route-copy>p,
+.home-page .home-route-spotlight:nth-child(1) .home-route-points li,
+.home-page .home-route-spotlight:nth-child(2) .home-route-points li,
+.home-page .home-route-spotlight:nth-child(4) .home-route-points li {
+    color: #74401b !important;
+}
+
+.home-page .home-route-spotlight:nth-child(1) .home-route-kicker::before,
+.home-page .home-route-spotlight:nth-child(2) .home-route-kicker::before,
+.home-page .home-route-spotlight:nth-child(4) .home-route-kicker::before,
+.home-page .home-route-spotlight:nth-child(1) .home-route-points li::before,
+.home-page .home-route-spotlight:nth-child(2) .home-route-points li::before,
+.home-page .home-route-spotlight:nth-child(4) .home-route-points li::before,
+.home-page .home-route-spotlight:nth-child(1) .home-route-copy-dots i,
+.home-page .home-route-spotlight:nth-child(2) .home-route-copy-dots i,
+.home-page .home-route-spotlight:nth-child(4) .home-route-copy-dots i {
+    background: linear-gradient(135deg, #feaf4e, #d9770d) !important;
+}
+
+.home-page .home-route-spotlight:nth-child(1) .home-route-chip-row span,
+.home-page .home-route-spotlight:nth-child(2) .home-route-chip-row span,
+.home-page .home-route-spotlight:nth-child(4) .home-route-chip-row span,
+.home-page .home-route-spotlight:nth-child(1) .home-route-copy-meta article,
+.home-page .home-route-spotlight:nth-child(2) .home-route-copy-meta article,
+.home-page .home-route-spotlight:nth-child(4) .home-route-copy-meta article,
+.home-page .home-route-spotlight:nth-child(1) .home-route-visual-note,
+.home-page .home-route-spotlight:nth-child(2) .home-route-visual-note,
+.home-page .home-route-spotlight:nth-child(4) .home-route-visual-note {
+    background: rgba(254, 175, 78, 0.14) !important;
+    border-color: rgba(179, 93, 8, 0.18) !important;
+    color: #9a5208 !important;
+    box-shadow: none !important;
+}
+
+.home-page .home-route-spotlight:nth-child(1) .home-route-preview-trigger,
+.home-page .home-route-spotlight:nth-child(2) .home-route-preview-trigger,
+.home-page .home-route-spotlight:nth-child(4) .home-route-preview-trigger {
+    background: rgba(254, 175, 78, 0.12) !important;
+    border-color: rgba(179, 93, 8, 0.22) !important;
+    color: #8a4908 !important;
+    box-shadow: none !important;
+}
+
+.home-page .home-route-spotlight:nth-child(1) .home-route-link-btn,
+.home-page .home-route-spotlight:nth-child(2) .home-route-link-btn,
+.home-page .home-route-spotlight:nth-child(4) .home-route-link-btn,
+.home-page .home-route-spotlight:nth-child(1) .home-route-visual-badge,
+.home-page .home-route-spotlight:nth-child(2) .home-route-visual-badge,
+.home-page .home-route-spotlight:nth-child(4) .home-route-visual-badge {
+    background: linear-gradient(135deg, #feaf4e, #d9770d) !important;
+    color: #4a2504 !important;
+    box-shadow: 0 14px 28px rgba(179, 93, 8, 0.16) !important;
+}
+
+.home-page .home-route-spotlight:nth-child(1) .home-route-visual,
+.home-page .home-route-spotlight:nth-child(2) .home-route-visual,
+.home-page .home-route-spotlight:nth-child(4) .home-route-visual {
+    box-shadow: 0 18px 34px rgba(179, 93, 8, 0.14) !important;
+}
+
+.home-page .home-cta-info {
+    background:
+        radial-gradient(circle at 10% 90%, rgba(254, 175, 78, 0.16), transparent 30%),
+        linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(255, 245, 225, 0.95)) !important;
+    border: 2px solid rgba(179, 93, 8, 0.16) !important;
+}
+
+.home-page .home-cta-tag {
+    background: linear-gradient(135deg, #feaf4e, #d9770d) !important;
+    color: #4a2504 !important;
+}
+
+.home-page .home-cta-info h2,
+.home-page .home-cta-address strong,
+.home-page .home-cta-channel strong {
+    color: #7f4307 !important;
+}
+
+.home-page .home-cta-info>p,
+.home-page .home-cta-address p,
+.home-page .home-cta-channel span:not(.home-cta-icon) {
+    color: #7a5230 !important;
+}
+
+.home-page .home-cta-channel {
+    background: rgba(255, 255, 255, 0.82) !important;
+    border-color: rgba(179, 93, 8, 0.16) !important;
+}
+
+.home-page .home-cta-channel:hover {
+    box-shadow: 0 12px 24px rgba(179, 93, 8, 0.12) !important;
+}
+
+.home-page .home-cta-icon {
+    background-color: rgba(254, 175, 78, 0.2) !important;
+    border-color: rgba(179, 93, 8, 0.14) !important;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+}
+
+.home-page .home-cta-address {
+    background: rgba(254, 175, 78, 0.12) !important;
+    border-color: rgba(179, 93, 8, 0.14) !important;
 }

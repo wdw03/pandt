@@ -156,7 +156,6 @@ const videoTrack = document.querySelector("[data-video-track]");
 const videoDots = document.querySelector("[data-video-dots]");
 const blogTrack = document.querySelector("[data-blog-track]");
 const blogDots = document.querySelector("[data-blog-dots]");
-const productsGrid = document.querySelector("[data-products-grid]");
 const accordionToggle = document.querySelector("[data-gallery-accordion-toggle]");
 const accordionContent = document.querySelector("[data-gallery-accordion-content]");
 
@@ -204,13 +203,11 @@ const reviews = [
         name: "Divya N",
         initials: "DN",
         stars: "â˜…â˜…â˜…â˜…â˜…",
-        text: "Products, blogs, videos sab ek jagah dekhna easy ho gaya. Overall page design bahut sundar bana hai."
+        text: "Blogs, videos aur daily astrology content sab ek jagah dekhna easy ho gaya. Overall page design bahut sundar bana hai."
     }
 ];
 
 let videoItems = [];
-
-let products = [];
 
 const blogs = [
     {
@@ -488,177 +485,6 @@ const renderVideoCarousel = () => {
     });
 };
 
-const initializeProductCarousel = (gallery, images) => {
-    const track = gallery.querySelector(".gallery-product-track");
-    const prevButton = gallery.querySelector("[data-product-prev]");
-    const nextButton = gallery.querySelector("[data-product-next]");
-    const dots = Array.from(gallery.querySelectorAll(".gallery-product-dot"));
-
-    if (!track || images.length <= 1) {
-        return;
-    }
-
-    let currentIndex = 0;
-    let timerId = null;
-
-    const render = () => {
-        track.style.transform = `translateX(-${currentIndex * 100}%)`;
-        dots.forEach((dot, index) => {
-            dot.classList.toggle("is-active", index === currentIndex);
-        });
-    };
-
-    const next = () => {
-        currentIndex = (currentIndex + 1) % images.length;
-        render();
-    };
-
-    const prev = () => {
-        currentIndex = (currentIndex - 1 + images.length) % images.length;
-        render();
-    };
-
-    const restart = () => {
-        window.clearInterval(timerId);
-        timerId = window.setInterval(next, 2000);
-    };
-
-    prevButton?.addEventListener("click", () => {
-        prev();
-        restart();
-    });
-
-    nextButton?.addEventListener("click", () => {
-        next();
-        restart();
-    });
-
-    dots.forEach((dot, index) => {
-        dot.addEventListener("click", () => {
-            currentIndex = index;
-            render();
-            restart();
-        });
-    });
-
-    gallery.addEventListener("mouseenter", () => window.clearInterval(timerId));
-    gallery.addEventListener("mouseleave", restart);
-
-    render();
-    restart();
-};
-
-const renderProducts = () => {
-    if (!productsGrid) {
-        return;
-    }
-
-    productsGrid.innerHTML = "";
-
-    products.forEach((product) => {
-        const card = document.createElement("article");
-        card.className = "gallery-product-card";
-
-        const gallery = document.createElement("div");
-        gallery.className = "gallery-product-gallery";
-
-        const track = document.createElement("div");
-        track.className = "gallery-product-track";
-
-        product.images.forEach((imagePath) => {
-            const image = document.createElement("div");
-            image.className = "gallery-product-image";
-            image.style.backgroundImage = `url("${imagePath}")`;
-            track.append(image);
-        });
-
-        const navs = document.createElement("div");
-        navs.className = "gallery-product-navs";
-
-        const prevButton = document.createElement("button");
-        prevButton.type = "button";
-        prevButton.className = "gallery-product-nav";
-        prevButton.dataset.productPrev = "true";
-        prevButton.textContent = "Prev";
-
-        const nextButton = document.createElement("button");
-        nextButton.type = "button";
-        nextButton.className = "gallery-product-nav";
-        nextButton.dataset.productNext = "true";
-        nextButton.textContent = "Next";
-
-        navs.append(prevButton, nextButton);
-
-        const dots = document.createElement("div");
-        dots.className = "gallery-product-dots";
-
-        product.images.forEach((_, index) => {
-            const dot = document.createElement("button");
-            dot.type = "button";
-            dot.className = "gallery-product-dot";
-            dot.setAttribute("aria-label", `Product image ${index + 1}`);
-            dots.append(dot);
-        });
-
-        gallery.append(track, navs, dots);
-
-        const meta = document.createElement("span");
-        meta.className = "gallery-product-meta";
-        meta.textContent = product.seller;
-
-        const title = document.createElement("h3");
-        title.textContent = product.title;
-
-        const description = document.createElement("p");
-        description.textContent = product.description;
-
-        const price = document.createElement("div");
-        price.className = "gallery-product-price";
-        price.textContent = product.price;
-
-        const actions = document.createElement("div");
-        actions.className = "gallery-product-actions";
-
-        const buyButton = document.createElement("button");
-        buyButton.type = "button";
-        buyButton.className = "gallery-product-action is-primary";
-        buyButton.textContent = "Buy Now";
-
-        const shareButton = document.createElement("button");
-        shareButton.type = "button";
-        shareButton.className = "gallery-product-action";
-        shareButton.textContent = "Share";
-        shareButton.addEventListener("click", async () => {
-            const shareText = `${product.title} - ${product.price}`;
-            if (navigator.share) {
-                try {
-                    await navigator.share({
-                        title: product.title,
-                        text: shareText
-                    });
-                    return;
-                } catch (error) {
-                    // Fallback to clipboard below when share is cancelled or unavailable.
-                }
-            }
-
-            if (navigator.clipboard?.writeText) {
-                await navigator.clipboard.writeText(shareText);
-                shareButton.textContent = "Copied";
-                window.setTimeout(() => {
-                    shareButton.textContent = "Share";
-                }, 1400);
-            }
-        });
-
-        actions.append(buyButton, shareButton);
-        card.append(gallery, meta, title, description, price, actions);
-        productsGrid.append(card);
-
-        initializeProductCarousel(gallery, product.images);
-    });
-};
-
 const renderBlogCarousel = () => {
     initializeSimpleCarousel({
         items: blogs,
@@ -746,24 +572,16 @@ initializeAccordion();
 
 (async () => {
     try {
-        const [videosRes, productsRes] = await Promise.all([
-            fetch('/api/public/videos'),
-            fetch('/api/public/products')
-        ]);
+        const videosRes = await fetch('/api/public/videos');
         const videosData = await videosRes.json();
-        const productsData = await productsRes.json();
         
         if (videosData.success) {
             videoItems = videosData.data;
-        }
-        if (productsData.success) {
-            products = productsData.data;
         }
     } catch (e) {
         console.error('Error fetching gallery data:', e);
     }
     
     renderVideoCarousel();
-    renderProducts();
 })();
 

@@ -552,3 +552,14 @@ body.about-route-body {
     box-shadow: 7px 7px 0 rgba(0, 0, 0, 1);
     outline: none;
 }
+
+/* About White Surface Cleanup */
+body.about-route-body,
+body.about-route-body #main,
+body.about-route-body .about-route-main {
+    background: #ffffff !important;
+}
+
+body.about-route-body * {
+    box-shadow: none !important;
+}

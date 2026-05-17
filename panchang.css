@@ -493,3 +493,20 @@ body.panchang-route-body {
     color: #1f140b;
     word-break: break-word;
 }
+
+/* Panchang White Surface Cleanup */
+body.panchang-route-body,
+body.panchang-route-body #main,
+body.panchang-route-body .panchang-route-main {
+    background: #ffffff !important;
+}
+
+body.panchang-route-body * {
+    box-shadow: none !important;
+}
+
+body.panchang-route-body .panchang-controls-card,
+body.panchang-route-body .panchang-date-picker,
+body.panchang-route-body .panchang-selected-date {
+    cursor: pointer;
+}

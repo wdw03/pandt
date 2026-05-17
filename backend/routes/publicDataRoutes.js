@@ -1,4 +1,5 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 const PoojaSlide = require('../models/PoojaSlide');
 const Product = require('../models/Product');
@@ -17,6 +18,13 @@ const {
 } = require('../utils/contentBootstrap');
 
 const router = express.Router();
+
+const normalizeProductForPublic = (product) => {
+    return {
+        ...product.toObject(),
+        images: Array.isArray(product.images) ? product.images.map(toWebAssetPath) : []
+    };
+};
 
 const getOptionalAuthUser = async (req) => {
     try {
@@ -70,11 +78,33 @@ router.get('/products', async (req, res) => {
     try {
         await ensureProductsSeeded();
         const products = await Product.find({ isActive: true }).sort({ order: 1, createdAt: -1 });
-        const normalizedProducts = products.map((product) => ({
-            ...product.toObject(),
-            images: Array.isArray(product.images) ? product.images.map(toWebAssetPath) : []
-        }));
+        const normalizedProducts = products.map(normalizeProductForPublic);
         return res.json({ success: true, data: normalizedProducts });
+    } catch (error) {
+        return res.status(500).json({ success: false, message: error.message });
+    }
+});
+
+router.get('/products/:id', async (req, res) => {
+    try {
+        await ensureProductsSeeded();
+        const { id } = req.params;
+        const query = {
+            isActive: true,
+            $or: [{ productId: id }]
+        };
+
+        if (mongoose.Types.ObjectId.isValid(id)) {
+            query.$or.push({ _id: id });
+        }
+
+        const product = await Product.findOne(query);
+
+        if (!product) {
+            return res.status(404).json({ success: false, message: 'Product not found' });
+        }
+
+        return res.json({ success: true, data: normalizeProductForPublic(product) });
     } catch (error) {
         return res.status(500).json({ success: false, message: error.message });
     }

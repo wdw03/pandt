@@ -151,6 +151,9 @@ const initializePanchangNavbar = () => {
 initializePanchangNavbar();
 
 const panchangDateInput = document.getElementById("panchangDateInput");
+const panchangControlsCard = document.querySelector(".panchang-controls-card");
+const panchangDatePicker = document.querySelector(".panchang-date-picker");
+const panchangSelectedDate = document.querySelector(".panchang-selected-date");
 const selectedDateLabel = document.querySelector("[data-selected-date-label]");
 const selectedSummary = document.querySelector("[data-selected-summary]");
 const heroDateShort = document.querySelector("[data-hero-date-short]");
@@ -572,6 +575,47 @@ if (panchangDateInput) {
 
         selectedDate = stripTime(nextDate);
         renderSelectedPanchang();
+    });
+}
+
+const openPanchangCalendar = () => {
+    if (!panchangDateInput) {
+        return;
+    }
+
+    if (typeof panchangDateInput.showPicker === "function") {
+        panchangDateInput.showPicker();
+        return;
+    }
+
+    panchangDateInput.focus();
+    panchangDateInput.click();
+};
+
+const bindCalendarOpen = (element) => {
+    if (!element || !panchangDateInput) {
+        return;
+    }
+
+    element.addEventListener("click", (event) => {
+        if (event.target.closest("button, input")) {
+            return;
+        }
+
+        openPanchangCalendar();
+    });
+};
+
+bindCalendarOpen(panchangControlsCard);
+bindCalendarOpen(panchangSelectedDate);
+
+if (panchangDatePicker) {
+    panchangDatePicker.addEventListener("click", (event) => {
+        if (event.target === panchangDateInput) {
+            return;
+        }
+
+        openPanchangCalendar();
     });
 }
 

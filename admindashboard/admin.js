@@ -687,6 +687,8 @@ const renderProductImageItems = (container, images) => {
 
 const productFormHtml = (product = {}) => {
     const productImages = Array.isArray(product.images) ? product.images : [];
+    const productHighlights = Array.isArray(product.highlights) ? product.highlights : [];
+    const productDetailPoints = Array.isArray(product.detailPoints) ? product.detailPoints : [];
 
     return `
         <form id="productForm" class="admin-form-stack">
@@ -727,6 +729,29 @@ const productFormHtml = (product = {}) => {
                 <label>Description (max 300)</label>
                 <textarea name="description" maxlength="300">${escapeHtml(product.description || '')}</textarea>
                 <div class="char-count"></div>
+            </div>
+
+            <div class="admin-field">
+                <label>Detail Intro (max 220)</label>
+                <textarea name="detailIntro" maxlength="220">${escapeHtml(product.detailIntro || '')}</textarea>
+                <div class="char-count"></div>
+            </div>
+
+            <div class="admin-field">
+                <label>Full Detail Body (max 2000)</label>
+                <textarea name="detailBody" maxlength="2000" rows="8">${escapeHtml(product.detailBody || '')}</textarea>
+                <div class="char-count"></div>
+            </div>
+
+            <div class="admin-form-grid admin-form-grid-2">
+                <div class="admin-field">
+                    <label>Highlights (one per line)</label>
+                    <textarea name="highlights" rows="6" placeholder="Premium finish&#10;Useful for gifting&#10;Best for daily devotional use">${escapeHtml(productHighlights.join('\n'))}</textarea>
+                </div>
+                <div class="admin-field">
+                    <label>Extra Detail Points (one per line)</label>
+                    <textarea name="detailPoints" rows="6" placeholder="Can be used in prayer corner&#10;Strong festival gifting option&#10;Admin can add richer use notes here">${escapeHtml(productDetailPoints.join('\n'))}</textarea>
+                </div>
             </div>
 
             <div class="admin-repeater-card">
@@ -809,6 +834,16 @@ const bindProductForm = (product = {}) => {
             order: Number(form.order.value || 0),
             isActive: form.isActive.value === 'true',
             description: form.description.value.trim(),
+            detailIntro: form.detailIntro.value.trim(),
+            detailBody: form.detailBody.value.trim(),
+            highlights: form.highlights.value
+                .split(/\r?\n/)
+                .map((entry) => entry.trim())
+                .filter(Boolean),
+            detailPoints: form.detailPoints.value
+                .split(/\r?\n/)
+                .map((entry) => entry.trim())
+                .filter(Boolean),
             images
         };
 
@@ -846,6 +881,8 @@ const loadProducts = async () => {
                     <strong>${escapeHtml(product.title)}</strong>
                     <br>
                     <small style="color:var(--text-muted)">Seller: ${escapeHtml(product.seller || '-')}</small>
+                    <br>
+                    <small style="color:var(--text-muted)">Details: ${product.detailBody || product.detailIntro ? 'Added' : 'Pending'}</small>
                 </td>
                 <td>
                     <strong>${escapeHtml(product.price || '-')}</strong>

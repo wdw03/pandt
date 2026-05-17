@@ -169,6 +169,10 @@ const normalizeProductPayload = (input = {}, existing = {}) => {
         description: cleanString(resolveIncoming(input, 'description', existing.description)),
         price: cleanString(resolveIncoming(input, 'price', existing.price)),
         seller: cleanString(resolveIncoming(input, 'seller', existing.seller)),
+        detailIntro: cleanString(resolveIncoming(input, 'detailIntro', existing.detailIntro)),
+        detailBody: cleanString(resolveIncoming(input, 'detailBody', existing.detailBody)),
+        highlights: toStringArray(input.highlights ?? existing.highlights ?? []),
+        detailPoints: toStringArray(input.detailPoints ?? existing.detailPoints ?? []),
         images: toStringArray(input.images ?? existing.images ?? []).map(toWebAssetPath),
         productLink: cleanString(resolveIncoming(input, 'productLink', existing.productLink)),
         order: toNumber(input.order ?? existing.order, 0),
@@ -289,7 +293,19 @@ const defaultProducts = [
         title: '5 Mukhi Rudraksha White Crystal Bracelet',
         description: 'The five Mukhi Rudraksha is associated with spiritual calm, protection and positive energy for daily wear.',
         price: 'Rs 80',
-        seller: 'Energised spiritual product',
+        seller: 'Energised daily wear',
+        detailIntro: 'A calm and balanced Rudraksha bracelet for devotees who want a simple spiritual accessory for prayer, travel and everyday protection.',
+        detailBody: 'This 5 Mukhi Rudraksha bracelet is chosen by devotees who prefer a wearable spiritual product that feels light, meaningful and easy to carry every day. It suits morning prayer, temple visits, focused work routines and gifting for someone who values sacred simplicity. The crystal-style finish gives it a cleaner premium presentation while still keeping the devotional identity intact.',
+        highlights: [
+            'Comfortable for daily wear and gifting',
+            'Suitable for prayer, calm and focus routines',
+            'Simple bracelet format with a devotional look'
+        ],
+        detailPoints: [
+            'Works well as a first spiritual accessory for regular use',
+            'Can be paired with daily mantra or meditation practice',
+            'A thoughtful option for devotees seeking a light wearable remedy'
+        ],
         images: [
             '/assets/images/astromallProduct_291713351741.png',
             '/assets/images/images.jpg'
@@ -301,7 +317,19 @@ const defaultProducts = [
         title: 'Green Cut Natural Emerald Beryl Gemstone',
         description: 'Barmunda gems Green Cut Natural Emerald Beryl Gemstone with a rich premium finish and strong astrological appeal.',
         price: 'Selling at Rs 4500',
-        seller: 'Customer image',
+        seller: 'Premium gemstone remedy',
+        detailIntro: 'A premium emerald-style gemstone option for devotees who want a refined spiritual purchase with visual richness and astrological appeal.',
+        detailBody: 'This green cut natural emerald beryl gemstone is presented as a premium remedy-oriented product for devotees who prefer a stronger visual finish and a more elevated product experience. It suits those looking for gemstone guidance, gifting, collection or astrology-linked selection. The product page can be used to explain purity, finish, recommendation flow and purchase enquiry in detail from the admin panel.',
+        highlights: [
+            'Premium green gemstone presentation',
+            'Strong visual appeal for remedy seekers',
+            'Suitable for gifting and guided selection'
+        ],
+        detailPoints: [
+            'Best used when the devotee wants a premium-looking gemstone option',
+            'Good fit for admin-led explanation of quality, suitability and recommendations',
+            'Can be updated later with purity, weight or consultation notes'
+        ],
         images: [
             '/assets/images/astromallProduct_281709056206.png',
             '/assets/images/images.jpg'
@@ -313,7 +341,19 @@ const defaultProducts = [
         title: 'Gold Art India Lord Ganesha Decorative Gift',
         description: 'A devotional Lord Ganesha gift and dashboard showpiece suitable for blessings, decor and festive gifting.',
         price: 'Selling at Rs 750',
-        seller: 'Customer image',
+        seller: 'Festive devotional decor',
+        detailIntro: 'A Lord Ganesha decorative product for blessings, festive gifting, home decor and sacred desk placement.',
+        detailBody: 'This Lord Ganesha decorative gift item is a devotional product designed for people who want a graceful spiritual showpiece for home, office, festive occasions or gift exchange. It is especially suitable for a visible sacred corner, entry area or work desk where the devotee wants a daily reminder of blessings, wisdom and auspicious beginnings.',
+        highlights: [
+            'Ideal for festive gifting and sacred decor',
+            'Works well for desk, shelf or prayer corner placement',
+            'A simple devotional product with strong emotional appeal'
+        ],
+        detailPoints: [
+            'Useful for housewarming, festival gifting and daily decor',
+            'Can be positioned as a blessings-oriented home accessory',
+            'Easy to promote as a visual and devotional product together'
+        ],
         images: [
             '/assets/images/astromallProduct_271709056132.png',
             '/assets/images/images.jpg'

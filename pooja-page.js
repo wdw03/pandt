@@ -181,14 +181,22 @@ const initPoojaPage = () => {
             .replace(/^-+|-+$/g, "");
     };
 
+    const formatPujaText = (value = "") => {
+        return String(value)
+            .replace(/\bPoojas\b/g, "Pujas")
+            .replace(/\bPooja\b/g, "Puja")
+            .replace(/\bpoojas\b/g, "pujas")
+            .replace(/\bpooja\b/g, "puja");
+    };
+
     const highlightMatch = (value = "", query = "") => {
         const searchQuery = normalizeSearchValue(query);
 
         if (!searchQuery) {
-            return escapeHtml(value);
+            return escapeHtml(formatPujaText(value));
         }
 
-        const rawValue = String(value);
+        const rawValue = formatPujaText(value);
         const normalizedValue = rawValue.toLowerCase();
         const matchIndex = normalizedValue.indexOf(searchQuery);
 
@@ -249,12 +257,12 @@ const initPoojaPage = () => {
                     <div class="benefititem expandcard" tabindex="0">
                         <div class="benefithead sectiontrigger">
                             <span class="benefitarrow"></span>
-                            <p>${escapeHtml(benefit.preview)}</p>
+                            <p>${escapeHtml(formatPujaText(benefit.preview))}</p>
                         </div>
                         <div class="expandcontent">
                             <div class="innerexpandbox">
-                                <h4>${escapeHtml(benefit.heading)}</h4>
-                                <p>${escapeHtml(benefit.body)}</p>
+                                <h4>${escapeHtml(formatPujaText(benefit.heading))}</h4>
+                                <p>${escapeHtml(formatPujaText(benefit.body))}</p>
                             </div>
                         </div>
                     </div>
@@ -314,15 +322,15 @@ const initPoojaPage = () => {
                 <div class="midlefttexs">
                     <div class="midtextpooja">
                         <div class="pooja-route-card-header">
-                            <span class="pooja-route-kicker">Pooja Service</span>
+                            <span class="pooja-route-kicker">Puja Service</span>
                             <div class="nameofpuja">
-                                <h2>${highlightMatch(pooja.title || "Pooja", query)}</h2>
+                                <h2>${highlightMatch(formatPujaText(pooja.title || "Puja"), query)}</h2>
                             </div>
-                            <p class="pooja-route-card-subtitle">${highlightMatch(pooja.subtitle, query)}</p>
+                            <p class="pooja-route-card-subtitle">${highlightMatch(formatPujaText(pooja.subtitle), query)}</p>
                         </div>
 
                         <div class="detailspooja" tabindex="0">
-                            <p>${escapeHtml(pooja.cardDescription)}</p>
+                            <p>${escapeHtml(formatPujaText(pooja.cardDescription))}</p>
                         </div>
 
                         <div class="pricepooja" data-price-label="${escapeHtml(pooja.priceLabel)}"></div>
@@ -334,12 +342,12 @@ const initPoojaPage = () => {
                                     <span class="titlearrow"></span>
                                 </div>
 
-                                <p class="previewtext">${escapeHtml(pooja.aboutPreview)}</p>
+                                <p class="previewtext">${escapeHtml(formatPujaText(pooja.aboutPreview))}</p>
 
                                 <div class="expandcontent">
                                     <div class="innerexpandbox">
-                                        <h4>${escapeHtml(pooja.aboutHeading)}</h4>
-                                        <p>${escapeHtml(pooja.aboutBody)}</p>
+                                        <h4>${escapeHtml(formatPujaText(pooja.aboutHeading))}</h4>
+                                        <p>${escapeHtml(formatPujaText(pooja.aboutBody))}</p>
                                     </div>
                                 </div>
                             </div>
@@ -391,7 +399,7 @@ const initPoojaPage = () => {
     const requestedPooja = poojaPageData.find((pooja) => {
         return normalizePoojaSlug(pooja.slug || pooja.title) === requestedSlug;
     });
-    const initialSearchValue = (searchParams.get("search") || requestedPooja?.title || "").trim();
+    const initialSearchValue = formatPujaText(searchParams.get("search") || requestedPooja?.title || "").trim();
     let activeHighlightedSlug = requestedPooja?.slug || "";
     let shouldAutoScrollToHighlightedCard = !!activeHighlightedSlug;
     let activePreviewSource = null;
@@ -493,13 +501,13 @@ const initPoojaPage = () => {
 
     const bindHoverPreviewSources = () => {
         poojaList.querySelectorAll("[data-pooja-card]").forEach((card) => {
-            const title = card.querySelector(".nameofpuja h2")?.textContent?.trim() || "Pooja";
+            const title = card.querySelector(".nameofpuja h2")?.textContent?.trim() || "Puja";
             const detailsElement = card.querySelector(".detailspooja");
             const aboutElement = card.querySelector(".rightaboutpooja.expandcard");
 
             bindHoverPreviewSource(detailsElement, () => {
                 return {
-                    label: "Pooja Details",
+                    label: "Puja Details",
                     title,
                     body: detailsElement?.querySelector("p")?.textContent?.trim() || ""
                 };
@@ -604,7 +612,7 @@ const initPoojaPage = () => {
         if (query) {
             resultsCount.textContent = `${visiblePoojaCount} match${visiblePoojaCount === 1 ? "" : "es"} for "${query}"`;
         } else {
-            resultsCount.textContent = `${visiblePoojaCount} pooja${visiblePoojaCount === 1 ? "" : "s"} available`;
+            resultsCount.textContent = `${visiblePoojaCount} puja${visiblePoojaCount === 1 ? "" : "s"} available`;
         }
     };
 

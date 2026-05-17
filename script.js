@@ -196,6 +196,13 @@ const normalizePoojaSlug = (value = "") => {
         .replace(/[^a-z0-9]+/g, "-")
         .replace(/^-+|-+$/g, "");
 };
+const formatPujaText = (value = "") => {
+    return String(value)
+        .replace(/\bPoojas\b/g, "Pujas")
+        .replace(/\bPooja\b/g, "Puja")
+        .replace(/\bpoojas\b/g, "pujas")
+        .replace(/\bpooja\b/g, "puja");
+};
 const requestedPoojaSlug = normalizePoojaSlug(
     new URLSearchParams(window.location.search).get("pooja") || ""
 );
@@ -220,10 +227,10 @@ const renderPoojaSlides = (slides) => {
                     <div class="midlefttexs">
                         <div class="midtextpooja">
                             <div class="nameofpuja">
-                                <h2>${pooja.title}</h2>
+                                <h2>${formatPujaText(pooja.title)}</h2>
                             </div>
                             <div class="detailspooja">
-                                <p>${pooja.cardDescription}</p>
+                                <p>${formatPujaText(pooja.cardDescription)}</p>
                             </div>
                             <div class="pricepooja" data-price-label="${pooja.priceLabel}"></div>
                             <div class="poojabutonsd">
@@ -245,13 +252,13 @@ const renderPoojaBenefits = (benefits) => {
                 <div class="benefititem expandcard">
                     <div class="benefithead sectiontrigger">
                         <span class="benefitarrow"></span>
-                        <p>${benefit.preview}</p>
+                        <p>${formatPujaText(benefit.preview)}</p>
                     </div>
 
                     <div class="expandcontent">
                         <div class="innerexpandbox">
-                            <h4>${benefit.heading}</h4>
-                            <p>${benefit.body}</p>
+                            <h4>${formatPujaText(benefit.heading)}</h4>
+                            <p>${formatPujaText(benefit.body)}</p>
                         </div>
                     </div>
                 </div>
@@ -405,11 +412,11 @@ poojaSliders.forEach((slider) => {
     };
 
     const updateRightPanel = (pooja) => {
-        title.textContent = pooja.title;
-        subtitle.textContent = pooja.subtitle;
-        aboutPreview.textContent = pooja.aboutPreview;
-        aboutHeading.textContent = pooja.aboutHeading;
-        aboutBody.textContent = pooja.aboutBody;
+        title.textContent = formatPujaText(pooja.title);
+        subtitle.textContent = formatPujaText(pooja.subtitle);
+        aboutPreview.textContent = formatPujaText(pooja.aboutPreview);
+        aboutHeading.textContent = formatPujaText(pooja.aboutHeading);
+        aboutBody.textContent = formatPujaText(pooja.aboutBody);
         benefitsContainer.innerHTML = renderPoojaBenefits(pooja.benefits);
         bindHoverPreviewSources();
         animatePanel();
@@ -574,7 +581,7 @@ poojaSliders.forEach((slider) => {
                 const detailBody = element.querySelector("p")?.textContent?.trim() || "";
 
                 return {
-                    label: "Pooja Details",
+                    label: "Puja Details",
                     title: detailTitle,
                     body: detailBody
                 };
@@ -824,22 +831,17 @@ const initHomeRevealAnimations = () => {
 };
 
 const initHomeFloatingCards = () => {
-    if (!homeFloatCards.length || typeof gsap === "undefined") {
+    if (!homeFloatCards.length) {
         return;
     }
 
-    homeFloatCards.forEach((card, index) => {
-        const distance = 12 + index * 4;
-        const duration = 3.6 + index * 0.4;
-
-        gsap.to(card, {
-            y: `-=${distance}`,
-            rotation: index % 2 === 0 ? "+=1.2" : "-=1.2",
-            duration,
-            repeat: -1,
-            yoyo: true,
-            ease: "sine.inOut"
-        });
+    homeFloatCards.forEach((card) => {
+        if (typeof gsap !== "undefined") {
+            gsap.killTweensOf(card);
+            gsap.set(card, { clearProps: "transform" });
+        } else {
+            card.style.transform = "none";
+        }
     });
 };
 

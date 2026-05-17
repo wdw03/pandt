@@ -735,3 +735,14 @@ body.gallery-route-body {
         transform: translateX(-50%);
     }
 }
+
+/* Astrology White Surface Cleanup */
+body.gallery-route-body,
+body.gallery-route-body #main,
+body.gallery-route-body .gallery-route-main {
+    background: #ffffff !important;
+}
+
+body.gallery-route-body * {
+    box-shadow: none !important;
+}
