@@ -348,6 +348,11 @@ body.pooja-route-body {
     animation-delay: calc(var(--pooja-service-index, 0) * 70ms);
 }
 
+.pooja-service-card.is-current {
+    border-color: #ff9200;
+    background: linear-gradient(180deg, rgba(255, 250, 240, 0.98) 0%, rgba(255, 241, 214, 0.98) 100%);
+}
+
 .pooja-service-visual {
     position: relative;
     min-height: 220px;
@@ -425,6 +430,11 @@ body.pooja-route-body {
     transform: translate(-2px, -2px);
     box-shadow: 7px 7px 0 rgba(0, 0, 0, 1);
     outline: none;
+}
+
+.pooja-service-btn[aria-current="page"] {
+    background: #fff7df;
+    color: #8a4f00;
 }
 
 .pooja-route-list {
@@ -602,6 +612,81 @@ body.pooja-route-body {
     font-size: 14px;
     line-height: 1.7;
     color: #4b3a28;
+}
+
+.puja-detail-slides-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(16px, 1.8vw, 22px);
+}
+
+.puja-detail-slides-head {
+    padding: 0 4px;
+}
+
+.puja-detail-slides-list {
+    margin-top: 2px;
+}
+
+.puja-detail-slides-list .detailspooja {
+    height: calc(1.65em * 2 + 24px);
+    max-height: calc(1.65em * 2 + 24px);
+    overflow: hidden;
+    scrollbar-gutter: stable;
+}
+
+.puja-detail-slides-list .detailspooja p {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    max-height: calc(1.65em * 2);
+    overflow: hidden;
+    padding-right: 0;
+}
+
+.puja-detail-slides-list .detailspooja:hover,
+.puja-detail-slides-list .detailspooja:focus-within {
+    overflow-y: auto;
+}
+
+.puja-detail-slides-list .detailspooja:hover p,
+.puja-detail-slides-list .detailspooja:focus-within p {
+    display: block;
+    -webkit-line-clamp: unset;
+    max-height: none;
+    overflow: visible;
+    padding-right: 4px;
+}
+
+.puja-detail-slides-list .rightaboutpooja .expandcontent,
+.puja-detail-slides-list .benefititem .expandcontent {
+    display: block;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.puja-detail-slides-list .rightaboutpooja.expandcard:hover .previewtext,
+.puja-detail-slides-list .rightaboutpooja.expandcard:focus-within .previewtext {
+    max-height: 0;
+    opacity: 0;
+    margin: 0;
+}
+
+.puja-detail-slides-list .benefititem.expandcard:hover .benefithead p,
+.puja-detail-slides-list .benefititem.expandcard:focus-within .benefithead p {
+    max-height: 0;
+    opacity: 0;
+    margin: 0;
+}
+
+.puja-detail-slides-list .rightaboutpooja.expandcard:hover .expandcontent,
+.puja-detail-slides-list .rightaboutpooja.expandcard:focus-within .expandcontent,
+.puja-detail-slides-list .benefititem.expandcard:hover .expandcontent,
+.puja-detail-slides-list .benefititem.expandcard:focus-within .expandcontent {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
 }
 
 .puja-detail-body {
