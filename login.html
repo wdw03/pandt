@@ -579,12 +579,73 @@
             margin: 0 0 clamp(16px, 1.4vw, 20px);
             padding: clamp(12px, 1vw, 14px) clamp(14px, 1.1vw, 16px);
             border-radius: 16px;
-            background: rgba(255, 211, 148, 0.14);
-            border: 1px solid rgba(255, 204, 128, 0.22);
-            color: #f5dcc0;
+            background: rgba(255, 211, 148, 0.22);
+            border: 1px solid rgba(255, 162, 66, 0.26);
+            color: #5d2c06;
             font-family: 'Inter', sans-serif;
             font-size: 13px;
+            font-weight: 600;
             line-height: 1.6;
+        }
+
+        .auth-inline-feedback[data-feedback-state="pending"] {
+            background: rgba(255, 174, 76, 0.2);
+            border-color: rgba(255, 146, 0, 0.32);
+            color: #6a3400;
+        }
+
+        .auth-inline-feedback[data-feedback-state="success"] {
+            background: rgba(112, 201, 120, 0.18);
+            border-color: rgba(74, 167, 94, 0.28);
+            color: #1f5b33;
+        }
+
+        .auth-inline-feedback[data-feedback-state="error"] {
+            background: rgba(255, 126, 126, 0.18);
+            border-color: rgba(224, 86, 86, 0.28);
+            color: #7d1d1d;
+        }
+
+        .auth-inline-actions {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin: -4px 0 18px;
+            flex-wrap: wrap;
+        }
+
+        .auth-inline-actions small {
+            color: rgba(91, 51, 19, 0.82);
+            font: 500 12px/1.5 'Inter', sans-serif;
+        }
+
+        .auth-resend-btn {
+            min-height: 42px;
+            padding: 0 16px;
+            border: 1px solid rgba(255, 146, 0, 0.28);
+            border-radius: 999px;
+            background: rgba(255, 190, 97, 0.16);
+            color: #7a3d00;
+            cursor: pointer;
+            font: 700 12px 'Inter', sans-serif;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            transition: transform 0.22s ease, background 0.22s ease, border-color 0.22s ease, color 0.22s ease;
+        }
+
+        .auth-resend-btn:hover,
+        .auth-resend-btn:focus-visible {
+            transform: translateY(-1px);
+            background: rgba(255, 146, 0, 0.2);
+            border-color: rgba(255, 146, 0, 0.4);
+            outline: none;
+        }
+
+        .auth-resend-btn[disabled] {
+            cursor: not-allowed;
+            opacity: 0.66;
+            transform: none;
         }
 
         .home-footer {
@@ -788,6 +849,10 @@
                 <div class="auth-view" id="viewVerifySignup">
                     <h2 data-i18n="login_verify">Verify Email</h2>
                     <p class="auth-inline-feedback" id="verifySignupMessage">Enter the 6-digit OTP sent to your email to verify your account.</p>
+                    <div class="auth-inline-actions">
+                        <small>OTP late aaye to resend use karein.</small>
+                        <button type="button" class="auth-resend-btn" id="resendSignupOtpBtn">Resend OTP</button>
+                    </div>
                     <form id="formVerifySignup">
                         <label class="auth-field">
                             <span>6-Digit OTP</span>
@@ -816,6 +881,10 @@
                 <div class="auth-view" id="viewResetPassword">
                     <h2 data-i18n="login_enter_otp">Enter OTP</h2>
                     <p class="auth-inline-feedback" id="resetPasswordMessage">Enter the 6-digit OTP sent to your email and create a new password.</p>
+                    <div class="auth-inline-actions">
+                        <small>OTP receive na ho to yahan se resend karein.</small>
+                        <button type="button" class="auth-resend-btn" id="resendResetOtpBtn">Resend OTP</button>
+                    </div>
                     <form id="formResetPassword">
                         <label class="auth-field">
                             <span>6-Digit OTP</span>

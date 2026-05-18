@@ -7,6 +7,16 @@ const generateToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '30d' });
 };
 
+const generateSixDigitOtp = () => Math.floor(100000 + Math.random() * 900000).toString();
+
+const sendSignupOtpEmail = ({ email, otp }) => {
+    return sendEmail({
+        email,
+        subject: 'Account Verification OTP - Thanathu Madom Devasthanam',
+        message: `Your OTP for account verification is: \n\n ${otp} \n\n It is valid for 10 minutes.`,
+    });
+};
+
 const serializeUser = (user) => {
     return {
         id: user._id,
@@ -70,19 +80,14 @@ exports.register = async (req, res) => {
             user = new User({ name, email, password, isVerified: false });
         }
 
-        // Generate 6-digit OTP
-        const otp = Math.floor(100000 + Math.random() * 900000).toString();
+        const otp = generateSixDigitOtp();
         user.signupOtp = otp;
         user.signupOtpExpire = Date.now() + 10 * 60 * 1000; // 10 mins
 
         await user.save();
 
         try {
-            await sendEmail({
-                email: user.email,
-                subject: 'Account Verification OTP - Thanathu Madom Devasthanam',
-                message: `Your OTP for account verification is: \n\n ${otp} \n\n It is valid for 10 minutes.`,
-            });
+            await sendSignupOtpEmail({ email: user.email, otp });
             res.status(200).json({ success: true, message: 'OTP sent to your email for verification.' });
         } catch (error) {
             console.error('Signup OTP email send failed:', error.message);
@@ -96,6 +101,50 @@ exports.register = async (req, res) => {
         }
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
+    }
+};
+
+// @desc    Resend signup OTP for unverified user
+// @route   POST /api/auth/resend-signup-otp
+exports.resendSignupOtp = async (req, res) => {
+    try {
+        const email = String(req.body.email || '').trim().toLowerCase();
+
+        if (!email) {
+            return res.status(400).json({ success: false, message: 'Email is required' });
+        }
+
+        const user = await User.findOne({ email });
+
+        if (!user) {
+            return res.status(404).json({ success: false, message: 'No signup request found for this email.' });
+        }
+
+        if (user.isVerified) {
+            return res.status(400).json({ success: false, message: 'This account is already verified. Please log in.' });
+        }
+
+        const otp = generateSixDigitOtp();
+        user.signupOtp = otp;
+        user.signupOtpExpire = Date.now() + 10 * 60 * 1000;
+
+        await user.save({ validateBeforeSave: false });
+
+        try {
+            await sendSignupOtpEmail({ email: user.email, otp });
+            return res.status(200).json({ success: true, message: 'A fresh OTP has been sent to your email.' });
+        } catch (error) {
+            console.error('Resend signup OTP email send failed:', error.message);
+            user.signupOtp = undefined;
+            user.signupOtpExpire = undefined;
+            await user.save({ validateBeforeSave: false });
+            return res.status(500).json({
+                success: false,
+                message: 'Email could not be sent. Please check backend email configuration and try again.'
+            });
+        }
+    } catch (error) {
+        return res.status(500).json({ success: false, message: error.message });
     }
 };
 
