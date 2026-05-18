@@ -648,13 +648,13 @@ body.janam-route-body {
 
 .janam-submit-btn,
 .janam-primary-btn {
-    background: #111;
-    color: #fffdf8;
+    background: #FF9200;
+    color: #2b1400;
 }
 
 .janam-secondary-btn {
-    background: #fffdf8;
-    color: #111;
+    background: #FF9200;
+    color: #2b1400;
 }
 
 .janam-submit-btn:hover,
@@ -663,6 +663,8 @@ body.janam-route-body {
 .janam-primary-btn:focus-visible,
 .janam-secondary-btn:hover,
 .janam-secondary-btn:focus-visible {
+    background: #e68100;
+    color: #2b1400;
     box-shadow: 5px 5px 0 rgba(0, 0, 0, 1);
 }
 
@@ -815,7 +817,7 @@ body.janam-route-body {
     flex-shrink: 0;
     border: 2px solid #111;
     border-radius: 50%;
-    background-color: #ffd25f;
+    background-color: #FF9200;
     background-image: url("./assets/images/down-arrow.png");
     background-repeat: no-repeat;
     background-position: center;

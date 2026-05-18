@@ -4373,3 +4373,26 @@ body.home-page {
 .home-page .home-route-spotlight .home-route-visual-badge strong {
     color: #fff8ef !important;
 }
+
+.home-page .home-route-chronicle .home-route-preview-trigger,
+.home-page .home-route-chronicle .home-route-link-btn,
+.home-page .home-route-chronicle .home-route-finale-btn,
+.home-page .home-products-showcase .home-product-btn,
+.home-page .home-products-showcase .home-product-btn-secondary {
+    background: #FF9200 !important;
+    background-image: none !important;
+    border-color: #FF9200 !important;
+    color: #2b1400 !important;
+}
+
+.home-page .home-route-chronicle .home-route-preview-trigger:hover,
+.home-page .home-route-chronicle .home-route-preview-trigger:focus-visible,
+.home-page .home-route-chronicle .home-route-link-btn:hover,
+.home-page .home-route-chronicle .home-route-finale-btn:hover,
+.home-page .home-products-showcase .home-product-btn:hover,
+.home-page .home-products-showcase .home-product-btn-secondary:hover {
+    background: #e68100 !important;
+    background-image: none !important;
+    border-color: #e68100 !important;
+    color: #2b1400 !important;
+}
