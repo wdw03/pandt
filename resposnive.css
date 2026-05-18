@@ -1,13 +1,13 @@
 body.home-page {
     min-height: 100vh;
     overflow-x: hidden;
-    background: linear-gradient(180deg, #fffaf2 0%, #fff4e3 100%);
+    background: #ffffff;
 }
 
 .home-page #main {
     min-height: 100vh;
     overflow-x: hidden;
-    background: transparent;
+    background: #ffffff;
 }
 
 .home-page #navbar {
@@ -4239,4 +4239,137 @@ body.home-page {
     to {
         transform: translateX(-50%);
     }
+}
+
+/* =============================================================
+   HOME PAGE BUTTON COLOR OVERRIDE
+   ============================================================= */
+.home-page .booknow button,
+.home-page .exprlorresrive button,
+.home-page .shareivutton button,
+.home-page .booknowb button,
+.home-page .custom-button,
+.home-page .aboutbtn,
+.home-page .benefitbtn,
+.home-page .viewallbtn,
+.home-page .home-route-preview-trigger,
+.home-page .home-route-link-btn,
+.home-page .home-route-finale-btn,
+.home-page .home-product-btn,
+.home-page .home-product-btn-secondary,
+.home-page .home-cta-submit,
+.home-page .home-footer-social-btn {
+    background: #882600 !important;
+    background-image: none !important;
+    border-color: #882600 !important;
+    color: #fff8ef !important;
+}
+
+.home-page .booknow button:hover,
+.home-page .exprlorresrive button:hover,
+.home-page .shareivutton button:hover,
+.home-page .booknowb button:hover,
+.home-page .custom-button:hover,
+.home-page .aboutbtn:hover,
+.home-page .benefitbtn:hover,
+.home-page .viewallbtn:hover,
+.home-page .home-route-preview-trigger:hover,
+.home-page .home-route-preview-trigger:focus-visible,
+.home-page .home-route-link-btn:hover,
+.home-page .home-route-finale-btn:hover,
+.home-page .home-product-btn:hover,
+.home-page .home-product-btn-secondary:hover,
+.home-page .home-cta-submit:hover,
+.home-page .home-footer-social-btn:hover {
+    background: #6f1e00 !important;
+    background-image: none !important;
+    border-color: #6f1e00 !important;
+    color: #fff8ef !important;
+}
+
+.home-page .home-route-preview-icon {
+    filter: brightness(0) invert(1);
+}
+
+.home-page .pooja-slider-btn-prev .pooja-slider-btn-icon,
+.home-page .pooja-slider-btn-prev:hover .pooja-slider-btn-icon,
+.home-page .pooja-slider-btn-prev:focus-visible .pooja-slider-btn-icon {
+    border-right-color: #882600;
+}
+
+.home-page .pooja-slider-btn-next .pooja-slider-btn-icon,
+.home-page .pooja-slider-btn-next:hover .pooja-slider-btn-icon,
+.home-page .pooja-slider-btn-next:focus-visible .pooja-slider-btn-icon {
+    border-left-color: #882600;
+}
+
+.home-page .pooja-slider-btn:focus-visible {
+    outline-color: rgba(136, 38, 0, 0.38);
+}
+
+/* =============================================================
+   HOME ROUTE CHRONICLE NORMALIZED THEME
+   ============================================================= */
+.home-page .home-route-spotlight {
+    background: #ffffff !important;
+    background-image: none !important;
+    border: 1.5px solid rgba(136, 38, 0, 0.14) !important;
+    border-left: none !important;
+    border-radius: 34px !important;
+    padding-left: clamp(18px, 2vw, 24px) !important;
+    box-shadow: 0 20px 34px rgba(136, 38, 0, 0.08) !important;
+}
+
+.home-page .home-route-spotlight::before,
+.home-page .home-route-spotlight::after {
+    content: none !important;
+    display: none !important;
+}
+
+.home-page .home-route-spotlight .home-route-copy h3,
+.home-page .home-route-spotlight .home-route-copy-meta article strong,
+.home-page .home-route-spotlight .home-route-visual-note strong {
+    color: #4d1900 !important;
+}
+
+.home-page .home-route-spotlight .home-route-kicker,
+.home-page .home-route-spotlight .home-route-copy-footer>span,
+.home-page .home-route-spotlight .home-route-copy-meta article span,
+.home-page .home-route-spotlight .home-route-visual-note span {
+    color: #882600 !important;
+}
+
+.home-page .home-route-spotlight .home-route-copy>p,
+.home-page .home-route-spotlight .home-route-points li {
+    color: #6b3418 !important;
+}
+
+.home-page .home-route-spotlight .home-route-kicker::before,
+.home-page .home-route-spotlight .home-route-points li::before,
+.home-page .home-route-spotlight .home-route-copy-dots i {
+    background: #882600 !important;
+    box-shadow: none !important;
+}
+
+.home-page .home-route-spotlight .home-route-chip-row span,
+.home-page .home-route-spotlight .home-route-copy-meta article,
+.home-page .home-route-spotlight .home-route-visual-note {
+    background: rgba(136, 38, 0, 0.05) !important;
+    border-color: rgba(136, 38, 0, 0.12) !important;
+    color: #6b3418 !important;
+    box-shadow: none !important;
+}
+
+.home-page .home-route-spotlight .home-route-visual {
+    box-shadow: 0 18px 30px rgba(136, 38, 0, 0.08) !important;
+}
+
+.home-page .home-route-spotlight .home-route-visual-badge {
+    background: #882600 !important;
+    box-shadow: none !important;
+}
+
+.home-page .home-route-spotlight .home-route-visual-badge span,
+.home-page .home-route-spotlight .home-route-visual-badge strong {
+    color: #fff8ef !important;
 }
