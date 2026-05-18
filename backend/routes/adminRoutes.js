@@ -7,8 +7,33 @@ const ctrl = require('../controllers/adminController');
 
 const router = express.Router();
 const uploadDir = path.join(__dirname, '../../assets/uploads');
+const allowedImageExtensions = new Set(['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'avif']);
+const allowedImageMimeTypes = new Set([
+    'image/jpeg',
+    'image/png',
+    'image/gif',
+    'image/webp',
+    'image/svg+xml',
+    'image/avif'
+]);
 
 fs.mkdirSync(uploadDir, { recursive: true });
+
+const getFileExtension = (file = {}) => path.extname(file.originalname || '').toLowerCase().replace('.', '');
+const hasAllowedImageExtension = (file = {}) => allowedImageExtensions.has(getFileExtension(file));
+const hasAllowedImageMime = (file = {}) => {
+    const mime = String(file.mimetype || '').toLowerCase();
+
+    if (allowedImageMimeTypes.has(mime)) {
+        return true;
+    }
+
+    if (mime === 'application/octet-stream' && hasAllowedImageExtension(file)) {
+        return true;
+    }
+
+    return mime.startsWith('image/') && hasAllowedImageExtension(file);
+};
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -25,11 +50,7 @@ const upload = multer({
     storage,
     limits: { fileSize: 5 * 1024 * 1024 },
     fileFilter: (req, file, cb) => {
-        const allowed = /jpeg|jpg|png|gif|webp|svg/;
-        const ext = allowed.test(path.extname(file.originalname).toLowerCase());
-        const mime = allowed.test(file.mimetype);
-
-        if (ext && mime) {
+        if (hasAllowedImageExtension(file) && hasAllowedImageMime(file)) {
             return cb(null, true);
         }
 
@@ -41,17 +62,11 @@ const reportUpload = multer({
     storage: multer.memoryStorage(),
     limits: { fileSize: 12 * 1024 * 1024 },
     fileFilter: (req, file, cb) => {
-        const allowedExtensions = /pdf|jpeg|jpg|png|gif|webp/;
-        const extension = allowedExtensions.test(path.extname(file.originalname).toLowerCase());
-        const allowedMime = [
-            'application/pdf',
-            'image/jpeg',
-            'image/png',
-            'image/gif',
-            'image/webp'
-        ].includes(file.mimetype);
+        const extension = getFileExtension(file);
+        const isPdf = extension === 'pdf' && String(file.mimetype || '').toLowerCase() === 'application/pdf';
+        const isImage = hasAllowedImageExtension(file) && hasAllowedImageMime(file);
 
-        if (extension && allowedMime) {
+        if (isPdf || isImage) {
             return cb(null, true);
         }
 

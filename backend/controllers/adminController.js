@@ -386,12 +386,33 @@ exports.getAstrologyServices = async (req, res) => {
     }
 };
 
+const deactivateSiblingAstrologyServices = async (serviceType, excludeId) => {
+    if (!serviceType) {
+        return;
+    }
+
+    const query = {
+        serviceType,
+        isActive: true
+    };
+
+    if (excludeId) {
+        query._id = { $ne: excludeId };
+    }
+
+    await AstrologyService.updateMany(query, { $set: { isActive: false } });
+};
+
 exports.createAstrologyService = async (req, res) => {
     try {
         const payload = normalizeAstrologyServicePayload(req.body);
 
         if (!payload.title) {
             return res.status(400).json({ success: false, message: 'Service title is required' });
+        }
+
+        if (payload.isActive) {
+            await deactivateSiblingAstrologyServices(payload.serviceType);
         }
 
         const service = await AstrologyService.create(payload);
@@ -410,6 +431,11 @@ exports.updateAstrologyService = async (req, res) => {
         }
 
         const payload = normalizeAstrologyServicePayload(req.body, service.toObject());
+
+        if (payload.isActive) {
+            await deactivateSiblingAstrologyServices(payload.serviceType, service._id);
+        }
+
         Object.assign(service, payload);
         await service.save();
 

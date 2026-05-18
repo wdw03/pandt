@@ -419,6 +419,28 @@
     color: #5a3b18;
 }
 
+.horoscope-service-price-badge,
+.horoscope-service-price-chip {
+    border-color: #6a4600;
+    background: linear-gradient(135deg, #fff1a8 0%, #ffd84d 52%, #ffbe2f 100%);
+    color: #3f2500;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+}
+
+.horoscope-service-price-badge {
+    min-height: 44px;
+    padding: 0 18px;
+    font-size: clamp(13px, 0.95vw, 15px);
+    box-shadow: 0 10px 18px rgba(255, 190, 47, 0.22);
+}
+
+.horoscope-service-price-chip {
+    min-height: 42px;
+    padding: 0 18px;
+    font-size: clamp(12px, 0.9vw, 14px);
+}
+
 .horoscope-service-copy,
 .horoscope-service-form {
     padding: clamp(20px, 2vw, 28px);
@@ -512,10 +534,39 @@
     gap: 8px;
 }
 
+.horoscope-service-price-banner {
+    margin-top: 4px;
+    padding: 14px 18px;
+    border: 2px solid #111;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #fff3a6 0%, #ffd44d 50%, #ffbf33 100%);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+}
+
+.horoscope-service-price-banner span {
+    font-family: "Poppins", sans-serif;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #6a4300;
+}
+
+.horoscope-service-price-banner strong {
+    font-family: "Poppins", sans-serif;
+    font-size: clamp(22px, 1.65vw, 28px);
+    font-weight: 800;
+    line-height: 1;
+    color: #2d1a00;
+}
+
 .horoscope-service-form-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 170px), 1fr));
-    gap: 14px;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+    gap: 16px 18px;
 }
 
 .horoscope-form-field {
@@ -526,6 +577,57 @@
 
 .horoscope-form-field--full {
     grid-column: 1 / -1;
+}
+
+.horoscope-form-field small {
+    margin: 0;
+    font-family: "Poppins", sans-serif;
+    font-size: 12px;
+    line-height: 1.5;
+    color: #7a5b39;
+}
+
+.horoscope-form-inline-grid {
+    display: grid;
+    gap: 10px;
+}
+
+.horoscope-form-inline-grid-date {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.horoscope-form-inline-grid-time {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: 360px;
+}
+
+.horoscope-check-row {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    width: fit-content;
+    padding: 8px 12px;
+    border-radius: 999px;
+    background: rgba(255, 244, 224, 0.8);
+    border: 1px dashed rgba(17, 17, 17, 0.18);
+}
+
+.horoscope-check-row span {
+    margin: 0;
+    font-family: "Poppins", sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    text-transform: none;
+    color: #5f4426;
+}
+
+.horoscope-check-row input {
+    width: 20px;
+    min-height: 20px;
+    margin: 0;
+    padding: 0;
+    border-radius: 6px;
 }
 
 .horoscope-form-field span {
@@ -605,17 +707,6 @@
     border-color: #ff7a00;
     background: linear-gradient(135deg, rgba(255, 184, 82, 0.22), rgba(255, 122, 0, 0.12));
     transform: translateY(-1px);
-}
-
-.horoscope-form-field--checkbox {
-    justify-content: flex-end;
-}
-
-.horoscope-form-field--checkbox input {
-    width: 22px;
-    min-height: 22px;
-    padding: 0;
-    border-radius: 6px;
 }
 
 .horoscope-service-form-foot {

@@ -121,7 +121,18 @@ img { max-width: 100%; display: block; }
     transition: transform var(--transition);
 }
 .admin-sidebar-brand { padding: 24px 20px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid var(--border); }
-.admin-sidebar-logo { font-size: 32px; }
+.admin-sidebar-logo {
+    width: 46px;
+    height: 46px;
+    border-radius: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #151515;
+    background: linear-gradient(135deg, #f4d27d 0%, #d4a853 100%);
+    box-shadow: 0 10px 20px rgba(212, 168, 83, 0.24);
+    flex-shrink: 0;
+}
 .admin-sidebar-brand h2 { font-size: 1.1rem; color: var(--accent); }
 
 .admin-sidebar-nav { flex: 1; padding: 16px 12px; overflow-y: auto; display: flex; flex-direction: column; gap: 4px; }
@@ -133,7 +144,30 @@ img { max-width: 100%; display: block; }
 }
 .admin-nav-item:hover { background: var(--bg-elevated); color: var(--text-primary); }
 .admin-nav-item.is-active { background: var(--accent-glow); color: var(--accent); font-weight: 600; }
-.admin-nav-icon { font-size: 1.15rem; width: 24px; text-align: center; flex-shrink: 0; }
+.admin-nav-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.06);
+    color: currentColor;
+}
+.admin-nav-item:hover .admin-nav-icon,
+.admin-nav-item.is-active .admin-nav-icon {
+    background: rgba(212, 168, 83, 0.16);
+    border-color: rgba(212, 168, 83, 0.28);
+}
+.admin-icon-svg {
+    width: 20px;
+    height: 20px;
+    display: block;
+    fill: currentColor;
+    flex-shrink: 0;
+}
 
 .admin-sidebar-footer { padding: 16px 12px; border-top: 1px solid var(--border); }
 .admin-logout-btn {
@@ -167,6 +201,19 @@ img { max-width: 100%; display: block; }
 
 .admin-section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; flex-wrap: wrap; gap: 12px; }
 .admin-section-header h2 { font-size: 1.4rem; }
+.admin-section-note {
+    margin: -8px 0 18px;
+    padding: 12px 14px;
+    border-radius: var(--radius-sm);
+    border: 1px solid rgba(212, 168, 83, 0.2);
+    background: rgba(212, 168, 83, 0.08);
+    color: var(--text-secondary);
+    font-size: 0.84rem;
+}
+
+.admin-section-note strong {
+    color: var(--accent);
+}
 
 /* ─── STATS GRID ─── */
 .admin-stats-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
@@ -176,7 +223,21 @@ img { max-width: 100%; display: block; }
     transition: transform var(--transition), border-color var(--transition);
 }
 .admin-stat-card:hover { transform: translateY(-2px); border-color: var(--accent); }
-.admin-stat-icon { font-size: 1.8rem; }
+.admin-stat-icon {
+    width: 54px;
+    height: 54px;
+    border-radius: 16px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #181818;
+    background: linear-gradient(135deg, #f4d27d 0%, #d4a853 100%);
+    box-shadow: 0 12px 22px rgba(212, 168, 83, 0.2);
+}
+.admin-stat-icon .admin-icon-svg {
+    width: 26px;
+    height: 26px;
+}
 .admin-stat-value { font-size: 2rem; font-weight: 700; font-family: 'Outfit', sans-serif; color: var(--accent); }
 .admin-stat-label { font-size: 0.82rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.04em; }
 
@@ -332,6 +393,28 @@ img { max-width: 100%; display: block; }
 .admin-form-grid { display: grid; gap: 16px; }
 .admin-form-grid-2 { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
 .admin-field-span-2 { grid-column: 1 / -1; }
+
+.admin-form-note {
+    padding: 14px 16px;
+    border-radius: var(--radius-sm);
+    border: 1px solid rgba(212, 168, 83, 0.16);
+    background: rgba(212, 168, 83, 0.07);
+    color: var(--text-secondary);
+    font-size: 0.84rem;
+}
+
+.admin-form-note strong {
+    display: block;
+    margin-bottom: 4px;
+    color: var(--accent);
+}
+
+.admin-field-help {
+    margin-top: 6px;
+    color: var(--text-muted);
+    font-size: 0.76rem;
+    line-height: 1.5;
+}
 
 .admin-upload-card {
     display: grid;

@@ -154,7 +154,6 @@ const API_BASE = "/api";
 const TOKEN_KEY = "tmToken";
 const USER_KEY = "tmUser";
 
-const zodiacGrid = document.querySelector("[data-zodiac-grid]");
 const reviewTrack = document.querySelector("[data-review-track]");
 const videoTrack = document.querySelector("[data-video-track]");
 const videoDots = document.querySelector("[data-video-dots]");
@@ -170,21 +169,6 @@ const CONCERN_OPTIONS = [
     "Health & Wellbeing Analysis",
     "Marriage & Relationship Guidance",
     "Complete Kundli & Horoscope Analysis"
-];
-
-const zodiacSigns = [
-    { name: "Aries", short: "Ar", start: "#ff7f73", end: "#dc493f" },
-    { name: "Taurus", short: "Ta", start: "#b4b95b", end: "#7a7f26" },
-    { name: "Gemini", short: "Ge", start: "#6cd0d2", end: "#30979a" },
-    { name: "Cancer", short: "Ca", start: "#7cb7f2", end: "#4a7ed5" },
-    { name: "Leo", short: "Le", start: "#ffbf4f", end: "#e68a13" },
-    { name: "Virgo", short: "Vi", start: "#7fbf8f", end: "#3f8b57" },
-    { name: "Libra", short: "Li", start: "#d39bd9", end: "#a460ac" },
-    { name: "Scorpio", short: "Sc", start: "#c25d74", end: "#8c2f49" },
-    { name: "Sagittarius", short: "Sg", start: "#ff9f68", end: "#e06b29" },
-    { name: "Capricorn", short: "Cp", start: "#b48462", end: "#7a4d2d" },
-    { name: "Aquarius", short: "Aq", start: "#53b7b3", end: "#247b78" },
-    { name: "Pisces", short: "Pi", start: "#7b9cff", end: "#4f6cd8" }
 ];
 
 const reviews = [
@@ -332,41 +316,6 @@ const getYouTubeId = (url) => {
 
     const longMatch = url.match(/[?&]v=([a-zA-Z0-9_-]{6,})/);
     return longMatch ? longMatch[1] : "";
-};
-
-const renderZodiacCards = () => {
-    if (!zodiacGrid) {
-        return;
-    }
-
-    zodiacGrid.innerHTML = "";
-
-    zodiacSigns.forEach((sign) => {
-        const card = document.createElement("a");
-        card.className = "gallery-zodiac-card";
-        card.href = "horoscope.html";
-
-        const art = document.createElement("div");
-        art.className = "gallery-zodiac-art";
-        art.style.setProperty("--zodiac-start", sign.start);
-        art.style.setProperty("--zodiac-end", sign.end);
-
-        const icon = document.createElement("span");
-        icon.className = "gallery-zodiac-icon";
-        icon.textContent = sign.short;
-
-        art.append(icon);
-
-        const title = document.createElement("h3");
-        title.textContent = sign.name;
-
-        const subtitle = document.createElement("p");
-        subtitle.className = "gallery-zodiac-subtitle";
-        subtitle.textContent = "Open daily reading";
-
-        card.append(art, title, subtitle);
-        zodiacGrid.append(card);
-    });
 };
 
 const renderReviewMarquee = () => {
@@ -684,6 +633,105 @@ const createConcernOptions = (options = []) => {
         .join("");
 };
 
+const populateSelectOptions = (select, options, placeholder) => {
+    if (!select) {
+        return;
+    }
+
+    select.innerHTML = "";
+
+    const placeholderOption = document.createElement("option");
+    placeholderOption.value = "";
+    placeholderOption.textContent = placeholder;
+    placeholderOption.disabled = true;
+    placeholderOption.selected = true;
+    select.append(placeholderOption);
+
+    options.forEach((optionData) => {
+        const option = document.createElement("option");
+        option.value = optionData.value;
+        option.textContent = optionData.label;
+        select.append(option);
+    });
+};
+
+const buildRangeOptions = (start, end, formatter) => {
+    const values = [];
+    const direction = start <= end ? 1 : -1;
+
+    for (let value = start; direction > 0 ? value <= end : value >= end; value += direction) {
+        values.push({
+            value: formatter(value, "value"),
+            label: formatter(value, "label")
+        });
+    }
+
+    return values;
+};
+
+const initializeAstrologyFormSelects = () => {
+    const forms = document.querySelectorAll("[data-service-form]");
+
+    if (!forms.length) {
+        return;
+    }
+
+    const monthNames = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
+    ];
+    const currentYear = new Date().getFullYear();
+    const dayOptions = buildRangeOptions(1, 31, (value) => String(value).padStart(2, "0"));
+    const monthOptions = monthNames.map((monthName, index) => ({
+        value: String(index + 1).padStart(2, "0"),
+        label: monthName
+    }));
+    const yearOptions = buildRangeOptions(currentYear, 1950, (value) => String(value));
+    const hourOptions = buildRangeOptions(0, 23, (value) => String(value).padStart(2, "0"));
+    const minuteOptions = buildRangeOptions(0, 59, (value) => String(value).padStart(2, "0"));
+
+    forms.forEach((form) => {
+        populateSelectOptions(form.querySelector("[data-astro-day]"), dayOptions, "DD");
+        populateSelectOptions(form.querySelector("[data-astro-month]"), monthOptions, "MM");
+        populateSelectOptions(form.querySelector("[data-astro-year]"), yearOptions, "YYYY");
+        populateSelectOptions(form.querySelector("[data-astro-hour]"), hourOptions, "HH");
+        populateSelectOptions(form.querySelector("[data-astro-minute]"), minuteOptions, "MM");
+
+        const timeUnknownCheckbox = form.querySelector('input[name="timeUnknown"]');
+        const hourSelect = form.querySelector('select[name="birthHour"]');
+        const minuteSelect = form.querySelector('select[name="birthMinute"]');
+
+        const syncTimeUnknownState = () => {
+            const isUnknown = !!timeUnknownCheckbox?.checked;
+
+            [hourSelect, minuteSelect].forEach((select) => {
+                if (!select) {
+                    return;
+                }
+
+                select.disabled = isUnknown;
+
+                if (isUnknown) {
+                    select.value = "";
+                }
+            });
+        };
+
+        syncTimeUnknownState();
+        timeUnknownCheckbox?.addEventListener("change", syncTimeUnknownState);
+    });
+};
+
 const createConcernChoiceCards = (options = []) => {
     return options
         .map((option, index) => `
@@ -702,12 +750,6 @@ const createListItems = (items = []) => {
 const getDisplayServices = (allServices = []) => {
     const overallServices = allServices.filter((service) => service.serviceType === "overall");
     const topicServices = allServices.filter((service) => service.serviceType === "topic");
-    const collectedConcernOptions = Array.from(
-        new Set([
-            ...CONCERN_OPTIONS,
-            ...overallServices.map((service) => String(service.title || "").trim()).filter(Boolean)
-        ])
-    );
 
     const overallFallback = {
         title: "Manual Astrology Analysis and Remedies",
@@ -735,7 +777,7 @@ const getDisplayServices = (allServices = []) => {
             "Written remedies and practical suggestions",
             "Report visible in profile after admin upload"
         ],
-        dropdownOptions: collectedConcernOptions,
+        dropdownOptions: CONCERN_OPTIONS,
         whatsappNote: "Use an active WhatsApp number so the team can share service updates if needed.",
         formTitle: "Submit your overall astrology analysis request",
         formDescription: "Fill all birth details carefully and choose the concern area you want the report to focus on.",
@@ -769,7 +811,7 @@ const getDisplayServices = (allServices = []) => {
             "Written remedies",
             "Profile report delivery after admin upload"
         ],
-        dropdownOptions: collectedConcernOptions,
+        dropdownOptions: CONCERN_OPTIONS,
         whatsappNote: "Add your active WhatsApp number so the team can coordinate if any clarification is needed.",
         formTitle: "Submit your one topic astrology request",
         formDescription: "Choose a concern from the list or type the exact topic manually. You can use both for better context.",
@@ -778,9 +820,11 @@ const getDisplayServices = (allServices = []) => {
     };
 
     const overallPrimarySource = overallServices.find((service) => service.slug === "manual-analysis-report")
-        || (overallServices.length === 1 ? overallServices[0] : null);
+        || overallServices[0]
+        || null;
     const topicPrimarySource = topicServices.find((service) => service.slug === "one-topic-analysis")
-        || (topicServices.length === 1 ? topicServices[0] : null);
+        || topicServices[0]
+        || null;
 
     const overallPrimary = mergeServiceFallback(overallPrimarySource, overallFallback);
     const topicPrimary = mergeServiceFallback(topicPrimarySource, topicFallback);
@@ -789,15 +833,19 @@ const getDisplayServices = (allServices = []) => {
         options.length === legacyConcernOptions.length &&
         options.every((option, index) => option === legacyConcernOptions[index]);
     const resolveConcernOptions = (options = []) => {
-        if (overallServices.length > 1) {
-            return collectedConcernOptions;
+        const cleanedOptions = Array.from(
+            new Set(
+                options
+                    .map((option) => String(option || "").trim())
+                    .filter(Boolean)
+            )
+        );
+
+        if (!cleanedOptions.length || isLegacyOptionSet(cleanedOptions)) {
+            return CONCERN_OPTIONS;
         }
 
-        if (!options.length || isLegacyOptionSet(options)) {
-            return collectedConcernOptions;
-        }
-
-        return options;
+        return cleanedOptions;
     };
 
     overallPrimary.dropdownOptions = resolveConcernOptions(overallPrimary.dropdownOptions);
@@ -820,7 +868,7 @@ const renderAstrologyServices = (services = []) => {
                 <div class="horoscope-service-secondary" style="background-image:url('${escapeHtml(assetUrl(service.secondaryImage || service.image || ''))}')"></div>
                 <div class="horoscope-service-badges">
                     <span>${escapeHtml(service.badge)}</span>
-                    <span>${escapeHtml(service.priceLabel)}</span>
+                    <span class="horoscope-service-price-badge">Price ${escapeHtml(service.priceLabel)}</span>
                 </div>
             </div>
             <div class="horoscope-service-copy">
@@ -829,7 +877,7 @@ const renderAstrologyServices = (services = []) => {
                 <p>${escapeHtml(service.shortDescription)}</p>
                 <div class="horoscope-service-meta">
                     <span>${escapeHtml(service.turnaround)}</span>
-                    <span>${escapeHtml(service.priceLabel)}</span>
+                    <span class="horoscope-service-price-chip">Price: ${escapeHtml(service.priceLabel)}</span>
                 </div>
                 <div class="horoscope-service-detail-block">
                     <strong>${escapeHtml(service.introHeading)}</strong>
@@ -850,6 +898,10 @@ const renderAstrologyServices = (services = []) => {
                 <div class="horoscope-service-form-head">
                     <h4>${escapeHtml(service.formTitle)}</h4>
                     <p>${escapeHtml(service.formDescription)}</p>
+                    <div class="horoscope-service-price-banner">
+                        <span>Service Price</span>
+                        <strong>${escapeHtml(service.priceLabel)}</strong>
+                    </div>
                 </div>
                 <div class="horoscope-service-form-grid">
                     <label class="horoscope-form-field">
@@ -860,35 +912,32 @@ const renderAstrologyServices = (services = []) => {
                         <span>Birth Place</span>
                         <input type="text" name="birthPlace" required>
                     </label>
-                    <label class="horoscope-form-field">
-                        <span>D.O.B Day</span>
-                        <input type="text" name="birthDay" required>
-                    </label>
-                    <label class="horoscope-form-field">
-                        <span>D.O.B Month</span>
-                        <input type="text" name="birthMonth" required>
-                    </label>
-                    <label class="horoscope-form-field">
-                        <span>D.O.B Year</span>
-                        <input type="text" name="birthYear" required>
-                    </label>
-                    <label class="horoscope-form-field">
-                        <span>Birth Hour</span>
-                        <input type="text" name="birthHour">
-                    </label>
-                    <label class="horoscope-form-field">
-                        <span>Birth Minute</span>
-                        <input type="text" name="birthMinute">
-                    </label>
-                    <label class="horoscope-form-field horoscope-form-field--checkbox">
-                        <span>Time Unknown</span>
-                        <input type="checkbox" name="timeUnknown">
-                    </label>
+                    <div class="horoscope-form-field horoscope-form-field--full">
+                        <span>Birth Date</span>
+                        <div class="horoscope-form-inline-grid horoscope-form-inline-grid-date">
+                            <select name="birthDay" data-astro-day required></select>
+                            <select name="birthMonth" data-astro-month required></select>
+                            <select name="birthYear" data-astro-year required></select>
+                        </div>
+                        <small>Choose DD - MM - YYYY</small>
+                    </div>
+                    <div class="horoscope-form-field horoscope-form-field--full">
+                        <span>Birth Time</span>
+                        <div class="horoscope-form-inline-grid horoscope-form-inline-grid-time">
+                            <select name="birthHour" data-astro-hour required></select>
+                            <select name="birthMinute" data-astro-minute required></select>
+                        </div>
+                        <label class="horoscope-check-row">
+                            <input type="checkbox" name="timeUnknown">
+                            <span>Don't know birth time</span>
+                        </label>
+                        <small>Choose HH - MM or mark time unknown</small>
+                    </div>
                     <label class="horoscope-form-field">
                         <span>WhatsApp Number</span>
                         <input type="text" name="whatsappNumber" required>
                     </label>
-                    <label class="horoscope-form-field">
+                    <div class="horoscope-form-field horoscope-form-field--full">
                         <span>${service.serviceType === "topic" ? "Choose Topic" : "Concerned For"}</span>
                         ${service.serviceType === "topic" ? `
                             <select name="concernedFor">
@@ -900,7 +949,7 @@ const renderAstrologyServices = (services = []) => {
                                 ${createConcernChoiceCards(service.dropdownOptions)}
                             </div>
                         `}
-                    </label>
+                    </div>
                     ${service.serviceType === "topic" ? `
                         <label class="horoscope-form-field horoscope-form-field--full">
                             <span>Manual Topic</span>
@@ -918,6 +967,7 @@ const renderAstrologyServices = (services = []) => {
         </article>
     `).join("");
 
+    initializeAstrologyFormSelects();
     bindAstrologyForms();
 };
 
@@ -1048,9 +1098,6 @@ const loadVideos = async () => {
     renderVideoCarousel();
 };
 
-renderZodiacCards();
 renderReviewMarquee();
-renderBlogCarousel();
 initializeAccordion();
 loadAstrologyServices();
-loadVideos();

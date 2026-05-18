@@ -25,6 +25,23 @@ const compactWhitespace = (value = '') => {
     return String(value).replace(/\s+/g, ' ').trim();
 };
 
+const getAdminIconSvg = (name = '') => {
+    const icons = {
+        overview: '<svg viewBox="0 0 24 24" class="admin-icon-svg"><path d="M4 13h6V4H4v9Zm0 7h6v-5H4v5Zm10 0h6V11h-6v9Zm0-16v5h6V4h-6Z" fill="currentColor"/></svg>',
+        pooja: '<svg viewBox="0 0 24 24" class="admin-icon-svg"><path d="M12 2c2.8 3 4 5.4 4 7.5A4 4 0 1 1 8 9.5C8 7.4 9.2 5 12 2Zm-7 16h14v2H5v-2Z" fill="currentColor"/></svg>',
+        products: '<svg viewBox="0 0 24 24" class="admin-icon-svg"><path d="M7 6V4a5 5 0 0 1 10 0v2h3v14H4V6h3Zm2 0h6V4a3 3 0 0 0-6 0v2Zm1 5h4v2h-4v-2Z" fill="currentColor"/></svg>',
+        videos: '<svg viewBox="0 0 24 24" class="admin-icon-svg"><path d="M4 5h12a2 2 0 0 1 2 2v1l3-2v12l-3-2v1a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Zm6 4v6l5-3-5-3Z" fill="currentColor"/></svg>',
+        astrology: '<svg viewBox="0 0 24 24" class="admin-icon-svg"><path d="m12 2 1.6 4.4L18 8l-4.4 1.6L12 14l-1.6-4.4L6 8l4.4-1.6L12 2Zm7 11 1 2.7 2.7 1L20 17.7 19 20l-1-2.3-2.7-1 2.7-1L19 13Zm-14 0 1 2.7 2.7 1L6 17.7 5 20l-1-2.3-2.7-1 2.7-1L5 13Z" fill="currentColor"/></svg>',
+        kundali: '<svg viewBox="0 0 24 24" class="admin-icon-svg"><path d="M7 3a4 4 0 1 1 0 8 4 4 0 0 1 0-8Zm10 0a4 4 0 1 1 0 8 4 4 0 0 1 0-8ZM3 19a4 4 0 0 1 4-4h2a4 4 0 0 1 4 4v2H3v-2Zm8 2v-2a5.9 5.9 0 0 0-1-3.3c.3 0 .7-.1 1-.1h2a4 4 0 0 1 4 4v1h-6Z" fill="currentColor"/></svg>',
+        janam: '<svg viewBox="0 0 24 24" class="admin-icon-svg"><path d="M12 2 4 6v12l8 4 8-4V6l-8-4Zm0 2.2 5.5 2.7L12 9.6 6.5 6.9 12 4.2Zm-6 4.3 5 2.5v8.1l-5-2.5V8.5Zm7 10.6V11l5-2.5v8.1l-5 2.5Z" fill="currentColor"/></svg>',
+        topic: '<svg viewBox="0 0 24 24" class="admin-icon-svg"><path d="M4 5h16v2H4V5Zm0 4h10v2H4V9Zm0 4h16v2H4v-2Zm0 4h10v2H4v-2Zm13.5-7 1 2.2 2.5.4-1.8 1.8.4 2.6-2.1-1.1-2.1 1.1.4-2.6-1.8-1.8 2.5-.4 1-2.2Z" fill="currentColor"/></svg>',
+        contact: '<svg viewBox="0 0 24 24" class="admin-icon-svg"><path d="M3 5h18a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H7l-4 3V7a2 2 0 0 1 2-2Zm2 3v2h14V8H5Zm0 4v2h9v-2H5Z" fill="currentColor"/></svg>',
+        unread: '<svg viewBox="0 0 24 24" class="admin-icon-svg"><path d="M4 6h16a2 2 0 0 1 2 2v10l-4-2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2Zm4 5h8V9H8v2Zm0 4h5v-2H8v2Z" fill="currentColor"/></svg>'
+    };
+
+    return icons[name] || icons.overview;
+};
+
 const chunkLongText = (value = '', maxLength = 120) => {
     const normalized = compactWhitespace(value);
 
@@ -415,22 +432,22 @@ const loadStats = async () => {
     }
 
     const stats = [
-        { icon: 'O', value: result.data.poojaCount, label: 'Pooja Slides' },
-        { icon: 'P', value: result.data.productCount, label: 'Products' },
-        { icon: 'V', value: result.data.videoCount, label: 'Videos' },
-        { icon: 'A', value: result.data.astrologyServiceCount || 0, label: 'Astrology Services' },
-        { icon: 'K', value: result.data.kundaliCount, label: 'Kundali Matching' },
-        { icon: 'J', value: result.data.janamCount, label: 'Janam Kundali' },
-        { icon: 'O', value: result.data.astrologyOverallCount || 0, label: 'Overall Analysis Requests' },
-        { icon: 'T', value: result.data.astrologyTopicCount || 0, label: 'One Topic Requests' },
-        { icon: 'C', value: result.data.contactCount, label: 'Contact Messages' },
-        { icon: 'U', value: result.data.unreadCount, label: 'Unread Messages' }
+        { icon: 'pooja', value: result.data.poojaCount, label: 'Pooja Slides' },
+        { icon: 'products', value: result.data.productCount, label: 'Products' },
+        { icon: 'videos', value: result.data.videoCount, label: 'Videos' },
+        { icon: 'astrology', value: result.data.astrologyServiceCount || 0, label: 'Astrology Services' },
+        { icon: 'kundali', value: result.data.kundaliCount, label: 'Kundali Matching' },
+        { icon: 'janam', value: result.data.janamCount, label: 'Janam Kundali' },
+        { icon: 'overview', value: result.data.astrologyOverallCount || 0, label: 'Overall Analysis Requests' },
+        { icon: 'topic', value: result.data.astrologyTopicCount || 0, label: 'One Topic Requests' },
+        { icon: 'contact', value: result.data.contactCount, label: 'Contact Messages' },
+        { icon: 'unread', value: result.data.unreadCount, label: 'Unread Messages' }
     ];
 
     document.getElementById('statsGrid').innerHTML = stats
         .map((item) => `
             <div class="admin-stat-card">
-                <span class="admin-stat-icon">${item.icon}</span>
+                <span class="admin-stat-icon" aria-hidden="true">${getAdminIconSvg(item.icon)}</span>
                 <span class="admin-stat-value">${item.value}</span>
                 <span class="admin-stat-label">${item.label}</span>
             </div>
@@ -1236,9 +1253,15 @@ const astrologyServiceFormHtml = (service = {}) => {
     const highlights = Array.isArray(service.highlights) ? service.highlights : [];
     const deliverables = Array.isArray(service.deliverables) ? service.deliverables : [];
     const dropdownOptions = Array.isArray(service.dropdownOptions) ? service.dropdownOptions : [];
+    const isTopic = service.serviceType === 'topic';
 
     return `
         <form id="astrologyServiceForm" class="admin-form-stack">
+            <div class="admin-form-note">
+                <strong>Frontend use rule</strong>
+                Astrology page par sirf 2 live forms dikhte hain: 1 active Overall Analysis aur 1 active One Topic Analysis.
+                Agar aap same type ka naya active service save karenge, to purana active service automatically inactive ho jayega.
+            </div>
             <div class="admin-form-grid admin-form-grid-2">
                 <div class="admin-field">
                     <label>Title (max 100)</label>
@@ -1253,9 +1276,14 @@ const astrologyServiceFormHtml = (service = {}) => {
                 <div class="admin-field">
                     <label>Service Type</label>
                     <select name="serviceType">
-                        <option value="overall" ${service.serviceType !== 'topic' ? 'selected' : ''}>Overall Analysis</option>
-                        <option value="topic" ${service.serviceType === 'topic' ? 'selected' : ''}>One Topic Analysis</option>
+                        <option value="overall" ${!isTopic ? 'selected' : ''}>Overall Analysis</option>
+                        <option value="topic" ${isTopic ? 'selected' : ''}>One Topic Analysis</option>
                     </select>
+                    <p class="admin-field-help" id="astrologyServiceTypeHelp">
+                        ${isTopic
+            ? 'Ye service One Topic Analysis form ko control karega.'
+            : 'Ye service Overall Analysis form ko control karega.'}
+                    </p>
                 </div>
                 <div class="admin-field">
                     <label>Badge (max 40)</label>
@@ -1372,8 +1400,13 @@ const astrologyServiceFormHtml = (service = {}) => {
                     <textarea name="deliverables" rows="6">${escapeHtml(deliverables.join('\n'))}</textarea>
                 </div>
                 <div class="admin-field">
-                    <label>Concern Dropdown Options (one per line)</label>
+                    <label id="astrologyOptionsLabel">${isTopic ? 'Dropdown Options (one per line)' : 'Concern Cards on Frontend (one per line)'}</label>
                     <textarea name="dropdownOptions" rows="6">${escapeHtml(dropdownOptions.join('\n'))}</textarea>
+                    <p class="admin-field-help" id="astrologyOptionsHelp">
+                        ${isTopic
+            ? 'Ye options One Topic Analysis ke dropdown me dikhte hain. User manual topic bhi likh sakta hai.'
+            : 'Ye options Overall Analysis form me visible selectable concern cards ke roop me dikhte hain.'}
+                    </p>
                 </div>
                 <div class="admin-field">
                     <label>WhatsApp Note (max 160)</label>
@@ -1402,6 +1435,9 @@ const astrologyServiceFormHtml = (service = {}) => {
                     <label>Custom Topic Placeholder (max 160)</label>
                     <input type="text" name="topicPlaceholder" maxlength="160" value="${escapeHtml(service.topicPlaceholder || '')}">
                     <div class="char-count"></div>
+                    <p class="admin-field-help" id="astrologyTopicPlaceholderHelp">
+                        Ye field sirf One Topic Analysis ke manual topic textarea ke liye use hoti hai.
+                    </p>
                 </div>
             </div>
 
@@ -1425,6 +1461,46 @@ const bindAstrologyServiceForm = (service = {}) => {
     bindTextCounters(form);
     setUploadPreview(imagePreview, service.image || imageInput.value, 'Main service image preview');
     setUploadPreview(secondaryPreview, service.secondaryImage || secondaryImageInput.value, 'Secondary image preview');
+
+    const syncAstrologyServiceCopy = () => {
+        const isTopic = form.serviceType.value === 'topic';
+        const typeHelp = document.getElementById('astrologyServiceTypeHelp');
+        const optionsLabel = document.getElementById('astrologyOptionsLabel');
+        const optionsHelp = document.getElementById('astrologyOptionsHelp');
+        const topicPlaceholderHelp = document.getElementById('astrologyTopicPlaceholderHelp');
+        const topicPlaceholderField = form.topicPlaceholder.closest('.admin-field');
+
+        if (typeHelp) {
+            typeHelp.textContent = isTopic
+                ? 'Ye service One Topic Analysis form ko control karega.'
+                : 'Ye service Overall Analysis form ko control karega.';
+        }
+
+        if (optionsLabel) {
+            optionsLabel.textContent = isTopic
+                ? 'Dropdown Options (one per line)'
+                : 'Concern Cards on Frontend (one per line)';
+        }
+
+        if (optionsHelp) {
+            optionsHelp.textContent = isTopic
+                ? 'Ye options One Topic Analysis ke dropdown me dikhte hain. User manual topic bhi likh sakta hai.'
+                : 'Ye options Overall Analysis form me visible selectable concern cards ke roop me dikhte hain.';
+        }
+
+        if (topicPlaceholderField) {
+            topicPlaceholderField.style.opacity = isTopic ? '1' : '0.55';
+        }
+
+        if (topicPlaceholderHelp) {
+            topicPlaceholderHelp.textContent = isTopic
+                ? 'Ye field One Topic Analysis ke manual topic textarea me placeholder ke roop me dikhai deti hai.'
+                : 'Overall Analysis me manual topic textarea nahi hota, isliye ye field frontend par use nahi hogi.';
+        }
+    };
+
+    syncAstrologyServiceCopy();
+    form.serviceType.addEventListener('change', syncAstrologyServiceCopy);
 
     const refreshImageState = () => {
         imagePath.textContent = imageInput.value || 'No image selected';
@@ -1536,6 +1612,8 @@ const loadAstrologyServices = async () => {
                     <strong>${escapeHtml(service.serviceType === 'topic' ? 'One Topic' : 'Overall')}</strong>
                     <br>
                     <small style="color:var(--text-muted)">Options: ${escapeHtml(String(service.dropdownOptions?.length || 0))}</small>
+                    <br>
+                    <small style="color:var(--text-muted)">${service.isActive ? 'Live frontend form' : 'Not live on frontend'}</small>
                 </td>
                 <td>
                     <strong>${escapeHtml(service.priceLabel || '-')}</strong>
@@ -1634,6 +1712,11 @@ const loadKundali = async (type) => {
                     <td>${escapeHtml(submission.singleData?.name || '-')}</td>
                     <td>${escapeHtml(submission.analysisData?.concernedFor || '-')}</td>
                     <td>${escapeHtml(submission.analysisData?.serviceTitle || '-')}</td>
+                    <td>
+                        ${escapeHtml(submission.userProfile?.name || '-')}
+                        <br>
+                        <small>${escapeHtml(submission.userProfile?.email || '')}</small>
+                    </td>
                     <td>${escapeHtml(submission.whatsappNumber || '-')}</td>
                     <td><span class="admin-badge admin-badge-info">${escapeHtml(submission.status || 'pending')}</span></td>
                     <td>${reportBadgeHtml(submission)}</td>
@@ -1650,6 +1733,11 @@ const loadKundali = async (type) => {
                     <td>${escapeHtml(submission.singleData?.name || '-')}</td>
                     <td>${escapeHtml(submission.analysisData?.concernedFor || '-')}</td>
                     <td>${escapeHtml(submission.analysisData?.customTopic || '-')}</td>
+                    <td>
+                        ${escapeHtml(submission.userProfile?.name || '-')}
+                        <br>
+                        <small>${escapeHtml(submission.userProfile?.email || '')}</small>
+                    </td>
                     <td>${escapeHtml(submission.whatsappNumber || '-')}</td>
                     <td><span class="admin-badge admin-badge-info">${escapeHtml(submission.status || 'pending')}</span></td>
                     <td>${reportBadgeHtml(submission)}</td>
@@ -1674,9 +1762,11 @@ const loadKundali = async (type) => {
         `;
     });
 
+    const emptyColspan = type === 'astrology_overall' || type === 'astrology_topic' ? 10 : 9;
+
     document.getElementById(targetId).innerHTML = rows.join('') || `
         <tr>
-            <td colspan="9" style="text-align:center;color:var(--text-muted)">No submissions found.</td>
+            <td colspan="${emptyColspan}" style="text-align:center;color:var(--text-muted)">No submissions found.</td>
         </tr>
     `;
 };
