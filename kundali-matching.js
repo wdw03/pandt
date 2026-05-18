@@ -175,6 +175,58 @@ const kundaliApiUrl = (path) => `${kundaliApiOrigin}${path}`;
 const kundaliForm = document.getElementById("kundaliMatchingForm");
 const feedbackElement = document.querySelector("[data-kundali-feedback]");
 const kundaliPriceDisplays = Array.from(document.querySelectorAll("[data-kundali-price-display]"));
+let kundaliLoginRedirectPending = false;
+
+const isKundaliUserLoggedIn = () => Boolean(localStorage.getItem("tmToken"));
+
+const getKundaliLoginRedirectUrl = () => {
+    const returnTo = `${window.location.pathname}${window.location.search}${window.location.hash}`;
+    return `login.html?returnTo=${encodeURIComponent(returnTo)}`;
+};
+
+const redirectKundaliLoginRequired = () => {
+    if (kundaliLoginRedirectPending) {
+        return;
+    }
+
+    kundaliLoginRedirectPending = true;
+    showKundaliFeedback("Please login first to continue with Kundali Matching.", "error");
+
+    window.setTimeout(() => {
+        window.location.href = getKundaliLoginRedirectUrl();
+    }, 120);
+};
+
+const protectKundaliFormUntilLogin = () => {
+    if (!kundaliForm || isKundaliUserLoggedIn()) {
+        return;
+    }
+
+    const blockUntilLogin = (event) => {
+        const interactiveTarget = event.target instanceof Element
+            ? event.target.closest("input, select, textarea, button, label")
+            : null;
+
+        if (!interactiveTarget) {
+            return;
+        }
+
+        if (event.cancelable) {
+            event.preventDefault();
+        }
+
+        if (event.type === "focusin" && typeof interactiveTarget.blur === "function") {
+            interactiveTarget.blur();
+        }
+
+        event.stopPropagation?.();
+        redirectKundaliLoginRequired();
+    };
+
+    kundaliForm.addEventListener("pointerdown", blockUntilLogin, true);
+    kundaliForm.addEventListener("focusin", blockUntilLogin, true);
+    kundaliForm.addEventListener("keydown", blockUntilLogin, true);
+};
 
 const populateSelectOptions = (select, options, placeholder) => {
     if (!select) {
@@ -356,6 +408,11 @@ const handleKundaliSubmit = () => {
     kundaliForm.addEventListener("submit", async (event) => {
         event.preventDefault();
 
+        if (!isKundaliUserLoggedIn()) {
+            redirectKundaliLoginRequired();
+            return;
+        }
+
         if (!kundaliForm.reportValidity()) {
             showKundaliFeedback(
                 "Please fill in all required details correctly before submitting the Kundali Matching form.",
@@ -433,6 +490,7 @@ const animateKundaliPage = () => {
 };
 
 initializeKundaliForm();
+protectKundaliFormUntilLogin();
 handleKundaliSubmit();
 animateKundaliPage();
 loadKundaliPrice();

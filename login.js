@@ -17,6 +17,34 @@ const loginMobileOverlay = document.getElementById('loginMobileOverlay');
 
 let loginActivePanel = '';
 
+function getPostLoginDestination() {
+    const rawReturnTo = new URLSearchParams(window.location.search).get('returnTo');
+
+    if (!rawReturnTo) {
+        return 'index.html';
+    }
+
+    try {
+        const resolvedUrl = new URL(rawReturnTo, window.location.origin);
+
+        if (resolvedUrl.origin !== window.location.origin) {
+            return 'index.html';
+        }
+
+        if (resolvedUrl.pathname.endsWith('/login.html') || resolvedUrl.pathname === '/login.html') {
+            return 'index.html';
+        }
+
+        return `${resolvedUrl.pathname}${resolvedUrl.search}${resolvedUrl.hash}`;
+    } catch (error) {
+        return 'index.html';
+    }
+}
+
+function redirectAfterAuth() {
+    window.location.href = getPostLoginDestination();
+}
+
 function syncLoginPanelState(panelName) {
     loginActivePanel = panelName;
 
@@ -67,7 +95,7 @@ window.addEventListener('resize', () => {
 
 // Check if already logged in, redirect to home
 if (localStorage.getItem('tmToken')) {
-    window.location.href = 'index.html';
+    redirectAfterAuth();
 }
 
 // Switch Views
@@ -148,7 +176,7 @@ document.getElementById('formVerifySignup')?.addEventListener('submit', async (e
                 localStorage.setItem('tmUser', JSON.stringify(data.user));
             }
             alert('Verification Successful! You are now logged in.');
-            window.location.href = 'index.html'; // Redirect to home
+            redirectAfterAuth();
         } else {
             alert(data.message || 'Verification failed');
         }
@@ -175,7 +203,7 @@ document.getElementById('formLogin')?.addEventListener('submit', async (e) => {
             if (data.user) {
                 localStorage.setItem('tmUser', JSON.stringify(data.user));
             }
-            window.location.href = 'index.html'; // Redirect to home
+            redirectAfterAuth();
         } else if (data.needsVerification) {
             alert(data.message);
             switchAuthView('viewSignup');
@@ -235,7 +263,7 @@ document.getElementById('formResetPassword')?.addEventListener('submit', async (
                 localStorage.setItem('tmUser', JSON.stringify(data.user));
             }
             sessionStorage.removeItem('resetEmail');
-            window.location.href = 'index.html';
+            redirectAfterAuth();
         } else {
             alert(data.message || 'Reset failed');
         }

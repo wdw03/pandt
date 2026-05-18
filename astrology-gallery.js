@@ -163,6 +163,7 @@ const accordionToggle = document.querySelector("[data-gallery-accordion-toggle]"
 const accordionContent = document.querySelector("[data-gallery-accordion-content]");
 const serviceGrid = document.querySelector("[data-astrology-services]");
 const astrologyFeedbackNode = document.querySelector("[data-astrology-feedback]");
+let astrologyLoginRedirectPending = false;
 
 const CONCERN_OPTIONS = [
     "Career & Financial Growth",
@@ -281,6 +282,13 @@ const getAuthHeaders = () => {
     return headers;
 };
 
+const isAstrologyUserLoggedIn = () => Boolean(localStorage.getItem(TOKEN_KEY));
+
+const getAstrologyLoginRedirectUrl = () => {
+    const returnTo = `${window.location.pathname}${window.location.search}${window.location.hash}`;
+    return `login.html?returnTo=${encodeURIComponent(returnTo)}`;
+};
+
 const setAstrologyFeedback = (message = "", type = "info") => {
     if (!astrologyFeedbackNode) {
         return;
@@ -301,6 +309,24 @@ const setFormFeedback = (form, message = "", type = "info") => {
     feedbackNode.textContent = message;
     feedbackNode.hidden = !message;
     feedbackNode.dataset.state = type;
+};
+
+const redirectAstrologyLoginRequired = (form = null) => {
+    if (astrologyLoginRedirectPending) {
+        return;
+    }
+
+    astrologyLoginRedirectPending = true;
+
+    if (form) {
+        setFormFeedback(form, "Please login first to continue with Astrology Analysis.", "error");
+    }
+
+    setAstrologyFeedback("Please login first to continue with Astrology Analysis.", "error");
+
+    window.setTimeout(() => {
+        window.location.href = getAstrologyLoginRedirectUrl();
+    }, 120);
 };
 
 const getYouTubeId = (url) => {
@@ -975,9 +1001,41 @@ const bindAstrologyForms = () => {
     const storedUser = getStoredUser();
 
     document.querySelectorAll("[data-service-form]").forEach((form) => {
+        if (!isAstrologyUserLoggedIn()) {
+            const blockUntilLogin = (event) => {
+                const interactiveTarget = event.target instanceof Element
+                    ? event.target.closest("input, select, textarea, button, label")
+                    : null;
+
+                if (!interactiveTarget) {
+                    return;
+                }
+
+                if (event.cancelable) {
+                    event.preventDefault();
+                }
+
+                if (event.type === "focusin" && typeof interactiveTarget.blur === "function") {
+                    interactiveTarget.blur();
+                }
+
+                event.stopPropagation?.();
+                redirectAstrologyLoginRequired(form);
+            };
+
+            form.addEventListener("pointerdown", blockUntilLogin, true);
+            form.addEventListener("focusin", blockUntilLogin, true);
+            form.addEventListener("keydown", blockUntilLogin, true);
+        }
+
         form.addEventListener("submit", async (event) => {
             event.preventDefault();
             setFormFeedback(form, "");
+
+            if (!isAstrologyUserLoggedIn()) {
+                redirectAstrologyLoginRequired(form);
+                return;
+            }
 
             const serviceType = form.dataset.serviceType || "overall";
             const selectedConcernRadio = form.querySelector('input[name="concernedFor"]:checked');

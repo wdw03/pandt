@@ -176,6 +176,58 @@ const janamForm = document.getElementById("janamKundaliForm");
 const janamFeedback = document.querySelector("[data-janam-feedback]");
 const janamPriceDisplays = Array.from(document.querySelectorAll("[data-janam-price-display]"));
 const janamPriceInlineText = Array.from(document.querySelectorAll("[data-janam-price-inline]"));
+let janamLoginRedirectPending = false;
+
+const isJanamUserLoggedIn = () => Boolean(localStorage.getItem("tmToken"));
+
+const getJanamLoginRedirectUrl = () => {
+    const returnTo = `${window.location.pathname}${window.location.search}${window.location.hash}`;
+    return `login.html?returnTo=${encodeURIComponent(returnTo)}`;
+};
+
+const redirectJanamLoginRequired = () => {
+    if (janamLoginRedirectPending) {
+        return;
+    }
+
+    janamLoginRedirectPending = true;
+    showJanamFeedback("Please login first to continue with Janam Kundali.", "error");
+
+    window.setTimeout(() => {
+        window.location.href = getJanamLoginRedirectUrl();
+    }, 120);
+};
+
+const protectJanamFormUntilLogin = () => {
+    if (!janamForm || isJanamUserLoggedIn()) {
+        return;
+    }
+
+    const blockUntilLogin = (event) => {
+        const interactiveTarget = event.target instanceof Element
+            ? event.target.closest("input, select, textarea, button, label")
+            : null;
+
+        if (!interactiveTarget) {
+            return;
+        }
+
+        if (event.cancelable) {
+            event.preventDefault();
+        }
+
+        if (event.type === "focusin" && typeof interactiveTarget.blur === "function") {
+            interactiveTarget.blur();
+        }
+
+        event.stopPropagation?.();
+        redirectJanamLoginRequired();
+    };
+
+    janamForm.addEventListener("pointerdown", blockUntilLogin, true);
+    janamForm.addEventListener("focusin", blockUntilLogin, true);
+    janamForm.addEventListener("keydown", blockUntilLogin, true);
+};
 
 const fillSelectOptions = (select, options, placeholder) => {
     if (!select) {
@@ -351,6 +403,11 @@ const handleJanamSubmit = () => {
     janamForm.addEventListener("submit", async (event) => {
         event.preventDefault();
 
+        if (!isJanamUserLoggedIn()) {
+            redirectJanamLoginRequired();
+            return;
+        }
+
         if (!janamForm.reportValidity()) {
             showJanamFeedback(
                 "Please fill in all required Janam Kundali details correctly before submitting.",
@@ -446,6 +503,7 @@ const animateJanamPage = () => {
 };
 
 initializeJanamForm();
+protectJanamFormUntilLogin();
 handleJanamSubmit();
 initializeJanamFaq();
 animateJanamPage();
