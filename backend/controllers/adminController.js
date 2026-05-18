@@ -5,6 +5,7 @@ const Admin = require('../models/Admin');
 const PoojaSlide = require('../models/PoojaSlide');
 const Product = require('../models/Product');
 const VideoItem = require('../models/VideoItem');
+const AstrologyService = require('../models/AstrologyService');
 const RouteSection = require('../models/RouteSection');
 const KundaliSubmission = require('../models/KundaliSubmission');
 const ContactSubmission = require('../models/ContactSubmission');
@@ -14,12 +15,14 @@ const {
     normalizePoojaSlidePayload,
     normalizeProductPayload,
     normalizeVideoPayload,
+    normalizeAstrologyServicePayload,
     toWebAssetPath
 } = require('../utils/contentManager');
 const {
     ensurePoojaSlidesSeeded,
     ensureProductsSeeded,
     ensureVideosSeeded,
+    ensureAstrologyServicesSeeded,
     ensureSiteConfigSeeded
 } = require('../utils/contentBootstrap');
 const { resetTokenCache } = require('../utils/prokeralaService');
@@ -35,6 +38,26 @@ const submissionHasReport = (submission) => {
         report.fileUrl ||
         (report.storage === 'database' && (Number(report.fileSize || 0) > 0 || cleanString(report.originalName)))
     );
+};
+
+const getSubmissionReportTitle = (submission = {}) => {
+    if (submission.type === 'matching') {
+        return 'Kundali Matching Report';
+    }
+
+    if (submission.type === 'janam') {
+        return 'Janam Kundali Report';
+    }
+
+    if (submission.type === 'astrology_overall') {
+        return 'Overall Astrology Analysis Report';
+    }
+
+    if (submission.type === 'astrology_topic') {
+        return 'One Topic Astrology Report';
+    }
+
+    return 'Astrology Report';
 };
 
 const resolveLegacyReportPath = (fileUrl = '') => {
@@ -348,6 +371,68 @@ exports.deleteVideo = async (req, res) => {
     }
 };
 
+exports.getAstrologyServices = async (req, res) => {
+    try {
+        await ensureAstrologyServicesSeeded();
+        const services = await AstrologyService.find().sort({ order: 1, createdAt: -1 });
+        const normalizedServices = services.map((service) => ({
+            ...service.toObject(),
+            image: toWebAssetPath(service.image),
+            secondaryImage: toWebAssetPath(service.secondaryImage)
+        }));
+        return res.json({ success: true, data: normalizedServices });
+    } catch (error) {
+        return res.status(500).json({ success: false, message: error.message });
+    }
+};
+
+exports.createAstrologyService = async (req, res) => {
+    try {
+        const payload = normalizeAstrologyServicePayload(req.body);
+
+        if (!payload.title) {
+            return res.status(400).json({ success: false, message: 'Service title is required' });
+        }
+
+        const service = await AstrologyService.create(payload);
+        return res.status(201).json({ success: true, data: service });
+    } catch (error) {
+        return res.status(400).json({ success: false, message: error.message });
+    }
+};
+
+exports.updateAstrologyService = async (req, res) => {
+    try {
+        const service = await AstrologyService.findById(req.params.id);
+
+        if (!service) {
+            return res.status(404).json({ success: false, message: 'Service not found' });
+        }
+
+        const payload = normalizeAstrologyServicePayload(req.body, service.toObject());
+        Object.assign(service, payload);
+        await service.save();
+
+        return res.json({ success: true, data: service });
+    } catch (error) {
+        return res.status(400).json({ success: false, message: error.message });
+    }
+};
+
+exports.deleteAstrologyService = async (req, res) => {
+    try {
+        const service = await AstrologyService.findByIdAndDelete(req.params.id);
+
+        if (!service) {
+            return res.status(404).json({ success: false, message: 'Service not found' });
+        }
+
+        return res.json({ success: true, message: 'Service deleted' });
+    } catch (error) {
+        return res.status(500).json({ success: false, message: error.message });
+    }
+};
+
 exports.getKundaliSubmissions = async (req, res) => {
     try {
         const typeFilter = req.query.type;
@@ -398,7 +483,7 @@ exports.uploadKundaliReport = async (req, res) => {
 
         if (req.file) {
             submission.report = {
-                title: title || `${submission.type === 'matching' ? 'Kundali Matching' : 'Janam Kundali'} Report`,
+                title: title || getSubmissionReportTitle(submission),
                 note,
                 storage: 'database',
                 fileUrl: '',
@@ -586,23 +671,30 @@ exports.getDashboardStats = async (req, res) => {
         await Promise.all([
             ensurePoojaSlidesSeeded(),
             ensureProductsSeeded(),
-            ensureVideosSeeded()
+            ensureVideosSeeded(),
+            ensureAstrologyServicesSeeded()
         ]);
 
         const [
             poojaCount,
             productCount,
             videoCount,
+            astrologyServiceCount,
             kundaliCount,
             janamCount,
+            astrologyOverallCount,
+            astrologyTopicCount,
             contactCount,
             unreadCount
         ] = await Promise.all([
             PoojaSlide.countDocuments(),
             Product.countDocuments(),
             VideoItem.countDocuments(),
+            AstrologyService.countDocuments(),
             KundaliSubmission.countDocuments({ type: 'matching' }),
             KundaliSubmission.countDocuments({ type: 'janam' }),
+            KundaliSubmission.countDocuments({ type: 'astrology_overall' }),
+            KundaliSubmission.countDocuments({ type: 'astrology_topic' }),
             ContactSubmission.countDocuments(),
             ContactSubmission.countDocuments({ isRead: false })
         ]);
@@ -613,8 +705,11 @@ exports.getDashboardStats = async (req, res) => {
                 poojaCount,
                 productCount,
                 videoCount,
+                astrologyServiceCount,
                 kundaliCount,
                 janamCount,
+                astrologyOverallCount,
+                astrologyTopicCount,
                 contactCount,
                 unreadCount
             }

@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const PoojaSlide = require('../models/PoojaSlide');
 const Product = require('../models/Product');
 const VideoItem = require('../models/VideoItem');
+const AstrologyService = require('../models/AstrologyService');
 const RouteSection = require('../models/RouteSection');
 const KundaliSubmission = require('../models/KundaliSubmission');
 const ContactSubmission = require('../models/ContactSubmission');
@@ -14,6 +15,7 @@ const {
     ensurePoojaSlidesSeeded,
     ensureProductsSeeded,
     ensureVideosSeeded,
+    ensureAstrologyServicesSeeded,
     ensureSiteConfigSeeded
 } = require('../utils/contentBootstrap');
 
@@ -30,6 +32,14 @@ const normalizeProductForPublic = (product) => {
     return {
         ...product.toObject(),
         images: Array.isArray(product.images) ? product.images.map(toWebAssetPath) : []
+    };
+};
+
+const normalizeAstrologyServiceForPublic = (service) => {
+    return {
+        ...service.toObject(),
+        image: toWebAssetPath(service.image),
+        secondaryImage: toWebAssetPath(service.secondaryImage)
     };
 };
 
@@ -137,6 +147,19 @@ router.get('/videos', async (req, res) => {
         await ensureVideosSeeded();
         const videos = await VideoItem.find({ isActive: true }).sort({ order: 1, createdAt: -1 });
         return res.json({ success: true, data: videos });
+    } catch (error) {
+        return res.status(500).json({ success: false, message: error.message });
+    }
+});
+
+router.get('/astrology-services', async (req, res) => {
+    try {
+        await ensureAstrologyServicesSeeded();
+        const services = await AstrologyService.find({ isActive: true }).sort({ order: 1, createdAt: -1 });
+        return res.json({
+            success: true,
+            data: services.map(normalizeAstrologyServiceForPublic)
+        });
     } catch (error) {
         return res.status(500).json({ success: false, message: error.message });
     }
@@ -272,6 +295,75 @@ router.post('/janam-submit', async (req, res) => {
         return res.status(201).json({
             success: true,
             message: 'Janam Kundali details submitted successfully',
+            data: { id: submission._id }
+        });
+    } catch (error) {
+        return res.status(400).json({ success: false, message: error.message });
+    }
+});
+
+router.post('/astrology-submit', async (req, res) => {
+    try {
+        const authUser = await getOptionalAuthUser(req);
+        const {
+            serviceSlug,
+            serviceType,
+            fullName,
+            birthPlace,
+            birthDay,
+            birthMonth,
+            birthYear,
+            birthHour,
+            birthMinute,
+            timeUnknown,
+            whatsappNumber,
+            concernedFor,
+            customTopic,
+            userName,
+            userEmail
+        } = req.body;
+
+        const normalizedServiceType = String(serviceType || '').trim().toLowerCase() === 'topic'
+            ? 'topic'
+            : 'overall';
+        const fallbackServiceTitle = normalizedServiceType === 'topic'
+            ? 'One Topic Analysis and Remedies'
+            : 'Manual Astrology Analysis and Remedies';
+        const service = await AstrologyService.findOne({
+            slug: String(serviceSlug || '').trim().toLowerCase(),
+            isActive: true
+        });
+
+        const submission = await KundaliSubmission.create({
+            type: normalizedServiceType === 'topic' ? 'astrology_topic' : 'astrology_overall',
+            userId: authUser?._id || null,
+            singleData: {
+                name: fullName,
+                birthPlace,
+                birthDay,
+                birthMonth,
+                birthYear,
+                birthHour: timeUnknown === 'true' || timeUnknown === true ? 'unknown' : birthHour,
+                birthMinute: timeUnknown === 'true' || timeUnknown === true ? 'unknown' : birthMinute,
+                timeUnknown: timeUnknown === 'true' || timeUnknown === true
+            },
+            analysisData: {
+                serviceType: normalizedServiceType,
+                serviceSlug: service?.slug || String(serviceSlug || '').trim().toLowerCase(),
+                serviceTitle: service?.title || fallbackServiceTitle,
+                concernedFor: concernedFor || '',
+                customTopic: customTopic || ''
+            },
+            whatsappNumber: whatsappNumber || '',
+            userProfile: {
+                name: authUser?.name || userName || fullName || '',
+                email: authUser?.email || userEmail || ''
+            }
+        });
+
+        return res.status(201).json({
+            success: true,
+            message: 'Astrology analysis request submitted successfully',
             data: { id: submission._id }
         });
     } catch (error) {

@@ -35,10 +35,22 @@ const reportSchema = new mongoose.Schema({
     isSeen: { type: Boolean, default: false }
 }, { _id: false });
 
+const analysisDataSchema = new mongoose.Schema({
+    serviceType: {
+        type: String,
+        enum: ['', 'overall', 'topic'],
+        default: ''
+    },
+    serviceSlug: { type: String, default: '' },
+    serviceTitle: { type: String, default: '' },
+    concernedFor: { type: String, default: '' },
+    customTopic: { type: String, default: '' }
+}, { _id: false });
+
 const kundaliSubmissionSchema = new mongoose.Schema({
     type: {
         type: String,
-        enum: ['matching', 'janam'],
+        enum: ['matching', 'janam', 'astrology_overall', 'astrology_topic'],
         required: true
     },
     userId: {
@@ -50,6 +62,7 @@ const kundaliSubmissionSchema = new mongoose.Schema({
     boyData: { type: partnerSchema, default: null },
     girlData: { type: partnerSchema, default: null },
     singleData: { type: partnerSchema, default: null },
+    analysisData: { type: analysisDataSchema, default: null },
     whatsappNumber: { type: String, default: '' },
     userProfile: {
         name: { type: String, default: '' },

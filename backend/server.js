@@ -21,7 +21,8 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 // Page aliases
 app.get(['/horoscope', '/horoscope/', '/horoscope.html'], servePage('horoscope.html'));
-app.get(['/astrology', '/astrology/', '/astrology.html'], servePage('horoscope.html'));
+app.get(['/astrology', '/astrology/', '/astrology.html'], servePage('astrology-gallery.html'));
+app.get(['/astrology-gallery', '/astrology-gallery/', '/astrology-gallery.html'], servePage('astrology-gallery.html'));
 app.get(['/premium-pooja', '/premium-pooja/', '/premium-pooja.html'], servePage('premium-pooja.html'));
 app.get(['/horoscope-detail', '/horoscope-detail/', '/horoscope-detail.html'], servePage('horoscope-detail.html'));
 app.get(['/puja-detail', '/puja-detail/', '/puja-detail.html'], servePage('puja-detail.html'));

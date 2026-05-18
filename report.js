@@ -163,6 +163,50 @@ const totalReportsNode = document.querySelector("[data-report-total]");
 const readyReportsNode = document.querySelector("[data-report-ready]");
 const unseenReportsNode = document.querySelector("[data-report-unseen]");
 
+const getSubmissionTypeLabel = (type = "") => {
+    if (type === "matching") {
+        return "Kundali Matching";
+    }
+
+    if (type === "janam") {
+        return "Janam Kundali";
+    }
+
+    if (type === "astrology_overall") {
+        return "Overall Astrology Analysis";
+    }
+
+    if (type === "astrology_topic") {
+        return "One Topic Astrology Analysis";
+    }
+
+    return "Astrology Report";
+};
+
+const getBirthPlaceLabel = (entry = {}) => {
+    if (entry.type === "matching") {
+        return [entry.boyData?.birthCity, entry.girlData?.birthCity].filter(Boolean).join(" / ") || "-";
+    }
+
+    return entry.singleData?.birthPlace || entry.singleData?.birthCity || "-";
+};
+
+const getSubmissionTitle = (entry = {}) => {
+    if (entry.displayName) {
+        return entry.displayName;
+    }
+
+    if (entry.type === "matching") {
+        return "Kundali Matching Submission";
+    }
+
+    if (entry.type === "janam") {
+        return "Janam Kundali Submission";
+    }
+
+    return entry.analysisData?.serviceTitle || "Astrology Report";
+};
+
 const escapeHtml = (value = "") => {
     const div = document.createElement("div");
     div.textContent = value;
@@ -230,10 +274,11 @@ const renderEmptyState = () => {
         <article class="report-empty-state">
             <span class="report-section-tag">Nothing Yet</span>
             <h3>No reports have been submitted from this account yet.</h3>
-            <p>Once you submit Kundali Matching or Janam Kundali details, the request will appear here. When the admin uploads your PDF or image report, it will show up with direct view and download buttons.</p>
+            <p>Once you submit Kundali Matching, Janam Kundali, or Astrology analysis details, the request will appear here. When the admin uploads your PDF or image report, it will show up with direct view and download buttons.</p>
             <div class="report-card-actions">
                 <a href="kundali-matching.html" class="report-primary-btn">Submit Kundali Matching</a>
                 <a href="free-janam-kundali.html" class="report-secondary-btn">Submit Janam Kundali</a>
+                <a href="horoscope.html" class="report-secondary-btn">Submit Astrology Analysis</a>
             </div>
         </article>
     `;
@@ -251,19 +296,34 @@ const renderReports = (reports = []) => {
 
     reportListNode.innerHTML = reports.map((entry) => {
         const hasReport = !!entry.report?.hasFile;
-        const birthPlace = entry.type === "matching"
-            ? [entry.boyData?.birthCity, entry.girlData?.birthCity].filter(Boolean).join(" / ")
-            : entry.singleData?.birthPlace || "-";
-        const title = entry.displayName || (entry.type === "matching" ? "Kundali Matching Submission" : "Janam Kundali Submission");
+        const birthPlace = getBirthPlaceLabel(entry);
+        const title = getSubmissionTitle(entry);
+        const typeLabel = getSubmissionTypeLabel(entry.type);
         const readyLabel = hasReport
             ? (entry.report?.isSeen ? "Viewed" : "New Report")
             : "Pending Upload";
+        const concernLine = entry.analysisData?.concernedFor
+            ? `
+                <article class="report-meta-item">
+                    <span>Concerned For</span>
+                    <strong>${escapeHtml(entry.analysisData.concernedFor)}</strong>
+                </article>
+            `
+            : "";
+        const topicLine = entry.analysisData?.customTopic
+            ? `
+                <article class="report-meta-item">
+                    <span>Custom Topic</span>
+                    <strong>${escapeHtml(entry.analysisData.customTopic)}</strong>
+                </article>
+            `
+            : "";
 
         return `
             <article class="report-card">
                 <div class="report-card-head">
                     <div>
-                        <span class="report-type-chip">${escapeHtml(entry.type === "matching" ? "Kundali Matching" : "Janam Kundali")}</span>
+                        <span class="report-type-chip">${escapeHtml(typeLabel)}</span>
                         <h3>${escapeHtml(title)}</h3>
                     </div>
                     <div class="report-card-actions">
@@ -289,6 +349,8 @@ const renderReports = (reports = []) => {
                         <span>Registered Email</span>
                         <strong>${escapeHtml(entry.userProfile?.email || "Not available")}</strong>
                     </article>
+                    ${concernLine}
+                    ${topicLine}
                 </div>
 
                 ${hasReport ? `

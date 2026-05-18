@@ -1,16 +1,19 @@
 const PoojaSlide = require('../models/PoojaSlide');
 const Product = require('../models/Product');
 const VideoItem = require('../models/VideoItem');
+const AstrologyService = require('../models/AstrologyService');
 const SiteConfig = require('../models/SiteConfig');
 const {
     cloneDefaults,
     defaultPoojaSlides,
     defaultProducts,
     defaultVideos,
+    defaultAstrologyServices,
     defaultSiteConfigs,
     normalizePoojaSlidePayload,
     normalizeProductPayload,
-    normalizeVideoPayload
+    normalizeVideoPayload,
+    normalizeAstrologyServicePayload
 } = require('./contentManager');
 
 const ensurePoojaSlidesSeeded = async () => {
@@ -55,6 +58,20 @@ const ensureVideosSeeded = async () => {
     }
 };
 
+const ensureAstrologyServicesSeeded = async () => {
+    const count = await AstrologyService.countDocuments();
+
+    if (count === 0) {
+        const services = cloneDefaults(defaultAstrologyServices).map((service) =>
+            normalizeAstrologyServicePayload(service)
+        );
+
+        if (services.length) {
+            await AstrologyService.insertMany(services, { ordered: true });
+        }
+    }
+};
+
 const ensureSiteConfigSeeded = async () => {
     const defaults = cloneDefaults(defaultSiteConfigs);
     const existingKeys = await SiteConfig.find(
@@ -75,6 +92,7 @@ const ensureCoreAdminContent = async () => {
     await ensurePoojaSlidesSeeded();
     await ensureProductsSeeded();
     await ensureVideosSeeded();
+    await ensureAstrologyServicesSeeded();
     await ensureSiteConfigSeeded();
 };
 
@@ -82,6 +100,7 @@ module.exports = {
     ensurePoojaSlidesSeeded,
     ensureProductsSeeded,
     ensureVideosSeeded,
+    ensureAstrologyServicesSeeded,
     ensureSiteConfigSeeded,
     ensureCoreAdminContent
 };

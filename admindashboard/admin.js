@@ -286,13 +286,36 @@ const reportBadgeHtml = (submission) => {
     return '<span class="admin-badge admin-badge-info">New</span>';
 };
 
+const getSubmissionDisplayLabel = (type = '') => {
+    if (type === 'matching') {
+        return 'Kundali Matching';
+    }
+
+    if (type === 'janam') {
+        return 'Janam Kundali';
+    }
+
+    if (type === 'astrology_overall') {
+        return 'Overall Astrology Analysis';
+    }
+
+    if (type === 'astrology_topic') {
+        return 'One Topic Astrology Analysis';
+    }
+
+    return 'Submission';
+};
+
 const sectionTitles = {
     overview: 'Dashboard Overview',
     'pooja-slides': 'Pooja Slides',
     products: 'Products',
     videos: 'Astrology Videos',
+    'astrology-services': 'Astrology Services',
     'kundali-matching': 'Kundali Matching',
     'janam-kundali': 'Janam Kundali',
+    'astrology-overall': 'Overall Astrology Analysis',
+    'astrology-topic': 'One Topic Astrology Analysis',
     contacts: 'Contact Messages',
     settings: 'Site Settings'
 };
@@ -354,12 +377,24 @@ const loadSectionData = (section) => {
         return loadVideos();
     }
 
+    if (section === 'astrology-services') {
+        return loadAstrologyServices();
+    }
+
     if (section === 'kundali-matching') {
         return loadKundali('matching');
     }
 
     if (section === 'janam-kundali') {
         return loadKundali('janam');
+    }
+
+    if (section === 'astrology-overall') {
+        return loadKundali('astrology_overall');
+    }
+
+    if (section === 'astrology-topic') {
+        return loadKundali('astrology_topic');
     }
 
     if (section === 'contacts') {
@@ -383,8 +418,11 @@ const loadStats = async () => {
         { icon: 'O', value: result.data.poojaCount, label: 'Pooja Slides' },
         { icon: 'P', value: result.data.productCount, label: 'Products' },
         { icon: 'V', value: result.data.videoCount, label: 'Videos' },
+        { icon: 'A', value: result.data.astrologyServiceCount || 0, label: 'Astrology Services' },
         { icon: 'K', value: result.data.kundaliCount, label: 'Kundali Matching' },
         { icon: 'J', value: result.data.janamCount, label: 'Janam Kundali' },
+        { icon: 'O', value: result.data.astrologyOverallCount || 0, label: 'Overall Analysis Requests' },
+        { icon: 'T', value: result.data.astrologyTopicCount || 0, label: 'One Topic Requests' },
         { icon: 'C', value: result.data.contactCount, label: 'Contact Messages' },
         { icon: 'U', value: result.data.unreadCount, label: 'Unread Messages' }
     ];
@@ -1194,6 +1232,365 @@ window.deleteVideo = async (id) => {
     await loadStats();
 };
 
+const astrologyServiceFormHtml = (service = {}) => {
+    const highlights = Array.isArray(service.highlights) ? service.highlights : [];
+    const deliverables = Array.isArray(service.deliverables) ? service.deliverables : [];
+    const dropdownOptions = Array.isArray(service.dropdownOptions) ? service.dropdownOptions : [];
+
+    return `
+        <form id="astrologyServiceForm" class="admin-form-stack">
+            <div class="admin-form-grid admin-form-grid-2">
+                <div class="admin-field">
+                    <label>Title (max 100)</label>
+                    <input type="text" name="title" maxlength="100" required value="${escapeHtml(service.title || '')}">
+                    <div class="char-count"></div>
+                </div>
+                <div class="admin-field">
+                    <label>Slug (optional)</label>
+                    <input type="text" name="slug" maxlength="100" value="${escapeHtml(service.slug || '')}" placeholder="auto-generated-from-title">
+                    <div class="char-count"></div>
+                </div>
+                <div class="admin-field">
+                    <label>Service Type</label>
+                    <select name="serviceType">
+                        <option value="overall" ${service.serviceType !== 'topic' ? 'selected' : ''}>Overall Analysis</option>
+                        <option value="topic" ${service.serviceType === 'topic' ? 'selected' : ''}>One Topic Analysis</option>
+                    </select>
+                </div>
+                <div class="admin-field">
+                    <label>Badge (max 40)</label>
+                    <input type="text" name="badge" maxlength="40" value="${escapeHtml(service.badge || '')}">
+                    <div class="char-count"></div>
+                </div>
+                <div class="admin-field">
+                    <label>Price Label (max 30)</label>
+                    <input type="text" name="priceLabel" maxlength="30" value="${escapeHtml(service.priceLabel || '')}">
+                    <div class="char-count"></div>
+                </div>
+                <div class="admin-field">
+                    <label>Turnaround (max 80)</label>
+                    <input type="text" name="turnaround" maxlength="80" value="${escapeHtml(service.turnaround || '')}">
+                    <div class="char-count"></div>
+                </div>
+                <div class="admin-field">
+                    <label>Display Order</label>
+                    <input type="number" name="order" min="0" step="1" value="${escapeHtml(String(service.order ?? 0))}">
+                </div>
+                <div class="admin-field">
+                    <label>Status</label>
+                    <select name="isActive">
+                        <option value="true" ${service.isActive !== false ? 'selected' : ''}>Active</option>
+                        <option value="false" ${service.isActive === false ? 'selected' : ''}>Inactive</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="admin-upload-card">
+                <div class="admin-upload-preview is-empty" id="astrologyImagePreview">
+                    <span>Main service image preview</span>
+                </div>
+                <div class="admin-upload-panel">
+                    <div class="admin-upload-top">
+                        <div>
+                            <h4>Main service image</h4>
+                            <p>This image appears on the merged horoscope and astrology service card.</p>
+                        </div>
+                        <div class="admin-upload-actions">
+                            <label class="admin-btn admin-btn-secondary admin-btn-sm">
+                                Upload
+                                <input type="file" id="astrologyImageFile" accept="image/*" hidden>
+                            </label>
+                            <button type="button" class="admin-btn admin-btn-secondary admin-btn-sm" id="astrologyImageRemove">Remove</button>
+                        </div>
+                    </div>
+                    <input type="hidden" name="image" id="astrologyImageInput" value="${escapeHtml(service.image || '')}">
+                    <p class="admin-upload-path" id="astrologyImagePath">${escapeHtml(service.image || 'No image selected')}</p>
+                </div>
+            </div>
+
+            <div class="admin-upload-card">
+                <div class="admin-upload-preview is-empty" id="astrologySecondaryImagePreview">
+                    <span>Secondary image preview</span>
+                </div>
+                <div class="admin-upload-panel">
+                    <div class="admin-upload-top">
+                        <div>
+                            <h4>Secondary image</h4>
+                            <p>This image appears in the service detail layout for richer storytelling.</p>
+                        </div>
+                        <div class="admin-upload-actions">
+                            <label class="admin-btn admin-btn-secondary admin-btn-sm">
+                                Upload
+                                <input type="file" id="astrologySecondaryImageFile" accept="image/*" hidden>
+                            </label>
+                            <button type="button" class="admin-btn admin-btn-secondary admin-btn-sm" id="astrologySecondaryImageRemove">Remove</button>
+                        </div>
+                    </div>
+                    <input type="hidden" name="secondaryImage" id="astrologySecondaryImageInput" value="${escapeHtml(service.secondaryImage || '')}">
+                    <p class="admin-upload-path" id="astrologySecondaryImagePath">${escapeHtml(service.secondaryImage || 'No image selected')}</p>
+                </div>
+            </div>
+
+            <div class="admin-field">
+                <label>Short Description (max 260)</label>
+                <textarea name="shortDescription" maxlength="260">${escapeHtml(service.shortDescription || '')}</textarea>
+                <div class="char-count"></div>
+            </div>
+
+            <div class="admin-form-grid admin-form-grid-2">
+                <div class="admin-field">
+                    <label>Intro Heading (max 100)</label>
+                    <input type="text" name="introHeading" maxlength="100" value="${escapeHtml(service.introHeading || '')}">
+                    <div class="char-count"></div>
+                </div>
+                <div class="admin-field">
+                    <label>Detail Heading (max 120)</label>
+                    <input type="text" name="detailHeading" maxlength="120" value="${escapeHtml(service.detailHeading || '')}">
+                    <div class="char-count"></div>
+                </div>
+            </div>
+
+            <div class="admin-field">
+                <label>Intro Body (max 1200)</label>
+                <textarea name="introBody" maxlength="1200" rows="5">${escapeHtml(service.introBody || '')}</textarea>
+                <div class="char-count"></div>
+            </div>
+
+            <div class="admin-field">
+                <label>Full Detail Body (max 5000)</label>
+                <textarea name="detailBody" maxlength="5000" rows="10">${escapeHtml(service.detailBody || '')}</textarea>
+                <div class="char-count"></div>
+            </div>
+
+            <div class="admin-form-grid admin-form-grid-2">
+                <div class="admin-field">
+                    <label>Highlights (one per line)</label>
+                    <textarea name="highlights" rows="6">${escapeHtml(highlights.join('\n'))}</textarea>
+                </div>
+                <div class="admin-field">
+                    <label>Deliverables (one per line)</label>
+                    <textarea name="deliverables" rows="6">${escapeHtml(deliverables.join('\n'))}</textarea>
+                </div>
+                <div class="admin-field">
+                    <label>Concern Dropdown Options (one per line)</label>
+                    <textarea name="dropdownOptions" rows="6">${escapeHtml(dropdownOptions.join('\n'))}</textarea>
+                </div>
+                <div class="admin-field">
+                    <label>WhatsApp Note (max 160)</label>
+                    <textarea name="whatsappNote" maxlength="160" rows="6">${escapeHtml(service.whatsappNote || '')}</textarea>
+                    <div class="char-count"></div>
+                </div>
+            </div>
+
+            <div class="admin-form-grid admin-form-grid-2">
+                <div class="admin-field">
+                    <label>Form Title (max 100)</label>
+                    <input type="text" name="formTitle" maxlength="100" value="${escapeHtml(service.formTitle || '')}">
+                    <div class="char-count"></div>
+                </div>
+                <div class="admin-field">
+                    <label>Button Label (max 40)</label>
+                    <input type="text" name="buttonLabel" maxlength="40" value="${escapeHtml(service.buttonLabel || '')}">
+                    <div class="char-count"></div>
+                </div>
+                <div class="admin-field admin-field-span-2">
+                    <label>Form Description (max 320)</label>
+                    <textarea name="formDescription" maxlength="320">${escapeHtml(service.formDescription || '')}</textarea>
+                    <div class="char-count"></div>
+                </div>
+                <div class="admin-field admin-field-span-2">
+                    <label>Custom Topic Placeholder (max 160)</label>
+                    <input type="text" name="topicPlaceholder" maxlength="160" value="${escapeHtml(service.topicPlaceholder || '')}">
+                    <div class="char-count"></div>
+                </div>
+            </div>
+
+            <div class="admin-modal-actions">
+                <button type="button" class="admin-btn admin-btn-secondary" onclick="closeModal()">Cancel</button>
+                <button type="submit" class="admin-btn admin-btn-primary">${service._id ? 'Update service' : 'Create service'}</button>
+            </div>
+        </form>
+    `;
+};
+
+const bindAstrologyServiceForm = (service = {}) => {
+    const form = document.getElementById('astrologyServiceForm');
+    const imageInput = document.getElementById('astrologyImageInput');
+    const secondaryImageInput = document.getElementById('astrologySecondaryImageInput');
+    const imagePreview = document.getElementById('astrologyImagePreview');
+    const secondaryPreview = document.getElementById('astrologySecondaryImagePreview');
+    const imagePath = document.getElementById('astrologyImagePath');
+    const secondaryPath = document.getElementById('astrologySecondaryImagePath');
+
+    bindTextCounters(form);
+    setUploadPreview(imagePreview, service.image || imageInput.value, 'Main service image preview');
+    setUploadPreview(secondaryPreview, service.secondaryImage || secondaryImageInput.value, 'Secondary image preview');
+
+    const refreshImageState = () => {
+        imagePath.textContent = imageInput.value || 'No image selected';
+        secondaryPath.textContent = secondaryImageInput.value || 'No image selected';
+        setUploadPreview(imagePreview, imageInput.value, 'Main service image preview');
+        setUploadPreview(secondaryPreview, secondaryImageInput.value, 'Secondary image preview');
+    };
+
+    const bindImageField = (fileInputId, targetInput, removeButtonId, successMessage) => {
+        const fileInput = document.getElementById(fileInputId);
+        const removeButton = document.getElementById(removeButtonId);
+
+        fileInput.addEventListener('change', async (event) => {
+            const files = event.target.files;
+
+            if (!files?.length) {
+                return;
+            }
+
+            try {
+                showToast('Uploading image...', 'info');
+                const [uploadedUrl] = await uploadImages(files);
+                targetInput.value = uploadedUrl;
+                refreshImageState();
+                showToast(successMessage);
+            } catch (error) {
+                showToast(error.message || 'Image upload failed', 'error');
+            } finally {
+                fileInput.value = '';
+            }
+        });
+
+        removeButton.addEventListener('click', () => {
+            targetInput.value = '';
+            refreshImageState();
+        });
+    };
+
+    bindImageField('astrologyImageFile', imageInput, 'astrologyImageRemove', 'Main astrology image uploaded');
+    bindImageField('astrologySecondaryImageFile', secondaryImageInput, 'astrologySecondaryImageRemove', 'Secondary astrology image uploaded');
+
+    form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        const payload = {
+            title: form.title.value.trim(),
+            slug: form.slug.value.trim(),
+            serviceType: form.serviceType.value,
+            badge: form.badge.value.trim(),
+            priceLabel: form.priceLabel.value.trim(),
+            turnaround: form.turnaround.value.trim(),
+            order: Number(form.order.value || 0),
+            isActive: form.isActive.value === 'true',
+            image: imageInput.value.trim(),
+            secondaryImage: secondaryImageInput.value.trim(),
+            shortDescription: form.shortDescription.value.trim(),
+            introHeading: form.introHeading.value.trim(),
+            introBody: form.introBody.value.trim(),
+            detailHeading: form.detailHeading.value.trim(),
+            detailBody: form.detailBody.value.trim(),
+            highlights: toChunkedLineArray(form.highlights.value, 140),
+            deliverables: toChunkedLineArray(form.deliverables.value, 180),
+            dropdownOptions: toChunkedLineArray(form.dropdownOptions.value, 80),
+            whatsappNote: form.whatsappNote.value.trim(),
+            formTitle: form.formTitle.value.trim(),
+            formDescription: form.formDescription.value.trim(),
+            topicPlaceholder: form.topicPlaceholder.value.trim(),
+            buttonLabel: form.buttonLabel.value.trim()
+        };
+
+        const result = service._id
+            ? await apiPut(`/astrology-services/${service._id}`, payload)
+            : await apiPost('/astrology-services', payload);
+
+        if (!result?.success) {
+            showToast(result?.message || 'Unable to save astrology service', 'error');
+            return;
+        }
+
+        showToast(service._id ? 'Astrology service updated' : 'Astrology service created');
+        closeModal();
+        await loadAstrologyServices();
+        await loadStats();
+    });
+};
+
+const loadAstrologyServices = async () => {
+    const result = await apiGet('/astrology-services');
+
+    if (!result?.success) {
+        showToast(result?.message || 'Unable to load astrology services', 'error');
+        return;
+    }
+
+    document.getElementById('astrologyServicesBody').innerHTML = result.data
+        .map((service) => `
+            <tr>
+                <td>
+                    <img class="table-img" src="${escapeHtml(assetUrl(service.image || ''))}" alt="${escapeHtml(service.title || 'Astrology service')}" onerror="this.style.display='none'">
+                </td>
+                <td>
+                    <strong>${escapeHtml(service.title || '-')}</strong>
+                    <br>
+                    <small style="color:var(--text-muted)">Slug: ${escapeHtml(service.slug || '-')}</small>
+                    <br>
+                    <small style="color:var(--text-muted)">Turnaround: ${escapeHtml(service.turnaround || '-')}</small>
+                </td>
+                <td>
+                    <strong>${escapeHtml(service.serviceType === 'topic' ? 'One Topic' : 'Overall')}</strong>
+                    <br>
+                    <small style="color:var(--text-muted)">Options: ${escapeHtml(String(service.dropdownOptions?.length || 0))}</small>
+                </td>
+                <td>
+                    <strong>${escapeHtml(service.priceLabel || '-')}</strong>
+                    <br>
+                    <small style="color:var(--text-muted)">Order: ${escapeHtml(String(service.order ?? 0))}</small>
+                </td>
+                <td>${getStatusBadge(service.isActive)}</td>
+                <td class="table-actions">
+                    <button class="admin-btn admin-btn-secondary admin-btn-sm" onclick="editAstrologyService('${service._id}')">Edit</button>
+                    <button class="admin-btn admin-btn-danger admin-btn-sm" onclick="deleteAstrologyService('${service._id}')">Delete</button>
+                </td>
+            </tr>
+        `)
+        .join('') || `
+            <tr>
+                <td colspan="6" style="text-align:center;color:var(--text-muted)">No astrology services available yet.</td>
+            </tr>
+        `;
+};
+
+document.getElementById('btnAddAstrologyService').addEventListener('click', () => {
+    openModal('Create Astrology Service', astrologyServiceFormHtml());
+    bindAstrologyServiceForm();
+});
+
+window.editAstrologyService = async (id) => {
+    const result = await apiGet('/astrology-services');
+    const service = result?.data?.find((entry) => entry._id === id);
+
+    if (!service) {
+        showToast('Astrology service not found', 'error');
+        return;
+    }
+
+    openModal('Edit Astrology Service', astrologyServiceFormHtml(service));
+    bindAstrologyServiceForm(service);
+};
+
+window.deleteAstrologyService = async (id) => {
+    if (!window.confirm('Delete this astrology service?')) {
+        return;
+    }
+
+    const result = await apiDelete(`/astrology-services/${id}`);
+
+    if (!result?.success) {
+        showToast(result?.message || 'Unable to delete astrology service', 'error');
+        return;
+    }
+
+    showToast('Astrology service deleted');
+    await loadAstrologyServices();
+    await loadStats();
+};
+
 const loadKundali = async (type) => {
     const result = await apiGet(`/kundali-submissions?type=${type}`);
 
@@ -1202,7 +1599,13 @@ const loadKundali = async (type) => {
         return;
     }
 
-    const targetId = type === 'matching' ? 'kundaliBody' : 'janamBody';
+    const targetIdMap = {
+        matching: 'kundaliBody',
+        janam: 'janamBody',
+        astrology_overall: 'astrologyOverallBody',
+        astrology_topic: 'astrologyTopicBody'
+    };
+    const targetId = targetIdMap[type] || 'kundaliBody';
     const rows = result.data.map((submission, index) => {
         if (type === 'matching') {
             return `
@@ -1220,6 +1623,38 @@ const loadKundali = async (type) => {
                     <td>${reportBadgeHtml(submission)}</td>
                     <td><small>${new Date(submission.createdAt).toLocaleDateString()}</small></td>
                     <td><button class="admin-btn admin-btn-secondary admin-btn-sm" onclick="viewKundali('${submission._id}', 'matching')">View</button></td>
+                </tr>
+            `;
+        }
+
+        if (type === 'astrology_overall') {
+            return `
+                <tr>
+                    <td>${index + 1}</td>
+                    <td>${escapeHtml(submission.singleData?.name || '-')}</td>
+                    <td>${escapeHtml(submission.analysisData?.concernedFor || '-')}</td>
+                    <td>${escapeHtml(submission.analysisData?.serviceTitle || '-')}</td>
+                    <td>${escapeHtml(submission.whatsappNumber || '-')}</td>
+                    <td><span class="admin-badge admin-badge-info">${escapeHtml(submission.status || 'pending')}</span></td>
+                    <td>${reportBadgeHtml(submission)}</td>
+                    <td><small>${new Date(submission.createdAt).toLocaleDateString()}</small></td>
+                    <td><button class="admin-btn admin-btn-secondary admin-btn-sm" onclick="viewKundali('${submission._id}', 'astrology_overall')">View</button></td>
+                </tr>
+            `;
+        }
+
+        if (type === 'astrology_topic') {
+            return `
+                <tr>
+                    <td>${index + 1}</td>
+                    <td>${escapeHtml(submission.singleData?.name || '-')}</td>
+                    <td>${escapeHtml(submission.analysisData?.concernedFor || '-')}</td>
+                    <td>${escapeHtml(submission.analysisData?.customTopic || '-')}</td>
+                    <td>${escapeHtml(submission.whatsappNumber || '-')}</td>
+                    <td><span class="admin-badge admin-badge-info">${escapeHtml(submission.status || 'pending')}</span></td>
+                    <td>${reportBadgeHtml(submission)}</td>
+                    <td><small>${new Date(submission.createdAt).toLocaleDateString()}</small></td>
+                    <td><button class="admin-btn admin-btn-secondary admin-btn-sm" onclick="viewKundali('${submission._id}', 'astrology_topic')">View</button></td>
                 </tr>
             `;
         }
@@ -1268,12 +1703,24 @@ window.viewKundali = async (id, type) => {
         detailsHtml += detailItem('Girl Birth Time', `${submission.girlData?.birthHour || '-'}:${submission.girlData?.birthMinute || '-'}`);
         detailsHtml += detailItem('Girl Birth City', submission.girlData?.birthCity);
         detailsHtml += detailItem('Girl Chart Type', submission.girlData?.chartType);
-    } else {
+    } else if (type === 'janam') {
         detailsHtml += detailItem('Name', submission.singleData?.name);
         detailsHtml += detailItem('Gender', submission.singleData?.gender);
         detailsHtml += detailItem('Birth Place', submission.singleData?.birthPlace);
         detailsHtml += detailItem('Birth Date', `${submission.singleData?.birthDay || '-'}-${submission.singleData?.birthMonth || '-'}-${submission.singleData?.birthYear || '-'}`);
         detailsHtml += detailItem('Birth Time', `${submission.singleData?.birthHour || '-'}:${submission.singleData?.birthMinute || '-'}`);
+    } else {
+        detailsHtml += detailItem('Service', submission.analysisData?.serviceTitle || submission.analysisData?.serviceSlug);
+        detailsHtml += detailItem('Service Type', type === 'astrology_topic' ? 'One Topic Analysis' : 'Overall Analysis');
+        detailsHtml += detailItem('Name', submission.singleData?.name);
+        detailsHtml += detailItem('Birth Place', submission.singleData?.birthPlace);
+        detailsHtml += detailItem('Birth Date', `${submission.singleData?.birthDay || '-'}-${submission.singleData?.birthMonth || '-'}-${submission.singleData?.birthYear || '-'}`);
+        detailsHtml += detailItem('Birth Time', `${submission.singleData?.birthHour || '-'}:${submission.singleData?.birthMinute || '-'}`);
+        detailsHtml += detailItem('Concerned For', submission.analysisData?.concernedFor);
+
+        if (type === 'astrology_topic') {
+            detailsHtml += detailItem('Custom Topic', submission.analysisData?.customTopic, true);
+        }
     }
 
     detailsHtml += detailItem('WhatsApp', submission.whatsappNumber);
@@ -1310,7 +1757,7 @@ window.viewKundali = async (id, type) => {
             <div class="admin-form-grid admin-form-grid-2">
                 <label class="admin-field">
                     <span>Report Title</span>
-                    <input type="text" id="reportTitleInput" maxlength="100" value="${escapeHtml(submission.report?.title || '')}" placeholder="Kundali analysis report">
+                    <input type="text" id="reportTitleInput" maxlength="100" value="${escapeHtml(submission.report?.title || '')}" placeholder="${escapeHtml(getSubmissionDisplayLabel(type))} report">
                 </label>
                 <label class="admin-field">
                     <span>Upload Report File</span>
@@ -1335,7 +1782,7 @@ window.viewKundali = async (id, type) => {
         </div>
     `;
 
-    openModal('Submission Details', detailsHtml);
+    openModal(`${getSubmissionDisplayLabel(type)} Details`, detailsHtml);
 };
 
 window.updateKStatus = async (id, type) => {

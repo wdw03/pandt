@@ -38,16 +38,39 @@ const resolveLegacyReportPath = (fileUrl = '') => {
     return path.join(__dirname, '../../', normalized);
 };
 
+const getSubmissionTypeLabel = (type = '') => {
+    if (type === 'matching') {
+        return 'Kundali Matching';
+    }
+
+    if (type === 'janam') {
+        return 'Janam Kundali';
+    }
+
+    if (type === 'astrology_overall') {
+        return 'Overall Astrology Analysis';
+    }
+
+    if (type === 'astrology_topic') {
+        return 'One Topic Astrology Analysis';
+    }
+
+    return 'Astrology Report';
+};
+
 const normalizeSubmissionReport = (submission) => {
     const source = submission.toObject ? submission.toObject() : submission;
     const report = source.report || {};
     const displayName = source.type === 'matching'
         ? [source.boyData?.name, source.girlData?.name].filter(Boolean).join(' & ')
-        : source.singleData?.name || source.userProfile?.name || 'Kundali Report';
+        : source.type === 'janam'
+            ? source.singleData?.name || source.userProfile?.name || 'Janam Kundali Report'
+            : source.analysisData?.serviceTitle || source.singleData?.name || source.userProfile?.name || 'Astrology Report';
 
     return {
         ...source,
         displayName,
+        typeLabel: getSubmissionTypeLabel(source.type),
         report: {
             title: report.title || '',
             note: report.note || '',

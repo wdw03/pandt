@@ -82,6 +82,11 @@ router.post('/videos', adminProtect, ctrl.createVideo);
 router.put('/videos/:id', adminProtect, ctrl.updateVideo);
 router.delete('/videos/:id', adminProtect, ctrl.deleteVideo);
 
+router.get('/astrology-services', adminProtect, ctrl.getAstrologyServices);
+router.post('/astrology-services', adminProtect, ctrl.createAstrologyService);
+router.put('/astrology-services/:id', adminProtect, ctrl.updateAstrologyService);
+router.delete('/astrology-services/:id', adminProtect, ctrl.deleteAstrologyService);
+
 router.get('/kundali-submissions', adminProtect, ctrl.getKundaliSubmissions);
 router.put('/kundali-submissions/:id/status', adminProtect, ctrl.updateKundaliStatus);
 router.put('/kundali-submissions/:id/report', adminProtect, reportUpload.single('report'), ctrl.uploadKundaliReport);

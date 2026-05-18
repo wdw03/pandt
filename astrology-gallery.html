@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="resposnive.css">
+    <link rel="stylesheet" href="horoscope.css">
     <link rel="stylesheet" href="astrology-gallery.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&display=swap" rel="stylesheet">
@@ -169,7 +170,7 @@
 
         <main class="gallery-route-page">
             <section class="gallery-hero">
-                <a class="gallery-analyze-card" href="free-janam-kundali.html">
+                <a class="gallery-analyze-card" href="#astrology-analysis">
                     <div class="gallery-analyze-image"></div>
                     <div class="gallery-analyze-overlay">
                         <span class="gallery-badge" data-i18n="gallery_kundali_badge">Kundali Analysis</span>
@@ -181,65 +182,12 @@
                 <div class="gallery-hero-side">
                     <article class="gallery-intro-card">
                         <span class="gallery-badge" data-i18n="gallery_discovery_badge">Spiritual Discovery</span>
-                        <h2>See Panchang, Horoscope, reviews, videos, blogs, and deeper astrology guidance in one place.</h2>
+                        <h2>See Horoscope, reviews, videos, blogs, and deeper astrology guidance in one place.</h2>
                         <p>
-                            This page is built like a rich gallery destination. It keeps key astrology content organized
-                            in fluid sections so devotees can discover guidance, media, and knowledge from one
+                            This page is built like a rich astrology destination. It keeps key astrology content organized
+                            in fluid sections so devotees can discover guidance, media, analysis services and knowledge from one
                             beautifully arranged experience.
                         </p>
-                    </article>
-
-                    <article class="gallery-panchang-card">
-                        <div class="gallery-card-head">
-                            <div>
-                                <span class="gallery-section-tag">Today's Panchang</span>
-                                <h3>Fri Apr 24 2026</h3>
-                            </div>
-                            <a href="panchang.html" class="gallery-inline-link" data-i18n="gallery_detailed_panchang">Detailed Panchang</a>
-                        </div>
-
-                        <div class="gallery-panchang-list">
-                            <div class="gallery-info-row">
-                                <span class="gallery-info-icon">SR</span>
-                                <span>Sunrise : 5:48:10 AM</span>
-                            </div>
-                            <div class="gallery-info-row">
-                                <span class="gallery-info-icon">SS</span>
-                                <span>Sunset : 6:52:45 PM</span>
-                            </div>
-                            <div class="gallery-info-row">
-                                <span class="gallery-info-icon">MR</span>
-                                <span>Moonrise : 11:54:43 AM</span>
-                            </div>
-                            <div class="gallery-info-row">
-                                <span class="gallery-info-icon">MS</span>
-                                <span>Moonset : 2:02:18 AM</span>
-                            </div>
-                            <div class="gallery-info-row">
-                                <span class="gallery-info-icon">MO</span>
-                                <span>Month : Amanta : Vaisakha</span>
-                            </div>
-                            <div class="gallery-info-row">
-                                <span class="gallery-info-icon">SV</span>
-                                <span>Samvat : Vikram 2083 - Siddharthi</span>
-                            </div>
-                            <div class="gallery-info-row">
-                                <span class="gallery-info-icon">TI</span>
-                                <span>Tithi : Ashtami till Fri Apr 24 2026 6:57:01 PM</span>
-                            </div>
-                            <div class="gallery-info-row">
-                                <span class="gallery-info-icon">NK</span>
-                                <span>Nakshatra : Pushya till Fri Apr 24 2026 7:49:18 PM</span>
-                            </div>
-                            <div class="gallery-info-row">
-                                <span class="gallery-info-icon">KR</span>
-                                <span>Karan : Vishti till Fri Apr 24 2026 7:36:30 AM</span>
-                            </div>
-                            <div class="gallery-info-row">
-                                <span class="gallery-info-icon">YG</span>
-                                <span>Yog : Dhrithi till Fri Apr 24 2026 3:06:13 AM</span>
-                            </div>
-                        </div>
                     </article>
 
                     <article class="gallery-mini-copy-card">
@@ -251,6 +199,20 @@
                         <a href="horoscope.html" class="gallery-inline-link" data-i18n="gallery_explore_horoscope">Explore Astrology</a>
                     </article>
                 </div>
+            </section>
+
+            <section class="horoscope-analysis-section" id="astrology-analysis">
+                <div class="horoscope-section-head">
+                    <span class="horoscope-section-tag">Astrology Services</span>
+                    <h2>Book Manual Astrology Analysis and Remedies</h2>
+                    <p>
+                        Choose one complete overall analysis service or one focused one-topic analysis service.
+                        Fill in your birth details, concern area, WhatsApp number and request a written report that
+                        the admin team can upload later directly into your profile reports page.
+                    </p>
+                </div>
+                <div class="horoscope-service-grid" data-astrology-services></div>
+                <p class="horoscope-analysis-feedback" data-astrology-feedback hidden></p>
             </section>
 
             <section class="gallery-zodiac-section">

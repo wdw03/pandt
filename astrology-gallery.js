@@ -1,4 +1,4 @@
-﻿const initializeGalleryNavbar = () => {
+const initializeGalleryNavbar = () => {
     const toggle = document.getElementById("profileToggle");
     const drawer = document.getElementById("profileDrawer");
     const overlay = document.getElementById("drawerOverlay");
@@ -150,6 +150,10 @@
 
 initializeGalleryNavbar();
 
+const API_BASE = "/api";
+const TOKEN_KEY = "tmToken";
+const USER_KEY = "tmUser";
+
 const zodiacGrid = document.querySelector("[data-zodiac-grid]");
 const reviewTrack = document.querySelector("[data-review-track]");
 const videoTrack = document.querySelector("[data-video-track]");
@@ -158,6 +162,15 @@ const blogTrack = document.querySelector("[data-blog-track]");
 const blogDots = document.querySelector("[data-blog-dots]");
 const accordionToggle = document.querySelector("[data-gallery-accordion-toggle]");
 const accordionContent = document.querySelector("[data-gallery-accordion-content]");
+const serviceGrid = document.querySelector("[data-astrology-services]");
+const astrologyFeedbackNode = document.querySelector("[data-astrology-feedback]");
+
+const CONCERN_OPTIONS = [
+    "Career & Financial Growth",
+    "Health & Wellbeing Analysis",
+    "Marriage & Relationship Guidance",
+    "Complete Kundli & Horoscope Analysis"
+];
 
 const zodiacSigns = [
     { name: "Aries", short: "Ar", start: "#ff7f73", end: "#dc493f" },
@@ -207,31 +220,104 @@ const reviews = [
     }
 ];
 
-let videoItems = [];
-
 const blogs = [
     {
-        tag: "testing",
-        title: "Best Astrologer in Varanasi 2025: Real Predictions by Sarica Ji That Work HELLO",
-        excerpt: "Read More ->",
+        tag: "Manual Reading",
+        title: "When Should You Choose A Full Astrology Analysis Instead Of A Quick Reading?",
+        excerpt: "Understand when a detailed handwritten report with remedies gives more value than a short prediction.",
         image: "./assets/images/blog_85_1760531089.jpg",
         link: "#"
     },
     {
-        tag: "Best Astrologer in Varanasi 2025: Real Predictions by Sarica Ji That Work HELLO",
-        title: "Best Astrologer in Varanasi 2025: Real Predictions by Sarica Ji That Work HELLO",
-        excerpt: "efsd",
+        tag: "Marriage Guidance",
+        title: "How To Prepare Better Birth Details Before Asking For Marriage Guidance",
+        excerpt: "Clear birth details help the admin review the request more carefully and write a better report.",
         image: "./assets/images/blog_611759214029.jpg",
         link: "#"
     },
     {
-        tag: "9 Names of Shri Krishna and the Stories Behind Them Shri Krishna loved deities of Sanatan Dharma",
-        title: "9 Names of Shri Krishna and the Stories Behind Them",
-        excerpt: "But have you ever thought why there are so many names to call Krishna? Is it...",
+        tag: "Remedies",
+        title: "Why Focused One Topic Analysis Works For Career, Health And Relationship Questions",
+        excerpt: "A focused one-topic reading helps when one concern needs immediate clarity and practical remedies.",
         image: "./assets/images/blog_551752043771.jpg",
         link: "#"
     }
 ];
+
+let videoItems = [];
+
+const escapeHtml = (value = "") => {
+    const div = document.createElement("div");
+    div.textContent = value;
+    return div.innerHTML;
+};
+
+const assetUrl = (value = "") => {
+    if (!value) {
+        return "";
+    }
+
+    if (
+        value.startsWith("http://") ||
+        value.startsWith("https://") ||
+        value.startsWith("data:")
+    ) {
+        return value;
+    }
+
+    if (value.startsWith("/")) {
+        return value;
+    }
+
+    if (value.startsWith("./")) {
+        return value;
+    }
+
+    return `./${value.replace(/^\/+/, "")}`;
+};
+
+const getStoredUser = () => {
+    try {
+        return JSON.parse(localStorage.getItem(USER_KEY) || "null");
+    } catch (error) {
+        return null;
+    }
+};
+
+const getAuthHeaders = () => {
+    const headers = {
+        "Content-Type": "application/json"
+    };
+    const token = localStorage.getItem(TOKEN_KEY);
+
+    if (token) {
+        headers.Authorization = `Bearer ${token}`;
+    }
+
+    return headers;
+};
+
+const setAstrologyFeedback = (message = "", type = "info") => {
+    if (!astrologyFeedbackNode) {
+        return;
+    }
+
+    astrologyFeedbackNode.textContent = message;
+    astrologyFeedbackNode.hidden = !message;
+    astrologyFeedbackNode.dataset.state = type;
+};
+
+const setFormFeedback = (form, message = "", type = "info") => {
+    const feedbackNode = form.querySelector("[data-service-feedback]");
+
+    if (!feedbackNode) {
+        return;
+    }
+
+    feedbackNode.textContent = message;
+    feedbackNode.hidden = !message;
+    feedbackNode.dataset.state = type;
+};
 
 const getYouTubeId = (url) => {
     if (!url) {
@@ -239,6 +325,7 @@ const getYouTubeId = (url) => {
     }
 
     const shortMatch = url.match(/youtu\.be\/([a-zA-Z0-9_-]{6,})/);
+
     if (shortMatch) {
         return shortMatch[1];
     }
@@ -275,7 +362,7 @@ const renderZodiacCards = () => {
 
         const subtitle = document.createElement("p");
         subtitle.className = "gallery-zodiac-subtitle";
-        subtitle.textContent = sign.name;
+        subtitle.textContent = "Open daily reading";
 
         card.append(art, title, subtitle);
         zodiacGrid.append(card);
@@ -359,7 +446,7 @@ const initializeSimpleCarousel = ({
     slideRenderer,
     intervalMs = 2600
 }) => {
-    if (!track || !items.length) {
+    if (!track || !Array.isArray(items) || !items.length) {
         return;
     }
 
@@ -367,7 +454,6 @@ const initializeSimpleCarousel = ({
     let timerId = null;
 
     track.innerHTML = "";
-
     items.forEach((item) => {
         track.append(slideRenderer(item));
     });
@@ -468,10 +554,10 @@ const renderVideoCarousel = () => {
             meta.textContent = videoId ? "YouTube video thumbnail" : "Future admin-ready video slot";
 
             const title = document.createElement("h3");
-            title.textContent = item.title;
+            title.textContent = item.title || "Astrology video";
 
             const description = document.createElement("p");
-            description.textContent = item.description;
+            description.textContent = item.description || "Video details can be managed from the admin dashboard.";
 
             const link = document.createElement("span");
             link.className = "gallery-inline-link";
@@ -520,7 +606,7 @@ const renderBlogCarousel = () => {
 
             const link = document.createElement("span");
             link.className = "gallery-inline-link";
-            link.textContent = "Read More ->";
+            link.textContent = "Read More";
 
             copy.append(meta, title, description, link);
             card.append(thumb, copy);
@@ -563,25 +649,408 @@ const initializeAccordion = () => {
     });
 };
 
+const mergeServiceFallback = (service, fallback) => {
+    const source = service || {};
+    return {
+        ...fallback,
+        ...source,
+        title: source.title || fallback.title,
+        badge: source.badge || fallback.badge,
+        priceLabel: source.priceLabel || fallback.priceLabel,
+        turnaround: source.turnaround || fallback.turnaround,
+        image: source.image || fallback.image,
+        secondaryImage: source.secondaryImage || source.image || fallback.secondaryImage || fallback.image,
+        shortDescription: source.shortDescription || fallback.shortDescription,
+        introHeading: source.introHeading || fallback.introHeading,
+        introBody: source.introBody || fallback.introBody,
+        detailHeading: source.detailHeading || fallback.detailHeading,
+        detailBody: source.detailBody || fallback.detailBody,
+        highlights: Array.isArray(source.highlights) && source.highlights.length ? source.highlights : fallback.highlights,
+        deliverables: Array.isArray(source.deliverables) && source.deliverables.length ? source.deliverables : fallback.deliverables,
+        dropdownOptions: Array.isArray(source.dropdownOptions) ? source.dropdownOptions : [],
+        whatsappNote: source.whatsappNote || fallback.whatsappNote,
+        formTitle: source.formTitle || fallback.formTitle,
+        formDescription: source.formDescription || fallback.formDescription,
+        topicPlaceholder: source.topicPlaceholder || fallback.topicPlaceholder,
+        buttonLabel: source.buttonLabel || fallback.buttonLabel,
+        slug: source.slug || fallback.slug,
+        serviceType: source.serviceType || fallback.serviceType
+    };
+};
+
+const createConcernOptions = (options = []) => {
+    return options
+        .map((option) => `<option value="${escapeHtml(option)}">${escapeHtml(option)}</option>`)
+        .join("");
+};
+
+const createConcernChoiceCards = (options = []) => {
+    return options
+        .map((option, index) => `
+            <label class="horoscope-form-option">
+                <input type="radio" name="concernedFor" value="${escapeHtml(option)}" ${index === 0 ? "checked" : ""}>
+                <span>${escapeHtml(option)}</span>
+            </label>
+        `)
+        .join("");
+};
+
+const createListItems = (items = []) => {
+    return items.map((item) => `<li>${escapeHtml(item)}</li>`).join("");
+};
+
+const getDisplayServices = (allServices = []) => {
+    const overallServices = allServices.filter((service) => service.serviceType === "overall");
+    const topicServices = allServices.filter((service) => service.serviceType === "topic");
+    const collectedConcernOptions = Array.from(
+        new Set([
+            ...CONCERN_OPTIONS,
+            ...overallServices.map((service) => String(service.title || "").trim()).filter(Boolean)
+        ])
+    );
+
+    const overallFallback = {
+        title: "Manual Astrology Analysis and Remedies",
+        slug: "manual-analysis-report",
+        serviceType: "overall",
+        badge: "Overall Analysis",
+        priceLabel: "Rs 501",
+        turnaround: "Written analysis within 24 hours",
+        image: "/assets/images/home-analyze.png",
+        secondaryImage: "/assets/images/Gemini_Generated_Image_alcwplalcwplalcw.png",
+        shortDescription: "Book a full handwritten astrology report with remedies and practical guidance based on the birth details you submit here.",
+        introHeading: "Overall analysis for complete life direction",
+        introBody: "Use this one form when you want a full report for career, health, relationship or complete life direction. The admin can later upload your final written report directly into your profile.",
+        detailHeading: "What the overall analysis covers",
+        detailBody: "This full analysis request is meant for users who want broader guidance instead of a short answer. The report can focus on one selected concern area while still considering the wider life picture and remedies.",
+        highlights: [
+            "Written analysis with remedies",
+            "Designed for complete life direction",
+            "Admin uploaded report syncs to profile",
+            "WhatsApp number collected for updates"
+        ],
+        deliverables: [
+            "Overall astrology reading",
+            "Concern-specific guidance",
+            "Written remedies and practical suggestions",
+            "Report visible in profile after admin upload"
+        ],
+        dropdownOptions: collectedConcernOptions,
+        whatsappNote: "Use an active WhatsApp number so the team can share service updates if needed.",
+        formTitle: "Submit your overall astrology analysis request",
+        formDescription: "Fill all birth details carefully and choose the concern area you want the report to focus on.",
+        topicPlaceholder: "",
+        buttonLabel: "Submit Overall Analysis"
+    };
+
+    const topicFallback = {
+        title: "One Topic Analysis and Remedies",
+        slug: "one-topic-analysis",
+        serviceType: "topic",
+        badge: "One Topic Analysis",
+        priceLabel: "Rs 101",
+        turnaround: "Focused written answer and remedies",
+        image: "/assets/images/panditpujakete.jpg",
+        secondaryImage: "/assets/images/home-analyze.png",
+        shortDescription: "Choose one main concern from the dropdown or type your topic manually and receive a focused written astrology response with remedies.",
+        introHeading: "One topic guidance with dropdown and manual typing",
+        introBody: "This service is for users who want clarity on one specific concern. You can choose a topic from the list or also describe the exact issue manually for better context.",
+        detailHeading: "What the one topic analysis covers",
+        detailBody: "The admin reviews the selected concern, the custom note and the birth details together before preparing a written response. This keeps the service focused, practical and easier to act on.",
+        highlights: [
+            "Best for one urgent life question",
+            "Dropdown and manual topic support",
+            "Focused remedies and suggestions",
+            "Admin uploaded report syncs to profile"
+        ],
+        deliverables: [
+            "Single topic astrology reading",
+            "Custom issue note support",
+            "Written remedies",
+            "Profile report delivery after admin upload"
+        ],
+        dropdownOptions: collectedConcernOptions,
+        whatsappNote: "Add your active WhatsApp number so the team can coordinate if any clarification is needed.",
+        formTitle: "Submit your one topic astrology request",
+        formDescription: "Choose a concern from the list or type the exact topic manually. You can use both for better context.",
+        topicPlaceholder: "Write your exact issue manually here if you want the admin to focus on a specific topic",
+        buttonLabel: "Submit One Topic Analysis"
+    };
+
+    const overallPrimarySource = overallServices.find((service) => service.slug === "manual-analysis-report")
+        || (overallServices.length === 1 ? overallServices[0] : null);
+    const topicPrimarySource = topicServices.find((service) => service.slug === "one-topic-analysis")
+        || (topicServices.length === 1 ? topicServices[0] : null);
+
+    const overallPrimary = mergeServiceFallback(overallPrimarySource, overallFallback);
+    const topicPrimary = mergeServiceFallback(topicPrimarySource, topicFallback);
+    const legacyConcernOptions = ["Love Life", "Marriage", "Career", "Full Life Analysis"];
+    const isLegacyOptionSet = (options = []) =>
+        options.length === legacyConcernOptions.length &&
+        options.every((option, index) => option === legacyConcernOptions[index]);
+    const resolveConcernOptions = (options = []) => {
+        if (overallServices.length > 1) {
+            return collectedConcernOptions;
+        }
+
+        if (!options.length || isLegacyOptionSet(options)) {
+            return collectedConcernOptions;
+        }
+
+        return options;
+    };
+
+    overallPrimary.dropdownOptions = resolveConcernOptions(overallPrimary.dropdownOptions);
+    topicPrimary.dropdownOptions = resolveConcernOptions(topicPrimary.dropdownOptions);
+
+    return [overallPrimary, topicPrimary];
+};
+
+const renderAstrologyServices = (services = []) => {
+    if (!serviceGrid) {
+        return;
+    }
+
+    const displayServices = getDisplayServices(services);
+
+    serviceGrid.innerHTML = displayServices.map((service) => `
+        <article class="horoscope-service-card">
+            <div class="horoscope-service-media">
+                <div class="horoscope-service-image" style="background-image:url('${escapeHtml(assetUrl(service.image || ''))}')"></div>
+                <div class="horoscope-service-secondary" style="background-image:url('${escapeHtml(assetUrl(service.secondaryImage || service.image || ''))}')"></div>
+                <div class="horoscope-service-badges">
+                    <span>${escapeHtml(service.badge)}</span>
+                    <span>${escapeHtml(service.priceLabel)}</span>
+                </div>
+            </div>
+            <div class="horoscope-service-copy">
+                <span class="horoscope-service-type">${escapeHtml(service.serviceType === "topic" ? "One Topic Analysis" : "Manual Full Analysis")}</span>
+                <h3>${escapeHtml(service.title)}</h3>
+                <p>${escapeHtml(service.shortDescription)}</p>
+                <div class="horoscope-service-meta">
+                    <span>${escapeHtml(service.turnaround)}</span>
+                    <span>${escapeHtml(service.priceLabel)}</span>
+                </div>
+                <div class="horoscope-service-detail-block">
+                    <strong>${escapeHtml(service.introHeading)}</strong>
+                    <p>${escapeHtml(service.introBody)}</p>
+                </div>
+                <div class="horoscope-service-lists">
+                    <div>
+                        <h4>Highlights</h4>
+                        <ul>${createListItems(service.highlights)}</ul>
+                    </div>
+                    <div>
+                        <h4>What user gets</h4>
+                        <ul>${createListItems(service.deliverables)}</ul>
+                    </div>
+                </div>
+            </div>
+            <form class="horoscope-service-form" data-service-form data-service-slug="${escapeHtml(service.slug)}" data-service-type="${escapeHtml(service.serviceType)}">
+                <div class="horoscope-service-form-head">
+                    <h4>${escapeHtml(service.formTitle)}</h4>
+                    <p>${escapeHtml(service.formDescription)}</p>
+                </div>
+                <div class="horoscope-service-form-grid">
+                    <label class="horoscope-form-field">
+                        <span>Name</span>
+                        <input type="text" name="fullName" required>
+                    </label>
+                    <label class="horoscope-form-field">
+                        <span>Birth Place</span>
+                        <input type="text" name="birthPlace" required>
+                    </label>
+                    <label class="horoscope-form-field">
+                        <span>D.O.B Day</span>
+                        <input type="text" name="birthDay" required>
+                    </label>
+                    <label class="horoscope-form-field">
+                        <span>D.O.B Month</span>
+                        <input type="text" name="birthMonth" required>
+                    </label>
+                    <label class="horoscope-form-field">
+                        <span>D.O.B Year</span>
+                        <input type="text" name="birthYear" required>
+                    </label>
+                    <label class="horoscope-form-field">
+                        <span>Birth Hour</span>
+                        <input type="text" name="birthHour">
+                    </label>
+                    <label class="horoscope-form-field">
+                        <span>Birth Minute</span>
+                        <input type="text" name="birthMinute">
+                    </label>
+                    <label class="horoscope-form-field horoscope-form-field--checkbox">
+                        <span>Time Unknown</span>
+                        <input type="checkbox" name="timeUnknown">
+                    </label>
+                    <label class="horoscope-form-field">
+                        <span>WhatsApp Number</span>
+                        <input type="text" name="whatsappNumber" required>
+                    </label>
+                    <label class="horoscope-form-field">
+                        <span>${service.serviceType === "topic" ? "Choose Topic" : "Concerned For"}</span>
+                        ${service.serviceType === "topic" ? `
+                            <select name="concernedFor">
+                                <option value="">Choose focus</option>
+                                ${createConcernOptions(service.dropdownOptions)}
+                            </select>
+                        ` : `
+                            <div class="horoscope-form-option-group">
+                                ${createConcernChoiceCards(service.dropdownOptions)}
+                            </div>
+                        `}
+                    </label>
+                    ${service.serviceType === "topic" ? `
+                        <label class="horoscope-form-field horoscope-form-field--full">
+                            <span>Manual Topic</span>
+                            <textarea name="customTopic" placeholder="${escapeHtml(service.topicPlaceholder)}" rows="4"></textarea>
+                        </label>
+                    ` : ""}
+                </div>
+                <div class="horoscope-service-form-foot">
+                    <p>${escapeHtml(service.whatsappNote)}</p>
+                    <p>Login recommended so the final admin uploaded report comes directly to your profile reports page.</p>
+                </div>
+                <p class="horoscope-service-feedback" data-service-feedback hidden></p>
+                <button class="horoscope-primary-btn horoscope-service-submit" type="submit" data-default-label="${escapeHtml(service.buttonLabel)}">${escapeHtml(service.buttonLabel)}</button>
+            </form>
+        </article>
+    `).join("");
+
+    bindAstrologyForms();
+};
+
+const bindAstrologyForms = () => {
+    const storedUser = getStoredUser();
+
+    document.querySelectorAll("[data-service-form]").forEach((form) => {
+        form.addEventListener("submit", async (event) => {
+            event.preventDefault();
+            setFormFeedback(form, "");
+
+            const serviceType = form.dataset.serviceType || "overall";
+            const selectedConcernRadio = form.querySelector('input[name="concernedFor"]:checked');
+            const concernSelect = form.querySelector('select[name="concernedFor"]');
+            const payload = {
+                serviceSlug: form.dataset.serviceSlug || "",
+                serviceType,
+                fullName: form.fullName.value.trim(),
+                birthPlace: form.birthPlace.value.trim(),
+                birthDay: form.birthDay.value.trim(),
+                birthMonth: form.birthMonth.value.trim(),
+                birthYear: form.birthYear.value.trim(),
+                birthHour: form.timeUnknown.checked ? "" : form.birthHour.value.trim(),
+                birthMinute: form.timeUnknown.checked ? "" : form.birthMinute.value.trim(),
+                timeUnknown: form.timeUnknown.checked,
+                whatsappNumber: form.whatsappNumber.value.trim(),
+                concernedFor: selectedConcernRadio?.value?.trim() || concernSelect?.value?.trim() || "",
+                customTopic: form.customTopic ? form.customTopic.value.trim() : "",
+                userName: storedUser?.name || "",
+                userEmail: storedUser?.email || ""
+            };
+
+            if (!payload.fullName || !payload.birthPlace || !payload.birthDay || !payload.birthMonth || !payload.birthYear || !payload.whatsappNumber) {
+                setFormFeedback(form, "Please fill all required personal details before submitting.", "error");
+                return;
+            }
+
+            if (!payload.timeUnknown && (!payload.birthHour || !payload.birthMinute)) {
+                setFormFeedback(form, "Add birth hour and minute, or mark time unknown.", "error");
+                return;
+            }
+
+            if (serviceType === "overall" && !payload.concernedFor) {
+                setFormFeedback(form, "Please choose one overall concern area first.", "error");
+                return;
+            }
+
+            if (serviceType === "topic" && !payload.concernedFor && !payload.customTopic) {
+                setFormFeedback(form, "Choose a topic from the dropdown or write your topic manually.", "error");
+                return;
+            }
+
+            const submitButton = form.querySelector(".horoscope-service-submit");
+            if (submitButton) {
+                submitButton.disabled = true;
+                submitButton.textContent = "Submitting...";
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/public/astrology-submit`, {
+                    method: "POST",
+                    headers: getAuthHeaders(),
+                    body: JSON.stringify(payload)
+                });
+                const data = await response.json();
+
+                if (!response.ok || !data.success) {
+                    throw new Error(data.message || "Unable to submit astrology request.");
+                }
+
+                form.reset();
+                setFormFeedback(form, "Request submitted successfully. The admin team can now review the details and upload the final report to your profile.", "success");
+                setAstrologyFeedback("Astrology request submitted successfully. The final report can be uploaded from the admin dashboard and will appear in the user's profile reports page.", "success");
+            } catch (error) {
+                setFormFeedback(form, error.message || "Unable to submit astrology request.", "error");
+            } finally {
+                if (submitButton) {
+                    submitButton.disabled = false;
+                    submitButton.textContent = submitButton.dataset.defaultLabel || "Submit Request";
+                }
+            }
+        });
+    });
+};
+
+const loadAstrologyServices = async () => {
+    if (!serviceGrid) {
+        return;
+    }
+
+    try {
+        const response = await fetch(`${API_BASE}/public/astrology-services`);
+        const data = await response.json();
+
+        if (!response.ok || !data.success) {
+            throw new Error(data.message || "Unable to load astrology services.");
+        }
+
+        renderAstrologyServices(Array.isArray(data.data) ? data.data : []);
+    } catch (error) {
+        renderAstrologyServices([]);
+        setAstrologyFeedback(error.message || "Unable to load astrology services.", "error");
+    }
+};
+
+const loadVideos = async () => {
+    try {
+        const response = await fetch(`${API_BASE}/public/videos`);
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+            videoItems = data.data || [];
+        }
+    } catch (error) {
+        videoItems = [];
+    }
+
+    if (!videoItems.length) {
+        videoItems = [
+            {
+                title: "Daily Astrology Guidance",
+                description: "A future-ready spiritual video card managed from the admin dashboard.",
+                url: ""
+            }
+        ];
+    }
+
+    renderVideoCarousel();
+};
+
 renderZodiacCards();
 renderReviewMarquee();
-
-
 renderBlogCarousel();
 initializeAccordion();
-
-(async () => {
-    try {
-        const videosRes = await fetch('/api/public/videos');
-        const videosData = await videosRes.json();
-        
-        if (videosData.success) {
-            videoItems = videosData.data;
-        }
-    } catch (e) {
-        console.error('Error fetching gallery data:', e);
-    }
-    
-    renderVideoCarousel();
-})();
-
+loadAstrologyServices();
+loadVideos();

@@ -314,6 +314,351 @@
     background-size: contain;
 }
 
+.horoscope-route-body .gallery-hero,
+.horoscope-route-body .gallery-reviews-section,
+.horoscope-route-body .gallery-videos-section,
+.horoscope-route-body .gallery-blogs-section,
+.horoscope-route-body .gallery-accordion-section {
+    margin: 0;
+}
+
+.horoscope-merge-discovery .gallery-analyze-image {
+    background-image:
+        linear-gradient(180deg, rgba(16, 8, 2, 0.08) 0%, rgba(16, 8, 2, 0.42) 100%),
+        url("./assets/images/home-analyze.png");
+}
+
+.horoscope-analysis-section {
+    border: 2px solid #111;
+    border-radius: clamp(28px, 2.6vw, 40px);
+    background: linear-gradient(135deg, rgba(255, 254, 249, 0.98) 0%, rgba(255, 243, 221, 0.98) 100%);
+    box-shadow: clamp(8px, 1vw, 12px) clamp(8px, 1vw, 12px) 0 rgba(0, 0, 0, 1);
+    padding: clamp(24px, 3vw, 40px);
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.horoscope-service-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr));
+    gap: 22px;
+}
+
+.horoscope-service-card,
+.horoscope-service-empty {
+    border: 2px solid #111;
+    border-radius: 32px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(255, 248, 232, 0.98) 100%);
+    box-shadow: 8px 8px 0 rgba(0, 0, 0, 1);
+    overflow: hidden;
+}
+
+.horoscope-service-card {
+    display: grid;
+    grid-template-rows: auto auto 1fr;
+}
+
+.horoscope-service-media {
+    position: relative;
+    min-height: clamp(240px, 22vw, 320px);
+    background: linear-gradient(135deg, rgba(255, 198, 118, 0.3), rgba(255, 134, 76, 0.12));
+    overflow: hidden;
+}
+
+.horoscope-service-image,
+.horoscope-service-secondary {
+    position: absolute;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    border: 2px solid rgba(17, 17, 17, 0.08);
+}
+
+.horoscope-service-image {
+    inset: 24px 28% 24px 24px;
+    border-radius: 28px;
+}
+
+.horoscope-service-secondary {
+    right: 20px;
+    bottom: 20px;
+    width: clamp(120px, 12vw, 180px);
+    height: clamp(120px, 12vw, 180px);
+    border-radius: 24px;
+    box-shadow: 0 14px 28px rgba(53, 34, 18, 0.16);
+}
+
+.horoscope-service-badges {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    right: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.horoscope-service-badges span,
+.horoscope-service-meta span,
+.horoscope-service-type {
+    width: fit-content;
+    min-height: 34px;
+    padding: 0 14px;
+    border: 2px solid #111;
+    border-radius: 999px;
+    background: rgba(255, 250, 240, 0.96);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Poppins", sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #5a3b18;
+}
+
+.horoscope-service-copy,
+.horoscope-service-form {
+    padding: clamp(20px, 2vw, 28px);
+}
+
+.horoscope-service-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.horoscope-service-copy h3,
+.horoscope-service-form-head h4,
+.horoscope-service-empty h3 {
+    margin: 0;
+    font-family: "Cinzel", serif;
+    font-size: clamp(24px, 2vw, 34px);
+    line-height: 1.24;
+    color: #1d1208;
+}
+
+.horoscope-service-copy p,
+.horoscope-service-form-head p,
+.horoscope-service-detail-block p,
+.horoscope-service-form-foot p,
+.horoscope-analysis-feedback,
+.horoscope-service-feedback,
+.horoscope-service-empty p {
+    margin: 0;
+    font-family: "Poppins", sans-serif;
+    font-size: clamp(14px, 1vw, 16px);
+    line-height: 1.74;
+    color: #4b3a28;
+}
+
+.horoscope-service-meta,
+.horoscope-service-lists {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 12px;
+}
+
+.horoscope-service-detail-block {
+    padding: 16px 18px;
+    border: 1px dashed rgba(17, 17, 17, 0.18);
+    border-radius: 22px;
+    background: rgba(255, 250, 238, 0.84);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.horoscope-service-detail-block strong,
+.horoscope-service-lists h4 {
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: #241407;
+}
+
+.horoscope-service-lists > div {
+    flex: 1 1 220px;
+    padding: 16px 18px;
+    border-radius: 24px;
+    background: rgba(255, 255, 255, 0.88);
+    border: 1px solid rgba(17, 17, 17, 0.08);
+}
+
+.horoscope-service-lists ul {
+    margin: 10px 0 0;
+    padding-left: 18px;
+    display: grid;
+    gap: 8px;
+    color: #4b3a28;
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.horoscope-service-form {
+    border-top: 1px solid rgba(17, 17, 17, 0.08);
+    background: rgba(255, 252, 246, 0.9);
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.horoscope-service-form-head {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.horoscope-service-form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 170px), 1fr));
+    gap: 14px;
+}
+
+.horoscope-form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.horoscope-form-field--full {
+    grid-column: 1 / -1;
+}
+
+.horoscope-form-field span {
+    font-family: "Poppins", sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #5d4125;
+}
+
+.horoscope-form-field input,
+.horoscope-form-field select,
+.horoscope-form-field textarea {
+    width: 100%;
+    min-height: 50px;
+    padding: 12px 14px;
+    border: 2px solid #111;
+    border-radius: 16px;
+    background: #fffdf8;
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+    color: #241407;
+    outline: none;
+}
+
+.horoscope-form-field textarea {
+    min-height: 118px;
+    resize: vertical;
+}
+
+.horoscope-form-field input:focus,
+.horoscope-form-field select:focus,
+.horoscope-form-field textarea:focus {
+    border-color: #ff7a00;
+    box-shadow: 0 0 0 3px rgba(255, 122, 0, 0.12);
+}
+
+.horoscope-form-option-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 190px), 1fr));
+    gap: 10px;
+}
+
+.horoscope-form-option {
+    position: relative;
+    display: block;
+    cursor: pointer;
+}
+
+.horoscope-form-option input {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.horoscope-form-option span {
+    min-height: 56px;
+    padding: 12px 14px;
+    border: 2px solid #111;
+    border-radius: 16px;
+    background: #fffdf8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-family: "Poppins", sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.45;
+    color: #241407;
+    transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+}
+
+.horoscope-form-option input:checked + span {
+    border-color: #ff7a00;
+    background: linear-gradient(135deg, rgba(255, 184, 82, 0.22), rgba(255, 122, 0, 0.12));
+    transform: translateY(-1px);
+}
+
+.horoscope-form-field--checkbox {
+    justify-content: flex-end;
+}
+
+.horoscope-form-field--checkbox input {
+    width: 22px;
+    min-height: 22px;
+    padding: 0;
+    border-radius: 6px;
+}
+
+.horoscope-service-form-foot {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 16px 18px;
+    border-radius: 20px;
+    background: rgba(255, 245, 228, 0.88);
+    border: 1px dashed rgba(17, 17, 17, 0.14);
+}
+
+.horoscope-service-submit {
+    align-self: flex-start;
+}
+
+.horoscope-analysis-feedback,
+.horoscope-service-feedback {
+    padding: 12px 16px;
+    border-radius: 16px;
+    border: 1px solid rgba(17, 17, 17, 0.12);
+    background: rgba(255, 255, 255, 0.86);
+}
+
+.horoscope-analysis-feedback[data-state="success"],
+.horoscope-service-feedback[data-state="success"] {
+    border-color: rgba(51, 153, 75, 0.28);
+    color: #2d6f38;
+}
+
+.horoscope-analysis-feedback[data-state="error"],
+.horoscope-service-feedback[data-state="error"] {
+    border-color: rgba(200, 71, 71, 0.28);
+    color: #a03838;
+}
+
+.horoscope-service-empty {
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
 .horoscope-hero-garland {
     left: -4%;
     top: 2%;

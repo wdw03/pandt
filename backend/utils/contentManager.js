@@ -249,6 +249,38 @@ const normalizeVideoPayload = (input = {}, existing = {}) => {
     };
 };
 
+const normalizeAstrologyServicePayload = (input = {}, existing = {}) => {
+    const title = cleanString(resolveIncoming(input, 'title', existing.title));
+    const slugSource = cleanString(resolveIncoming(input, 'slug', existing.slug)) || title || existing.slug;
+    const serviceType = cleanString(resolveIncoming(input, 'serviceType', existing.serviceType || 'overall'));
+
+    return {
+        title,
+        slug: slugify(slugSource),
+        serviceType: serviceType === 'topic' ? 'topic' : 'overall',
+        badge: cleanString(resolveIncoming(input, 'badge', existing.badge)),
+        priceLabel: cleanString(resolveIncoming(input, 'priceLabel', existing.priceLabel)),
+        turnaround: cleanString(resolveIncoming(input, 'turnaround', existing.turnaround)),
+        image: toWebAssetPath(resolveIncoming(input, 'image', existing.image)),
+        secondaryImage: toWebAssetPath(resolveIncoming(input, 'secondaryImage', existing.secondaryImage)),
+        shortDescription: cleanString(resolveIncoming(input, 'shortDescription', existing.shortDescription)),
+        introHeading: cleanString(resolveIncoming(input, 'introHeading', existing.introHeading)),
+        introBody: cleanString(resolveIncoming(input, 'introBody', existing.introBody)),
+        detailHeading: cleanString(resolveIncoming(input, 'detailHeading', existing.detailHeading)),
+        detailBody: cleanString(resolveIncoming(input, 'detailBody', existing.detailBody)),
+        highlights: toLimitedStringArray(input.highlights ?? existing.highlights ?? [], 140),
+        deliverables: toLimitedStringArray(input.deliverables ?? existing.deliverables ?? [], 180),
+        dropdownOptions: toLimitedStringArray(input.dropdownOptions ?? existing.dropdownOptions ?? [], 80),
+        whatsappNote: cleanString(resolveIncoming(input, 'whatsappNote', existing.whatsappNote)),
+        formTitle: cleanString(resolveIncoming(input, 'formTitle', existing.formTitle)),
+        formDescription: cleanString(resolveIncoming(input, 'formDescription', existing.formDescription)),
+        topicPlaceholder: cleanString(resolveIncoming(input, 'topicPlaceholder', existing.topicPlaceholder)),
+        buttonLabel: cleanString(resolveIncoming(input, 'buttonLabel', existing.buttonLabel)),
+        order: toNumber(input.order ?? existing.order, 0),
+        isActive: toBoolean(input.isActive ?? existing.isActive, true)
+    };
+};
+
 const cloneDefaults = (value) => JSON.parse(JSON.stringify(value));
 
 const defaultPoojaSlides = [
@@ -526,6 +558,79 @@ const defaultVideos = [
     }
 ];
 
+const defaultAstrologyServices = [
+    {
+        title: 'Manual Analysis Report in 24 Hours',
+        slug: 'manual-analysis-report',
+        serviceType: 'overall',
+        badge: 'Overall Analysis',
+        priceLabel: 'Rs 501',
+        turnaround: 'Handwritten report in 24 hours',
+        image: '/assets/images/home-analyze.png',
+        secondaryImage: '/assets/images/Gemini_Generated_Image_alcwplalcwplalcw.png',
+        shortDescription: 'Book a personal handwritten astrology report with remedies, life insights and clear guidance prepared manually after reviewing birth details.',
+        introHeading: 'Overall life analysis with remedies',
+        introBody: 'This service is meant for devotees who want a complete manual astrology reading. The analysis includes major life directions, practical observations and remedies prepared after reviewing the birth chart manually.',
+        detailHeading: 'What the overall manual astrology report includes',
+        detailBody: 'The overall manual analysis is prepared by reviewing the birth details carefully and then writing a clear report around the user’s current life direction. It can cover emotional state, opportunity timing, obstacles, guidance areas and suggested remedies. The report is meant to feel personal, readable and spiritually grounded instead of generic.',
+        highlights: [
+            'Handwritten style manual reading',
+            'Delivered within 24 hours',
+            'Includes remedies and practical guidance',
+            'Suitable for full life direction'
+        ],
+        deliverables: [
+            'Overall life direction analysis',
+            'Focus on the selected concern area',
+            'Written remedies and spiritual suggestions',
+            'Admin uploaded report available in user profile'
+        ],
+        dropdownOptions: ['Career & Financial Growth', 'Health & Wellbeing Analysis', 'Marriage & Relationship Guidance', 'Complete Kundli & Horoscope Analysis'],
+        whatsappNote: 'Share an active WhatsApp number to receive service updates quickly.',
+        formTitle: 'Submit your overall astrology analysis request',
+        formDescription: 'Fill in your birth details carefully so the manual report can be prepared correctly.',
+        topicPlaceholder: '',
+        buttonLabel: 'Submit Overall Analysis',
+        order: 1,
+        isActive: true
+    },
+    {
+        title: 'One Topic Analysis and Remedies',
+        slug: 'one-topic-analysis',
+        serviceType: 'topic',
+        badge: 'One Topic Reading',
+        priceLabel: 'Rs 101',
+        turnaround: 'Single-topic written guidance',
+        image: '/assets/images/panditpujakete.jpg',
+        secondaryImage: '/assets/images/home-analyze.png',
+        shortDescription: 'Request a focused astrology reading for one important area of life and let the admin team upload your written report with remedies after review.',
+        introHeading: 'Focused single-topic astrology guidance',
+        introBody: 'This service is ideal if the user wants clarity only on one important area. The reading stays more focused, includes remedies and can also include a custom topic note from the user for better context.',
+        detailHeading: 'What the one-topic analysis covers',
+        detailBody: 'The one-topic service keeps the reading centered on a single concern, such as marriage, love life or career growth. The user can select a focus area and also write a short custom note. This helps the admin prepare a more practical written answer with remedies and guidance instead of a broad life reading.',
+        highlights: [
+            'Best for one important life question',
+            'Shorter but focused analysis',
+            'Custom note can be added by the user',
+            'Written remedies included'
+        ],
+        deliverables: [
+            'Single-topic reading based on birth details',
+            'Specific written advice and remedies',
+            'Custom topic note supported',
+            'Admin uploaded report appears in user profile'
+        ],
+        dropdownOptions: ['Career & Financial Growth', 'Health & Wellbeing Analysis', 'Marriage & Relationship Guidance', 'Complete Kundli & Horoscope Analysis'],
+        whatsappNote: 'Use your active WhatsApp number so the team can coordinate updates if needed.',
+        formTitle: 'Submit your one-topic astrology request',
+        formDescription: 'Select the concern area and add a custom topic note if you want the reading to focus on something specific.',
+        topicPlaceholder: 'Write your exact topic or question here',
+        buttonLabel: 'Submit One Topic Analysis',
+        order: 2,
+        isActive: true
+    }
+];
+
 // SiteConfig defaults are seeded into MongoDB on first boot. Credential keys are
 // intentionally seeded as empty strings — the admin must populate them via the
 // admin dashboard Settings panel (or via env vars). Never hardcode real secrets here.
@@ -547,9 +652,11 @@ module.exports = {
     normalizePoojaSlidePayload,
     normalizeProductPayload,
     normalizeVideoPayload,
+    normalizeAstrologyServicePayload,
     cloneDefaults,
     defaultPoojaSlides,
     defaultProducts,
     defaultVideos,
+    defaultAstrologyServices,
     defaultSiteConfigs
 };

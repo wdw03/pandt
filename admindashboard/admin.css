@@ -218,7 +218,7 @@ img { max-width: 100%; display: block; }
 .admin-modal-overlay.is-visible { display: flex; }
 .admin-modal {
     background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-lg);
-    width: 100%; max-width: 640px; max-height: 85vh; overflow-y: auto;
+    width: 100%; max-width: 960px; max-height: 85vh; overflow-y: auto;
     box-shadow: var(--shadow-lg); animation: modalSlideIn 0.3s ease-out;
 }
 @keyframes modalSlideIn { from { opacity: 0; transform: translateY(20px) scale(0.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
