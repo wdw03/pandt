@@ -249,17 +249,34 @@ const getRequestedPujaSlug = () => {
     return "";
 };
 
-const getBookingUrl = (slug = "") => {
-    const url = isFileProtocol
-        ? new URL("index.html", window.location.href)
-        : new URL("/index.html", window.location.origin);
+const getBookingWhatsappUrlLegacy = (pujaName = "this puja") => {
+    const normalizedTitle = formatPujaText(pujaName || "this puja").trim();
+    const message = [
+        "🙏 Namaskar Pandit Ji,",
+        "",
+        `Main ${normalizedTitle} book karna chahta/chahti hoon.`,
+        "Kripya is puja ke booking process, shubh samay aur aage ke steps ke baare mein margdarshan dijiye.",
+        "",
+        "Dhanyavaad. 🌸"
+    ].join("\n");
 
-    if (slug) {
-        url.searchParams.set("pooja", slug);
-    }
+    return `https://wa.me/918789968980?text=${encodeURIComponent(message)}`;
+};
 
-    url.hash = "pooja";
-    return url.toString();
+const getBookingWhatsappUrl = (pujaName = "this puja") => {
+    const normalizedTitle = formatPujaText(pujaName || "this puja").trim();
+    const foldedHandsEmoji = decodeURIComponent("%F0%9F%99%8F");
+    const blossomEmoji = decodeURIComponent("%F0%9F%8C%B8");
+    const message = [
+        `${foldedHandsEmoji} Namaskar Pandit Ji,`,
+        "",
+        `Main ${normalizedTitle} book karna chahta/chahti hoon.`,
+        "Kripya is puja ke booking process, shubh samay aur aage ke steps ke baare mein margdarshan dijiye.",
+        "",
+        `Dhanyavaad. ${blossomEmoji}`
+    ].join("\n");
+
+    return `https://api.whatsapp.com/send/?phone=918789968980&text=${encodeURIComponent(message)}&type=phone_number&app_absent=0`;
 };
 
 const getPujaDetailUrl = (slug = "") => {
@@ -546,9 +563,16 @@ const renderDetailedSlidesSection = (poojas = [], activeSlug = "") => {
         return "";
     }
 
-    const cardsMarkup = poojas
+    const matchingPoojas = poojas.filter((pooja) => {
+        return normalizePoojaSlug(pooja.slug || pooja.title) === activeSlug;
+    });
+
+    const slidesToRender = matchingPoojas.length ? matchingPoojas : poojas.slice(0, 1);
+
+    const cardsMarkup = slidesToRender
         .map((pooja, index) => {
             const slideSlug = normalizePoojaSlug(pooja.slug || pooja.title);
+            const rawTitle = formatPujaText(pooja.title || "Puja Service");
             const title = escapeHtml(formatPujaText(pooja.title || "Puja Service"));
             const subtitle = escapeHtml(formatPujaText(pooja.subtitle || ""));
             const description = escapeHtml(formatPujaText(pooja.cardDescription || ""));
@@ -610,7 +634,7 @@ const renderDetailedSlidesSection = (poojas = [], activeSlug = "") => {
                                     <button type="button" data-puja-slide-share="${slideSlug}">share</button>
                                 </div>
                                 <div class="booknowb">
-                                    <button type="button" data-puja-slide-book="${slideSlug}">book now</button>
+                                    <button type="button" data-puja-slide-book="${slideSlug}" data-puja-slide-title="${escapeHtml(rawTitle)}">book now</button>
                                 </div>
                             </div>
                         </div>
@@ -625,15 +649,15 @@ const renderDetailedSlidesSection = (poojas = [], activeSlug = "") => {
             <div class="pooja-route-results-head puja-detail-slides-head">
                 <div>
                     <p class="pooja-route-results-label">More Puja Details</p>
-                    <h2>Explore all puja detail slides</h2>
+                    <h2>Detailed slider for this puja</h2>
                 </div>
             </div>
             <div class="pooja-route-services-head">
                 <div>
-                    <span class="pooja-route-services-tag">Puja Slides</span>
+                    <span class="pooja-route-services-tag">Puja Slide</span>
                     <p>
-                        After reading the full puja details, you can continue browsing every detailed puja slide one by
-                        one below.
+                        After reading the full puja details, you can explore the same puja in its slider-style detailed
+                        card below.
                     </p>
                 </div>
             </div>
@@ -676,8 +700,11 @@ const bindDetailedSlideActions = (root = document) => {
 
         button.dataset.pujaActionBound = "true";
         button.addEventListener("click", () => {
-            const slug = button.dataset.pujaSlideBook || "";
-            window.location.href = getBookingUrl(slug);
+            const pujaTitle =
+                button.dataset.pujaSlideTitle ||
+                button.closest(".pooja-route-card")?.querySelector(".nameofpuja h2")?.textContent?.trim() ||
+                "this puja";
+            window.location.href = getBookingWhatsappUrl(pujaTitle);
         });
     });
 
@@ -753,7 +780,7 @@ const renderPujaDetail = (puja, allPoojas = []) => {
                 <p class="puja-detail-intro">${escapeHtml(intro)}</p>
 
                 <div class="puja-detail-actions">
-                    <a class="puja-detail-primary-btn" href="${getBookingUrl(slug)}">Book This Puja</a>
+                    <a class="puja-detail-primary-btn" href="${escapeHtml(getBookingWhatsappUrl(title))}">Book This Puja</a>
                     <button class="puja-detail-secondary-btn" type="button" id="pujaDetailShareBtn">Share Puja</button>
                 </div>
 

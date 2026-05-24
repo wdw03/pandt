@@ -858,6 +858,10 @@ const initHomeRevealAnimations = () => {
         y: 36
     });
 
+    const revealOrder = new Map(
+        homeRevealItems.map((item, index) => [item, index])
+    );
+
     const revealObserver = new IntersectionObserver(
         (entries, observer) => {
             entries.forEach((entry) => {
@@ -868,9 +872,13 @@ const initHomeRevealAnimations = () => {
                 const item = entry.target;
                 const isSpotlight = item.classList.contains("home-route-spotlight");
                 const isPulseCard = item.classList.contains("home-route-pulse-card");
+                const revealIndex = revealOrder.get(item) || 0;
                 const direction = isSpotlight && Array.from(item.parentElement.children).indexOf(item) % 2 !== 0
                     ? 48
                     : -48;
+                const revealDelay = isSpotlight
+                    ? Math.min(revealIndex * 0.11, 0.6)
+                    : Math.min(revealIndex * 0.06, 0.32);
 
                 item.classList.add("is-visible");
 
@@ -887,6 +895,7 @@ const initHomeRevealAnimations = () => {
                         y: 0,
                         x: 0,
                         scale: 1,
+                        delay: revealDelay,
                         duration: isPulseCard ? 0.65 : 0.9,
                         ease: "power3.out",
                         clearProps: "transform"
